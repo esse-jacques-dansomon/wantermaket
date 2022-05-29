@@ -4,12 +4,69 @@ List categories = [
     "name": "Vêtements",
     "img": "assets/images/categories/vetements.jpg",
     "status": true,
+    "sub_categories": [
+      {
+        "id": 1,
+        "name": "T-Shirts",
+        "img": "assets/images/categories/vetements/tshirts.jpg",
+        "status": true,
+      },
+      {
+        "id": 2,
+        "name": "Chemises",
+        "img": "assets/images/categories/vetements/chemises.jpg",
+        "status": true,
+      },
+      {
+        "id": 3,
+        "name": "Pantalons",
+        "img": "assets/images/categories/vetements/pantalons.jpg",
+        "status": true,
+      },
+      {
+        "id": 4,
+        "name": "Pulls",
+        "img": "assets/images/categories/vetements/pulls.jpg",
+        "status": true,
+      },
+      {
+        "id": 5,
+        "name": "Jeans",
+        "img": "assets/images/categories/vetements/jeans.jpg",
+        "status": true,
+      },
+      {
+        "id": 6,
+        "name": "Sweats",
+        "img": "assets/images/categories/vetements/sweats.jpg",
+        "status": true,
+      },
+      {
+        "id": 7,
+        "name": "Manteaux",
+        "img": "assets/images/categories/vetements/manteaux.jpg",
+        "status": true,
+      },
+      {
+        "id": 8,
+        "name": "Chaussures",
+        "img": "assets/images/categories/vetements/chaussures.jpg",
+        "status": true,
+      },
+      {
+        "id": 9,
+        "name": "Accessoires",
+        "img": "assets/images/categories/vetements/accessoires.jpg",
+        "status": true,
+      },
+    ],
   },
   {
     "id": 2,
     "name": "Accessoires",
     "img": "assets/images/categories/accessoires.jpg",
     "status": true,
+
   },
   {
     "id": 3,
