@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
             fontSize: 12,
           ),
           selectedItemColor: Colors.blue,
-          unselectedItemColor: Colors.black,       
+          unselectedItemColor: Colors.black45,       
         ),
       ),
       home: const Scaffold(
