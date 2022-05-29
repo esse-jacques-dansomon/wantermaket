@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../screens/boutique/secteur_screen.dart';
 import '../screens/home/home_screen.dart';
 
 class BottomBar extends StatefulWidget {
@@ -48,7 +49,7 @@ class _BottomBarState extends State<BottomBar> {
           ),
           renderView(
             1,
-            const HomeScreen(),
+            const SecteurScreen(),
           ),
           renderView(
             2,
