@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:wantermarket/ui/screens/home/home_screen.dart';
+
+import 'ui/widgets/bottom_bar.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,11 +13,27 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      title: 'WANTERMARKET',
       theme: ThemeData(      
-        primarySwatch: Colors.blue,
+        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+          backgroundColor: Colors.white,
+          type: BottomNavigationBarType.fixed,
+          selectedLabelStyle: TextStyle(
+            fontSize: 12,
+          ),
+          unselectedLabelStyle: TextStyle(
+            fontSize: 12,
+          ),
+          selectedItemColor: Colors.blue,
+          unselectedItemColor: Colors.black,       
+        ),
       ),
-      home: const HomeScreen(),
+      home: const Scaffold(
+        body: Center(
+          child: BottomBar(),
+        ),
+      )
     );
   }
 }
