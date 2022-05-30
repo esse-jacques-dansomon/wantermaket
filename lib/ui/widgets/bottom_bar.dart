@@ -9,7 +9,13 @@ class BottomBar extends StatefulWidget {
   @override
   State<BottomBar> createState() => _BottomBarState();
 }
+List pages = <Widget>[
+  const HomeScreen(),
+  const SecteurScreen(),
+  const SecteurScreen(),
+  const SecteurScreen(),
 
+];
 class _BottomBarState extends State<BottomBar> {
  int _currentIndex = 0;
   @override
@@ -41,27 +47,7 @@ class _BottomBarState extends State<BottomBar> {
           ),
         ]),
 
-      body: Stack(
-          children: [
-            renderView(
-            0,
-            const HomeScreen(),
-          ),
-          renderView(
-            1,
-            const SecteurScreen(),
-          ),
-          renderView(
-            2,
-            const HomeScreen(),
-          ),
-          renderView(
-            3,
-            const HomeScreen(),
-          ),
-          
-          ]
-      ),
+      body: pages[_currentIndex] ,
     );
   }
    Widget renderView(int tabIndex, Widget view) {
