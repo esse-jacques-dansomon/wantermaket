@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'widgets/secteur_card.dart';
+import '../../widgets/app_bar.dart';
+
 
 class SecteurScreen extends StatefulWidget {
   const SecteurScreen({Key? key}) : super(key: key);
@@ -12,8 +13,12 @@ class SecteurScreen extends StatefulWidget {
 class _SecteurScreenState extends State<SecteurScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
+    return Scaffold(
+      appBar: appBar(),
+      drawer: newDrawer(MediaQuery.of(context).size.height),
+      body: const 
+      
+    Center(
         child: Text('Secteurs'),
       ),
     );

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:wantermarket/ui/screens/home/home_screen.dart';
+
 
 import 'ui/widgets/bottom_bar.dart';
 
@@ -27,11 +29,13 @@ class MyApp extends StatelessWidget {
           ),
           selectedItemColor: Colors.blue,
           unselectedItemColor: Colors.black45,       
+         
         ),
       ),
-      home: const Scaffold(
-        body: Center(
-          child: BottomBar(),
+      home: const SafeArea(
+        child: Scaffold(
+          body: HomeScreen() ,
+          bottomNavigationBar: BottomBar(),
         ),
       )
     );
