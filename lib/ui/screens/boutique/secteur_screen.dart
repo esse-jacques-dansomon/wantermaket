@@ -13,45 +13,40 @@ class SecteurScreen extends StatefulWidget {
 class _SecteurScreenState extends State<SecteurScreen> {
 
    Widget _selectedExtras(){
-    return Container(
-      
-     decoration:BoxDecoration(
-        borderRadius:BorderRadius.circular(10.0),
-          border:Border.all(color:Colors.grey,width:2)
-        ),
-        child:  Column(
-          mainAxisAlignment:  MainAxisAlignment.center,
-          children: [
-            
-            Container(
-              height: 60,
-              decoration:  const BoxDecoration(
-                image:  DecorationImage(
-                  image:  AssetImage('assets/images/agroalimentaire.png'),
-                  fit:  BoxFit.cover,
-                ),
+    return Card(
+      shadowColor: Colors.black,
+      child: Column(
+        mainAxisAlignment:  MainAxisAlignment.center,
+        children: [
+          
+          Container(
+            height: 90,
+            decoration:  const BoxDecoration(
+              image:  DecorationImage(
+                image:  AssetImage('assets/images/agroalimentaire.png'),
+                fit:  BoxFit.cover,
               ),
-
             ),
-            const  SizedBox(height: 10,),
-            const Text('Agroalimentaria',style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold),),
-          ],
-        ),// BoxDecoration
+    
+          ),
+          const  SizedBox(height: 10,),
+          const Text('Agroalimentaria',style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold),),
+        ],
+      ),
     );
   }
   
   @override
   Widget build(BuildContext context) {
     //final cardSize = MediaQuery.of(context).size.width / 2 - 32;
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 10),
+    return SafeArea(
       child: Scaffold(
         appBar: appBar(),
         drawer: newDrawer(MediaQuery.of(context).size.height),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           //prendre la taille de l'écran
-
+    
           children:  [
              const Padding(
               padding: EdgeInsets.only(left: 10, right: 15, top: 5),
@@ -77,30 +72,23 @@ class _SecteurScreenState extends State<SecteurScreen> {
             const SizedBox(
               height: 8,
             ),
-
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SizedBox(
-                  height: 300,
-                  child: GridView.count(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 12,
-                    mainAxisSpacing: 8,
-                    childAspectRatio: 1.30,
-                    children: [
-                      _selectedExtras(),
-                      _selectedExtras(),
-                      _selectedExtras(),
-                      _selectedExtras(),
-                      _selectedExtras(),
-                      _selectedExtras(),
-                      _selectedExtras(),
-                      _selectedExtras(),
-                    ],
-                    )
-                ),
-            ),
-            
+        Expanded(
+             child: Padding(
+               padding: const EdgeInsets.only(left: 10, right: 10),
+               child: GridView.builder(
+                           itemCount: 40,
+                           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 12,
+                              mainAxisSpacing: 8,
+                              childAspectRatio: 1.30,
+                           ),
+                           itemBuilder: (context, index) {
+                             return  _selectedExtras();
+                           },
+                         ),
+             )
+               ),
           ],
         ),
       ),
