@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wantermarket/ui/widgets/app_bar.dart';
 
 import 'widgets/secteur_card.dart';
 
@@ -12,9 +13,12 @@ class SecteurScreen extends StatefulWidget {
 class _SecteurScreenState extends State<SecteurScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text('Secteurs'),
+    return  SafeArea(
+      child: Scaffold(
+        appBar: appBar(),
+        body: const Center(
+          child: Text('Secteurs'),
+        ),
       ),
     );
   }

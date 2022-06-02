@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_swiper_plus/flutter_swiper_plus.dart';
 import '../../widgets/app_bar.dart';
+import '../../widgets/boutique_card.dart';
+import '../../widgets/deal_du_jour_card.dart';
+import '../../widgets/produit_by_boutique.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -10,6 +13,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+  final images=[
+    'assets/images/agroalimentaire.png',
+    'assets/images/logo.png',
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,50 +27,68 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ConstrainedBox(
-              constraints: const BoxConstraints(maxHeight: 200),
-              child: ListView.builder(
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                itemCount: 4,
-                itemBuilder: (BuildContext context, int index) => Card(
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    child: Image.network(
-                      'https://picsum.photos/250?image=9',
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
+            SizedBox(
+              height: 200,
+              child: Swiper(
+                itemBuilder: (BuildContext context, int index) {
+                  return  Image.network(
+                    'https://picsum.photos/250?image=${index*10}',
+                    fit: BoxFit.cover,
+                  );
+                },
+                indicatorLayout: PageIndicatorLayout.COLOR,
+                autoplay: true,
+                duration: 500,
+                itemCount: images.length,
+                pagination: const SwiperPagination(),
+                control: const SwiperControl(),
               ),
             ),
             const Padding(
               padding: EdgeInsets.only(left: 15.0, top: 10, bottom: 10),
               child: Text('Boutiques Exclusives', style: TextStyle(fontWeight: FontWeight.w400, fontSize: 20, ), textAlign: TextAlign.start,),
             ),
-            Container(
+            SizedBox(
               height: 250,
               child: ListView.builder(
                 itemCount: 8,
                 scrollDirection: Axis.horizontal,
-                itemBuilder: (BuildContext context, int index) => Card(
-                  
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        width: 200,
-                        child: Image.network(
-                          'https://picsum.photos/250?image=9',
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-
-                      Text('Boutique No $index', style: TextStyle(fontWeight: FontWeight.w400, fontSize: 20, ), textAlign: TextAlign.center,),
-                    ],
-                  ),
-                ),
+                itemBuilder: (BuildContext context, int index) => BoutiqueCard(id : index),
               ),
             ),
+            const Padding(
+              padding: EdgeInsets.only(left: 15.0, top: 10, bottom: 10),
+              child: Text('Deals Du Jour', style: TextStyle(fontWeight: FontWeight.w400, fontSize: 20, ), textAlign: TextAlign.start,),
+            ),
+            SizedBox(
+              height: 500,
+              child: ListView.builder(
+                itemCount: 8,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (BuildContext context, int index) => DealDuJour(id: index),
+              ),
+            ),
+            Container(
+              height: 600,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(left: 15.0, top: 10, bottom: 10),
+                    child: Text('Top Annonces', style: TextStyle(fontWeight: FontWeight.w400, fontSize: 20, ), textAlign: TextAlign.start,),
+                  ),
+                  SizedBox(
+                    height: 550,
+                    child: ListView.builder(
+                      itemCount: 8,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (BuildContext context, int index) => ProductByBoutique(id : index),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
           ],
         ),
       ),
@@ -70,3 +96,4 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+
