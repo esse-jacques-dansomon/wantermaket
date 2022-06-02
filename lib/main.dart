@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wantermarket/ui/screens/home/home_screen.dart';
-import 'package:wantermarket/ui/widgets/app_bar.dart';
+
 
 import 'ui/widgets/bottom_bar.dart';
 
@@ -28,7 +28,8 @@ class MyApp extends StatelessWidget {
             fontSize: 12,
           ),
           selectedItemColor: Colors.blue,
-          unselectedItemColor: Colors.green,
+          unselectedItemColor: Colors.black45,       
+         
         ),
       ),
       home: const SafeArea(
