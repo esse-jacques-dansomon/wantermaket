@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wantermarket/ui/screens/home/home_screen.dart';
 
 
-import 'ui/widgets/bottom_bar.dart';
+import 'ui/basewidgets/bottom_bar.dart';
 
 void main() {
   runApp(const MyApp());

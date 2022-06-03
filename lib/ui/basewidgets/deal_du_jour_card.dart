@@ -18,7 +18,7 @@ class DealDuJour extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                height: 350,
+                height: 360,
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
@@ -33,9 +33,9 @@ class DealDuJour extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children:  [
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(0.0),
                       child: Container(
-                        height: 40,
+                        height: 30,
                         width: 140,
                         decoration: BoxDecoration(
                           color: Colors.green,
@@ -44,7 +44,7 @@ class DealDuJour extends StatelessWidget {
                         child: const Center(
                           child: Text('Deal Du jour', textAlign: TextAlign.start,
                             style: TextStyle(
-                                fontSize: 20,
+                                fontSize: 18,
                                 fontWeight: FontWeight.w500,
                                 color: Colors.white
                             ),
@@ -55,7 +55,7 @@ class DealDuJour extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 10,),
+              const SizedBox(height: 15,),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children:  [
@@ -85,7 +85,7 @@ class DealDuJour extends StatelessWidget {
                       child: Container(
                         width: MediaQuery.of(context).size.width*0.90,
                         child: Center(
-                          child: Text('Acheter', style: TextStyle(
+                          child: Text('Profitez-En', style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w500,
                           ),

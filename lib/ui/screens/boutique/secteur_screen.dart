@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../widgets/app_bar.dart';
+import '../../basewidgets/app_bar.dart';
 
 
 class SecteurScreen extends StatefulWidget {
@@ -18,19 +18,19 @@ class _SecteurScreenState extends State<SecteurScreen> {
       child: Column(
         mainAxisAlignment:  MainAxisAlignment.center,
         children: [
-          
           Container(
-            height: 90,
+            height: 50,
+            width: 50,
             decoration:  const BoxDecoration(
               image:  DecorationImage(
                 image:  AssetImage('assets/images/agroalimentaire.png'),
                 fit:  BoxFit.cover,
               ),
             ),
-    
+
           ),
           const  SizedBox(height: 10,),
-          const Text('Agroalimentaria',style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold),),
+          const Text('Agroalimentaria',style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis,),
         ],
       ),
     );
@@ -41,8 +41,6 @@ class _SecteurScreenState extends State<SecteurScreen> {
     //final cardSize = MediaQuery.of(context).size.width / 2 - 32;
     return SafeArea(
       child: Scaffold(
-        appBar: appBar(),
-        drawer: newDrawer(MediaQuery.of(context).size.height),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           //prendre la taille de l'écran

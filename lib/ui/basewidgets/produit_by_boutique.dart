@@ -15,7 +15,7 @@ class ProductByBoutique extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                height: 250,
+                height: 220,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   image:  DecorationImage(
@@ -34,9 +34,9 @@ class ProductByBoutique extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text('Product avec Nom ${id}', maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black, ),),
-                    SizedBox(height: 15),
+                    SizedBox(height: 10),
                     const  Text('2.000.000 fcfa', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.blueAccent),),
-                    const SizedBox(height: 15),
+                    const SizedBox(height: 13),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children:  [
@@ -49,21 +49,24 @@ class ProductByBoutique extends StatelessWidget {
 
                       ],
                     ),
-                   ListTile(
-                     horizontalTitleGap: 10,
-                      contentPadding: const EdgeInsets.only(top: 5, right: 15),
-                      leading:  SizedBox(
-                        height: 40,
-                        child: ClipOval(
-                          child: Image.network(
-                            'https://picsum.photos/250?image=9',
-                            fit: BoxFit.cover,
-                        ),),
-                      ),
-                      trailing:  Icon(Icons.verified, color: Colors.blueAccent,),
+                   InkWell(
+                     onTap: (){},
+                     child: ListTile(
+                       horizontalTitleGap: 10,
+                        contentPadding: const EdgeInsets.only(top: 5, right: 15),
+                        leading:  SizedBox(
+                          height: 40,
+                          child: ClipOval(
+                            child: Image.network(
+                              'https://picsum.photos/250?image=9',
+                              fit: BoxFit.cover,
+                          ),),
+                        ),
+                        trailing:  Icon(Icons.verified, color: Colors.blueAccent,),
 
-                      title: const Text('Boumba boutiq', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.green),),
-                    ),
+                        title: const Text('Boumba boutiq', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.green),),
+                      ),
+                   ),
                   ],
                 ),
               )

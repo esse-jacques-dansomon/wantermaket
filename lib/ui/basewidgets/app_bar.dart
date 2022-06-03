@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:wantermarket/data/categorie_json.dart';
+import 'package:wantermarket/data/fakedata/categorie_json.dart';
 
 import '../../config/app_colors.dart';
 
 AppBar appBar() {
   return AppBar(
     elevation: 0,
-    backgroundColor: Colors.greenAccent,
+    backgroundColor: AppColors.WHITE,
+    iconTheme: const IconThemeData(color: AppColors.PRIMARY, size: 28),
     actions: [
-      IconButton(
-        onPressed: () {},
-        icon: Icon(Icons.account_box_outlined, color: Colors.white,),
-      ),
-      IconButton(
-        onPressed: () {
-        },
-        icon: Icon(Icons.shopping_cart_outlined, color: Colors.white,),
-      ),
+      Container(
+        height: 60,
+        width: 60,
+        padding: const EdgeInsets.only(right: 15),
+        child: Image.asset('assets/images/logo.png'),
+      )
     ],
   );
 }
@@ -26,18 +24,20 @@ AppBar appBar() {
 
 Drawer newDrawer(double height){
   return  Drawer(
+    elevation: 0,
+
     child: ListView(
-      padding: EdgeInsets.zero,
       children: [
         SizedBox(
           height: height,
           child: ListView.builder(
             itemCount: categories.length,
             itemBuilder: (BuildContext context, int index) {
-              return MenuItem(name:categories[index]['name'], sousCategories: categories[index]['name'],);
+              return MenuItem(name:categories[index]['name']+index.toString()+'/'+ categories.length.toString(), sousCategories: categories[index]['name'],);
             },
           ),
         ),
+
 
       ],
     ),
