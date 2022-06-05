@@ -15,13 +15,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
-  carousel_slider:
+  card_swiper:
     dependency: "direct main"
     description:
-      name: carousel_slider
+      name: card_swiper
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.1.1"
+    version: "2.0.3"
   characters:
     dependency: transitive
     description:
@@ -83,13 +83,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1"
-  flutter_swiper_plus:
-    dependency: "direct main"
-    description:
-      name: flutter_swiper_plus
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.4"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -102,6 +95,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.1"
+  intl:
+    dependency: "direct main"
+    description:
+      name: intl
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.17.0"
   lints:
     dependency: transitive
     description:

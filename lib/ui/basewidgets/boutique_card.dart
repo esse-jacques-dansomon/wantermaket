@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../screens/boutique/boutique_details_screen.dart';
+
 class BoutiqueCard extends StatelessWidget {
   final int id;
   const BoutiqueCard({
@@ -9,7 +11,9 @@ class BoutiqueCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){},
+      onTap: (){
+        Navigator.push(context, MaterialPageRoute(builder: (context) => BoutiqueDetailsScreen()));
+      },
       child: Container(
         margin: const EdgeInsets.only(right: 10.0),
         height: 80,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_swiper_plus/flutter_swiper_plus.dart';
+import 'package:card_swiper/card_swiper.dart';
 import 'package:wantermarket/config/app_colors.dart';
 import 'package:wantermarket/ui/screens/boutique/secteur_screen.dart';
 import '../../basewidgets/boutique_card.dart';
@@ -25,6 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
