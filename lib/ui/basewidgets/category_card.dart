@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wantermarket/route/routes.dart';
 
 class CategoryCard extends StatelessWidget {
   final int id;
@@ -7,6 +8,9 @@ class CategoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+        onTap: (){
+          Navigator.pushNamed(context, AppRoutes.category);
+        },
         child: SizedBox(
           height: 100,
           width: 80,

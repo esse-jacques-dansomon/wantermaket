@@ -1,40 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:wantermarket/ui/screens/boutique/widgets/secteur_card.dart';
 
-import '../../basewidgets/app_bar.dart';
-
-
-class SecteurScreen extends StatefulWidget {
+class SecteurScreen extends StatelessWidget {
   const SecteurScreen({Key? key}) : super(key: key);
-
-  @override
-  State<SecteurScreen> createState() => _SecteurScreenState();
-}
-
-class _SecteurScreenState extends State<SecteurScreen> {
-
-   Widget _selectedExtras(){
-    return Card(
-      shadowColor: Colors.black,
-      child: Column(
-        mainAxisAlignment:  MainAxisAlignment.center,
-        children: [
-          Container(
-            height: 50,
-            width: 50,
-            decoration:  const BoxDecoration(
-              image:  DecorationImage(
-                image:  AssetImage('assets/images/agroalimentaire.png'),
-                fit:  BoxFit.cover,
-              ),
-            ),
-
-          ),
-          const  SizedBox(height: 10,),
-          const Text('Agroalimentaria',style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis,),
-        ],
-      ),
-    );
-  }
   
   @override
   Widget build(BuildContext context) {
@@ -47,7 +15,7 @@ class _SecteurScreenState extends State<SecteurScreen> {
     
           children:  [
              const Padding(
-              padding: EdgeInsets.only(left: 10, right: 15, top: 5),
+              padding: EdgeInsets.only(left: 15, right: 15, top: 5),
               child: Text(
                 "Nos secteurs",
                 style: TextStyle(
@@ -62,7 +30,7 @@ class _SecteurScreenState extends State<SecteurScreen> {
                 'Retrouvez les boutiques par secteurs',
                 style: TextStyle(
                   fontWeight: FontWeight.w400,
-                  fontSize: 12,
+                  fontSize: 14,
                 ),
                 textAlign: TextAlign.start,
               ),
@@ -82,7 +50,7 @@ class _SecteurScreenState extends State<SecteurScreen> {
                               childAspectRatio: 1.30,
                            ),
                            itemBuilder: (context, index) {
-                             return  _selectedExtras();
+                             return const SecteurCard();
                            },
                          ),
              )

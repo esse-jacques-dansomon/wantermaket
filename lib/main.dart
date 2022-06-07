@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wantermarket/route/routes.dart';
 import 'package:wantermarket/ui/screens/home/home_screen.dart';
 
 
@@ -16,6 +17,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      onGenerateRoute: AppRoutes.onGenerateRoute,
       title: 'WANTERMARKET',
       theme: ThemeData(      
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(

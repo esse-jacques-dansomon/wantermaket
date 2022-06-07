@@ -8,6 +8,17 @@ AppBar appBar() {
     elevation: 0,
     backgroundColor: AppColors.WHITE,
     iconTheme: const IconThemeData(color: AppColors.PRIMARY, size: 28),
+    leading: Builder(
+      builder: (BuildContext context) {
+        return IconButton(
+          icon: const Icon(Icons.menu),
+          onPressed: () {
+            Scaffold.of(context).openDrawer();
+          },
+          tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+        );
+      },
+    ),
     actions: [
       Container(
         height: 60,

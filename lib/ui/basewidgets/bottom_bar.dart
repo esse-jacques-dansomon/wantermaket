@@ -3,6 +3,7 @@ import 'package:wantermarket/config/app_colors.dart';
 
 import '../screens/boutique/secteur_screen.dart';
 import '../screens/home/home_screen.dart';
+import '../screens/recherche/search_screen.dart';
 import 'app_bar.dart';
 
 class BottomBar extends StatefulWidget {
@@ -72,7 +73,7 @@ class _BottomBarState extends State<BottomBar> {
       case 1:
         return const SecteurScreen();
       case 2:
-        return const SecteurScreen();
+        return const SearchScreen();
       case 3:
         return const SecteurScreen();
       default:
