@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:wantermarket/config/app_colors.dart';
 import 'package:wantermarket/ui/screens/boutique/secteur_screen.dart';
+import '../../../route/routes.dart';
 import '../../basewidgets/boutique_card.dart';
 import '../../basewidgets/category_card.dart';
 import '../../basewidgets/deal_du_jour_card.dart';
@@ -257,7 +258,9 @@ class TitleAndMoreText extends StatelessWidget {
        mainAxisAlignment: MainAxisAlignment.spaceBetween,
        children:  [
           Text(title, style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 18, ), textAlign: TextAlign.start,),
-          TextButton(onPressed: (){}, child:
+          TextButton(onPressed: (){
+            Navigator.pushNamed(context, AppRoutes.category);
+          }, child:
          Row(
            children:  [
              Text(moreText, style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 18, ), textAlign: TextAlign.start,),

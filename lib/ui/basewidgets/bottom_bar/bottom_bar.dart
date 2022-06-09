@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:wantermarket/config/app_colors.dart';
 
-import '../screens/boutique/secteur_screen.dart';
-import '../screens/home/home_screen.dart';
-import '../screens/recherche/search_screen.dart';
-import 'app_bar.dart';
+import '../../screens/auth/start_screen.dart';
+import '../../screens/boutique/secteur_screen.dart';
+import '../../screens/home/home_screen.dart';
+import '../../screens/mon_compte/dashboard_screen.dart';
+import '../../screens/recherche/search_screen.dart';
+import '../app_bars/app_bar.dart';
 
 class BottomBar extends StatefulWidget {
   const BottomBar({Key? key}) : super(key: key);
@@ -18,7 +20,7 @@ class _BottomBarState extends State<BottomBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar:  BottomNavigationBar(
+      bottomNavigationBar:   BottomNavigationBar(
         currentIndex: _currentIndex,
         unselectedIconTheme: const IconThemeData(color: AppColors.PRIMARY),
         selectedIconTheme: const IconThemeData(color: AppColors.SECONDARY),
@@ -56,12 +58,17 @@ class _BottomBarState extends State<BottomBar> {
           ),
         ]),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => LoginOrLogupScreen()),
+          );
+        },
         child: const Icon(Icons.add),
         elevation: 50,
         backgroundColor: AppColors.PRIMARY,
       ),
-      appBar: appBar(),
+      appBar: _currentIndex != 3 ? appBar() : null,
       drawer: newDrawer(MediaQuery.of(context).size.height),
       body: renderView(_currentIndex) ,
     );
@@ -75,7 +82,7 @@ class _BottomBarState extends State<BottomBar> {
       case 2:
         return const SearchScreen();
       case 3:
-        return const SecteurScreen();
+        return const DashBoardScreen();
       default:
         return const HomeScreen();
     }

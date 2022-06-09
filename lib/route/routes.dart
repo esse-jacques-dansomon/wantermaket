@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../ui/screens/auth/login_screen.dart';
+import '../ui/screens/auth/register_screen.dart';
 import '../ui/screens/category/category_screen.dart';
 import '../ui/screens/home/home_screen.dart';
 import '../ui/screens/recherche/search_screen.dart';
@@ -24,6 +26,10 @@ class AppRoutes {
 
   static Route<dynamic> onGenerateRoute(RouteSettings settings){
     switch(settings.name) {
+      case login:
+        return MaterialPageRoute(builder: (context) => const LoginScreen());
+      case register:
+        return MaterialPageRoute(builder: (context) => const RegisterScreen());
       case home:
         return MaterialPageRoute(builder: (context) => const HomeScreen());
       case search:
