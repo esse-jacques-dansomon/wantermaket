@@ -37,7 +37,6 @@ class MyApp extends StatelessWidget {
       home: const SafeArea(
         child: Scaffold(
           body: HomeScreen() ,
-          bottomNavigationBar: BottomBar(),
         ),
       )
     );

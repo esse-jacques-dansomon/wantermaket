@@ -5,6 +5,7 @@ import 'package:wantermarket/ui/screens/category/widget/short_item_widget.dart';
 
 import '../../../config/app_colors.dart';
 import '../../basewidgets/listTitle_item.dart';
+import '../../basewidgets/produit_by_boutique_2.dart';
 
 class CategoryScreen extends StatelessWidget {
   const CategoryScreen({Key? key}) : super(key: key);
@@ -85,30 +86,24 @@ class CategoryScreen extends StatelessWidget {
                         Icon(Icons.arrow_upward_outlined, color: AppColors.PRIMARY,),
                         Icon(Icons.arrow_downward_outlined, color: AppColors.PRIMARY,),
                         Text('Prix', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
+                        SizedBox(width: 10,),
                       ]
                   ),
                 ),
-                Icon(Icons.menu_outlined, color: AppColors.PRIMARY,),
               ],
             ),
           ),
           Expanded(child: Padding(
             padding: const EdgeInsets.only(left: 15, right: 15),
-            child: GridView.builder(
-              physics: const BouncingScrollPhysics(),
-              itemCount: 20,
-              scrollDirection: Axis.vertical,
-              itemBuilder : (context, index){
-                return const ProduitCardWithoutVendor();
-              },
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 1,
-                crossAxisSpacing: 5,
-                mainAxisSpacing: 10,
-                mainAxisExtent: 315,
-              ),
-            ),
+            child:  GridView.builder(
+                itemCount: 30,
+                physics: const BouncingScrollPhysics(),
+                shrinkWrap: true,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2, mainAxisSpacing: 10, mainAxisExtent: 330),
+                itemBuilder: (context, index){
+                  return ProductByBoutique2(id: index,);
+                }),
           ))
         ],
       ),

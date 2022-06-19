@@ -1,19 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:wantermarket/config/app_colors.dart';
 import 'package:wantermarket/data/fakedata/boutique_json.dart';
+import 'package:wantermarket/ui/screens/boutique/widgets/boutique_card.dart';
 import 'package:wantermarket/ui/screens/boutique/widgets/secteur_card.dart';
 
 import '../../basewidgets/app_bars/app_bar.dart';
 import '../../basewidgets/bottom_bar/bottom_nav_bar.dart';
+import '../../basewidgets/boutique_card.dart';
 
-class SecteurScreen extends StatelessWidget {
-  const SecteurScreen({Key? key}) : super(key: key);
+class BoutiqueBySecteurScreen extends StatelessWidget {
+  const BoutiqueBySecteurScreen({Key? key}) : super(key: key);
   
   @override
   Widget build(BuildContext context) {
     //final cardSize = MediaQuery.of(context).size.width / 2 - 32;
     return SafeArea(
       child: Scaffold(
-        appBar: appBar(isActiveSearchbar: true),
+        appBar: AppBar(
+          elevation: 0,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios, color: Colors.white, size: 20,),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+          centerTitle: false,
+          backgroundColor:AppColors.PRIMARY,
+          title: const Text('Secteur Agroalimentaire', style: TextStyle(color: Colors.white),),
+          iconTheme: const IconThemeData(color: Colors.white, size: 28),),
         bottomNavigationBar: const CustomBottomNavBar(boutique: true,),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,7 +47,7 @@ class SecteurScreen extends StatelessWidget {
             const Padding(
               padding: EdgeInsets.only(left: 10, top: 0, bottom: 10),
               child: Text(
-                'Retrouvez les boutiques par secteurs',
+                ' Retrouvez ici toutes les boutiques du secteur Electronique ',
                 style: TextStyle(
                   fontWeight: FontWeight.w400,
                   fontSize: 14,
@@ -54,9 +68,10 @@ class SecteurScreen extends StatelessWidget {
                               crossAxisSpacing: 12,
                               mainAxisSpacing: 8,
                               childAspectRatio: 1.30,
+                              mainAxisExtent: 190
                            ),
                            itemBuilder: (context, index) {
-                             return const SecteurCard();
+                             return const BoutiqueCardBySecteur();
                            },
                          ),
              )

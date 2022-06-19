@@ -8,5 +8,6 @@ class AppColors{
   static const Color WHITE = Color(0xffFFFFFF);
   static const Color PLACEHOLDER = Color(0xE5DADAFF);
   static const Color PLACEHOLDERBg = Color(0xFFB6B7B7);
+  static const Color FACEBOOK = Color(0xFF4267B2);
 
 }

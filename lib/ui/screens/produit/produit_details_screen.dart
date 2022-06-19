@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:wantermarket/ui/basewidgets/produit_card_without_vendor.dart';
-import 'package:card_swiper/card_swiper.dart';
-import '../../../config/app_colors.dart';
+import 'package:flutter_swiper_view/flutter_swiper_view.dart';
+import '../../basewidgets/produit_by_boutique.dart';
 
 class ProduitDetailsScreen extends StatelessWidget {
   const ProduitDetailsScreen({Key? key}) : super(key: key);
@@ -19,34 +18,61 @@ class ProduitDetailsScreen extends StatelessWidget {
           //   ),
           // ),
           bottomNavigationBar: Container(
+            height: 50,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                  Container(
-                    width: MediaQuery.of(context).size.width*0.4,
-                    child: Text('Le Vendeur'.toUpperCase(), style: const TextStyle( fontSize: 20 , fontWeight: FontWeight.bold),),
-                  ),
-                ClipOval(
+                SizedBox(
+                  height: 40,
                   child: ElevatedButton(
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(AppColors.PRIMARY),
+                        backgroundColor: MaterialStateProperty.all(Colors.black54),
+                        shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50),
+                        ),)
                       ),
-                      onPressed: (){}, child: const Icon(Icons.whatsapp, size: 25)),
+                      onPressed: (){}, child: Row(
+                        children: [
+                          const Icon(Icons.call_outlined, size: 25),
+                          SizedBox(width: 5,),
+                          Text('Appel', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),),
+                        ],
+                      )),
                 ),
-                ClipOval(
+                SizedBox(
+                  height: 40,
                   child: ElevatedButton(
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(AppColors.PRIMARY),
+                        backgroundColor: MaterialStateProperty.all(Colors.black54),
+                        shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50),
+                        ),)
                       ),
-                      onPressed: (){}, child: const Icon(Icons.phone_in_talk_outlined, size: 25)),
-                ),
-                ClipOval(
+                      onPressed: (){}, child: Row(
+                        children: [
+                          const Icon(Icons.sms_outlined, size: 25),
+                          SizedBox(width: 5,),
+                          Text('SMS', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),),
+                        ],
+                      )),
+                ),SizedBox(
+                  height: 40,
                   child: ElevatedButton(
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(AppColors.PRIMARY),
+                        backgroundColor: MaterialStateProperty.all(Colors.green),
+                        shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50),
+                        ),)
                       ),
-                      onPressed: (){}, child: const Icon(Icons.message, size: 25)),
+                      onPressed: (){}, child: Row(
+                        children: [
+                          const Icon(Icons.whatsapp, size: 25),
+                          SizedBox(width: 5,),
+                          Text('WhatsApp', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),),
+                        ],
+                      )),
                 ),
+
                 //message
 
               ],
@@ -96,7 +122,7 @@ class ProduitDetailsScreen extends StatelessWidget {
                         ),
                         Column(
                           children: [
-                             //button share
+                            //button share
                             IconButton(
                               icon: const Icon(Icons.share, color: Colors.white,),
                               onPressed: (){},
@@ -130,11 +156,12 @@ class ProduitDetailsScreen extends StatelessWidget {
                                 const TextSpan(text: 'Laptop | Electronique ! IT', style: const TextStyle(fontWeight: FontWeight.w300, color: Colors.black)),
                               ]),),
                           const SizedBox(height: 10,),
-                          Row(
+                          Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text('2.000.000 fcfa', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),),
-                              const Text('3.000.000 fcfa',  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black, decoration: TextDecoration.lineThrough), ),
+                              const Text('FCFA 2.000.000', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),),
+                              const Text('FCFA 3.000.000',  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w300, color: Colors.black, decoration: TextDecoration.lineThrough), ),
                             ],
                           ),
                           const SizedBox(height: 10,),
@@ -142,44 +169,6 @@ class ProduitDetailsScreen extends StatelessWidget {
                           const SizedBox(height: 10,),
                           const Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300, color: Colors.black),),
                           const SizedBox(height: 10,),
-                          //get in touch with teh seller
-                          const Text('Get in touch with the seller', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),),
-                          const SizedBox(height: 10,),
-                          Container(
-                            padding: const EdgeInsets.symmetric( vertical: 5),
-                            child: Card(
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    width: 100, height: 120,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      image: const DecorationImage(
-                                        image: const NetworkImage('https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60'),
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 10),
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: const [
-                                      Text('Nom du vendeur', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),),
-                                      SizedBox(height: 5,),
-                                      Text('Boutique : Amama', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),),
-                                      SizedBox(height: 5,),
-                                      Text('Categorie : Phones ! Electoniques', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.black),),
-                                      SizedBox(height: 5,),
-                                      Text('Senagal Medina Rue 31x2 Bis', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 20),
                         ],
                       )
 
@@ -190,28 +179,76 @@ class ProduitDetailsScreen extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text('Related Products', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),),
-                      const SizedBox(height: 10,),
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text('Vous aimeriez ausso', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),),
+                        const SizedBox(height: 10,),
 
-                    
-                    
-                    ]),
+                      ]),
                 ),
                 //
                 Container(
-                  height: 315,
+                  height: 325,
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child:  ListView.builder(
                       itemCount: 15,
                       scrollDirection: Axis.horizontal,
                       shrinkWrap: true,
                       itemBuilder: (context, index){
-                        return const ProduitCardWithoutVendor();
+                        return  Container(width: 210, child: ProductByBoutique(id: index,));
                       }
                   ),
+                ),
+
+
+                //get in touch with teh seller
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                      height: 10,),
+                      const Text('Get in touch with the seller', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),),
+                      Container(
+                        padding: const EdgeInsets.symmetric( vertical: 5),
+                        child: Card(
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                width: 100, height: 100,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  image: const DecorationImage(
+                                    image: const NetworkImage('https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60'),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  Text('Nom du vendeur', style: TextStyle(fontSize: 16,  color: Colors.black),),
+                                  SizedBox(height: 5,),
+                                  Text('Boutique : Amama', style: TextStyle(fontSize: 16, color: Colors.black),),
+                                  SizedBox(height: 5,),
+                                  Text('Categorie : Phones ! Electoniques', style: TextStyle(fontSize: 12, color: Colors.black),),
+                                  SizedBox(height: 5,),
+                                  Text('Senagal Medina Rue 31x2 Bis', style: TextStyle(fontSize: 15, color: Colors.black),),
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 20),
+                    ],
+                  ),
                 )
+
 
               ],
             ),

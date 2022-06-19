@@ -1,31 +1,103 @@
+import 'package:circle_flags/circle_flags.dart';
 import 'package:flutter/material.dart';
 import 'package:wantermarket/data/fakedata/categorie_json.dart';
 
 import '../../../config/app_colors.dart';
 
-AppBar appBar() {
+AppBar appBar({bool isActiveSearchbar=false}) {
   return AppBar(
+    automaticallyImplyLeading: false,
+    toolbarHeight: 60,
     elevation: 0,
     backgroundColor: AppColors.WHITE,
     iconTheme: const IconThemeData(color: AppColors.PRIMARY, size: 28),
-    leading: Builder(
-      builder: (BuildContext context) {
-        return IconButton(
-          icon: const Icon(Icons.menu),
-          onPressed: () {
-            Scaffold.of(context).openDrawer();
-          },
-          tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-        );
-      },
-    ),
     actions: [
-      Container(
-        height: 60,
-        width: 60,
-        padding: const EdgeInsets.only(right: 15),
-        child: Image.asset('assets/images/logo.png'),
-      )
+      // Center(child: Builder(
+      //   builder: (context) {
+      //     return Container(child: Icon(Icons.menu), padding: EdgeInsets.only(left: 10),);
+      //   }
+      // )),
+      Builder(
+        builder: (context) => IconButton(
+          icon: new Icon(Icons.menu_sharp),
+          onPressed: () => Scaffold.of(context).openDrawer(),
+        ),),
+      isActiveSearchbar? Expanded(
+        child: Center(
+          child: Container(
+            height:40,
+            alignment: Alignment.centerLeft,
+            margin: const EdgeInsets.only(left: 10, right: 10),
+            child: Center(
+              child: TextField(
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                    contentPadding: EdgeInsets.only(left: 15),
+                    hintText: 'Rechercher',
+                    alignLabelWithHint : true,
+                    suffixIcon: Icon(Icons.search),
+                  ),
+                  textAlign: TextAlign.start,
+                  textAlignVertical : TextAlignVertical.center
+              ),
+            ),
+          ),
+        ),
+      ): Expanded(child: Container()),
+      Center(
+        child: DropdownButton(
+          alignment :AlignmentDirectional.bottomEnd,
+          underline: DropdownButtonHideUnderline(child: Container(),) ,
+          hint: const Text('SN'),
+          value: 'SN',
+          elevation: 0,
+          items:   [
+            DropdownMenuItem(
+              alignment: Alignment.center,
+              value: 'SN',
+              child: Container(
+                alignment: Alignment.center,
+                child: Center(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      CircleFlag('sn', size: 25,),
+                      // SizedBox(width: 3),
+                      // Text('SN', style: TextStyle(
+                      //   fontSize: 16,
+                      //   fontWeight: FontWeight.bold,
+                      //   color: AppColors.PRIMARY,
+                      // ),)
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            DropdownMenuItem(
+              value: 'TG',
+              child: Container(
+                alignment: Alignment.center,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    CircleFlag('tg', size: 25,),
+                    // SizedBox(width: 3),
+                    // Text('TG', style: TextStyle(
+                    //   fontSize: 16,
+                    //   fontWeight: FontWeight.bold,
+                    //   color: AppColors.PRIMARY,
+                    // ),)
+                  ],
+                ),
+              ),
+            ),
+          ], onChanged: (String? value) {  },
+        ),
+      ),
+
+
     ],
   );
 }
@@ -90,20 +162,20 @@ class MenuItem extends StatelessWidget {
                 child: Align(
                   alignment: Alignment.topLeft,
                   child: SizedBox(
-                    height: 400,
-                    child: ListView.builder(
-                        itemCount: 8,
+                      height: 400,
+                      child: ListView.builder(
+                          itemCount: 8,
                           itemBuilder: (context, index){
-                          return InkWell(
-                            onTap: (){},
-                            child: Padding(
+                            return InkWell(
+                              onTap: (){},
+                              child: Padding(
                                 padding: EdgeInsets.only(left: 50, top: 5, bottom: 10),
-                              child: Text('sous categorie $index', style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.w400
-                              )),
+                                child: Text('sous categorie $index', style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.w400
+                                )),
 
-                            ),
-                          );
+                              ),
+                            );
                           }
 
                       )

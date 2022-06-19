@@ -11,34 +11,33 @@ class CategoryCard extends StatelessWidget {
         onTap: (){
           Navigator.pushNamed(context, AppRoutes.category);
         },
-        child: SizedBox(
-          height: 100,
-          width: 80,
+        child: Container(
+          width: 75,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                flex: 4,
-                child: Container(
-                    decoration:  BoxDecoration(
-                      borderRadius:const BorderRadius.all(Radius.circular(5)),
-                      image: DecorationImage(
-                        image: NetworkImage(
-                          'https://picsum.photos/250?image=${id*12}',
-                        ),
-                        fit: BoxFit.cover,
+              Container(
+                width: 65,
+                  height: 65,
+                  decoration:  BoxDecoration(
+                    borderRadius:const BorderRadius.all(Radius.circular(50)),
+                    image: DecorationImage(
+                      image: NetworkImage(
+                        'https://picsum.photos/250?image=${id*12}',
                       ),
+                      fit: BoxFit.cover,
+                    ),
               ),
-                ),
               ),
               const SizedBox(height: 5,),
               const Expanded(
                 child: Text(
-                  'Electroniques',
+                  'Electronique & Manager', textAlign: TextAlign.start,
+                  maxLines: 1,
                   style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
                     overflow: TextOverflow.ellipsis
+
                   ),
                 ),
               ),
