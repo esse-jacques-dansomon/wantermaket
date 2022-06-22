@@ -58,14 +58,17 @@ class BoutiqueCardBySecteur extends StatelessWidget {
                       icon: Icon(Icons.call, color: Colors.green,),
                       onPressed: (){},
                     ),
-                    //message button
-                    IconButton(
-                      icon: Icon(Icons.message, color: Colors.green,),
-                      onPressed: (){},
-                    ),
+
                     //whatsapp button
                     IconButton(
                       icon: Icon(Icons.whatsapp, color: Colors.green,),
+                      onPressed: (){},
+                    ),
+
+                    //gps button
+                    //message button
+                    IconButton(
+                      icon: Icon(Icons.gps_fixed, color: Colors.grey,),
                       onPressed: (){},
                     ),
                   ]

@@ -81,13 +81,14 @@ class CustomBottomNavBar extends StatelessWidget {
               width: 60,
               child: FloatingActionButton(
                 elevation: 0,
-                backgroundColor: add_product ? AppColors.PRIMARY : AppColors.PRIMARY,
+                clipBehavior: Clip.antiAlias,
+                backgroundColor:  add_product ? AppColors.WHITE :  AppColors.PRIMARY,
                 onPressed: () {
                   if (!add_product) {
-                    Navigator.pushNamed(context, AppRoutes.home);
+                    Navigator.pushNamed(context, AppRoutes.addProduct);
                   }
                 },
-                child: Icon(Icons.add_circle, size: 40, color:  add_product ? AppColors.PRIMARY : AppColors.WHITE ),
+                child: Icon(Icons.add_circle, size: 61, color:  add_product ? AppColors.PRIMARY : AppColors.WHITE ),
               ),
             ),
           )

@@ -9,7 +9,7 @@ class SecteurCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return   InkWell(
       onTap: (){
-        Navigator.pushNamed(context, AppRoutes.boutique_by_secteur);
+        Navigator.pushNamed(context, AppRoutes.boutiqueBySecteur);
       },
       child: Card(
         shadowColor: Colors.black,

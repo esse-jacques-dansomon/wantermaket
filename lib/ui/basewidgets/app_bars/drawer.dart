@@ -41,6 +41,24 @@ class AppDrawer extends StatelessWidget {
               ],
             ),
           ),
+          // Padding(
+          //   padding: const EdgeInsets.all(8.0),
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.start,
+          //     crossAxisAlignment: CrossAxisAlignment.center,
+          //     children: [
+          //       Column(
+          //         mainAxisAlignment: MainAxisAlignment.start,
+          //         crossAxisAlignment: CrossAxisAlignment.start,
+          //         children: [
+          //           Text('Bienvenue'),
+          //           Text('Merci de creer otre compte'),
+          //         ],
+          //       ),
+          //       ElevatedButton(onPressed: (){}, child: Text('Créer un compte'),),
+          //     ],
+          //   ),
+          // ),
           const DrawerMenuItem(
             menuName: 'Accueil',
             route: AppRoutes.home,
@@ -48,28 +66,37 @@ class AppDrawer extends StatelessWidget {
           ) ,
           const DrawerMenuItem(
             menuName: 'Categories',
-            route: AppRoutes.category,
+            route: AppRoutes.categories,
             icon: Icons.category_outlined,
           ) ,
           const DrawerMenuItem(
-            menuName: 'Ma Boutique',
+            menuName: 'Boutique',
             route: AppRoutes.vendor,
             icon: Icons.shopping_bag_outlined,
           ) ,
           const DrawerMenuItem(
-            menuName: 'Mes Boutiques Favories',
-            route: AppRoutes.vendor,
+            menuName: 'Boutiques Favories',
+            route: AppRoutes.favoritesBoutiques,
             icon: Icons.shop_2_outlined,
           ) ,
           const DrawerMenuItem(
             menuName: 'Ma Liste d\'Envies',
-            route: AppRoutes.vendor,
+            route: AppRoutes.wishList,
             icon: Icons.favorite_border,
           ) ,
           const DrawerMenuItem(
             menuName: 'Notifications',
-            route: AppRoutes.home,
+            route: AppRoutes.notification,
             icon: Icons.notifications_on_outlined,
+          ),
+
+          const DrawerMenuItem(
+            menuName: 'Abonnements',
+            route: AppRoutes.home,
+            icon: Icons.person_pin_rounded,
+          ),
+          ListTile(
+            title: Text('Mon compte', style: TextStyle(fontSize: 17, color: Colors.grey[600]),),
           ),
           const DrawerMenuItem(
             menuName: 'Paramettres',
@@ -77,7 +104,7 @@ class AppDrawer extends StatelessWidget {
             icon: Icons.settings,
           ) ,
           const DrawerMenuItem(
-            menuName: 'Changer Mot de Passe',
+            menuName: 'Mot de Passe',
             route: AppRoutes.home,
             icon: Icons.password_outlined,
           ),
@@ -86,6 +113,17 @@ class AppDrawer extends StatelessWidget {
             route: AppRoutes.home,
             icon: Icons.logout_outlined,
           ),
+          const DrawerMenuItem(
+            menuName: 'Se connecter',
+            route: AppRoutes.login,
+            icon: Icons.login,
+          ),
+          const DrawerMenuItem(
+            menuName: 'Créer un compte',
+            route: AppRoutes.register,
+            icon: Icons.person_add_alt,
+          ),
+
 
         ]
       ),

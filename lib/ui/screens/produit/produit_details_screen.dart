@@ -91,7 +91,7 @@ class ProduitDetailsScreen extends StatelessWidget {
                       width: double.infinity,
                       child: Swiper(
                         indicatorLayout: PageIndicatorLayout.COLOR,
-                        itemCount: 3,
+                        itemCount: 5,
                         pagination: const SwiperPagination(
                           alignment: Alignment.bottomCenter,
                           margin: EdgeInsets.only(bottom: 20),
@@ -104,7 +104,7 @@ class ProduitDetailsScreen extends StatelessWidget {
                         ),
                         itemBuilder: (context, index) {
                           return Image.network(
-                            'https://picsum.photos/250?image=9',
+                            'https://picsum.photos/250?image=${index*11}',
                             fit: BoxFit.cover,
                           );
                         },
@@ -181,7 +181,7 @@ class ProduitDetailsScreen extends StatelessWidget {
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text('Vous aimeriez ausso', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),),
+                        const Text('Produits Similaires : ', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),),
                         const SizedBox(height: 10,),
 
                       ]),

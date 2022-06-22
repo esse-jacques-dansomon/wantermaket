@@ -32,7 +32,7 @@ class BoutiqueCard extends StatelessWidget {
             SizedBox(
               width: 115,
               child: Image.network(
-                'https://picsum.photos/250?image=${id*11}',
+                'https://picsum.photos/250?image=${id}',
                 fit: BoxFit.cover,
               ),
             ),

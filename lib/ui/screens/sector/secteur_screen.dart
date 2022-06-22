@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wantermarket/data/fakedata/boutique_json.dart';
-import 'package:wantermarket/ui/screens/boutique/widgets/secteur_card.dart';
+import 'package:wantermarket/ui/basewidgets/app_bars/drawer.dart';
+import 'package:wantermarket/ui/screens/sector/widgets/secteur_card.dart';
 
 import '../../basewidgets/app_bars/app_bar.dart';
 import '../../basewidgets/bottom_bar/bottom_nav_bar.dart';
@@ -14,6 +15,7 @@ class SecteurScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: appBar(isActiveSearchbar: true),
+        drawer: AppDrawer(),
         bottomNavigationBar: const CustomBottomNavBar(boutique: true,),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

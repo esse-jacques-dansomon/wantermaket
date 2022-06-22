@@ -3,7 +3,8 @@ import 'package:wantermarket/route/routes.dart';
 
 class CategoryCard extends StatelessWidget {
   final int id;
-  const CategoryCard({Key? key,  required this.id}) : super(key: key);
+  final bool categoriesPage;
+  const CategoryCard({Key? key,  required this.id, this.categoriesPage=false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,15 +13,15 @@ class CategoryCard extends StatelessWidget {
           Navigator.pushNamed(context, AppRoutes.category);
         },
         child: Container(
-          width: 75,
+          width: !categoriesPage ? 75: 110,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                width: 65,
-                  height: 65,
+                width: !categoriesPage ?65: 100,
+                  height: !categoriesPage ?65: 100,
                   decoration:  BoxDecoration(
-                    borderRadius:const BorderRadius.all(Radius.circular(50)),
+                    borderRadius: BorderRadius.all(Radius.circular( !categoriesPage ?50:0)),
                     image: DecorationImage(
                       image: NetworkImage(
                         'https://picsum.photos/250?image=${id*12}',

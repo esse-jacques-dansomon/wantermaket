@@ -7,19 +7,15 @@ import '../../../config/app_colors.dart';
 AppBar appBar({bool isActiveSearchbar=false}) {
   return AppBar(
     automaticallyImplyLeading: false,
-    toolbarHeight: 60,
+    toolbarHeight: 70,
     elevation: 0,
     backgroundColor: AppColors.WHITE,
     iconTheme: const IconThemeData(color: AppColors.PRIMARY, size: 28),
     actions: [
-      // Center(child: Builder(
-      //   builder: (context) {
-      //     return Container(child: Icon(Icons.menu), padding: EdgeInsets.only(left: 10),);
-      //   }
-      // )),
+
       Builder(
         builder: (context) => IconButton(
-          icon: new Icon(Icons.menu_sharp),
+          icon: Icon(Icons.menu_sharp),
           onPressed: () => Scaffold.of(context).openDrawer(),
         ),),
       isActiveSearchbar? Expanded(

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:wantermarket/ui/basewidgets/produit_card_without_vendor.dart';
 import 'package:wantermarket/ui/screens/category/widget/filters_widget.dart';
 import 'package:wantermarket/ui/screens/category/widget/short_item_widget.dart';
 
 import '../../../config/app_colors.dart';
-import '../../basewidgets/listTitle_item.dart';
 import '../../basewidgets/produit_by_boutique_2.dart';
 
 class CategoryScreen extends StatelessWidget {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wantermarket/config/app_colors.dart';
 
 import '../../screens/auth/start_screen.dart';
-import '../../screens/boutique/secteur_screen.dart';
+import '../../screens/sector/secteur_screen.dart';
 import '../../screens/home/home_screen.dart';
 import '../../screens/mon_compte/dashboard_screen.dart';
 import '../../screens/recherche/search_screen.dart';
