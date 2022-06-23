@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wantermarket/ui/screens/abonnement/abonnement_screen.dart';
 import 'package:wantermarket/ui/screens/add_product/add_product_screen.dart';
 import 'package:wantermarket/ui/screens/boutique/boutique_details_screen.dart';
 import 'package:wantermarket/ui/screens/boutique_follow/boutique_favories.dart';
@@ -72,6 +73,8 @@ class AppRoutes {
         return MaterialPageRoute(builder: (context) => const BoutiquesFavoriesScreen());
       case wishList:
         return MaterialPageRoute(builder: (context) => const WishlistScreen());
+      case abonnements:
+        return MaterialPageRoute(builder: (context) => const AbonnementScreen());
       default:
         return MaterialPageRoute(builder: (context) => const HomeScreen());
     }

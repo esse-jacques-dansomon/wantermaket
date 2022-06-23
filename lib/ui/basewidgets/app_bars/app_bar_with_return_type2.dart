@@ -4,7 +4,6 @@ import '../../../config/app_colors.dart';
 
 AppBar appBarWithReturnType2({required String title, required BuildContext context}){
   return AppBar(
-
     automaticallyImplyLeading: false,
     backgroundColor: Colors.grey[50],
     elevation: 0,

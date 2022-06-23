@@ -92,7 +92,7 @@ class AppDrawer extends StatelessWidget {
 
           const DrawerMenuItem(
             menuName: 'Abonnements',
-            route: AppRoutes.home,
+            route: AppRoutes.abonnements,
             icon: Icons.person_pin_rounded,
           ),
           ListTile(
