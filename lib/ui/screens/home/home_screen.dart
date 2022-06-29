@@ -28,6 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
     'assets/images/agroalimentaire.png',
     'assets/images/logo.png',
   ];
+  
   @override
   Widget build(BuildContext context) {
     return SafeArea(

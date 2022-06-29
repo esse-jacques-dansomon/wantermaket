@@ -1,77 +1,64 @@
-
-import 'dart:convert';
-
-Vendeur vendeurFromJson(String str) => Vendeur.fromJson(json.decode(str));
-
-String vendeurToJson(Vendeur data) => json.encode(data.toJson());
-
 class Vendeur {
-  Vendeur({
-    required this.id,
-    required this.username,
-    required this.email,
-    required this.phone,
-    required this.address,
-    required this.city,
-    required this.country,
-    required this.status,
-    required this.codeValide,
-  });
+  int? id;
+  String? name;
+  String? firstName;
+  String? sex;
+  String? email;
+  int? age;
+  String? nationality;
+  String? username;
+  String? phone;
+  String? address;
+  String? city;
+  String? country;
+  String? statut;
 
-  int id;
-  String username;
-  String email;
-  String phone;
-  String address;
-  String city;
-  String country;
-  String status;
-  String codeValide;
+  Vendeur(
+      {this.id,
+      this.name,
+      this.firstName,
+      this.sex,
+      this.email,
+      this.age,
+      this.nationality,
+      this.username,
+      this.phone,
+      this.address,
+      this.city,
+      this.country,
+      this.statut});
 
-  Vendeur copyWith({
-    int? id,
-    String? username,
-    String? email,
-    String? phone,
-    String? address,
-    String? city,
-    String? country,
-    String? status,
-    String? codeValide,
-  }) =>
-      Vendeur(
-        id: id ?? this.id,
-        username: username ?? this.username,
-        email: email ?? this.email,
-        phone: phone ?? this.phone,
-        address: address ?? this.address,
-        city: city ?? this.city,
-        country: country ?? this.country,
-        status: status ?? this.status,
-        codeValide: codeValide ?? this.codeValide,
-      );
+  Vendeur.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    firstName = json['first_name'];
+    sex = json['sex'];
+    email = json['email'];
+    age = json['age'];
+    nationality = json['nationality'];
+    username = json['username'];
+    phone = json['phone'];
+    address = json['address'];
+    city = json['city'];
+    country = json['country'];
+    statut = json['statut'];
+  }
 
-  factory Vendeur.fromJson(Map<String, dynamic> json) => Vendeur(
-    id: json["id"],
-    username: json["username"],
-    email: json["email"],
-    phone: json["phone"],
-    address: json["address"],
-    city: json["city"],
-    country: json["country"],
-    status: json["status"],
-    codeValide: json["code_valide"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "username": username,
-    "email": email,
-    "phone": phone,
-    "address": address,
-    "city": city,
-    "country": country,
-    "status": status,
-    "code_valide": codeValide,
-  };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['first_name'] = firstName;
+    data['sex'] = sex;
+    data['email'] = email;
+    data['age'] = age;
+    data['nationality'] = nationality;
+    data['username'] = username;
+    data['phone'] = phone;
+    data['address'] = address;
+    data['city'] =city;
+    data['country'] = country;
+    data['statut'] = statut;
+    return data;
+  }
 }

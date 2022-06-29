@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:wantermarket/route/routes.dart';
 import 'package:wantermarket/ui/screens/home/home_screen.dart';
 
-
 import 'ui/basewidgets/bottom_bar/bottom_bar.dart';
 
 void main() {
