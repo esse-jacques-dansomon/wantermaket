@@ -4,6 +4,7 @@ import 'package:wantermarket/ui/screens/add_product/add_product_screen.dart';
 import 'package:wantermarket/ui/screens/boutique/boutique_details_screen.dart';
 import 'package:wantermarket/ui/screens/boutique_follow/boutique_favories.dart';
 import 'package:wantermarket/ui/screens/category/all_categories_screen.dart';
+import 'package:wantermarket/ui/screens/edit_boutique/edit_boutique_screen.dart';
 import 'package:wantermarket/ui/screens/notification/notification_screen.dart';
 import 'package:wantermarket/ui/screens/sector/secteur_screen.dart';
 import 'package:wantermarket/ui/screens/mon_compte/dashboard_screen.dart';
@@ -12,15 +13,17 @@ import 'package:wantermarket/ui/screens/wishlist/wishlist_screen.dart';
 
 import '../ui/screens/auth/login_screen.dart';
 import '../ui/screens/auth/register_screen.dart';
+import '../ui/screens/auth/start_screen.dart';
 import '../ui/screens/boutique/boutique_by_secteur_screen.dart';
 import '../ui/screens/category/category_details_screen.dart';
 import '../ui/screens/home/home_screen.dart';
 import '../ui/screens/recherche/search_screen.dart';
 
 class AppRoutes {
-  static const String home = '/';
+  static const String home = '/home';
   static const String login = '/login';
   static const String register = '/register';
+  static const String splash = '/';
   static const String forgotPassword = '/forgot_password';
   static const String profile = '/profile';
   static const String search = '/search';
@@ -30,6 +33,7 @@ class AppRoutes {
   static const String categories = '/categories';
   static const String vendor = '/vendor';
   static const String boutiqueBySecteur = '/boutique_by_secteur';
+  static const String editboutiqueBySecteur = '/egit_boutique_by_secteur';
   static const String shop = '/secteur';
   static const String notification = '/notifications';
   static const String hasnotification = '/has_notifications';
@@ -73,8 +77,12 @@ class AppRoutes {
         return MaterialPageRoute(builder: (context) => const BoutiquesFavoriesScreen());
       case wishList:
         return MaterialPageRoute(builder: (context) => const WishlistScreen());
+      case splash:
+        return MaterialPageRoute(builder: (context) => const LoginOrLogupScreen());
       case abonnements:
         return MaterialPageRoute(builder: (context) => const AbonnementScreen());
+      case editboutiqueBySecteur:
+        return MaterialPageRoute(builder: (context) => const EditBoutiqueScreen( ));
       default:
         return MaterialPageRoute(builder: (context) => const HomeScreen());
     }

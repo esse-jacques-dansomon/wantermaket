@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wantermarket/ui/screens/home/widgets/title_and_more_widget.dart';
 
 import '../../../basewidgets/produit_by_boutique_2.dart';
+import '../../../basewidgets/produit_by_boutique_3.dart';
 import '../../sector/secteur_screen.dart';
 
 class NouveautesWidget extends StatelessWidget {
@@ -20,10 +21,10 @@ class NouveautesWidget extends StatelessWidget {
             padding: const EdgeInsets.only(left: 10.0, right: 10.0),
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, mainAxisSpacing: 10, mainAxisExtent: 330),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2, mainAxisSpacing: 10, mainAxisExtent: 315),
             itemBuilder: (context, index){
-              return ProductByBoutique2(id: index,);
+              return ProductByBoutique3(id: index,);
             }),
         const SizedBox(height: 15,),
       ],

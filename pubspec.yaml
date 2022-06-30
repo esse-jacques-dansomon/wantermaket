@@ -43,6 +43,7 @@ dependencies:
   flutter_swiper_view: ^1.1.8
   circle_flags: ^0.0.3
   shared_preferences: ^2.0.15
+  image_picker: ^0.8.5+3
 
 dev_dependencies:
   flutter_test:

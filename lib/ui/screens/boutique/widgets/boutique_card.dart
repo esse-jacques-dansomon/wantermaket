@@ -18,14 +18,16 @@ class BoutiqueCardBySecteur extends StatelessWidget {
         child: Column(
           mainAxisAlignment:  MainAxisAlignment.start,
           children: [
-            Container(
-              height: 70,
-              width: MediaQuery.of(context).size.width/2,
-              child: Image.network(
-                'https://picsum.photos/250?image=${2*11}',
-                fit: BoxFit.cover,
-              ),
+            Expanded(
+              child: Container(
+                // height: 70,
+                width: MediaQuery.of(context).size.width/2,
+                child: Image.network(
+                  'https://picsum.photos/250?image=${2*11}',
+                  fit: BoxFit.cover,
+                ),
 
+              ),
             ),
             const SizedBox(height: 10,),
             Padding(padding: EdgeInsets.symmetric(horizontal: 10), child: Column(
@@ -41,16 +43,15 @@ class BoutiqueCardBySecteur extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 10,),
-                    SizedBox(
+                   const  SizedBox(
                       width: 100,
                       child: Text('Boutique de pretes porter Ama',overflow: TextOverflow.ellipsis, textAlign: TextAlign.start,
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, ),
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, ),
                         maxLines: 2,
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 10,),
                 Row(
                   children: [
                     //call button
@@ -68,7 +69,7 @@ class BoutiqueCardBySecteur extends StatelessWidget {
                     //gps button
                     //message button
                     IconButton(
-                      icon: Icon(Icons.gps_fixed, color: Colors.grey,),
+                      icon: const Icon(Icons.location_on_outlined, color: Colors.grey,),
                       onPressed: (){},
                     ),
                   ]

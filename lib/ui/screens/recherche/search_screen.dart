@@ -1,4 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:wantermarket/ui/basewidgets/app_bars/app_bar.dart';
+import 'package:wantermarket/ui/basewidgets/app_bars/app_bar_with_return_type2.dart';
+import 'package:wantermarket/ui/basewidgets/app_bars/drawer.dart';
+import 'package:wantermarket/ui/basewidgets/boutique_card.dart';
+import 'package:wantermarket/ui/screens/boutique/boutique_by_secteur_screen.dart';
+import 'package:wantermarket/ui/screens/boutique/widgets/boutique_card.dart';
+import 'package:wantermarket/ui/screens/recherche/widget/product_found_fliter_widget.dart';
 
 import '../../../config/app_colors.dart';
 import '../../basewidgets/bottom_bar/bottom_nav_bar.dart';
@@ -10,150 +17,209 @@ class SearchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        bottomNavigationBar: const CustomBottomNavBar(search: true,),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0),
-          child: Column(
-            children: [
-              Container(
-                padding: const EdgeInsets.only(top: 10),
-                height: 60,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+    return DefaultTabController(length: 2,
+        child: SafeArea(
+          child: Scaffold(
+            appBar: appBar(isActiveSearchbar: true),
+            drawer: const AppDrawer(),
+            bottomNavigationBar: const CustomBottomNavBar(search: true),
+            body: Column(
+              children:const [
+                TabBar(
+                  labelColor: Colors.black,
+                    tabs:
+                    [
+                     Tab(
+                       text: 'Produits',
+                     ),
+                     Tab(
+                       text: 'boutiques',
+                     ),
+                   ]
+                ),
+                Expanded(child: TabBarView(
+                    children: [
+                      ProductsFound(),
+                      BoutiquesFinded(),
+                    ]
+                
+                ))
+              ],
+            ),
+          ),
+
+    ));
+  }
+}
+
+class ProductsFound extends StatelessWidget {
+  const ProductsFound({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.only(top: 0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
                   children: [
+                    Text('Trier par'.toUpperCase()),
                     SizedBox(
-                        height: 70,
-                        width: 50,
-                        child : Row(
-                          children: [
-                            Container(
-                              child: DropdownButton(
-                                hint: const Text('SN'),
-                                value: 'SN',
-                                items: const [
-                                  DropdownMenuItem(
-                                    child: Text('SN'),
-                                    value: 'SN',
-                                  ),
-                                  DropdownMenuItem(
-                                    child: Text('TG'),
-                                    value: 'TG',
-                                  ),
-                                  DropdownMenuItem(
-                                    child: Text('BN'),
-                                    value: 'BN',
-                                  ),
-                                ], onChanged: (String? value) {  },
-                              ),
-                            )
-                          ],
-                        )
+                      width: 10,
                     ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    //search input
-                    Expanded(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          hintText: 'Rechercher',
+                    DropdownButton(
+                      hint: const Text('Prix'),
+                      value: 'Prix',
+                      items: const [
+                        DropdownMenuItem(
+                          child: Text('Prix'),
+                          value: 'Prix',
                         ),
-                      ),
+                        DropdownMenuItem(
+                          child: Text('Nom'),
+                          value: 'Nom',
+                        ),
+                        DropdownMenuItem(
+                          child: Text('Popularité'),
+                          value: 'Popularité',
+                        ),
+                      ], onChanged: (String? value) {  },
                     ),
-                    //filter icon
-
                   ],
                 ),
-              ),
-              //sort
-              Container(
-                padding: const EdgeInsets.only(top: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Text('Trier par'.toUpperCase()),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        DropdownButton(
-                          hint: const Text('Prix'),
-                          value: 'Prix',
-                          items: const [
-                            DropdownMenuItem(
-                              child: Text('Prix'),
-                              value: 'Prix',
-                            ),
-                            DropdownMenuItem(
-                              child: Text('Nom'),
-                              value: 'Nom',
-                            ),
-                            DropdownMenuItem(
-                              child: Text('Popularité'),
-                              value: 'Popularité',
-                            ),
-                          ], onChanged: (String? value) {  },
-                        ),
+
+                InkWell(
+                  onTap: (){
+                    //on bottom sheet
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      isDismissible: false,
+                      builder: (BuildContext context) {
+                        return SizedBox(
+                            child: const ProductFoundFilter());
+                      },
+                    );
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    child: Row(
+                      children: const [
+                        Text('Filter'),
+                        SizedBox(width: 10,),
+                        Icon(Icons.filter_alt_rounded, color: AppColors.PRIMARY,size: 28,)
                       ],
                     ),
-
-                    InkWell(
-                      onTap: (){},
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                        child: Row(
-                          children: [
-                            Text('Filter'),
-                            SizedBox(width: 10,),
-                            Icon(Icons.filter_alt_rounded, color: AppColors.PRIMARY,size: 28,)
-                          ],
-                        ),
-                      ),
-                    ),
-                   ],
+                  ),
                 ),
-              ),
-              //expanded
-              Container(
-                padding: const EdgeInsets.only(top: 10, bottom: 10),
-                width: double.infinity,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Produits Trouvés',style: TextStyle(color: Colors.black, fontSize: 18),)
-
-
-                  ],
-                ),
-              ),
-              Expanded(child: GridView.builder(
-                physics: const BouncingScrollPhysics(),
-                itemCount: 20,
-                scrollDirection: Axis.vertical,
-                itemBuilder : (context, index){
-                  return  ProductByBoutique2(id: index);
-                },
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 1,
-                  crossAxisSpacing: 5,
-                  mainAxisSpacing: 10,
-                  mainAxisExtent: 315,
-                ),
-              ))
-
-            ],
+              ],
+            ),
           ),
-        ),
 
+          Expanded(child: GridView.builder(
+            physics: const BouncingScrollPhysics(),
+            itemCount: 20,
+            scrollDirection: Axis.vertical,
+            itemBuilder : (context, index){
+              return  ProductByBoutique2(id: index);
+            },
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: 1,
+              crossAxisSpacing: 5,
+              mainAxisSpacing: 10,
+              mainAxisExtent: 315,
+            ),
+          ))
+
+        ],
       ),
     );
   }
 }
+
+class BoutiquesFinded extends StatelessWidget {
+  const BoutiquesFinded({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.only(top: 0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Text('Trier par'.toUpperCase()),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    DropdownButton(
+                      hint: const Text('Prix'),
+                      value: 'Prix',
+                      items: const [
+                        DropdownMenuItem(
+                          child: Text('Prix'),
+                          value: 'Prix',
+                        ),
+                        DropdownMenuItem(
+                          child: Text('Nom'),
+                          value: 'Nom',
+                        ),
+                        DropdownMenuItem(
+                          child: Text('Popularité'),
+                          value: 'Popularité',
+                        ),
+                      ], onChanged: (String? value) {  },
+                    ),
+                  ],
+                ),
+
+                InkWell(
+                  onTap: (){},
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    child: Row(
+                      children: [
+                        Text('Filter'),
+                        SizedBox(width: 10,),
+                        Icon(Icons.filter_alt_rounded, color: AppColors.PRIMARY,size: 28,)
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          Expanded(child: GridView.builder(
+            physics: const BouncingScrollPhysics(),
+            itemCount: 20,
+            scrollDirection: Axis.vertical,
+            itemBuilder : (context, index){
+              return  BoutiqueCardBySecteur();
+            },
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: 1,
+              crossAxisSpacing: 5,
+              mainAxisSpacing: 10,
+              mainAxisExtent: 190,
+            ),
+          ))
+
+        ],
+      ),
+    );
+  }
+}
+

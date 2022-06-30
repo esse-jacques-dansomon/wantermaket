@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wantermarket/ui/basewidgets/produit_by_boutique_2.dart';
-import '../../../config/app_dimenssions.dart';
+import 'package:wantermarket/ui/basewidgets/produit_by_boutique_3.dart';
 
 import '../../basewidgets/app_bars/app_bar_with_return_type2.dart';
 
@@ -14,25 +13,25 @@ class WishlistScreen extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(padding: EdgeInsets.fromLTRB(15, 0, 15, 15),
+          const Padding(padding: EdgeInsets.fromLTRB(10, 0, 10, 15),
             child: Text('Liste d\'envies', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
           ),
           Expanded(
             child: Padding(
-              padding : const EdgeInsets.only(left: 15.0, right: 15.0),
+              padding : const EdgeInsets.only(left: 10.0, right: 10.0),
               child: GridView.builder(
                 itemCount: 10,
                   shrinkWrap: true,
                   physics: const BouncingScrollPhysics(),
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
-                    childAspectRatio: 1,
-                    crossAxisSpacing: 10,
+                    childAspectRatio: 1.5,
+                    crossAxisSpacing: 0,
                     mainAxisSpacing: 10,
-                    mainAxisExtent: 330
+                    mainAxisExtent: 315
                   ),
                   itemBuilder: (context, index){
-                    return ProductByBoutique2(id: index);
+                    return ProductByBoutique3(id: index);
                   }
               ),
             ),

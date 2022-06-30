@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wantermarket/config/app_colors.dart';
+import 'package:wantermarket/route/routes.dart';
 import 'package:wantermarket/ui/basewidgets/app_bars/drawer.dart';
 
 import '../../basewidgets/app_bars/app_bar.dart';
@@ -11,15 +12,12 @@ class DashBoardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var params= [
-      'Payements', 'Statistiques', 'Paramètres', 'Aide',
-      'Analytics', 'Support', 'A propos', 'Déconnexion'
-    ];
+
     return SafeArea(
       child: Scaffold(
         bottomNavigationBar: const CustomBottomNavBar(profile: true,),
         appBar: appBar(isActiveSearchbar: true),
-        drawer: AppDrawer(),
+        drawer: const AppDrawer(),
         backgroundColor: AppColors.WHITE,
         body: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 10) ,
@@ -48,46 +46,34 @@ class DashBoardScreen extends StatelessWidget {
                           ),
                         ),
                         Container(
-                            width: MediaQuery.of(context).size.width * 0.34,
-                            margin: EdgeInsets.only(left: 10),
-                            child:
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: const [
-                                Text('Nom et Prénom',
-                                  style: TextStyle(
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.w400,
-                                  ),
+                          width: MediaQuery.of(context).size.width * 0.7,
+                          margin: const EdgeInsets.only(left: 10),
+                          child:
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: const [
+                              Text('Esse Jacques Dansomon',
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w400,
                                 ),
-                                Text('Nom et Prénom',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w300,
-                                  ),
+                              ),
+                              Text('Nom et Prénom',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w300,
                                 ),
-                                Text('Senagal',
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w300,
-                                  ),
+                              ),
+                              Text('Senegal ',
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w300,
                                 ),
-
-                              ],)),
-                        SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.37,
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.start,
-
-                              children: [
-                                IconButton(onPressed: (){}, icon: Icon(Icons.ios_share),),
-                                IconButton(onPressed: (){}, icon: Icon(Icons.qr_code),),
-                                IconButton(onPressed: (){}, icon: Icon(Icons.settings),),
-                              ],
-                            ))
-
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
                     )
                   ],
@@ -95,9 +81,9 @@ class DashBoardScreen extends StatelessWidget {
               ),
               Column(
                 children: [
-                  SizedBox(height: 10,),
+                  const SizedBox(height: 10,),
                   Row(
-                    children: const [
+                    children:  [
                       Text('Membre depuis le',
                         style: TextStyle(
                           fontSize: 16,
@@ -113,46 +99,103 @@ class DashBoardScreen extends StatelessWidget {
                       ),
                     ],
                   ),
+                  const SizedBox(height: 10,),
+                  Row(
+                    children: [
+                      Expanded(child: ElevatedButton(onPressed: (){
+                        Navigator.pushNamed(context, AppRoutes.register);
+
+                      }, child: Text('Editer Profile'))),
+                      const SizedBox(width: 10,),
+                      Expanded(child: ElevatedButton(onPressed: (){
+                        Navigator.pushNamed(context, AppRoutes.editboutiqueBySecteur);
+                      }, child: Text('Editer Boutique'))),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.symmetric(vertical: 10),
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: const [
+                            Text('40', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),),
+                            Text('produits', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: Colors.grey),),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(vertical: 10),
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: const [
+                            Text('60', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),),
+                            Text('reste produits', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: Colors.grey),),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(vertical: 10),
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: const [
+                            Text('1000000', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),),
+                            Text('solde', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w400, color: Colors.grey),),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.symmetric(vertical: 10),
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: const [
+                            Text('500', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+                            Text('Followers', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: Colors.grey),),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(vertical: 10),
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: const [
+                            Text('600', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+                            Text('Vues Boutiques', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: Colors.grey),),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(vertical: 10),
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: const [
+                            Text('', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+                            Text('', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w400, color: Colors.grey),),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ],
               ),
-              // Container(
-              //   height: 100,
-              //   margin: const EdgeInsets.only(top: 10),
-              //   child: Row(
-              //     crossAxisAlignment: CrossAxisAlignment.center,
-              //     mainAxisAlignment: MainAxisAlignment.center,
-              //     children: [
-              //
-              //       ClipOval(
-              //         child: Container(
-              //           width: 70,
-              //           height: 70,
-              //           color: Colors.red,
-              //           child: Center(
-              //             child: Icon(Icons.monetization_on, size: 38, color: Colors.white,),
-              //           ),
-              //         ),
-              //       ),
-              //       SizedBox(width: 20,),
-              //       ClipOval(
-              //         child: Container(
-              //           width: 70,
-              //           height: 70,
-              //           color: Colors.green,
-              //           child: Center(
-              //             child: Icon(Icons.wallet, size: 38, color: Colors.white,),
-              //           ),
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // ),
               Container(
-                margin : EdgeInsets.only(bottom: 20, top: 20),
+                margin : const EdgeInsets.only(bottom: 20, top: 10),
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
+                    children: const [
                       Text('Mes Produits', textAlign: TextAlign.center, style: TextStyle(fontSize: 18),)
                     ]
                 ),
@@ -165,7 +208,7 @@ class DashBoardScreen extends StatelessWidget {
                       childAspectRatio: 1.5,
                       crossAxisSpacing: 10,
                       mainAxisSpacing: 10,
-                      mainAxisExtent: 250
+                      mainAxisExtent: 320
                   ),
                   itemCount: 50,
                   itemBuilder : (context, index){
@@ -174,61 +217,62 @@ class DashBoardScreen extends StatelessWidget {
                         children: [
                           Stack(
                             clipBehavior: Clip.hardEdge,
-                            children: [
-                              Container(
-
+                            children:  [
+                              SizedBox(
                                 width: double.infinity,
                                 height: 180,
                                 child: Image.network(
-                                  'https://i.pravatar.cc/30${index}',
+                                  'https://i.pravatar.cc/30${index+1}',
                                   fit: BoxFit.cover,
                                 ),
                               ),
-                              //mark as favorite
-                              // Positioned(
-                              //   top: 5,
-                              //   right: 5,
-                              //   child: Container(
-                              //     width: 30,
-                              //     height: 30,
-                              //     decoration: BoxDecoration(
-                              //       color: Colors.white,
-                              //       borderRadius: BorderRadius.circular(5),
-                              //     ),
-                              //     child: Icon(Icons.favorite_border),
-                              //   ),
-                              // ),
-                              //mark as sold
-                              false ? Positioned(
-                                top: 5,
-                                left: 0,
-                                child: Container(
-                                  width: 100,
-                                  height: 30,
-                                  padding: const EdgeInsets.only(left: 10),
-                                  alignment: Alignment(-1, 0),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(0),
-                                  ),
-                                  child: Text('SOLD', style: TextStyle(fontSize: 17, color: Colors.red),),
-                                ),
-                              ): Container(),
                             ],
                           ),
+
                           const SizedBox(height: 5,),
                           Expanded(
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
+                                children: const [
                                   Text('Mack Book 2021 256Giga', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 17),),
                                   SizedBox(height: 5,),
                                   Text('FCFA 1 750 000', maxLines: 2, style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),)
-
                                 ],
                               )),
-                          const SizedBox(height: 10,)
+                          const SizedBox(height: 5,),
+                          Row(
+                            children: [
+                              Row(
+                                children: [
+                                  Icon(Icons.remove_red_eye, color: Colors.grey,),
+                                  SizedBox(width: 4,),
+                                  Text('Vues')
+
+                                ],
+                              ),
+                              SizedBox(width: 10,),
+                              Text('1000')
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(
+                                height:25,
+                                child: ElevatedButton(
+                                    style: ButtonStyle(
+
+                                    ),
+                                    onPressed: (){}, child: Text('Modifier')),
+                              ),
+                              //on off button
+                              Switch(
+                                value: true,
+                                onChanged: (value){},
+                              ),
+                            ],
+                          )
                         ],
                       ),
                     );

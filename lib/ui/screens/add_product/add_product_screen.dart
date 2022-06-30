@@ -22,7 +22,7 @@ class AddProductScreen extends StatelessWidget {
           margin: const EdgeInsets.symmetric(horizontal: 15),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: const [
               SizedBox(height: 20,),
               Text("Ajouter Un Produit", textAlign: TextAlign.start, style: TextStyle(fontSize: AppDimensions.FONT_SIZE_EXTRA_LARGE, color: AppColors.BLACK),),
               SizedBox(height: 10,),

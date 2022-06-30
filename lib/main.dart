@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wantermarket/route/routes.dart';
+import 'package:wantermarket/ui/screens/auth/start_screen.dart';
 import 'package:wantermarket/ui/screens/home/home_screen.dart';
 
 
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
       ),
       home: const SafeArea(
         child: Scaffold(
-          body: HomeScreen() ,
+          body: LoginOrLogupScreen() ,
         ),
       )
     );

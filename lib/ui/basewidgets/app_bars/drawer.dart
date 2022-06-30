@@ -98,11 +98,17 @@ class AppDrawer extends StatelessWidget {
           ListTile(
             title: Text('Mon compte', style: TextStyle(fontSize: 17, color: Colors.grey[600]),),
           ),
+
           const DrawerMenuItem(
-            menuName: 'Paramettres',
-            route: AppRoutes.home,
-            icon: Icons.settings,
-          ) ,
+            menuName: 'Se connecter',
+            route: AppRoutes.login,
+            icon: Icons.login,
+          ),
+          const DrawerMenuItem(
+            menuName: 'Créer un compte',
+            route: AppRoutes.register,
+            icon: Icons.person_add_alt,
+          ),
           const DrawerMenuItem(
             menuName: 'Mot de Passe',
             route: AppRoutes.home,
@@ -114,15 +120,10 @@ class AppDrawer extends StatelessWidget {
             icon: Icons.logout_outlined,
           ),
           const DrawerMenuItem(
-            menuName: 'Se connecter',
-            route: AppRoutes.login,
-            icon: Icons.login,
-          ),
-          const DrawerMenuItem(
-            menuName: 'Créer un compte',
-            route: AppRoutes.register,
-            icon: Icons.person_add_alt,
-          ),
+            menuName: 'Paramettres',
+            route: AppRoutes.splash,
+            icon: Icons.settings,
+          ) ,
 
 
         ]

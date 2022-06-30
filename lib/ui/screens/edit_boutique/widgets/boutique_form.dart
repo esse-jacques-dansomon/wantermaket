@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../../../config/app_dimenssions.dart';
 
-class ProductAddForm extends StatelessWidget {
-  const ProductAddForm({Key? key}) : super(key: key);
+class BoutiqueForm extends StatelessWidget {
+  const BoutiqueForm({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class ProductAddForm extends StatelessWidget {
           children: [
             //image
             const SizedBox(height: 15,),
-            const Text('Image Principale', style: TextStyle(fontSize: AppDimensions.FONT_SIZE_EXTRA_LARGE, fontWeight: FontWeight.bold),),
+            const Text('photo de couverture', style: TextStyle(fontSize: AppDimensions.FONT_SIZE_EXTRA_LARGE, fontWeight: FontWeight.bold),),
             Container(
               margin: const EdgeInsets.symmetric(vertical: 10),
               height: 200,
@@ -34,53 +34,44 @@ class ProductAddForm extends StatelessWidget {
             ),
             //list images
             const SizedBox(height: 15,),
-            const Text('Images Secondaires', style: TextStyle(fontSize: AppDimensions.FONT_SIZE_EXTRA_LARGE, fontWeight: FontWeight.bold),),
+            const Text('photo de profil', style: TextStyle(fontSize: AppDimensions.FONT_SIZE_EXTRA_LARGE, fontWeight: FontWeight.bold),),
             SizedBox(
               height: 150,
-              child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index){
-                    return Container(
-                      margin: const EdgeInsets.symmetric(vertical: 10),
-                      height: 100,
-                      width: 200,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.grey[200],
-                      ),
-                      child: IconButton(
-                        icon: Icon(Icons.add_a_photo, color: Colors.black,),
-                        onPressed: (){},
-                      ),
-                    );
-                  },
-                  separatorBuilder: (context, index){
-                    return SizedBox(width: 10,);
-                  },
-                  itemCount: 3
+              child:  Container(
+                margin: const EdgeInsets.symmetric(vertical: 10),
+                height: 100,
+                width: 200,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.grey[200],
+                ),
+                child: IconButton(
+                  icon: Icon(Icons.add_a_photo, color: Colors.black,),
+                  onPressed: (){},
+                ),
               ),
             ),
             const SizedBox(height: 15,),
             TextFormField(
               decoration: const InputDecoration(
-                labelText: "Nom du produit",
-                hintText: "Nom du produit",
+                labelText: "Secteur d'activité",
+                hintText: "Secteur d'activité",
                 border: OutlineInputBorder(),
                 contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
               ),
               validator: (value) {
                 if (value!.isEmpty) {
-                  return "Veuillez entrer un nom de produit";
+                  return "Secteur d'activité requis";
                 }
                 return null;
               },
             ),
             //price
-            SizedBox(height: 15,),
+            const SizedBox(height: 15,),
             TextFormField(
               decoration: InputDecoration(
-                labelText: "Prix du produit",
-                hintText: "Prix du produit",
+                labelText: "nom boutique",
+                hintText: "nom boutique",
                 border: OutlineInputBorder(),
                 contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
 
@@ -88,7 +79,7 @@ class ProductAddForm extends StatelessWidget {
               keyboardType: TextInputType.number,
               validator: (value) {
                 if (value!.isEmpty) {
-                  return "Veuillez entrer un prix de produit";
+                  return "Nom de boutique requis";
                 }
                 return null;
               },
@@ -97,8 +88,8 @@ class ProductAddForm extends StatelessWidget {
             SizedBox(height: 15,),
             TextFormField(
               decoration: InputDecoration(
-                labelText: "Prix promotionnel",
-                hintText: "Prix promotionnel",
+                labelText: "latitude",
+                hintText: "latitude",
                 border: OutlineInputBorder(),
                 contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
 
@@ -106,7 +97,7 @@ class ProductAddForm extends StatelessWidget {
               keyboardType: TextInputType.number,
               validator: (value) {
                 if (value!.isEmpty) {
-                  return "Veuillez entrer un prix de produit";
+                  return "latitude requise";
                 }
                 return null;
               },
@@ -116,8 +107,8 @@ class ProductAddForm extends StatelessWidget {
             SizedBox(height: 15,),
             TextFormField(
               decoration: InputDecoration(
-                labelText: "Categorie",
-                hintText: "Categorie",
+                labelText: "longitude",
+                hintText: "longitude",
                 border: OutlineInputBorder(),
                 contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
 
@@ -125,50 +116,11 @@ class ProductAddForm extends StatelessWidget {
               keyboardType: TextInputType.number,
               validator: (value) {
                 if (value!.isEmpty) {
-                  return "Veuillez choisir une categorie";
+                  return "longitude requise";
                 }
                 return null;
               },
             ),
-
-            //sous categorie
-            SizedBox(height: 15,),
-            TextFormField(
-              decoration: InputDecoration(
-                labelText: "Sous Categorie",
-                hintText: "sous Categorie",
-                border: OutlineInputBorder(),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
-
-              ),
-              keyboardType: TextInputType.number,
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return "Veuillez choisir une categorie";
-                }
-                return null;
-              },
-            ),
-
-            //
-            SizedBox(height: 15,),
-            TextFormField(
-              decoration: InputDecoration(
-                labelText: "Sous Categorie",
-                hintText: "sous Categorie",
-                border: OutlineInputBorder(),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
-
-              ),
-              keyboardType: TextInputType.number,
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return "Veuillez choisir une categorie";
-                }
-                return null;
-              },
-            ),
-
 
             //description textFormField textarea
             SizedBox(height: 15,),
@@ -176,15 +128,15 @@ class ProductAddForm extends StatelessWidget {
               minLines: 3,
               maxLines: 5,
               decoration: InputDecoration(
-                labelText: "Description",
-                hintText: "Description",
+                labelText: "biographie de la boutique",
+                hintText: "biographie de la boutique(300 caractere max)",
                 alignLabelWithHint: true,
                 border: OutlineInputBorder(),
 
               ),
               validator: (value) {
                 if (value!.isEmpty) {
-                  return "Veuillez choisir une categorie";
+                  return "biographie de la boutique requise";
                 }
                 return null;
               },
@@ -193,7 +145,7 @@ class ProductAddForm extends StatelessWidget {
             //submit button
             const SizedBox(height: 15,),
             ElevatedButton(
-              child: const SizedBox(width: double.infinity, child:  Center(child: Text('Ajouter Le produit', style: TextStyle(fontSize: AppDimensions.FONT_SIZE_EXTRA_LARGE, fontWeight: FontWeight.bold),),),),
+              child: const SizedBox(width: double.infinity, child:  Center(child: Text('Enregistrer', style: TextStyle(fontSize: AppDimensions.FONT_SIZE_EXTRA_LARGE, fontWeight: FontWeight.bold),),),),
               onPressed: () {
                 if (key.currentState!.validate()) {
                   key.currentState?.save();
@@ -206,7 +158,7 @@ class ProductAddForm extends StatelessWidget {
 
 
 
-            
+
 
 
 

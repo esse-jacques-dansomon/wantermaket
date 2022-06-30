@@ -10,7 +10,7 @@ class LoginOrLogupScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: const Color(0xEFEFEFFF),
+        color:  Colors.white,
         child: Stack(
           clipBehavior: Clip.none,
           alignment: Alignment.topCenter,
@@ -49,11 +49,11 @@ class LoginOrLogupScreen extends StatelessWidget {
                   ),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
-                    height: MediaQuery.of(context).size.height*0.5,
+                    height: MediaQuery.of(context).size.height*0.6,
                     width: double.infinity,
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all( Radius.circular(20)),                  ),
+                    decoration:  BoxDecoration(
+                      color: Colors.grey[200],
+                      borderRadius:const BorderRadius.all( Radius.circular(20)),                  ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -90,7 +90,10 @@ class LoginOrLogupScreen extends StatelessWidget {
                           width: MediaQuery.of(context).size.width*0.75,
                           height: 50,
                           child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pushNamed(context, AppRoutes.register);
+
+                            },
                             style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all(
                                 AppColors.PRIMARY,
@@ -124,8 +127,36 @@ class LoginOrLogupScreen extends StatelessWidget {
                                 AppColors.PRIMARY,
                               ),
                             ),
-                            child: Text(
+                            child: const Text(
                               'Se connecter',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width*0.75,
+                          height: 50,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.pushNamed(context, AppRoutes.home);
+                            },
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(
+                                Colors.white,
+                              ),
+                              foregroundColor: MaterialStateProperty.all(
+                                AppColors.PRIMARY,
+                              ),
+                            ),
+                            child: const Text(
+                              'Continuer sans compte',
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
@@ -186,12 +217,14 @@ class LoginOrLogupScreen extends StatelessWidget {
                               child: Icon(Icons.phone_android, color: Colors.white,),
                             ),
                           ],
-                        )
+                        ),
+
 
 
                       ],
                     ),
                     ),
+
 
 
 

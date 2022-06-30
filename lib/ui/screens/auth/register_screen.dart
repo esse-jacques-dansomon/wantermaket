@@ -33,7 +33,7 @@ class RegisterScreen extends StatelessWidget {
                     const SizedBox(
                       height: 30,
                     ),
-                    Text('Créer Votre Boutique', style: TextStyle(color: Colors.white,  fontWeight: FontWeight.bold, fontSize: 22),),
+                    Text('Créer Votre Compte', style: TextStyle(color: Colors.white,  fontWeight: FontWeight.bold, fontSize: 22),),
                   ],
                 ),
               ),
