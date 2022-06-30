@@ -3,7 +3,6 @@ import 'package:wantermarket/route/routes.dart';
 import 'package:wantermarket/ui/screens/auth/start_screen.dart';
 import 'package:wantermarket/ui/screens/home/home_screen.dart';
 
-
 import 'ui/basewidgets/bottom_bar/bottom_bar.dart';
 
 void main() {

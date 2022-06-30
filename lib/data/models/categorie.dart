@@ -1,4 +1,4 @@
-
+/*
 import 'dart:convert';
 
 Categorie categorieFromJson(String str) => Categorie.fromJson(json.decode(str));
@@ -28,11 +28,11 @@ class Categorie {
     required String imagePath,
   }) =>
       Categorie(
-        id: id ?? this.id,
-        name: name ?? this.name,
-        description: description ?? this.description,
-        icon: icon ?? this.icon,
-        imagePath: imagePath ?? this.imagePath,
+        id: id ?? id,
+        name: name ?? name,
+        description: description ?? description,
+        icon: icon ?? icon,
+        imagePath: imagePath ?? imagePath,
       );
 
   factory Categorie.fromJson(Map<String, dynamic> json) => Categorie(
@@ -50,4 +50,27 @@ class Categorie {
     "icon": icon,
     "image_path": imagePath,
   };
+}
+*/
+
+class Categorie {
+  int? id;
+  String? name;
+  String? imagePath;
+
+  Categorie({this.id, this.name, this.imagePath});
+
+  Categorie.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    imagePath = json['image_path'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['image_path'] = imagePath;
+    return data;
+  }
 }
