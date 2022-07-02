@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wantermarket/config/app_colors.dart';
+import 'package:wantermarket/config/app_dimenssions.dart';
 import 'package:wantermarket/ui/basewidgets/app_bars/drawer.dart';
 import 'package:wantermarket/ui/screens/home/widgets/home_categories_widget.dart';
 import 'package:wantermarket/ui/screens/home/widgets/boutiques_exclusives_widget.dart';
@@ -50,13 +51,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
               //banner image
               Padding(
-                padding: const EdgeInsets.only(top: 15.0),
+                padding: const EdgeInsets.only(top: 30.0),
                 child: Container(
                   height: 170,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(0),
+                    color: AppColors.BLACK,
+                    backgroundBlendMode: BlendMode.darken,
                     image: DecorationImage(
-                        image:  Image.network('https://wantermarket.sn/views/assets/images/slider/home_back0m.webp',).image,  fit: BoxFit.cover),
+                        image:  Image.network('https://picsum.photos/250?image=41',).image,  fit: BoxFit.cover),
                   ),
                   child:  Center(
                     child: Column(
@@ -81,13 +84,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
               //banner image
               Padding(
-                padding: const EdgeInsets.only(top: 15.0, ),
+                padding: const EdgeInsets.only(top: 30.0, ),
                 child: Container(
                   height: 170,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(0),
+                    color: AppColors.BLACK,
+                    backgroundBlendMode: BlendMode.darken,
                     image: DecorationImage(
-                        image:  Image.network('https://wantermarket.sn/views/assets/images/slider/home_back0m.webp',).image,  fit: BoxFit.cover),
+                        image:  Image.network('https://picsum.photos/250?image=41',).image,  fit: BoxFit.cover),
                   ),
                   child:  Center(
                     child: Column(
@@ -105,7 +110,16 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
 
               // Nouveautes
-              const NouveautesWidget()
+              const NouveautesWidget(),
+              //load more
+              const SizedBox(height: 10),
+              Center(
+                child: TextButton(
+                  onPressed: () {},
+                  child: const Text("Plus d'articles", style: TextStyle(color: AppColors.SECONDARY, fontSize: AppDimensions.FONT_SIZE_EXTRA_LARGE),),
+                ),
+              ),
+              const SizedBox(height: 30),
 
             ],
           ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wantermarket/data/fakedata/boutique_json.dart';
+import 'package:wantermarket/shared/app_helper.dart';
 import 'package:wantermarket/ui/basewidgets/app_bars/drawer.dart';
 import 'package:wantermarket/ui/screens/sector/widgets/secteur_card.dart';
 
@@ -51,8 +52,8 @@ class SecteurScreen extends StatelessWidget {
                padding: const EdgeInsets.only(left: 10, right: 10),
                child: GridView.builder(
                            itemCount: 40,
-                           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
+                           gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: AppHelper.getCrossAxisCount(context, width: 170),
                               crossAxisSpacing: 12,
                               mainAxisSpacing: 8,
                               childAspectRatio: 1.30,

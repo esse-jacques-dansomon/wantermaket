@@ -19,7 +19,7 @@ AppBar appBarWithReturn({required String title, required BuildContext context}){
             Center(child: Row(
               children:  [
                 Text(title, style: const TextStyle(fontSize: 20, color: AppColors.WHITE),),
-                const SizedBox(width: 10,)
+                const SizedBox(width: 15,)
               ],
             )),
           ],

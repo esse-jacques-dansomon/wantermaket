@@ -1,3 +1,4 @@
+
 class AppDimensions {
   static const double FONT_SIZE_EXTRA_SMALL = 10.0;
   static const double FONT_SIZE_SMALL = 12.0;
@@ -28,4 +29,10 @@ class AppDimensions {
   static const double ICON_SIZE_EXTRA_LARGE = 40.0;
 
   static const double IMAGE_SIZE_EXTRA_SEVENTY = 70.0;
+
+  //media screen for large tablets, medium and small width
+  static const double MEDIA_SCREEN_LARGE = 991.0;
+  static const double MEDIA_SCREEN_MEDIUM = 767.0;
+  static const double MEDIA_SCREEN_SMALL = 479.0;
+
 }

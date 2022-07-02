@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:wantermarket/ui/screens/abonnement/abonnement_screen.dart';
 import 'package:wantermarket/ui/screens/add_product/add_product_screen.dart';
+import 'package:wantermarket/ui/screens/auth/reset_password_screen.dart';
+import 'package:wantermarket/ui/screens/become_exclusive/become_exclusive.dart';
 import 'package:wantermarket/ui/screens/boutique/boutique_details_screen.dart';
 import 'package:wantermarket/ui/screens/boutique_follow/boutique_favories.dart';
 import 'package:wantermarket/ui/screens/category/all_categories_screen.dart';
@@ -22,6 +24,7 @@ import '../ui/screens/recherche/search_screen.dart';
 class AppRoutes {
   static const String home = '/home';
   static const String login = '/login';
+  static const String become_exclusive = '/become_exclusive';
   static const String register = '/register';
   static const String splash = '/';
   static const String forgotPassword = '/forgot_password';
@@ -83,6 +86,10 @@ class AppRoutes {
         return MaterialPageRoute(builder: (context) => const AbonnementScreen());
       case editboutiqueBySecteur:
         return MaterialPageRoute(builder: (context) => const EditBoutiqueScreen( ));
+      case forgotPassword:
+        return MaterialPageRoute(builder: (context) => const ResetPasswordFromScreen());
+      case become_exclusive:
+        return MaterialPageRoute(builder: (context) => const BecomeExclusiveScreen());
       default:
         return MaterialPageRoute(builder: (context) => const HomeScreen());
     }

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:wantermarket/route/routes.dart';
 import 'package:wantermarket/ui/screens/auth/widgets/login_form_widget.dart';
+import 'package:wantermarket/ui/screens/auth/widgets/reset_password_form_widget.dart';
 
 import '../../../config/app_colors.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class ResetPasswordFromScreen extends StatelessWidget {
+  const ResetPasswordFromScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,7 @@ class LoginScreen extends StatelessWidget {
                     const SizedBox(
                       height: 30,
                     ),
-                    Text('Se Connecter', style: TextStyle(color: Colors.white,  fontWeight: FontWeight.bold, fontSize: 22),),
+                    Text('Mot de Passe Oublié', style: TextStyle(color: Colors.white,  fontWeight: FontWeight.bold, fontSize: 22),),
                   ],
                 ),
               ),
@@ -52,17 +53,13 @@ class LoginScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     //welcome ac texte
-                    const SizedBox(
-                      height: 30,
+                 const SizedBox(
+                      height: 20,
                     ),
-                    Text('Bienvenue', style: TextStyle(color: AppColors.PRIMARY,  fontWeight: FontWeight.bold, fontSize: 25),),
-                    const SizedBox(
-                      height: 7,
-                    ),
-                    Text('Veuillez vous authentificer pour continuer', style: TextStyle(color: Colors.grey, fontSize: 16),),
+                    Text('Veuillez entre votre email', style: TextStyle(color: Colors.grey, fontSize: 16),),
 
                     //form
-                    LoginFormWidget(),
+                    ResetPasswordFromWidget(),
 
                     Expanded(child: Container(),),
                     //bottom

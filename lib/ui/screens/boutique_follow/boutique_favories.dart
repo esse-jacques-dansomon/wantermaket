@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wantermarket/config/app_dimenssions.dart';
 
+import '../../basewidgets/app_bars/app_bar_with_return.dart';
 import '../../basewidgets/app_bars/app_bar_with_return_type2.dart';
 
 class BoutiquesFavoriesScreen extends StatelessWidget {
@@ -9,17 +10,17 @@ class BoutiquesFavoriesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(child: Scaffold(
-      appBar: appBarWithReturnType2(title: 'Boutiques Favories', context: context),
+      appBar: appBarWithReturn(title: 'Mes Boutiques Favories', context: context),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Padding(padding: EdgeInsets.fromLTRB(15, 0, 15, 15),
-              child: Text('Boutiques Favories', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-            ),
+            // const Padding(padding: EdgeInsets.fromLTRB(15, 10, 15, 15),
+            //   child: Text('Boutiques Favories', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+            // ),
             Padding(
-              padding : const EdgeInsets.only(left: 15.0, right: 15.0),
+              padding : const EdgeInsets.only(left: 15.0, right: 15.0, top: 10),
               child: ListView.separated(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),

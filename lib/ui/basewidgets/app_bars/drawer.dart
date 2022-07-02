@@ -100,6 +100,10 @@ class AppDrawer extends StatelessWidget {
           ),
 
           const DrawerMenuItem(
+            menuName: 'Dévénir exclusive',
+            route: AppRoutes.become_exclusive,
+            icon: Icons.star_half_outlined,
+          ),     const DrawerMenuItem(
             menuName: 'Se connecter',
             route: AppRoutes.login,
             icon: Icons.login,
@@ -111,7 +115,7 @@ class AppDrawer extends StatelessWidget {
           ),
           const DrawerMenuItem(
             menuName: 'Mot de Passe',
-            route: AppRoutes.home,
+            route: AppRoutes.forgotPassword,
             icon: Icons.password_outlined,
           ),
           const DrawerMenuItem(
@@ -119,11 +123,11 @@ class AppDrawer extends StatelessWidget {
             route: AppRoutes.home,
             icon: Icons.logout_outlined,
           ),
-          const DrawerMenuItem(
-            menuName: 'Paramettres',
-            route: AppRoutes.splash,
-            icon: Icons.settings,
-          ) ,
+          // const DrawerMenuItem(
+          //   menuName: 'Paramettres',
+          //   route: AppRoutes.splash,
+          //   icon: Icons.settings,
+          // ) ,
 
 
         ]

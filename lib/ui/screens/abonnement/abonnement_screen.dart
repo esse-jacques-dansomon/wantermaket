@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wantermarket/config/app_colors.dart';
 
+import '../../basewidgets/app_bars/app_bar_with_return.dart';
 import '../../basewidgets/app_bars/app_bar_with_return_type2.dart';
 
 class AbonnementScreen extends StatelessWidget {
@@ -9,13 +10,13 @@ class AbonnementScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(child: Scaffold(
-      appBar: appBarWithReturnType2(title: 'Abonnement', context: context),
+      appBar: appBarWithReturn(title: 'Abonnements', context: context),
       body: Padding(
         padding: EdgeInsets.fromLTRB(15, 0, 15, 15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-           const  Text('Mon Abonnement', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+           // const  Text('Mon Abonnement', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
             const SizedBox(height: 15,),
             Expanded(child: ListView.separated(
                physics: const BouncingScrollPhysics(),

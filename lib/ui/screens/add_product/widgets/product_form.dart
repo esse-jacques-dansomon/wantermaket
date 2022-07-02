@@ -113,16 +113,15 @@ class ProductAddForm extends StatelessWidget {
             ),
 
             //categorie
-            SizedBox(height: 15,),
+            const SizedBox(height: 15,),
             TextFormField(
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: "Categorie",
                 hintText: "Categorie",
                 border: OutlineInputBorder(),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+                contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 5),
 
               ),
-              keyboardType: TextInputType.number,
               validator: (value) {
                 if (value!.isEmpty) {
                   return "Veuillez choisir une categorie";
@@ -141,26 +140,6 @@ class ProductAddForm extends StatelessWidget {
                 contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
 
               ),
-              keyboardType: TextInputType.number,
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return "Veuillez choisir une categorie";
-                }
-                return null;
-              },
-            ),
-
-            //
-            SizedBox(height: 15,),
-            TextFormField(
-              decoration: InputDecoration(
-                labelText: "Sous Categorie",
-                hintText: "sous Categorie",
-                border: OutlineInputBorder(),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
-
-              ),
-              keyboardType: TextInputType.number,
               validator: (value) {
                 if (value!.isEmpty) {
                   return "Veuillez choisir une categorie";
@@ -171,11 +150,11 @@ class ProductAddForm extends StatelessWidget {
 
 
             //description textFormField textarea
-            SizedBox(height: 15,),
+            const SizedBox(height: 15,),
             TextFormField(
               minLines: 3,
               maxLines: 5,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: "Description",
                 hintText: "Description",
                 alignLabelWithHint: true,
@@ -193,25 +172,13 @@ class ProductAddForm extends StatelessWidget {
             //submit button
             const SizedBox(height: 15,),
             ElevatedButton(
-              child: const SizedBox(width: double.infinity, child:  Center(child: Text('Ajouter Le produit', style: TextStyle(fontSize: AppDimensions.FONT_SIZE_EXTRA_LARGE, fontWeight: FontWeight.bold),),),),
+              child: const SizedBox(width: double.infinity, child:  Center(child: Text('Ajouter Le produit', style: TextStyle(fontSize: AppDimensions.FONT_SIZE_LARGE, fontWeight: FontWeight.bold),),),),
               onPressed: () {
                 if (key.currentState!.validate()) {
                   key.currentState?.save();
                 }
               },
             ),
-
-
-
-
-
-
-            
-
-
-
-
-
 
           ],
         ));

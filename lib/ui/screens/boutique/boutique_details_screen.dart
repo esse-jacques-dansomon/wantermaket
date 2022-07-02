@@ -3,8 +3,9 @@ import 'package:wantermarket/config/app_colors.dart';
 
 import 'package:intl/intl.dart';
 
-import '../../basewidgets/produit_by_boutique_2.dart';
-import '../../basewidgets/produit_card_without_vendor.dart';
+import '../../../shared/app_helper.dart';
+import '../../basewidgets/app_bars/app_bar_with_return.dart';
+import '../../basewidgets/produit_by_boutique_3.dart';
 
 class BoutiqueDetailsScreen extends StatelessWidget {
   const BoutiqueDetailsScreen({Key? key}) : super(key: key);
@@ -12,21 +13,11 @@ class BoutiqueDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(child: Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, size: 20,),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        backgroundColor: Colors.white,
-        title: const Text('Boutique AMAMA', style: TextStyle(color: Colors.black),),
-        iconTheme: const IconThemeData(color: Colors.black, size: 28),),
+      appBar:appBarWithReturn(title: 'Maktoum Shop', context: context),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -187,9 +178,12 @@ class BoutiqueDetailsScreen extends StatelessWidget {
                 itemCount: 10,
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, mainAxisExtent: 315),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: AppHelper.getCrossAxisCount(context, width: 230),
+                      mainAxisExtent: 315
+                  ),
                   itemBuilder: (context, index){
-                    return ProductByBoutique2(id: index);
+                    return ProductByBoutique3(id: index);
                   }),
 
 

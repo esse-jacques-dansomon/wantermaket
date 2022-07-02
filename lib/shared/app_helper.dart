@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:wantermarket/config/app_dimenssions.dart';
 
 class AppHelper {
   static double getScreenWidth(BuildContext context) {
@@ -20,5 +21,11 @@ class AppHelper {
 
   static String priceFormat({required String price, String currency='FCFA'}){
     return '${NumberFormat.currency(locale: 'fr_FR', symbol: '', decimalDigits: 0).format(int.parse(price))} ${currency}';
+  }
+
+  static int getCrossAxisCount(BuildContext context, {double width = 0.0}) {
+    final double large  = width==0 ? AppDimensions.MEDIA_SCREEN_LARGE : width*4;
+    final double medium  = width==0 ? AppDimensions.MEDIA_SCREEN_MEDIUM : width*3;
+    return MediaQuery.of(context).size.width > large ? 4 : (MediaQuery.of(context).size.width > medium? 3 : 2);
   }
 }

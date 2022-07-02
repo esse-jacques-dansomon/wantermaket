@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wantermarket/ui/basewidgets/produit_by_boutique_3.dart';
 import 'package:wantermarket/ui/screens/category/widget/filters_widget.dart';
 import 'package:wantermarket/ui/screens/category/widget/short_item_widget.dart';
 
@@ -14,7 +15,7 @@ class CategoryScreen extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
-        title: Text('Category', style: TextStyle(color: Colors.black),),
+        title: const Text('Categorie', style: TextStyle(color: Colors.black),),
         centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: AppColors.PRIMARY,),
@@ -64,11 +65,11 @@ class CategoryScreen extends StatelessWidget {
                     showModalBottomSheet(
                         isScrollControlled: true,
                         context: context, builder: (context){
-                      return FilterWidget();
+                      return const FilterWidget();
                     });
                   },
                   child: Row(
-                      children:[
+                      children:const [
                         Icon(Icons.filter_alt_rounded, color: AppColors.PRIMARY,),
                         Text('Filtres', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
                       ]
@@ -97,10 +98,15 @@ class CategoryScreen extends StatelessWidget {
                 itemCount: 30,
                 physics: const BouncingScrollPhysics(),
                 shrinkWrap: true,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2, mainAxisSpacing: 10, mainAxisExtent: 330),
+                gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
+                    mainAxisSpacing: 15,
+                    crossAxisSpacing: 7,
+                    childAspectRatio: 0.8,
+                    mainAxisExtent: 315,
+                    crossAxisCount: MediaQuery.of(context).size.width > 230*4 ? 4 : (MediaQuery.of(context).size.width > 230*3 ? 3 : 2),
+                ),
                 itemBuilder: (context, index){
-                  return ProductByBoutique2(id: index,);
+                  return ProductByBoutique3(id: index,);
                 }),
           ))
         ],

@@ -81,7 +81,7 @@ class RegisterScreen extends StatelessWidget {
                             InkWell(
                               child: const Text('Se Connecter', style: TextStyle(color: AppColors.PRIMARY, fontSize: 16, fontWeight: FontWeight.bold),),
                               onTap: (){
-                                Navigator.of(context).pushNamed(AppRoutes.login);
+                                Navigator.of(context).popAndPushNamed(AppRoutes.login);
                               },
                             ),
                           ],

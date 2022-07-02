@@ -49,7 +49,7 @@ class LoginOrLogupScreen extends StatelessWidget {
                   ),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
-                    height: MediaQuery.of(context).size.height*0.6,
+                    height: MediaQuery.of(context).size.height*0.55,
                     width: double.infinity,
                     decoration:  BoxDecoration(
                       color: Colors.grey[200],
@@ -168,56 +168,56 @@ class LoginOrLogupScreen extends StatelessWidget {
                         const SizedBox(
                           height: 20,
                         ),
-                        Container(
-                          width: MediaQuery.of(context).size.width*0.75,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children:const [
-                              Expanded( flex: 2,child: Divider(color: Colors.grey, height: 5,),),
-                              Expanded(flex: 3, child: Text('Ou Creer avec', style: TextStyle(fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold),),),
-                              Expanded(flex: 2,child: Divider(color: Colors.grey, height: 5,),),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              margin: const EdgeInsets.symmetric(horizontal: 8),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(Radius.circular(10)),
-                                color: Colors.blue,
-                              ),
-                              height: 50,
-                              width: 50,
-                              child: Icon(Icons.facebook, color: Colors.white,),
-                            ),
-                            Container(
-                              margin: const EdgeInsets.symmetric(horizontal: 8),
-
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(Radius.circular(10)),
-                                color: Colors.green,
-                              ),
-                              height: 50,
-                              width: 50,
-                              child: Icon(Icons.whatsapp, color: Colors.white,),
-                            ),
-                            Container(
-                              margin: const EdgeInsets.symmetric(horizontal: 8),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(Radius.circular(10)),
-                                color: Colors.black,
-                              ),
-                              height: 50,
-                              width: 50,
-                              child: Icon(Icons.phone_android, color: Colors.white,),
-                            ),
-                          ],
-                        ),
+                        // Container(
+                        //   width: MediaQuery.of(context).size.width*0.75,
+                        //   child: Row(
+                        //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        //     children:const [
+                        //       Expanded( flex: 2,child: Divider(color: Colors.grey, height: 5,),),
+                        //       Expanded(flex: 3, child: Text('Ou Creer avec', style: TextStyle(fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold),),),
+                        //       Expanded(flex: 2,child: Divider(color: Colors.grey, height: 5,),),
+                        //     ],
+                        //   ),
+                        // ),
+                        // const SizedBox(
+                        //   height: 20,
+                        // ),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.center,
+                        //   children: [
+                        //     Container(
+                        //       margin: const EdgeInsets.symmetric(horizontal: 8),
+                        //       decoration: BoxDecoration(
+                        //         borderRadius: BorderRadius.all(Radius.circular(10)),
+                        //         color: Colors.blue,
+                        //       ),
+                        //       height: 50,
+                        //       width: 50,
+                        //       child: Icon(Icons.facebook, color: Colors.white,),
+                        //     ),
+                        //     Container(
+                        //       margin: const EdgeInsets.symmetric(horizontal: 8),
+                        //
+                        //       decoration: BoxDecoration(
+                        //         borderRadius: BorderRadius.all(Radius.circular(10)),
+                        //         color: Colors.green,
+                        //       ),
+                        //       height: 50,
+                        //       width: 50,
+                        //       child: Icon(Icons.whatsapp, color: Colors.white,),
+                        //     ),
+                        //     Container(
+                        //       margin: const EdgeInsets.symmetric(horizontal: 8),
+                        //       decoration: BoxDecoration(
+                        //         borderRadius: BorderRadius.all(Radius.circular(10)),
+                        //         color: Colors.black,
+                        //       ),
+                        //       height: 50,
+                        //       width: 50,
+                        //       child: Icon(Icons.phone_android, color: Colors.white,),
+                        //     ),
+                        //   ],
+                        // ),
 
 
 
