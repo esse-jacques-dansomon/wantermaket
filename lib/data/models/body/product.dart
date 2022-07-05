@@ -41,7 +41,7 @@ class Product {
     name = json['name'];
     descriptionBrief = json['description_brief'];
     price = json['price'];
-    priceBefore = json['price_before']??0;
+    priceBefore = json['price_before'];
     disponibility = json['disponibility']??true;
     boutique = json['boutique'] != null ? Boutique.fromJson(json['boutique']) : null;
     vendor = json['vendeur'] != null ? Vendor.fromJson(json['vendeur']) : null;

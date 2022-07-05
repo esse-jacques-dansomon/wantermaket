@@ -28,7 +28,7 @@ class CategoryRepo {
 
   Future<ApiResponse> getCategoryProducts(int id) async {
     try {
-      final response = await dioClient.get('${AppConstants.CATEGORIES_URI}/$id/products');
+      final response = await dioClient.get('${AppConstants.CATEGORIES_URI}/$id/produits');
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

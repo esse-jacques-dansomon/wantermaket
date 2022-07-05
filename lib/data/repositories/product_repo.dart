@@ -40,6 +40,17 @@ class ProductsRepo {
     }
   }
 
+  //related products
+  Future<ApiResponse> getRelatedProducts(int categoryId) async {
+    try {
+      final response = await dioClient.get('${AppConstants.CATEGORIES_URI_PRODUCTS}/$categoryId/produits', queryParameters: {'pageSize': '10'});
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+
+  }
+
 
 
 }

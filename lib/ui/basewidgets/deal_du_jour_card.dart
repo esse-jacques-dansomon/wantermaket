@@ -69,7 +69,7 @@ class DealDuJour extends StatelessWidget {
                               ),
                               child: const Center(
                                 child: Text('-10%', textAlign: TextAlign.start,
-                                  style: TextStyle(
+                                  style:  TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.w500,
                                       color: Colors.white
@@ -101,7 +101,7 @@ class DealDuJour extends StatelessWidget {
                     ),),
                   Padding(padding: const EdgeInsets.only(left: 10, right: 10),
                     child: Text(
-                      AppHelper.priceFormat(price: '${product.priceBefore?? product.price}'),
+                      AppHelper.priceFormat(price: '${product.price ?? product.priceBefore}'),
                       style: const TextStyle(
                         fontSize: 20,
                         color: AppColors.SECONDARY,

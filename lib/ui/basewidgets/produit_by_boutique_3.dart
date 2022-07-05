@@ -52,7 +52,7 @@ class ProductByBoutique3 extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Text(AppHelper.priceFormat(price: "${product.priceBefore?? product.price}".toString()), style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: AppColors.SECONDARY),),
+                    Text(AppHelper.priceFormat(price: "${product.price?? product.priceBefore}".toString()), style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: AppColors.SECONDARY),),
                     const SizedBox(height: 5),
                     SizedBox(width: 215, child: Text(product.name!,  maxLines: 2, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 12, color: Colors.black, fontWeight: FontWeight.bold),)),
                     // contact button
@@ -66,7 +66,7 @@ class ProductByBoutique3 extends StatelessWidget {
                             //localisation icon
                             const Icon(Icons.location_on_outlined, color: AppColors.BLACK, size: 14, ),
                             const SizedBox(width: 5,),
-                            SizedBox(width:140, child: Text(product.vendor!.address!, style: const TextStyle(fontSize: 10, color: Colors.black, overflow: TextOverflow.ellipsis),)),
+                            SizedBox(width:135, child: Text(product.vendor!.address!, style: const TextStyle(fontSize: 10, color: Colors.black, overflow: TextOverflow.ellipsis),)),
                           ],
                         ) ,
                         const SizedBox(height: 5,),
@@ -81,7 +81,7 @@ class ProductByBoutique3 extends StatelessWidget {
                                 onTap: (){
                                   Navigator.of(context).pushNamed(AppRoutes.vendor, arguments: product.vendor!);
                                 },
-                                child:  SizedBox(width: 140, child: Text('${product.vendor!.email!}', style: const TextStyle(fontSize: 10, color: Colors.black, ), overflow: TextOverflow.ellipsis,)), ),
+                                child:  SizedBox(width: 135, child: Text(product.vendor!.email!, style: const TextStyle(fontSize: 10, color: Colors.black, ), overflow: TextOverflow.ellipsis,)), ),
                           ],
                         )
 

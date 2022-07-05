@@ -4,6 +4,7 @@ import 'package:wantermarket/providers/boutique_provider.dart';
 import '../../../basewidgets/boutique_card.dart';
 
 class BoutiquesExclusives extends StatelessWidget {
+
   const BoutiquesExclusives({
     Key? key,
   }) : super(key: key);

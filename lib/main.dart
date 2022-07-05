@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wantermarket/providers/boutique_provider.dart';
+import 'package:wantermarket/providers/category_detail_provider.dart';
 import 'package:wantermarket/providers/category_provider.dart';
 import 'package:wantermarket/providers/product_provider.dart';
 import 'package:wantermarket/providers/slider_provider.dart';
@@ -25,6 +26,7 @@ Future<void> main() async {
     providers: [
       ChangeNotifierProvider(create: (context) => di.sl<SliderProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<BoutiqueProvider>()),
+      ChangeNotifierProvider(create: (context) => di.sl<CategoryProviderDetails>()),
       ChangeNotifierProvider(create: (context) => di.sl<CategoryProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<ProductProvider>()),
     ],

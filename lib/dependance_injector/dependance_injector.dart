@@ -13,6 +13,7 @@ import 'package:wantermarket/providers/slider_provider.dart';
 import '../config/app_constantes.dart';
 import '../data/datasource/dio/dio_client.dart';
 import '../providers/boutique_provider.dart';
+import '../providers/category_detail_provider.dart';
 import '../providers/category_provider.dart';
 import '../providers/product_provider.dart';
 
@@ -34,6 +35,7 @@ Future<void> init() async {
   //Provider
   sl.registerLazySingleton(() => BoutiqueProvider(boutiqueRepo: sl()));
   sl.registerLazySingleton(() => CategoryProvider(categoryRepo: sl()));
+  sl.registerLazySingleton(() => CategoryProviderDetails(categoryRepo: sl()));
   sl.registerLazySingleton(() => ProductProvider(productsRepo: sl()));
   sl.registerLazySingleton(() => SliderProvider(sliderRepo: sl()));
 

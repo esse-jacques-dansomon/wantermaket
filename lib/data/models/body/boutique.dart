@@ -1,3 +1,5 @@
+import 'package:wantermarket/data/models/body/vendor.dart';
+
 import '../../../config/app_constantes.dart';
 
 class Boutique {
@@ -9,6 +11,8 @@ class Boutique {
   String? profilImage;
   String? coverImage;
   int? idVendor;
+  Vendor? vendor;
+
 
   Boutique(
       {this.id,
@@ -18,7 +22,8 @@ class Boutique {
       this.longitude,
       this.profilImage,
       this.coverImage,
-      this.idVendor});
+        this.vendor,
+        this.idVendor});
 
   Boutique.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -29,6 +34,8 @@ class Boutique {
     profilImage = AppConstants.BASE_URL_IMAGE + (json['profil_image']?? '');
     coverImage = AppConstants.BASE_URL_IMAGE + (json['cover_image']?? '');
     idVendor = json['id_vendor'];
+    vendor = json['vendeur'] != null ? Vendor.fromJson(json['vendeur']) : null;
+
 
 
   }
@@ -43,6 +50,8 @@ class Boutique {
     data['profil_image'] = profilImage;
     data['cover_image'] = coverImage;
     data['id_vendor'] = idVendor;
+    data['vendeur'] = vendor?.toJson();
+
     return data;
   }
 }

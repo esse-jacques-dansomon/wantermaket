@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wantermarket/data/models/body/boutique.dart';
 import 'package:wantermarket/data/models/body/product.dart';
 import 'package:wantermarket/ui/screens/abonnement/abonnement_screen.dart';
 import 'package:wantermarket/ui/screens/add_product/add_product_screen.dart';
@@ -14,6 +15,7 @@ import 'package:wantermarket/ui/screens/mon_compte/dashboard_screen.dart';
 import 'package:wantermarket/ui/screens/produit/produit_details_screen.dart';
 import 'package:wantermarket/ui/screens/wishlist/wishlist_screen.dart';
 
+import '../data/models/body/category.dart';
 import '../ui/screens/auth/login_screen.dart';
 import '../ui/screens/auth/register_screen.dart';
 import '../ui/screens/auth/start_screen.dart';
@@ -50,7 +52,6 @@ class AppRoutes {
 
 
   static Route<dynamic> onGenerateRoute(RouteSettings settings){
-    final arguments = settings.arguments as Product;
     switch(settings.name) {
       case login:
         return MaterialPageRoute(builder: (context) => const LoginScreen());
@@ -67,15 +68,23 @@ class AppRoutes {
       case profile:
         return MaterialPageRoute(builder: (context) => const DashBoardScreen());
       case category:
-        return MaterialPageRoute(builder: (context) => const CategoryScreen());
+        final category = settings.arguments as Category;
+        return MaterialPageRoute(builder: (context) =>  CategoryScreen(category: category,));
       case categories:
         return MaterialPageRoute(builder: (context) => const AllCategoriesScreen());
       case vendor:
-        return MaterialPageRoute(builder: (context) => const BoutiqueDetailsScreen());
+        final boutique = settings.arguments as Boutique;
+        if (boutique.name != null){
+
+          return MaterialPageRoute(builder: (context) =>  BoutiqueDetailsScreen(boutique: boutique));
+        }
+        return MaterialPageRoute(builder: (context) => const HomeScreen());
       case boutiqueBySecteur:
         return MaterialPageRoute(builder: (context) => const BoutiqueBySecteurScreen());
       case product:
+        final arguments = settings.arguments as Product;
         if (arguments.name != null){
+
         return MaterialPageRoute(builder: (context) =>  ProductDetailsScreen(product: arguments));
         }
         return MaterialPageRoute(builder: (context) => const HomeScreen());

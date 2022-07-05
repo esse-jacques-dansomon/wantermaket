@@ -6,6 +6,7 @@ class AppConstants {
   static const String BASE_URL_IMAGE = 'https://wantermarket.sn/';
   static const String SLIDER_URI= '/sliders';
   static const String CATEGORIES_URI = '/categories';
+  static const String CATEGORIES_URI_PRODUCTS = '/categorie';
   static const String SOUS_CATEGORIES_URI = '/souscategories';
   static const String PRODUITS_URI = '/produits';
   static const String BOUTIQUE_URI = '/boutiques';

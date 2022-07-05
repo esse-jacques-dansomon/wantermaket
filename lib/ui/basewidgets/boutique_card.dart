@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wantermarket/config/app_constantes.dart';
 
 import '../../data/models/body/boutique.dart';
+import '../../route/routes.dart';
 import '../screens/boutique/boutique_details_screen.dart';
 
 class BoutiqueCard extends StatelessWidget {
@@ -14,7 +15,7 @@ class BoutiqueCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context) => const BoutiqueDetailsScreen()));
+        Navigator.pushNamed(context, AppRoutes.vendor, arguments: boutique);
       },
       child: Card(
         child: Padding(

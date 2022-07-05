@@ -10,11 +10,13 @@ class ProductProvider extends ChangeNotifier{
   List<Product> _topAnnonces = [];
   List<Product> _dealsOfTheDay = [];
   List<Product> _newArrivals = [];
+  List<Product> _relatedProducts = [];
   int nextPage = 1;
 
   List<Product> get topAnnonces => _topAnnonces;
   List<Product> get dealsOfTheDay => _dealsOfTheDay;
   List<Product> get newArrivals => _newArrivals;
+  List<Product> get relatedProducts => _relatedProducts;
 
   Future<void> getTopAnnonces() async {
     final topAnnoncesResponse = await productsRepo.getTopAnnonces();
@@ -31,6 +33,7 @@ class ProductProvider extends ChangeNotifier{
   Future<void> getDealOfTheDay() async {
     final dealsOfTheDayResponse = await productsRepo.getDealsOfTheDay();
     if(dealsOfTheDayResponse.error == null ){
+      _dealsOfTheDay.clear();
       dealsOfTheDayResponse.response.data['data'].forEach((element) {
         _dealsOfTheDay.add(Product.fromJson(element));
       });
@@ -44,6 +47,17 @@ class ProductProvider extends ChangeNotifier{
       _newArrivals.clear();
       newArrivalsResponse.response.data['data'].forEach((element) {
         _newArrivals.add(Product.fromJson(element));
+      });
+      notifyListeners();
+    }
+  }
+
+  Future<void> getRelatedProducts(int categoryId) async {
+    final newArrivalsResponse = await productsRepo.getRelatedProducts(categoryId);
+    if(newArrivalsResponse.error == null ){
+      relatedProducts.clear();
+      newArrivalsResponse.response.data['data'].forEach((element) {
+        relatedProducts.add(Product.fromJson(element));
       });
       notifyListeners();
     }
