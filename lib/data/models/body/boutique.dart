@@ -1,3 +1,5 @@
+import '../../../config/app_constantes.dart';
+
 class Boutique {
   int? id;
   String? name;
@@ -20,13 +22,15 @@ class Boutique {
 
   Boutique.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    name = json['name'];
-    bio = json['bio'];
-    latitude = json['latitude'];
-    longitude = json['longitude'];
-    profilImage = json['profil_image'];
-    coverImage = json['cover_image'];
+    name = json['name']??'null';
+    bio = json['bio']??'null';
+    latitude = json['latitude']??'null';
+    longitude = json['longitude']??'null';
+    profilImage = AppConstants.BASE_URL_IMAGE + (json['profil_image']?? '');
+    coverImage = AppConstants.BASE_URL_IMAGE + (json['cover_image']?? '');
     idVendor = json['id_vendor'];
+
+
   }
 
   Map<String, dynamic> toJson() {

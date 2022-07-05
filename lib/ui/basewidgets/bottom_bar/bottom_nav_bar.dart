@@ -22,76 +22,55 @@ class CustomBottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.transparent,
-      height: 80,
+      color: Colors.red,
+      height: 60,
       width: MediaQuery.of(context).size.width,
       child: Stack(
         children: [
           Align(
             alignment: Alignment.bottomCenter,
-            child: ClipPath(
-              clipper: CustomBottomNavBarClipper(),
-              child: Container(
-                height: 60,
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                color: Colors.white,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    CustomBottomBarItem(
-                      activeImage:Icons.home,
-                      image:Icons.home_outlined,
-                      title: 'Accueil',
-                      route: AppRoutes.home,
-                      item: home,
-                    ),
-                    CustomBottomBarItem(
-                      activeImage:Icons.shop,
-                      image:Icons.shop_outlined,
-                      title: 'Boutiques',
-                      route: AppRoutes.shop,
-                      item: boutique,
-                    ),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    CustomBottomBarItem(
-                      activeImage:Icons.search,
-                      image:Icons.search_outlined,
-                      title: 'Recherche',
-                      route: AppRoutes.search,
-                      item: search ,
-                    ),
-                    CustomBottomBarItem(
-                      activeImage:Icons.person,
-                      image:Icons.person_outlined,
-                      title: 'Profile',
-                      route: AppRoutes.profile,
-                      item: profile,
-                    ),
-                  ],
-                ),
+            child: Container(
+              height: 60,
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              color: Colors.white,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CustomBottomBarItem(
+                    activeImage:Icons.home,
+                    image:Icons.home_outlined,
+                    title: 'Accueil',
+                    route: AppRoutes.home,
+                    item: home,
+                  ),
+                  CustomBottomBarItem(
+                    activeImage:Icons.shop,
+                    image:Icons.shop_outlined,
+                    title: 'Boutiques',
+                    route: AppRoutes.shop,
+                    item: boutique,
+                  ),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  CustomBottomBarItem(
+                    activeImage:Icons.search,
+                    image:Icons.search_outlined,
+                    title: 'Recherche',
+                    route: AppRoutes.search,
+                    item: search ,
+                  ),
+                  CustomBottomBarItem(
+                    activeImage:Icons.person,
+                    image:Icons.person_outlined,
+                    title: 'Profile',
+                    route: AppRoutes.profile,
+                    item: profile,
+                  ),
+                ],
               ),
             ),
           ),
-          Align(
-            alignment: Alignment.topCenter,
-            child: SizedBox(
-              height: 60,
-              width: 60,
-              child: FloatingActionButton(
-                elevation: 0,
-                clipBehavior: Clip.antiAlias,
-                backgroundColor:  add_product ? AppColors.WHITE :  AppColors.PRIMARY,
-                onPressed: () {
-                  if (!add_product) {
-                    Navigator.pushNamed(context, AppRoutes.addProduct);
-                  }
-                },
-                child: Icon(Icons.add_circle, size: 61, color:  add_product ? AppColors.PRIMARY : AppColors.WHITE ),
-              ),
-            ),
-          )
         ],
       ),
     );

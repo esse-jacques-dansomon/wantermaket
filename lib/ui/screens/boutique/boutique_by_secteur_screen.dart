@@ -20,6 +20,7 @@ class _BoutiqueBySecteurScreenState extends State<BoutiqueBySecteurScreen> {
     //final cardSize = MediaQuery.of(context).size.width / 2 - 32;
     return SafeArea(
       child: Scaffold(
+
         appBar: appBarWithReturn(title: 'Secteur Agro', context: context),
         bottomNavigationBar: const CustomBottomNavBar(boutique: true,),
         body: Column(

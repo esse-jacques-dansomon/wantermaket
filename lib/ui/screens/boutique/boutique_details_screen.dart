@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wantermarket/config/app_colors.dart';
 
 import 'package:intl/intl.dart';
+import 'package:wantermarket/data/models/body/product.dart';
 
 import '../../../shared/app_helper.dart';
 import '../../basewidgets/app_bars/app_bar_with_return.dart';
@@ -183,7 +184,7 @@ class BoutiqueDetailsScreen extends StatelessWidget {
                       mainAxisExtent: 315
                   ),
                   itemBuilder: (context, index){
-                    return ProductByBoutique3(id: index);
+                    return ProductByBoutique3(product: Product(),);
                   }),
 
 

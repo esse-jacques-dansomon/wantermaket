@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:wantermarket/config/app_colors.dart';
+import 'package:wantermarket/data/models/body/product.dart';
 import 'package:wantermarket/shared/app_helper.dart';
 
 import '../../config/app_dimenssions.dart';
 import '../../route/routes.dart';
 
 class ProductByBoutique3 extends StatelessWidget {
-  final int id;
-  const ProductByBoutique3({Key? key, required this.id}) : super(key: key);
+  final Product product;
+  const ProductByBoutique3({Key? key, required this.product}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, AppRoutes.product, arguments: id);
+        Navigator.pushNamed(context, AppRoutes.product, arguments: product);
       },
       child: Card(
         child: SizedBox(
@@ -26,10 +27,10 @@ class ProductByBoutique3 extends StatelessWidget {
                   children: [
                     Container(
                       // height: 200,
-                      decoration: BoxDecoration(
+                      decoration:  BoxDecoration(
                         image:  DecorationImage(
                           image: NetworkImage(
-                            'https://picsum.photos/250?image=$id',
+                            product.images?[0].path.replaceAll('\r\n', '') ?? 'https://wantermarket.sn/views/assets/images/slider/home_back2.jpg',
                           ),
                           fit: BoxFit.cover,
                         ),
@@ -51,9 +52,9 @@ class ProductByBoutique3 extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Text(AppHelper.priceFormat(price: '200000'.toString()), style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: AppColors.SECONDARY),),
+                    Text(AppHelper.priceFormat(price: "${product.priceBefore?? product.price}".toString()), style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: AppColors.SECONDARY),),
                     const SizedBox(height: 5),
-                    Text('Article qui tient sur plusieurs liges par exemple ${MediaQuery.of(context).size.width}',  maxLines: 2, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 12, color: Colors.black, fontWeight: FontWeight.bold),),
+                    SizedBox(width: 215, child: Text(product.name!,  maxLines: 2, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 12, color: Colors.black, fontWeight: FontWeight.bold),)),
                     // contact button
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,11 +62,11 @@ class ProductByBoutique3 extends StatelessWidget {
                         const SizedBox(height: 8,),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
-                          children: const [
+                          children:  [
                             //localisation icon
-                            Icon(Icons.location_on_outlined, color: AppColors.BLACK, size: 14, ),
-                            SizedBox(width: 5,),
-                            Text('Dakar, Senegal', style: TextStyle(fontSize: 10, color: Colors.black, ),),
+                            const Icon(Icons.location_on_outlined, color: AppColors.BLACK, size: 14, ),
+                            const SizedBox(width: 5,),
+                            SizedBox(width:140, child: Text(product.vendor!.address!, style: const TextStyle(fontSize: 10, color: Colors.black, overflow: TextOverflow.ellipsis),)),
                           ],
                         ) ,
                         const SizedBox(height: 5,),
@@ -78,9 +79,9 @@ class ProductByBoutique3 extends StatelessWidget {
                             InkWell
                               (
                                 onTap: (){
-                                  Navigator.of(context).pushNamed(AppRoutes.vendor);
+                                  Navigator.of(context).pushNamed(AppRoutes.vendor, arguments: product.vendor!);
                                 },
-                                child: const Text('Bamba Ndiaye', style: TextStyle(fontSize: 10, color: Colors.black, ),)),
+                                child:  SizedBox(width: 140, child: Text('${product.vendor!.email!}', style: const TextStyle(fontSize: 10, color: Colors.black, ), overflow: TextOverflow.ellipsis,)), ),
                           ],
                         )
 
@@ -113,7 +114,7 @@ class ProductByBoutique3 extends StatelessWidget {
                           ),
                         ),
                         Container(
-                          margin: const EdgeInsets.only(left: 10),
+                          margin: const EdgeInsets.only(left: 0),
                           padding: const EdgeInsets.only(left: 5, right: 5),
                           height: 25,
                           color: Colors.grey[200],

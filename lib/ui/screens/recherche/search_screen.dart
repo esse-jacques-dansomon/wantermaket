@@ -9,6 +9,8 @@ import 'package:wantermarket/ui/screens/boutique/widgets/boutique_card.dart';
 import 'package:wantermarket/ui/screens/recherche/widget/product_found_fliter_widget.dart';
 
 import '../../../config/app_colors.dart';
+import '../../../data/models/body/product.dart';
+import '../../../route/routes.dart';
 import '../../../shared/app_helper.dart';
 import '../../basewidgets/bottom_bar/bottom_nav_bar.dart';
 import '../../basewidgets/produit_by_boutique_2.dart';
@@ -22,6 +24,14 @@ class SearchScreen extends StatelessWidget {
     return DefaultTabController(length: 2,
         child: SafeArea(
           child: Scaffold(
+            floatingActionButton: FloatingActionButton(
+              onPressed: () {
+                Navigator.pushNamed(context, AppRoutes.addProduct);
+              },
+              backgroundColor: AppColors.WHITE,
+              child: const Icon(Icons.add, color: AppColors.PRIMARY, size: 50,),
+            ),
+            floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
             appBar: appBar(isActiveSearchbar: true),
             drawer: const AppDrawer(),
             bottomNavigationBar: const CustomBottomNavBar(search: true),
@@ -135,7 +145,7 @@ class ProductsFound extends StatelessWidget {
           itemCount: 20,
           scrollDirection: Axis.vertical,
           itemBuilder : (context, index){
-            return  ProductByBoutique3(id: index);
+            return  ProductByBoutique3(product: Product());
           },
           gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: AppHelper.getCrossAxisCount(context, width: 230),

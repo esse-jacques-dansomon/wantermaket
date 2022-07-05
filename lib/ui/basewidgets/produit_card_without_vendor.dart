@@ -11,7 +11,7 @@ class ProduitCardWithoutVendor extends StatelessWidget {
   Widget build(BuildContext context) {
     return  InkWell(
       onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context) => ProduitDetailsScreen()));
+        // Navigator.push(context, MaterialPageRoute(builder: (context) => ProduitDetailsScreen()));
       },
       child: Card(
         child: SizedBox(

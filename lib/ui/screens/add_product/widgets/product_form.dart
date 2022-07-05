@@ -15,7 +15,7 @@ class ProductAddForm extends StatelessWidget {
           children: [
             //image
             const SizedBox(height: 15,),
-            const Text('Image Principale', style: TextStyle(fontSize: AppDimensions.FONT_SIZE_EXTRA_LARGE, fontWeight: FontWeight.bold),),
+            const Text('Image Principale', style: TextStyle(fontSize: AppDimensions.FONT_SIZE_EXTRA_LARGE),),
             Container(
               margin: const EdgeInsets.symmetric(vertical: 10),
               height: 200,
@@ -34,7 +34,7 @@ class ProductAddForm extends StatelessWidget {
             ),
             //list images
             const SizedBox(height: 15,),
-            const Text('Images Secondaires', style: TextStyle(fontSize: AppDimensions.FONT_SIZE_EXTRA_LARGE, fontWeight: FontWeight.bold),),
+            const Text('Images Secondaires', style: TextStyle(fontSize: AppDimensions.FONT_SIZE_EXTRA_LARGE),),
             SizedBox(
               height: 150,
               child: ListView.separated(

@@ -1,4 +1,9 @@
-class Produit {
+import 'package:wantermarket/data/models/body/vendor.dart';
+
+import 'boutique.dart';
+import 'image.dart';
+
+class Product {
   int? id;
   String? code;
   int? idBoutique;
@@ -8,8 +13,12 @@ class Produit {
   int? price;
   int? priceBefore;
   String? disponibility;
+  List<Image>? images;
+  Vendor? vendor;
+  Boutique? boutique;
 
-  Produit(
+
+  Product(
       {this.id,
       this.code,
       this.idBoutique,
@@ -18,9 +27,13 @@ class Produit {
       this.descriptionBrief,
       this.price,
       this.priceBefore,
-      this.disponibility});
+      this.disponibility,
+      this.images,
+      this.vendor,
+      this.boutique
+      });
 
-  Produit.fromJson(Map<String, dynamic> json) {
+  Product.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     code = json['code'];
     idBoutique = json['id_boutique'];
@@ -28,8 +41,16 @@ class Produit {
     name = json['name'];
     descriptionBrief = json['description_brief'];
     price = json['price'];
-    priceBefore = json['price_before'];
-    disponibility = json['disponibility'];
+    priceBefore = json['price_before']??0;
+    disponibility = json['disponibility']??true;
+    boutique = json['boutique'] != null ? Boutique.fromJson(json['boutique']) : null;
+    vendor = json['vendeur'] != null ? Vendor.fromJson(json['vendeur']) : null;
+    if (json['images'] != null) {
+      images = <Image>[];
+      json['images'].forEach((v) {
+        images?.add(Image.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -43,6 +64,11 @@ class Produit {
     data['price'] = price;
     data['price_before'] = priceBefore;
     data['disponibility'] = disponibility;
+    data['vendeur'] = vendor?.toJson();
+    data['boutique'] = boutique?.toJson();
+    if (images != null) {
+      data['images'] = images!.map((v) => v.toJson()).toList();
+    }
     return data;
   }
 }

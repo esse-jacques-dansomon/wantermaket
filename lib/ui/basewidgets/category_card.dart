@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:wantermarket/data/models/body/category.dart';
 import 'package:wantermarket/route/routes.dart';
 
 class CategoryCard extends StatelessWidget {
-  final int id;
+  final Category category;
   final bool categoriesPage;
-  const CategoryCard({Key? key,  required this.id, this.categoriesPage=false}) : super(key: key);
+  const CategoryCard({Key? key, this.categoriesPage=false,  required this.category}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +13,7 @@ class CategoryCard extends StatelessWidget {
         onTap: (){
           Navigator.pushNamed(context, AppRoutes.category);
         },
-        child: Container(
+        child: SizedBox(
           width: !categoriesPage ? 75: 110,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -24,18 +25,18 @@ class CategoryCard extends StatelessWidget {
                     borderRadius: BorderRadius.all(Radius.circular( !categoriesPage ?50:0)),
                     image: DecorationImage(
                       image: NetworkImage(
-                        'https://picsum.photos/250?image=${id*12}',
+                        category.imagePath!,
                       ),
                       fit: BoxFit.cover,
                     ),
               ),
               ),
               const SizedBox(height: 5,),
-              const Expanded(
+               Expanded(
                 child: Text(
-                  'Electronique & Manager', textAlign: TextAlign.start,
+                  category.name!, textAlign: TextAlign.start,
                   maxLines: 1,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16,
                     overflow: TextOverflow.ellipsis
 

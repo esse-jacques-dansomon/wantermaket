@@ -13,6 +13,13 @@ class AddProductScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(child: Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+        },
+        backgroundColor: AppColors.PRIMARY,
+        child: const Icon(Icons.add, color: AppColors.WHITE, size: 50,),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: const CustomBottomNavBar(add_product: true,),
       appBar: appBar(isActiveSearchbar:true),
       drawer: const AppDrawer(),
@@ -24,7 +31,7 @@ class AddProductScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: const [
               SizedBox(height: 20,),
-              Text("Ajouter Un Produit", textAlign: TextAlign.start, style: TextStyle(fontSize: AppDimensions.FONT_SIZE_EXTRA_LARGE, color: AppColors.BLACK),),
+              Text("Ajouter Un Produit", textAlign: TextAlign.start, style: TextStyle(fontSize: AppDimensions.FONT_SIZE_EXTRA_LARGE+3, color: AppColors.BLACK),),
               SizedBox(height: 10,),
               ProductAddForm(),
             ]

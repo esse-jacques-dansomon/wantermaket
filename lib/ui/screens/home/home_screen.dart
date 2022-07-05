@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:wantermarket/config/app_colors.dart';
-import 'package:wantermarket/config/app_dimenssions.dart';
+import 'package:wantermarket/providers/boutique_provider.dart';
+import 'package:wantermarket/providers/category_provider.dart';
+import 'package:wantermarket/providers/product_provider.dart';
 import 'package:wantermarket/ui/basewidgets/app_bars/drawer.dart';
 import 'package:wantermarket/ui/screens/home/widgets/home_categories_widget.dart';
 import 'package:wantermarket/ui/screens/home/widgets/boutiques_exclusives_widget.dart';
@@ -10,6 +13,8 @@ import 'package:wantermarket/ui/screens/home/widgets/nouveautes_widget.dart';
 import 'package:wantermarket/ui/screens/home/widgets/top_annonces_widget.dart';
 import 'package:wantermarket/ui/screens/home/widgets/top_boutiques_widget.dart';
 
+import '../../../providers/slider_provider.dart';
+import '../../../route/routes.dart';
 import '../../basewidgets/app_bars/app_bar.dart';
 import '../../basewidgets/bottom_bar/bottom_nav_bar.dart';
 
@@ -23,12 +28,36 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final ScrollController _scrollController = ScrollController(initialScrollOffset: 50.0);
+  Future<void> _loadData() async {
+    Provider.of<SliderProvider>(context, listen: false).getHomeSliders();
+    Provider.of<BoutiqueProvider>(context, listen: false).getBoutiquesExclusives();
+    Provider.of<CategoryProvider>(context, listen: false).getCategories();
+    Provider.of<ProductProvider>(context, listen: false).getTopAnnonces();
+    Provider.of<ProductProvider>(context, listen: false).getDealOfTheDay();
+    Provider.of<ProductProvider>(context, listen: false).getNewArrivals();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
 
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
+
       child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.pushNamed(context, AppRoutes.addProduct, );
+          },
+          backgroundColor: AppColors.WHITE,
+          child: const Icon(Icons.add, color: AppColors.PRIMARY, size: 50,),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: const CustomBottomNavBar(home: true,),
         appBar: appBar(isActiveSearchbar:true),
         drawer: const AppDrawer(),
@@ -38,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 30),
-              HomeSliders(images: images),
+              const HomeSliders(),
               //Boutiques Exlusives
               const SizedBox(height: 30),
               const BoutiquesExclusives(),
@@ -113,13 +142,17 @@ class _HomeScreenState extends State<HomeScreen> {
               const NouveautesWidget(),
               //load more
               const SizedBox(height: 10),
-              Center(
-                child: TextButton(
-                  onPressed: () {},
-                  child: const Text("Plus d'articles", style: TextStyle(color: AppColors.SECONDARY, fontSize: AppDimensions.FONT_SIZE_EXTRA_LARGE),),
-                ),
-              ),
-              const SizedBox(height: 30),
+
+              //end of page indicator
+              // _scrollController.position.pixels == _scrollController.position.maxScrollExtent
+              //     ? const Center(
+              //   child: Text(
+              //     "End of Page",
+              //     style: TextStyle(color: AppColors.PRIMARY),
+              //   ),
+              // )
+              //     : const SizedBox(),
+
 
             ],
           ),
@@ -128,39 +161,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
-
-
-
-
-
-class SearchFormWidget extends StatelessWidget {
-  const SearchFormWidget({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      color: AppColors.WHITE,
-      height: 100,
-      child: Container(
-        height: 40,
-        //shadow box
-        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-        margin: const EdgeInsets.symmetric(vertical: 0.0),
-        child: TextField(
-          decoration: InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(5),
-
-            ),
-            hintText: 'Rechercher',
-            suffixIcon: const Icon(Icons.search),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-

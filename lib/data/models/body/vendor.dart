@@ -1,4 +1,4 @@
-class Vendeur {
+class Vendor {
   int? id;
   String? name;
   String? firstName;
@@ -13,7 +13,7 @@ class Vendeur {
   String? country;
   String? statut;
 
-  Vendeur(
+  Vendor(
       {this.id,
       this.name,
       this.firstName,
@@ -28,7 +28,7 @@ class Vendeur {
       this.country,
       this.statut});
 
-  Vendeur.fromJson(Map<String, dynamic> json) {
+  Vendor.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     firstName = json['first_name'];

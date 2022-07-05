@@ -4,6 +4,8 @@ import 'package:wantermarket/shared/app_helper.dart';
 import 'package:wantermarket/ui/basewidgets/app_bars/drawer.dart';
 import 'package:wantermarket/ui/screens/sector/widgets/secteur_card.dart';
 
+import '../../../config/app_colors.dart';
+import '../../../route/routes.dart';
 import '../../basewidgets/app_bars/app_bar.dart';
 import '../../basewidgets/bottom_bar/bottom_nav_bar.dart';
 
@@ -17,6 +19,15 @@ class SecteurScreen extends StatelessWidget {
       child: Scaffold(
         appBar: appBar(isActiveSearchbar: true),
         drawer: AppDrawer(),
+        floatingActionButton: FloatingActionButton(
+
+          onPressed: () {
+            Navigator.pushNamed(context, AppRoutes.addProduct);
+          },
+          backgroundColor: AppColors.WHITE,
+          child: const Icon(Icons.add, color: AppColors.PRIMARY, size: 50,),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: const CustomBottomNavBar(boutique: true,),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

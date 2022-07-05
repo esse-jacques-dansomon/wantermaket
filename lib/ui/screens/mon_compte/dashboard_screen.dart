@@ -8,6 +8,7 @@ import 'package:wantermarket/ui/basewidgets/app_bars/drawer.dart';
 import '../../basewidgets/app_bars/app_bar.dart';
 import '../../basewidgets/bottom_bar/bottom_nav_bar.dart';
 
+
 class DashBoardScreen extends StatelessWidget {
   const DashBoardScreen({Key? key}) : super(key: key);
 
@@ -18,6 +19,117 @@ class DashBoardScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         bottomNavigationBar: const CustomBottomNavBar(profile: true,),
+        floatingActionButton: FloatingActionButton(
+
+          onPressed: () {
+            Navigator.pushNamed(context, AppRoutes.addProduct);
+          },
+          backgroundColor: AppColors.WHITE,
+          child: const Icon(Icons.add, color: AppColors.PRIMARY, size: 50,),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        // bottomNavigationBar: BottomAppBar(
+        //   shape: CircularNotchedRectangle(),
+        //   notchMargin: 1,
+        //   child: Container(
+        //     height: 60,
+        //     child: Row(
+        //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //       children: [
+        //         Row(
+        //           crossAxisAlignment: CrossAxisAlignment.start,
+        //           children: [
+        //             MaterialButton(
+        //                 minWidth: 40,
+        //                 onPressed: (){},
+        //                 child: Column(
+        //                   mainAxisAlignment: MainAxisAlignment.center,
+        //               children: [
+        //                 Icon(
+        //                   Icons.home,
+        //                   color: AppColors.PRIMARY,
+        //                 ),
+        //                 Text(
+        //                   'Accueil',
+        //                   style: TextStyle(
+        //                     color: AppColors.PRIMARY,
+        //                     fontSize: 14,
+        //                   ),
+        //                 ),
+        //
+        //               ],
+        //             )),
+        //             MaterialButton(
+        //                 minWidth: 40,
+        //                 onPressed: (){},
+        //                 child: Column(
+        //                   mainAxisAlignment: MainAxisAlignment.center,
+        //               children: [
+        //                 Icon(
+        //                   Icons.home,
+        //                   color: AppColors.PRIMARY,
+        //                 ),
+        //                 Text(
+        //                   'Accueil',
+        //                   style: TextStyle(
+        //                     color: AppColors.PRIMARY,
+        //                     fontSize: 14,
+        //                   ),
+        //                 ),
+        //
+        //               ],
+        //             ))
+        //           ],
+        //         ),
+        //         Row(
+        //           crossAxisAlignment: CrossAxisAlignment.start,
+        //           children: [
+        //             MaterialButton(
+        //                 minWidth: 40,
+        //                 onPressed: (){},
+        //                 child: Column(
+        //                   mainAxisAlignment: MainAxisAlignment.center,
+        //               children: [
+        //                 Icon(
+        //                   Icons.home,
+        //                   color: AppColors.PRIMARY,
+        //                 ),
+        //                 Text(
+        //                   'Accueil',
+        //                   style: TextStyle(
+        //                     color: AppColors.PRIMARY,
+        //                     fontSize: 14,
+        //                   ),
+        //                 ),
+        //
+        //               ],
+        //             )),
+        //             MaterialButton(
+        //                 minWidth: 40,
+        //                 onPressed: (){},
+        //                 child: Column(
+        //                   mainAxisAlignment: MainAxisAlignment.center,
+        //               children: const [
+        //                 Icon(
+        //                   Icons.home,
+        //                   color: AppColors.PRIMARY,
+        //                 ),
+        //                 Text(
+        //                   'Accueil',
+        //                   style: TextStyle(
+        //                     color: AppColors.PRIMARY,
+        //                     fontSize: 14,
+        //                   ),
+        //                 ),
+        //
+        //               ],
+        //             ))
+        //           ],
+        //         )
+        //       ],
+        //     ),
+        //   )
+        // ),
         appBar: appBar(isActiveSearchbar: true),
         drawer: const AppDrawer(),
         backgroundColor: AppColors.WHITE,
@@ -150,19 +262,19 @@ class DashBoardScreen extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const  Expanded( child:  StatItem(name: 'Produits Restants',value: 40,), flex: 2,),
+                              const  Expanded( flex: 2, child:  StatItem(name: 'Abonnés',value: 400,),),
                               Container(
                                 width: 2,
                                 height: 45,
-                                margin: const EdgeInsets.symmetric(horizontal: 20),
+                                margin: const EdgeInsets.symmetric(horizontal: 0),
                                 color: AppColors.PRIMARY,
                               ),
-                              const Expanded(flex: 2, child:  StatItem(name: 'Vues Boutique',value: 60,)),
+                              const Expanded(flex: 2, child:  StatItem(name: 'Visites',value: 60,)),
 
                             ],
                           ),
                         ),
-                        const SizedBox(height: 10,),
+                        const SizedBox(height: 15,),
                         Container(
                           decoration: BoxDecoration(
                             color: AppColors.WHITE,
@@ -186,10 +298,10 @@ class DashBoardScreen extends StatelessWidget {
                               Container(
                                 width: 2,
                                 height: 45,
-                                margin: const EdgeInsets.symmetric(horizontal: 20),
+                                margin: const EdgeInsets.symmetric(horizontal: 0),
                                 color: AppColors.PRIMARY,
                               ),
-                             const Expanded(child: const StatItem(name: 'Abonnés',value: 60,)),
+                             const Expanded(child: const StatItem(name: 'Produits Restants',value: 60,)),
 
                             ],
                           ),
@@ -209,8 +321,8 @@ class DashBoardScreen extends StatelessWidget {
                     // mainAxisAlignment: MainAxisAlignment.center,
                     // crossAxisAlignment: CrossAxisAlignment.center,
                     children:  [
-                      const Expanded(child: const Divider(color: Colors.grey,),),
-                      Container( padding: const EdgeInsets.symmetric(horizontal: 10), child: const Text('Mes Produits', textAlign: TextAlign.center, style: TextStyle(fontSize: 18),)),
+                      const Expanded(child:  Divider(color: Colors.grey,),),
+                      Container( padding: const EdgeInsets.symmetric(horizontal: 10), child: const Text('Mes Produits', textAlign: TextAlign.center, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),)),
                       const Expanded(child: Divider(color: Colors.grey,),),
                     ]
                 ),
@@ -260,9 +372,9 @@ class DashBoardScreen extends StatelessWidget {
                                         Row(
                                           children: const [
                                             Icon(Icons.remove_red_eye, color: Colors.grey,),
-                                            SizedBox(width: 10,),
+                                            SizedBox(width: 5,),
                                             Text('1000'),
-                                            SizedBox(width: 10,),
+                                            SizedBox(width: 5,),
                                             Text('Vues')
                                           ],
                                         ),
@@ -295,7 +407,7 @@ class DashBoardScreen extends StatelessWidget {
                       ),
                     );
                   }
-              )
+              ),
             ],
           ),
 

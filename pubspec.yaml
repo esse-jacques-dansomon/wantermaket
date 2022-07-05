@@ -44,6 +44,7 @@ dependencies:
   circle_flags: ^0.0.3
   shared_preferences: ^2.0.15
   image_picker: ^0.8.5+3
+  get_it: ^7.2.0
 
 dev_dependencies:
   flutter_test:

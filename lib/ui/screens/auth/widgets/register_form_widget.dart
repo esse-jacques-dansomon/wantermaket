@@ -162,9 +162,10 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
             ),
           ),
           hintText: 'Numero de téléphone',
+
           hintStyle: const TextStyle(color: AppColors.PRIMARY),
           prefix: SizedBox(
-            height: 32,
+            height: 45,
             // For more check https://pub.dev/packages/country_code_picker
             child: CountryCodePicker(
               onChanged: (countryCode) => {
@@ -173,7 +174,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
               },
               padding: const EdgeInsets.only(right: 0),
               textStyle: const TextStyle(color: AppColors.PRIMARY, fontSize: 16.5,),
-              initialSelection: "SN",
+              initialSelection: "sn",
               showCountryOnly: false,
               searchDecoration:
               const InputDecoration(contentPadding: EdgeInsets.zero),
@@ -238,9 +239,6 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
             height: 20,
           ),
           _buildUserField('Adresse De La Boutique'),
-          const SizedBox(
-            height: 20,
-          ),
           const SizedBox(
             height: 20,
           ),

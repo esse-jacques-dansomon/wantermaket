@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wantermarket/data/models/body/product.dart';
 import 'package:wantermarket/ui/screens/abonnement/abonnement_screen.dart';
 import 'package:wantermarket/ui/screens/add_product/add_product_screen.dart';
 import 'package:wantermarket/ui/screens/auth/reset_password_screen.dart';
@@ -49,6 +50,7 @@ class AppRoutes {
 
 
   static Route<dynamic> onGenerateRoute(RouteSettings settings){
+    final arguments = settings.arguments as Product;
     switch(settings.name) {
       case login:
         return MaterialPageRoute(builder: (context) => const LoginScreen());
@@ -73,7 +75,10 @@ class AppRoutes {
       case boutiqueBySecteur:
         return MaterialPageRoute(builder: (context) => const BoutiqueBySecteurScreen());
       case product:
-        return MaterialPageRoute(builder: (context) => const ProduitDetailsScreen());
+        if (arguments.name != null){
+        return MaterialPageRoute(builder: (context) =>  ProductDetailsScreen(product: arguments));
+        }
+        return MaterialPageRoute(builder: (context) => const HomeScreen());
       case notification:
         return MaterialPageRoute(builder: (context) => const NotificationScreen());
       case favoritesBoutiques:

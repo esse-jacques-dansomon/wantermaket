@@ -1,12 +1,12 @@
 /*
 import 'dart:convert';
 
-Categorie categorieFromJson(String str) => Categorie.fromJson(json.decode(str));
+Category CategoryFromJson(String str) => Category.fromJson(json.decode(str));
 
-String categorieToJson(Categorie data) => json.encode(data.toJson());
+String CategoryToJson(Category data) => json.encode(data.toJson());
 
-class Categorie {
-  Categorie({
+class Category {
+  Category({
     required this.id,
     required this.name,
     required this.description,
@@ -20,14 +20,14 @@ class Categorie {
   String icon;
   String imagePath;
 
-  Categorie copyWith({
+  Category copyWith({
     required int id,
     required String name,
     required String description,
     required String icon,
     required String imagePath,
   }) =>
-      Categorie(
+      Category(
         id: id ?? id,
         name: name ?? name,
         description: description ?? description,
@@ -35,7 +35,7 @@ class Categorie {
         imagePath: imagePath ?? imagePath,
       );
 
-  factory Categorie.fromJson(Map<String, dynamic> json) => Categorie(
+  factory Category.fromJson(Map<String, dynamic> json) => Category(
     id: json["id"],
     name: json["name"],
     description: json["description"],
@@ -53,17 +53,19 @@ class Categorie {
 }
 */
 
-class Categorie {
+import 'package:wantermarket/config/app_constantes.dart';
+
+class Category {
   int? id;
   String? name;
   String? imagePath;
 
-  Categorie({this.id, this.name, this.imagePath});
+  Category({this.id, this.name, this.imagePath});
 
-  Categorie.fromJson(Map<String, dynamic> json) {
+  Category.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
-    imagePath = json['image_path'];
+    imagePath = AppConstants.BASE_URL_IMAGE + json['image_path'];
   }
 
   Map<String, dynamic> toJson() {

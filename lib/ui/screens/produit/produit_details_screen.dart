@@ -1,23 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper_view/flutter_swiper_view.dart';
+import 'package:wantermarket/shared/app_helper.dart';
+import '../../../data/models/body/product.dart';
 import '../../basewidgets/produit_by_boutique.dart';
 
-class ProduitDetailsScreen extends StatelessWidget {
-  const ProduitDetailsScreen({Key? key}) : super(key: key);
+class ProductDetailsScreen extends StatelessWidget {
+  final Product product;
+  const ProductDetailsScreen({Key? key, required this.product}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-          // appBar: AppBar(
-          //   backgroundColor: Colors.white,
-          //   elevation: 0,
-          //   title: const Text('Produit Details', style: TextStyle(color: Colors.black),),
-          //   leading: IconButton(
-          //     icon: const Icon(Icons.arrow_back_ios_rounded, color: Colors.black,),
-          //     onPressed: () => Navigator.pop(context),
-          //   ),
-          // ),
-          bottomNavigationBar: Container(
+          bottomNavigationBar: SizedBox(
             height: 50,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -32,8 +26,8 @@ class ProduitDetailsScreen extends StatelessWidget {
                         ),)
                       ),
                       onPressed: (){}, child: Row(
-                        children: [
-                          const Icon(Icons.call_outlined, size: 25),
+                        children: const [
+                          Icon(Icons.call_outlined, size: 25),
                           SizedBox(width: 5,),
                           Text('Appel', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),),
                         ],
@@ -49,8 +43,8 @@ class ProduitDetailsScreen extends StatelessWidget {
                         ),)
                       ),
                       onPressed: (){}, child: Row(
-                        children: [
-                          const Icon(Icons.sms_outlined, size: 25),
+                        children: const [
+                          Icon(Icons.sms_outlined, size: 25),
                           SizedBox(width: 5,),
                           Text('SMS', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),),
                         ],
@@ -65,8 +59,8 @@ class ProduitDetailsScreen extends StatelessWidget {
                         ),)
                       ),
                       onPressed: (){}, child: Row(
-                        children: [
-                          const Icon(Icons.whatsapp, size: 25),
+                        children: const [
+                          Icon(Icons.whatsapp, size: 25),
                           SizedBox(width: 5,),
                           Text('WhatsApp', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),),
                         ],
@@ -91,7 +85,7 @@ class ProduitDetailsScreen extends StatelessWidget {
                       width: double.infinity,
                       child: Swiper(
                         indicatorLayout: PageIndicatorLayout.COLOR,
-                        itemCount: 5,
+                        itemCount: product.images!.length,
                         pagination: const SwiperPagination(
                           alignment: Alignment.bottomCenter,
                           margin: EdgeInsets.only(bottom: 20),
@@ -104,7 +98,7 @@ class ProduitDetailsScreen extends StatelessWidget {
                         ),
                         itemBuilder: (context, index) {
                           return Image.network(
-                            'https://picsum.photos/250?image=${index*11}',
+                            product.images![index].path.replaceAll('\r\n', ''),
                             fit: BoxFit.cover,
                           );
                         },
@@ -137,7 +131,7 @@ class ProduitDetailsScreen extends StatelessWidget {
                     ))
                   ],
                 ),
-                //product and sseller info
+                //product informations
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Column(
@@ -148,26 +142,29 @@ class ProduitDetailsScreen extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children:  [
-                          const Text('Mack Boox Pro M1 2021', style: const TextStyle(fontSize: 21, fontWeight: FontWeight.bold, color: Colors.black),),
+                          Text(product.name!, style: const TextStyle(fontSize: 21, fontWeight: FontWeight.bold, color: Colors.black),),
                           const SizedBox(height: 10,),
-                          RichText(text: const TextSpan(text: 'Categorie', style: const TextStyle(fontWeight: FontWeight.w300, color: Colors.black),
+                          RichText(text:  TextSpan(text: 'Categorie', style: const TextStyle(fontWeight: FontWeight.w300, color: Colors.black),
                               children: [
-                                const TextSpan(text: ' : ', style: const TextStyle(fontWeight: FontWeight.w300, color: Colors.black)),
-                                const TextSpan(text: 'Laptop | Electronique ! IT', style: const TextStyle(fontWeight: FontWeight.w300, color: Colors.black)),
+                                const TextSpan(text: ' : ', style: TextStyle(fontWeight: FontWeight.w300, color: Colors.black)),
+                                TextSpan(text: '${product.idCategorie!}', style: const TextStyle(fontWeight: FontWeight.w300, color: Colors.black)),
                               ]),),
                           const SizedBox(height: 10,),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text('FCFA 2.000.000', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),),
-                              const Text('FCFA 3.000.000',  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w300, color: Colors.black, decoration: TextDecoration.lineThrough), ),
+                              product.priceBefore != null ?Column(children: [
+                                 Text(AppHelper.priceFormat(price: '${product.price}'), style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),),
+                                 Text(AppHelper.priceFormat(price: '${product.priceBefore}'),  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w300, color: Colors.black, decoration: TextDecoration.lineThrough), )
+                              ],):
+                           Text(AppHelper.priceFormat(price: '${product.price}'),  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w300, color: Colors.black, decoration: TextDecoration.lineThrough), ),
                             ],
                           ),
                           const SizedBox(height: 10,),
                           const Text('Description', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),),
                           const SizedBox(height: 10,),
-                          const Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300, color: Colors.black),),
+                          Text(product.descriptionBrief!, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w300, color: Colors.black),),
                           const SizedBox(height: 10,),
                         ],
                       )
@@ -177,19 +174,19 @@ class ProduitDetailsScreen extends StatelessWidget {
                 ),
                 //related products
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text('Produits Similaires : ', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),),
-                        const SizedBox(height: 10,),
+                      children: const [
+                        Text('Produits Similaires : ', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),),
+                        SizedBox(height: 10,),
 
                       ]),
                 ),
                 //
                 Container(
                   height: 325,
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
                   child:  ListView.builder(
                       itemCount: 15,
                       scrollDirection: Axis.horizontal,

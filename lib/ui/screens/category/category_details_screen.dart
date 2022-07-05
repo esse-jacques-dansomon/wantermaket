@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wantermarket/data/models/body/product.dart';
 import 'package:wantermarket/ui/basewidgets/produit_by_boutique_3.dart';
 import 'package:wantermarket/ui/screens/category/widget/filters_widget.dart';
 import 'package:wantermarket/ui/screens/category/widget/short_item_widget.dart';
@@ -106,7 +107,7 @@ class CategoryScreen extends StatelessWidget {
                     crossAxisCount: MediaQuery.of(context).size.width > 230*4 ? 4 : (MediaQuery.of(context).size.width > 230*3 ? 3 : 2),
                 ),
                 itemBuilder: (context, index){
-                  return ProductByBoutique3(id: index,);
+                  return ProductByBoutique3(product: Product(),);
                 }),
           ))
         ],
