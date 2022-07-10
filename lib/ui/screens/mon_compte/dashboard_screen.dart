@@ -1,139 +1,67 @@
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wantermarket/config/app_colors.dart';
+import 'package:wantermarket/providers/auth_provider.dart';
+import 'package:wantermarket/providers/vendor_provider.dart';
 import 'package:wantermarket/route/routes.dart';
 import 'package:wantermarket/shared/app_helper.dart';
 import 'package:wantermarket/ui/basewidgets/app_bars/drawer.dart';
+import 'package:wantermarket/ui/screens/home/home_screen.dart';
 
+import '../../../config/app_constantes.dart';
+import '../../../config/app_images.dart';
+import '../../../data/models/body/product.dart';
 import '../../basewidgets/app_bars/app_bar.dart';
 import '../../basewidgets/bottom_bar/bottom_nav_bar.dart';
 
 
-class DashBoardScreen extends StatelessWidget {
-  const DashBoardScreen({Key? key}) : super(key: key);
+class DashBoardScreen extends StatefulWidget {
+  DashBoardScreen({Key? key}) : super(key: key);
 
+  @override
+  State<DashBoardScreen> createState() => _DashBoardScreenState();
+}
+
+class _DashBoardScreenState extends State<DashBoardScreen> {
+
+  _loadData(boutiqueId) async {
+    Provider.of<VendorProvider>(context, listen: false).getBoutique(boutiqueId);
+    Provider.of<VendorProvider>(context, listen: false).getVendorStat(boutiqueId);
+    Provider.of<VendorProvider>(context, listen: false).getVendorProducts(boutiqueId);
+
+  }
+
+
+  @override
+  initState()  {
+    // TODO: implement initState
+    super.initState();
+    if(Provider.of<VendorProvider>(context, listen: false).products.isEmpty){
+      _loadData(Provider.of<AuthProvider>(context, listen: false).user.boutiqueId);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
 
-    return SafeArea(
-      child: Scaffold(
-        bottomNavigationBar: const CustomBottomNavBar(profile: true,),
-        floatingActionButton: FloatingActionButton(
-
-          onPressed: () {
-            Navigator.pushNamed(context, AppRoutes.addProduct);
-          },
-          backgroundColor: AppColors.WHITE,
-          child: const Icon(Icons.add, color: AppColors.PRIMARY, size: 50,),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        // bottomNavigationBar: BottomAppBar(
-        //   shape: CircularNotchedRectangle(),
-        //   notchMargin: 1,
-        //   child: Container(
-        //     height: 60,
-        //     child: Row(
-        //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //       children: [
-        //         Row(
-        //           crossAxisAlignment: CrossAxisAlignment.start,
-        //           children: [
-        //             MaterialButton(
-        //                 minWidth: 40,
-        //                 onPressed: (){},
-        //                 child: Column(
-        //                   mainAxisAlignment: MainAxisAlignment.center,
-        //               children: [
-        //                 Icon(
-        //                   Icons.home,
-        //                   color: AppColors.PRIMARY,
-        //                 ),
-        //                 Text(
-        //                   'Accueil',
-        //                   style: TextStyle(
-        //                     color: AppColors.PRIMARY,
-        //                     fontSize: 14,
-        //                   ),
-        //                 ),
-        //
-        //               ],
-        //             )),
-        //             MaterialButton(
-        //                 minWidth: 40,
-        //                 onPressed: (){},
-        //                 child: Column(
-        //                   mainAxisAlignment: MainAxisAlignment.center,
-        //               children: [
-        //                 Icon(
-        //                   Icons.home,
-        //                   color: AppColors.PRIMARY,
-        //                 ),
-        //                 Text(
-        //                   'Accueil',
-        //                   style: TextStyle(
-        //                     color: AppColors.PRIMARY,
-        //                     fontSize: 14,
-        //                   ),
-        //                 ),
-        //
-        //               ],
-        //             ))
-        //           ],
-        //         ),
-        //         Row(
-        //           crossAxisAlignment: CrossAxisAlignment.start,
-        //           children: [
-        //             MaterialButton(
-        //                 minWidth: 40,
-        //                 onPressed: (){},
-        //                 child: Column(
-        //                   mainAxisAlignment: MainAxisAlignment.center,
-        //               children: [
-        //                 Icon(
-        //                   Icons.home,
-        //                   color: AppColors.PRIMARY,
-        //                 ),
-        //                 Text(
-        //                   'Accueil',
-        //                   style: TextStyle(
-        //                     color: AppColors.PRIMARY,
-        //                     fontSize: 14,
-        //                   ),
-        //                 ),
-        //
-        //               ],
-        //             )),
-        //             MaterialButton(
-        //                 minWidth: 40,
-        //                 onPressed: (){},
-        //                 child: Column(
-        //                   mainAxisAlignment: MainAxisAlignment.center,
-        //               children: const [
-        //                 Icon(
-        //                   Icons.home,
-        //                   color: AppColors.PRIMARY,
-        //                 ),
-        //                 Text(
-        //                   'Accueil',
-        //                   style: TextStyle(
-        //                     color: AppColors.PRIMARY,
-        //                     fontSize: 14,
-        //                   ),
-        //                 ),
-        //
-        //               ],
-        //             ))
-        //           ],
-        //         )
-        //       ],
-        //     ),
-        //   )
-        // ),
-        appBar: appBar(isActiveSearchbar: true),
-        drawer: const AppDrawer(),
-        backgroundColor: AppColors.WHITE,
-        body: SingleChildScrollView(
+    return Provider.of<VendorProvider>(context, listen: true ).products.isNotEmpty ? Scaffold(
+      bottomNavigationBar: const CustomBottomNavBar(profile: true,),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, AppRoutes.addProduct);
+        },
+        backgroundColor: AppColors.PRIMARY,
+        child: const Icon(Icons.add, color: AppColors.WHITE, size: 50,),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      appBar: appBar(isActiveSearchbar: true),
+      drawer: const AppDrawer(),
+      backgroundColor: AppColors.WHITE,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.symmetric(horizontal: 10) ,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -167,67 +95,73 @@ class DashBoardScreen extends StatelessWidget {
                           width: 75,
                           height:75,
                           child: ClipOval(
-                            child: Image.network(
-                              'https://i.pravatar.cc/300',
-                              fit: BoxFit.cover,
-                              width: 75,
-                              height: 75,
-                            ),
+                            child: Consumer<VendorProvider>(
+                              builder: (context, vendorProvider, _)=>Image.network(
+                                vendorProvider.boutique.profilImage!,
+                                fit: BoxFit.cover,
+                                width: 75,
+                                height: 75,
+                              ),
+                            )
                           ),
                         ),
-                        Container(
-                          margin: const EdgeInsets.only(left: 15),
-                          child:
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: const [
-                              Text('Agence Cauris',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                              SizedBox(height: 5),
-                              Text('Marketing & Communication',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w300,
-                                ),
-                              ),
-                              SizedBox(height: 5),
+                        Consumer<VendorProvider>(
+                          builder: (context, vendorProvider, _){
+                            return  Container(
+                              margin: const EdgeInsets.only(left: 15),
+                              child:
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children:  [
+                                  Text(vendorProvider.boutique.name!,
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 5),
+                                  const Text('Marketing & Communication',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w300,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 5),
 
-                              Text('Senegal, Dakar ',
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w300,
-                                ),
+                                  Text(vendorProvider.boutique.vendor!.address!,
+                                    style: const TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w300,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
+                            );
+                          },
                         ),
                       ],
                     ),
                     Column(
                       children: [
-                        const SizedBox(height: 10,),
-                        Row(
-                          children:  const [
-                            Text('Membre depuis le',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w300,
-                              ),
-                            ),
-                            SizedBox(width: 40,),
-                            Text('01/01/2020',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ],
-                        ),
+                        // const SizedBox(height: 10,),
+                        // Row(
+                        //   children:  const [
+                        //     Text('Membre depuis le',
+                        //       style: TextStyle(
+                        //         fontSize: 16,
+                        //         fontWeight: FontWeight.w300,
+                        //       ),
+                        //     ),
+                        //     SizedBox(width: 40,),
+                        //     Text('01/01/2020',
+                        //       style: TextStyle(
+                        //         fontSize: 16,
+                        //         fontWeight: FontWeight.w400,
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
                         const SizedBox(height: 10,),
                         Row(
                           children: [
@@ -242,73 +176,77 @@ class DashBoardScreen extends StatelessWidget {
                           ],
                         ),
                         //STATISTIQUES
-                        const SizedBox(height: 10,),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: AppColors.WHITE,
-                            borderRadius: BorderRadius.circular(5),
-                            boxShadow: [
-                              BoxShadow(
-                                color: AppColors.BLACK.withOpacity(0.1),
-                                blurRadius: 10,
-                                offset: const Offset(0, 3),
-                              ),
-                            ],
-                            border: Border.all(
-                              color: AppColors.PRIMARY.withOpacity(0.1),
-                              width: 2,
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const  Expanded( flex: 2, child:  StatItem(name: 'Abonnés',value: 400,),),
-                              Container(
-                                width: 2,
-                                height: 45,
-                                margin: const EdgeInsets.symmetric(horizontal: 0),
-                                color: AppColors.PRIMARY,
-                              ),
-                              const Expanded(flex: 2, child:  StatItem(name: 'Visites',value: 60,)),
-
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 15,),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: AppColors.WHITE,
-                            borderRadius: BorderRadius.circular(5),
-                            boxShadow: [
-                              BoxShadow(
-                                color: AppColors.BLACK.withOpacity(0.1),
-                                blurRadius: 10,
-                                offset: const Offset(0, 3),
-                              ),
-                            ],
-                            border: Border.all(
-                              color: AppColors.PRIMARY.withOpacity(0.1),
-                              width: 2,
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Expanded(child:  StatItem(name: 'Produits',value: 40,)),
-                              Container(
-                                width: 2,
-                                height: 45,
-                                margin: const EdgeInsets.symmetric(horizontal: 0),
-                                color: AppColors.PRIMARY,
-                              ),
-                             const Expanded(child: const StatItem(name: 'Produits Restants',value: 60,)),
-
-                            ],
-                          ),
+                        Consumer<VendorProvider>(
+                          builder: (__, vendorProvider, _){
+                            return Column(
+                              children: [
+                                Container(
+                                  margin: const EdgeInsets.only(top: 15),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.WHITE,
+                                    borderRadius: BorderRadius.circular(5),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: AppColors.BLACK.withOpacity(0.1),
+                                        blurRadius: 10,
+                                        offset: const Offset(0, 3),
+                                      ),
+                                    ],
+                                    border: Border.all(
+                                      color: AppColors.PRIMARY.withOpacity(0.1),
+                                      width: 2,
+                                    ),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                        Expanded( flex: 2, child:  StatItem(name: 'Abonnés',value: vendorProvider.vendorStat.nombreAbonnes!,),),
+                                      Container(
+                                        width: 2,
+                                        height: 45,
+                                        margin: const EdgeInsets.symmetric(horizontal: 0),
+                                        color: AppColors.PRIMARY,
+                                      ),
+                                       Expanded(flex: 2, child:  StatItem(name: 'Visites',value: vendorProvider.vendorStat.nombreVisites!,)),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: AppColors.WHITE,
+                                    borderRadius: BorderRadius.circular(5),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: AppColors.BLACK.withOpacity(0.1),
+                                        blurRadius: 10,
+                                        offset: const Offset(0, 3),
+                                      ),
+                                    ],
+                                    border: Border.all(
+                                      color: AppColors.PRIMARY.withOpacity(0.1),
+                                      width: 2,
+                                    ),
+                                  ),
+                                  margin: const EdgeInsets.only(top: 15),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Expanded(child:  StatItem(name: 'Produits',value: vendorProvider.vendorStat.nombreAbonnes!,)),
+                                      Container(
+                                        width: 2,
+                                        height: 45,
+                                        margin: const EdgeInsets.symmetric(horizontal: 0),
+                                        color: AppColors.PRIMARY,
+                                      ),
+                                      Expanded(child:  StatItem(name: 'Produits Restants',value: vendorProvider.vendorStat.nombreAbonnes!,)),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
                         ),
                         const SizedBox(height: 25,),
-
-
                       ],
                     ),
                   ],
@@ -327,90 +265,115 @@ class DashBoardScreen extends StatelessWidget {
                     ]
                 ),
               ),
-              GridView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: AppHelper.getCrossAxisCount(context, width: 230),
-                      childAspectRatio: 1.5,
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10,
-                      mainAxisExtent: 320
-                  ),
-                  itemCount: 50,
-                  itemBuilder : (context, index){
-                    return Card(
-                      child: Column(
-                        children: [
-                          Stack(
-                            clipBehavior: Clip.hardEdge,
-                            children:  [
-                              SizedBox(
-                                width: double.infinity,
-                                height: 180,
-                                child: Image.network(
-                                  'https://i.pravatar.cc/30${index+1}',
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 5,),
-                          Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children:  [
-                                    Text(AppHelper.priceFormat(price: "2000000"), maxLines: 2, style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: AppColors.SECONDARY),),
-                                    const SizedBox(height: 5,),
-                                    const Text('Mack Book 2021 256Giga venu', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 13),),
-                                    const SizedBox(height: 5,),
-                                    Row(
-                                      children: [
-                                        Row(
-                                          children: const [
-                                            Icon(Icons.remove_red_eye, color: Colors.grey,),
-                                            SizedBox(width: 5,),
-                                            Text('1000'),
-                                            SizedBox(width: 5,),
-                                            Text('Vues')
-                                          ],
-                                        ),
-
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        SizedBox(
-                                          height:25,
-                                          child: ElevatedButton(
-                                              style: const ButtonStyle(
-
-                                              ),
-                                              onPressed: (){}, child: const Text('Modifier')),
-                                        ),
-                                        //on off button
-                                        Switch(
-                                          value: true,
-                                          onChanged: (value){},
-                                        ),
-                                      ],
-                                    )
-                                    ],
-                                ),
-                              )),
-
-                        ],
+              Consumer<VendorProvider>(
+                builder: (context, vendorProvider, _){
+                  return GridView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: AppHelper.getCrossAxisCount(context, width: 230),
+                          childAspectRatio: 1.5,
+                          crossAxisSpacing: 10,
+                          mainAxisSpacing: 10,
+                          mainAxisExtent: 320
                       ),
-                    );
-                  }
+                      itemCount: vendorProvider.products.length,
+                      itemBuilder : (context, index){
+                        return VendorProductCard(product: vendorProvider.products[index],);
+                      }
+                  );
+                },
               ),
+              const SizedBox(height: 50,),
             ],
           ),
 
+        ),
+      ),
+    ): const LoaderWidget();
+  }
+}
+
+class VendorProductCard extends StatelessWidget {
+  final Product product;
+  const VendorProductCard({
+    Key? key, required this.product
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: (){
+        Navigator.pushNamed(context, AppRoutes.product, arguments: product);
+      },
+      child: Card(
+        child: Column(
+          children: [
+            Stack(
+              clipBehavior: Clip.hardEdge,
+              children:  [
+                SizedBox(
+                  width: double.infinity,
+                  height: 180,
+                  child: Image.network(
+                    product.images![0].path,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 5,),
+            Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children:  [
+                      Text(AppHelper.priceFormat(price: "${product.priceBefore != 0 ? product.priceBefore : product.price}"), maxLines: 2, style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: AppColors.SECONDARY),),
+                      const SizedBox(height: 5,),
+                      Text('${product.name}', maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 13),),
+                      const SizedBox(height: 5,),
+                      Row(
+                        children: [
+                          Row(
+                            children:  [
+                              const Icon(Icons.remove_red_eye, color: Colors.grey,),
+                              const SizedBox(width: 5,),
+                              Text('${product.nombre_vues}'),
+                              const SizedBox(width: 5,),
+                              const Text('Vues')
+                            ],
+                          ),
+
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          SizedBox(
+                            height:25,
+                            child: ElevatedButton(
+                                style: const ButtonStyle(
+
+                                ),
+                                onPressed: (){
+                                  Navigator.pushNamed(context, AppRoutes.addProduct, arguments: product);
+                                }, child: const Text('Modifier')),
+                          ),
+                          //on off button
+                          Switch(
+                            value: product.disponibility == 'oui'? true : false,
+                            onChanged: (value){
+                              Provider.of<VendorProvider>(context, listen: false).changeDisponibilityProduct(product.id!);
+                          },),
+                        ],
+                      )
+                    ],
+                  ),
+                )),
+
+          ],
         ),
       ),
     );
@@ -418,7 +381,7 @@ class DashBoardScreen extends StatelessWidget {
 }
 
 class StatItem extends StatelessWidget {
-  final String name; final double value;
+  final String name; final int value;
   const StatItem({
     Key? key,
     required this.name, required this.value

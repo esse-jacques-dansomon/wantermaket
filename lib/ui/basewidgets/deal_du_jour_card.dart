@@ -45,32 +45,15 @@ class DealDuJour extends StatelessWidget {
                           children: [
                             Container(
                               height: 30,
-                              width: 140,
+                              width: 150,
                               decoration: BoxDecoration(
                                 color: AppColors.SECONDARY,
                                 borderRadius: BorderRadius.circular(5),
                               ),
                               child: const Center(
-                                child: Text('Deal Du jour', textAlign: TextAlign.start,
+                                child: Text('En promotion -10%', textAlign: TextAlign.start,
                                   style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.white
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              height: 30,
-                              width: 50,
-                              decoration: BoxDecoration(
-                                color: AppColors.SECONDARY,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: const Center(
-                                child: Text('-10%', textAlign: TextAlign.start,
-                                  style:  TextStyle(
-                                      fontSize: 18,
+                                      fontSize: 15,
                                       fontWeight: FontWeight.w500,
                                       color: Colors.white
                                   ),

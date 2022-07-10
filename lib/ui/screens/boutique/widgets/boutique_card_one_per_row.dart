@@ -3,16 +3,18 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:wantermarket/config/app_colors.dart';
 
+import '../../../../data/models/body/boutique.dart';
 import '../../../../route/routes.dart';
 
 class BoutiqueCardBySecteurOnePerRow extends StatelessWidget {
-  const BoutiqueCardBySecteurOnePerRow({Key? key}) : super(key: key);
+  final Boutique boutique;
+  const BoutiqueCardBySecteurOnePerRow({Key? key, required this.boutique}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return   InkWell(
       onTap: (){
-        Navigator.pushNamed(context, AppRoutes.vendor);
+        Navigator.pushNamed(context, AppRoutes.vendor, arguments: boutique);
       },
       child: Card(
         shadowColor: Colors.black,
@@ -27,7 +29,7 @@ class BoutiqueCardBySecteurOnePerRow extends StatelessWidget {
                 // height: 80,
                 width: MediaQuery.of(context).size.width/2.5,
                 child: Image.network(
-                  'https://picsum.photos/250?image=${2*11}',
+                  boutique.coverImage!,
                   fit: BoxFit.cover,
                 ),
 
@@ -44,7 +46,7 @@ class BoutiqueCardBySecteurOnePerRow extends StatelessWidget {
                       children: [
                         ClipOval(
                           child: Image.network(
-                            'https://picsum.photos/250?image=${2*11}',
+                            boutique.profilImage!,
                             fit: BoxFit.cover,
                             height: 40,
                             width: 40,
@@ -53,7 +55,7 @@ class BoutiqueCardBySecteurOnePerRow extends StatelessWidget {
                         const SizedBox(width: 10,),
                         SizedBox(
                           width: MediaQuery.of(context).size.width/2 - 50,
-                          child: Text('Boutique 1Ligne de pretes',overflow: TextOverflow.ellipsis, textAlign: TextAlign.start,
+                          child: Text( boutique.name!,overflow: TextOverflow.ellipsis, textAlign: TextAlign.start,
                             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, ),
                             maxLines: 2,
                           ),

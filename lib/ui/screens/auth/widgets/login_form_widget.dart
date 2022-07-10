@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:wantermarket/data/models/body/login_model.dart';
+import 'package:wantermarket/providers/auth_provider.dart';
+import 'package:wantermarket/route/routes.dart';
 
 import '../../../../config/app_colors.dart';
 
@@ -7,18 +11,41 @@ class LoginFormWidget extends StatefulWidget {
 
   @override
   State<LoginFormWidget> createState() => _LoginFormWidgetState();
+
+
 }
 
 class _LoginFormWidgetState extends State<LoginFormWidget> {
+
+
+
   bool _obscureText = true;
   String? _password, _email;
   FocusNode? _passwordNode;
 
+  void _signIn() async {
+   try{
+     final authProvider = Provider.of<AuthProvider>(context, listen: false);
+     final loginModel = LoginModel(email: 'abakarmahamat1991@gmail.com', password: 'rasmuslerdorf');
+     await authProvider.login(loginModel);
+     if (authProvider.loginn) {
+       if (!mounted) return;
+       Navigator.of(context).pushReplacementNamed(AppRoutes.profile);
+     }else{
+       if (!mounted) return;
+       displayDialog(context, 'Error', 'Invalid email or password');
+     }
+   }catch(e){
+
+   }
+
+  }
+
   @override
   void initState() {
     super.initState();
-    _password='';
-    _email='';
+    _password='rasmuslerdorf';
+    _email='abakarmahamat1991@gmail.com';
     _passwordNode = FocusNode();
   }
 
@@ -26,12 +53,21 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
   void dispose() {
     super.dispose();
     _passwordNode?.dispose();
+    _email = null;
+    _password = null;
+
   }
 
 
   Widget _buildPasswordField(){
     return SizedBox(
       child: TextFormField(
+        validator: (value) {
+          if (value?.isEmpty ?? true) {
+            return 'Please enter your password';
+          }
+          return null;
+        },
         focusNode: _passwordNode,
         obscureText: _obscureText,
         decoration:  InputDecoration(
@@ -66,7 +102,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
     return SizedBox(
       child: TextFormField(
         onSaved: (value) => _email = value,
-        // validator: emailValidator,
+        validator: (value) => value!.isEmpty ? 'Please enter your email' : null,
         textInputAction: TextInputAction.next,
         onEditingComplete: () {
           // Once user click on Next then it go to password field
@@ -104,6 +140,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
   Widget build(BuildContext context) {
 ;
     return Form(
+      key: _formKey,
       child: Column(
         children: [
           const SizedBox(
@@ -117,15 +154,20 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
           const SizedBox(
             height: 20,
           ),
-          Container(
+          SizedBox(
               width: double.infinity,
               height: 45,
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(AppColors.PRIMARY),),
-                onPressed: (){}, child: Text('Se Connecter', style: TextStyle(
-                fontSize: 18,
-              ),), )),
+              child: Provider.of<AuthProvider>(context).isLoading ? const Center(child: CircularProgressIndicator()): ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(AppColors.PRIMARY),),
+                  onPressed: () {
+
+                    if(_formKey.currentState!.validate()){
+                      _formKey.currentState?.save();
+                      _signIn();
+                    }
+                  }, child: const Text("Se Connecter", style: TextStyle(color: Colors.white),)  )
+    ),
         ],
       ),
 

@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:wantermarket/config/app_colors.dart';
 import 'package:wantermarket/data/models/body/product.dart';
+import 'package:wantermarket/providers/wishlist_provider.dart';
 import 'package:wantermarket/shared/app_helper.dart';
 
 import '../../config/app_dimenssions.dart';
+import '../../data/models/body/vendor.dart';
 import '../../route/routes.dart';
+import '../../shared/contact_vendor.dart';
 
 class ProductByBoutique3 extends StatelessWidget {
   final Product product;
-  const ProductByBoutique3({Key? key, required this.product}) : super(key: key);
+  final bool isWishlist;
+  const ProductByBoutique3({Key? key, required this.product,  this.isWishlist=false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +47,13 @@ class ProductByBoutique3 extends StatelessWidget {
                         color: Colors.grey[200],
                       ),
                         padding: const EdgeInsets.all(2),
-                        child: const Icon(Icons.favorite_border_outlined, color: Colors.blueAccent,)),),
+                        child: InkWell(
+                            onTap: (){
+                              isWishlist ?
+                              Provider.of<WishlistProvider>(context, listen: false).removeFromWishlist(product) :
+                              Provider.of<WishlistProvider>(context, listen: false).addToWishlist(product);
+                            },
+                            child:  Icon( !isWishlist ? Icons.favorite_border_outlined :Icons.favorite , color: !isWishlist ? Colors.blueAccent : Colors.red,))),),
                   ],
                 ),
               ),
@@ -66,7 +77,7 @@ class ProductByBoutique3 extends StatelessWidget {
                             //localisation icon
                             const Icon(Icons.location_on_outlined, color: AppColors.BLACK, size: 14, ),
                             const SizedBox(width: 5,),
-                            SizedBox(width:135, child: Text(product.vendor!.address!, style: const TextStyle(fontSize: 10, color: Colors.black, overflow: TextOverflow.ellipsis),)),
+                            SizedBox(width:135, child: Text("${ product.vendor!.city!  } ${ product.vendor!.country == "SN" ? "Sénégal": "Togo"  }" , style: const TextStyle(fontSize: 10, color: Colors.black, overflow: TextOverflow.ellipsis),)),
                           ],
                         ) ,
                         const SizedBox(height: 5,),
@@ -81,7 +92,7 @@ class ProductByBoutique3 extends StatelessWidget {
                                 onTap: (){
                                   Navigator.of(context).pushNamed(AppRoutes.vendor, arguments: product.vendor!);
                                 },
-                                child:  SizedBox(width: 135, child: Text(product.vendor!.email!, style: const TextStyle(fontSize: 10, color: Colors.black, ), overflow: TextOverflow.ellipsis,)), ),
+                                child:  SizedBox(width: 135, child: Text(product.boutique!.name ?? product.vendor!.email! , style: const TextStyle(fontSize: 10, color: Colors.black, ), overflow: TextOverflow.ellipsis,)), ),
                           ],
                         )
 
@@ -96,7 +107,7 @@ class ProductByBoutique3 extends StatelessWidget {
                             onTap: (){
                               showDialog(
                                 context: context,
-                                builder: (context) => const ContactsDialog(),
+                                builder: (context) =>  ContactsDialog(vendor: product.vendor!),
                               );
                             },
                             child: Container(
@@ -138,8 +149,9 @@ class ProductByBoutique3 extends StatelessWidget {
 }
 
 class ContactsDialog extends StatelessWidget {
+  final Vendor vendor;
   const ContactsDialog({
-    Key? key,
+    Key? key, required this.vendor
   }) : super(key: key);
 
   @override
@@ -158,10 +170,12 @@ class ContactsDialog extends StatelessWidget {
                       borderRadius: BorderRadius.circular(50),
                     ),)
                 ),
-                onPressed: (){}, child: Row(
+                onPressed: (){
+                  ContactVendor.openPhone(context: context, number: vendor.phone!);
+                }, child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(Icons.call_outlined, size: 25),
+              children: const [
+                Icon(Icons.call_outlined, size: 25),
               ],
             )),
           ),
@@ -174,9 +188,12 @@ class ContactsDialog extends StatelessWidget {
                       borderRadius: BorderRadius.circular(50),
                     ),)
                 ),
-                onPressed: (){}, child: Row(
-              children: [
-                const Icon(Icons.sms_outlined, size: 25),
+                onPressed: (){
+                  ContactVendor.openMessage(context: context, number: vendor.phone!);
+
+                }, child: Row(
+              children: const [
+                Icon(Icons.sms_outlined, size: 25),
               ],
             )),
           ),
@@ -189,9 +206,12 @@ class ContactsDialog extends StatelessWidget {
                       borderRadius: BorderRadius.circular(50),
                     ),)
                 ),
-                onPressed: (){}, child: Row(
-              children: [
-                const Icon(Icons.whatsapp, size: 25),
+                onPressed: (){
+                  ContactVendor.openWhatsappVendor(context: context, vendor: vendor);
+
+                }, child: Row(
+              children: const [
+                Icon(Icons.whatsapp, size: 25),
               ],
             )),
           ),

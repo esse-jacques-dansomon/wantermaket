@@ -31,9 +31,14 @@ class RegisterScreen extends StatelessWidget {
                       },
                     ),
                     const SizedBox(
-                      height: 30,
+                      height: 20,
                     ),
                     Text('Créer Votre Compte', style: TextStyle(color: Colors.white,  fontWeight: FontWeight.bold, fontSize: 22),),
+                    const SizedBox(
+                      height: 7,
+                    ),
+                    const Text('Veuillez creer un compte pour continuer', style: TextStyle(color: Colors.grey, fontSize: 16),),
+
                   ],
                 ),
               ),
@@ -52,15 +57,6 @@ class RegisterScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      //welcome ac texte
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      Text('C est gratiut', style: TextStyle(color: AppColors.PRIMARY,  fontWeight: FontWeight.bold, fontSize: 25),),
-                      const SizedBox(
-                        height: 7,
-                      ),
-                      const Text('Veuillez creer un compte pour continuer', style: TextStyle(color: Colors.grey, fontSize: 16),),
 
                       //form
                       RegisterFormWidget(),

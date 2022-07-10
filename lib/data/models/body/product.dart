@@ -13,6 +13,7 @@ class Product {
   int? price;
   int? priceBefore;
   String? disponibility;
+  int? nombre_vues;
   List<Image>? images;
   Vendor? vendor;
   Boutique? boutique;
@@ -28,6 +29,7 @@ class Product {
       this.price,
       this.priceBefore,
       this.disponibility,
+      this.nombre_vues,
       this.images,
       this.vendor,
       this.boutique
@@ -37,11 +39,12 @@ class Product {
     id = json['id'];
     code = json['code'];
     idBoutique = json['id_boutique'];
-    idCategorie = json['id_categorie'];
+    idCategorie = json['id_category'];
     name = json['name'];
     descriptionBrief = json['description_brief'];
     price = json['price'];
     priceBefore = json['price_before'];
+    nombre_vues = json['nombre_vues'];
     disponibility = json['disponibility']??true;
     boutique = json['boutique'] != null ? Boutique.fromJson(json['boutique']) : null;
     vendor = json['vendeur'] != null ? Vendor.fromJson(json['vendeur']) : null;

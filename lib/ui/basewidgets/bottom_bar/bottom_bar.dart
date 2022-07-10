@@ -94,7 +94,7 @@ class _BottomBarState extends State<BottomBar> {
       case 2:
         return const SearchScreen();
       case 3:
-        return const DashBoardScreen();
+        return  DashBoardScreen();
       default:
         return const HomeScreen();
     }

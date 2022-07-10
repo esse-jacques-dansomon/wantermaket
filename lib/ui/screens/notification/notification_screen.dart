@@ -10,58 +10,60 @@ class NotificationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(child: Scaffold(
+    return Scaffold(
       appBar: appBarWithReturn(title: 'Notifications', context: context),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15.0),
-        child: ListView.builder(
-            itemCount: 20,
-            itemBuilder: (context, index){
-              return Dismissible(
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+          child: ListView.builder(
+              itemCount: 20,
+              itemBuilder: (context, index){
+                return Dismissible(
 
-                key: Key(index.toString()),
-                child: Container(
-                  margin: const EdgeInsets.symmetric( vertical: 5),
-                  padding: const EdgeInsets.symmetric(horizontal:15),
-                  color: Colors.grey[300],
-                  height: 110,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          ClipOval(
-                            child: SizedBox(
-                              height: 50,
-                              width: 50,
-                              child: Image.network('', fit: BoxFit.cover,),
+                  key: Key(index.toString()),
+                  child: Container(
+                    margin: const EdgeInsets.symmetric( vertical: 5),
+                    padding: const EdgeInsets.symmetric(horizontal:15),
+                    color: Colors.grey[300],
+                    height: 110,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            ClipOval(
+                              child: SizedBox(
+                                height: 50,
+                                width: 50,
+                                child: Image.network('', fit: BoxFit.cover,),
+                              ),
                             ),
-                          ),
-                          SizedBox(width: 10,),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('Amama', style: TextStyle(fontSize: AppDimensions.FONT_SIZE_EXTRA_LARGE, color: AppColors.BLACK, fontWeight: FontWeight.w300),),
-                              SizedBox(height: 5,),
-                              Text('jute de publier un nouveau produit')
-                            ],
-                          )
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          TextButton(onPressed: (){}, child: Text('Voir', style: TextStyle(color: AppColors.SECONDARY),)),
-                          TextButton(onPressed: (){}, child: Text('Archiver', style: TextStyle(color: AppColors.SECONDARY),))
-                        ],
-                      )
-                    ],
+                            SizedBox(width: 10,),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('Amama', style: TextStyle(fontSize: AppDimensions.FONT_SIZE_EXTRA_LARGE, color: AppColors.BLACK, fontWeight: FontWeight.w300),),
+                                SizedBox(height: 5,),
+                                Text('jute de publier un nouveau produit')
+                              ],
+                            )
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            TextButton(onPressed: (){}, child: Text('Voir', style: TextStyle(color: AppColors.SECONDARY),)),
+                            TextButton(onPressed: (){}, child: Text('Archiver', style: TextStyle(color: AppColors.SECONDARY),))
+                          ],
+                        )
+                      ],
+                    ),
                   ),
-                ),
-              );
-            }),
+                );
+              }),
+        ),
       ),
-    ));
+    );
   }
 }

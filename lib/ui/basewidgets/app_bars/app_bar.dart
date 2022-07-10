@@ -1,10 +1,13 @@
 import 'package:circle_flags/circle_flags.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:wantermarket/data/fakedata/categorie_json.dart';
+import 'package:wantermarket/providers/search_provider.dart';
+import 'package:wantermarket/route/routes.dart';
 
 import '../../../config/app_colors.dart';
 
-AppBar appBar({bool isActiveSearchbar=false}) {
+AppBar appBar({bool isActiveSearchbar=false, bool isOnSearchPage=false}) {
   return AppBar(
     automaticallyImplyLeading: false,
     toolbarHeight: 70,
@@ -15,29 +18,43 @@ AppBar appBar({bool isActiveSearchbar=false}) {
 
       Builder(
         builder: (context) => IconButton(
-          icon: Icon(Icons.menu_sharp),
+          icon: const Icon(Icons.menu_sharp),
           onPressed: () => Scaffold.of(context).openDrawer(),
         ),),
       isActiveSearchbar? Expanded(
         child: Center(
           child: Container(
+
             height:40,
             alignment: Alignment.centerLeft,
             margin: const EdgeInsets.only(left: 10, right: 10),
-            child: Center(
-              child: TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(50),
-                    ),
-                    contentPadding: EdgeInsets.only(left: 15),
-                    hintText: 'Rechercher',
-                    alignLabelWithHint : true,
-                    suffixIcon: Icon(Icons.search),
+            child: Builder(
+              builder: (context) {
+                return Center(
+                  child: TextField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        contentPadding: const EdgeInsets.only(left: 15),
+                        hintText: 'Rechercher',
+                        alignLabelWithHint : true,
+                        suffixIcon: const Icon(Icons.search),
+                      ),
+                      textAlign: TextAlign.start,
+                      textAlignVertical : TextAlignVertical.center,
+                    onSubmitted: (value) {
+                      Provider.of<SearchProvider>(context, listen: false)
+                          .search(value);
+                      if (!isOnSearchPage) {
+                        Navigator.of(context).pushNamed(AppRoutes.search);
+                      }
+
+                    },
+
                   ),
-                  textAlign: TextAlign.start,
-                  textAlignVertical : TextAlignVertical.center
-              ),
+                );
+              }
             ),
           ),
         ),

@@ -5,7 +5,7 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(child: Scaffold(
+    return Scaffold(
       appBar: AppBar(
         title: Text('Mon Profile'),
         actions: [
@@ -19,12 +19,14 @@ class ProfileScreen extends StatelessWidget {
           )
         ],
       ),
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Column(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(
 
+          ),
         ),
       ),
-    ));
+    );
   }
 }

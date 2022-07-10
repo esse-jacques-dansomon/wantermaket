@@ -25,7 +25,7 @@ class LoginScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    InkWell(child: Icon(Icons.arrow_back_ios, color: Colors.white,),
+                    InkWell(child: const Icon(Icons.arrow_back_ios, color: Colors.white,),
                       onTap: (){
                         Navigator.of(context).pop();
                       },
@@ -33,7 +33,7 @@ class LoginScreen extends StatelessWidget {
                     const SizedBox(
                       height: 30,
                     ),
-                    Text('Se Connecter', style: TextStyle(color: Colors.white,  fontWeight: FontWeight.bold, fontSize: 22),),
+                    Text('Se Connecter', style: const TextStyle(color: Colors.white,  fontWeight: FontWeight.bold, fontSize: 22),),
                   ],
                 ),
               ),
@@ -55,14 +55,14 @@ class LoginScreen extends StatelessWidget {
                     const SizedBox(
                       height: 30,
                     ),
-                    Text('Bienvenue', style: TextStyle(color: AppColors.PRIMARY,  fontWeight: FontWeight.bold, fontSize: 25),),
+                    const Text('Bienvenue', style: TextStyle(color: AppColors.PRIMARY,  fontWeight: FontWeight.bold, fontSize: 25),),
                     const SizedBox(
                       height: 7,
                     ),
-                    Text('Veuillez vous authentificer pour continuer', style: TextStyle(color: Colors.grey, fontSize: 16),),
+                    Text('Veuillez vous authentificer pour continuer', style: const TextStyle(color: Colors.grey, fontSize: 16),),
 
                     //form
-                    LoginFormWidget(),
+                    const LoginFormWidget(),
 
                     Expanded(child: Container(),),
                     //bottom
@@ -72,7 +72,7 @@ class LoginScreen extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text('Pas encore inscrit ?', style: const TextStyle(color: Colors.grey, fontSize: 16),),
+                          const Text('Pas encore inscrit ?', style: TextStyle(color: Colors.grey, fontSize: 16),),
                           const SizedBox(
                             width: 10,
                           ),

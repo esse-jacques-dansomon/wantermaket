@@ -10,9 +10,10 @@ import '../../basewidgets/bottom_bar/bottom_nav_bar.dart';
 class AddProductScreen extends StatelessWidget {
   const AddProductScreen({Key? key}) : super(key: key);
 
+
   @override
   Widget build(BuildContext context) {
-    return SafeArea(child: Scaffold(
+    return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
         },
@@ -23,21 +24,23 @@ class AddProductScreen extends StatelessWidget {
       bottomNavigationBar: const CustomBottomNavBar(add_product: true,),
       appBar: appBar(isActiveSearchbar:true),
       drawer: const AppDrawer(),
-      body: SingleChildScrollView(
-        physics:  const BouncingScrollPhysics(),
-        child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 15),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
-              SizedBox(height: 20,),
-              Text("Ajouter Un Produit", textAlign: TextAlign.start, style: TextStyle(fontSize: AppDimensions.FONT_SIZE_EXTRA_LARGE+3, color: AppColors.BLACK),),
-              SizedBox(height: 10,),
-              ProductAddForm(),
-            ]
+      body: SafeArea(
+        child: SingleChildScrollView(
+          physics:  const BouncingScrollPhysics(),
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 15),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: const [
+                SizedBox(height: 20,),
+                Text("Ajouter Un Produit", textAlign: TextAlign.start, style: TextStyle(fontSize: AppDimensions.FONT_SIZE_EXTRA_LARGE+3, color: AppColors.BLACK),),
+                SizedBox(height: 10,),
+                ProductAddForm(),
+              ]
+            ),
           ),
         ),
       ),
-    ));
+    );
   }
 }

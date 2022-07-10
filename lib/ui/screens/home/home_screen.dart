@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wantermarket/config/app_colors.dart';
+import 'package:wantermarket/providers/auth_provider.dart';
 import 'package:wantermarket/providers/boutique_provider.dart';
 import 'package:wantermarket/providers/category_provider.dart';
 import 'package:wantermarket/providers/product_provider.dart';
@@ -28,7 +29,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final ScrollController _scrollController = ScrollController(initialScrollOffset: 50.0);
   Future<void> _loadData() async {
     Provider.of<SliderProvider>(context, listen: false).getHomeSliders();
     Provider.of<BoutiqueProvider>(context, listen: false).getBoutiquesExclusives();
@@ -38,124 +38,167 @@ class _HomeScreenState extends State<HomeScreen> {
     Provider.of<ProductProvider>(context, listen: false).getNewArrivals();
   }
 
+  Future<void> _loadDataBoutique() async {
+    Provider.of<AuthProvider>(context, listen: false).logout();
+    Provider.of<BoutiqueProvider>(context, listen: false).getBoutiquesExclusives();
+    Provider.of<ProductProvider>(context, listen: false).getDealOfTheDay();
+
+  }
+
+
+
   @override
   void initState() {
     super.initState();
-    _loadData();
+    if (Provider.of<ProductProvider>(context, listen: false).newArrivals.isEmpty){
+      _loadData();
+    }
   }
 
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return Provider.of<ProductProvider>(context, listen: true).newArrivals.isNotEmpty ? Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, AppRoutes.addProduct, );
+        },
+        backgroundColor: AppColors.PRIMARY,
+        child: const Icon(Icons.add, color: AppColors.WHITE, size: 50,),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: const CustomBottomNavBar(home: true,),
+      appBar: appBar(isActiveSearchbar:true),
+      drawer: const AppDrawer(),
+      body: RefreshIndicator(
+        onRefresh: _loadDataBoutique ,
+        child: SafeArea(
+          child: SingleChildScrollView(
+            // physics: const BouncingScrollPhysics(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 30),
+                const HomeSliders(),
+                //Boutiques Exlusives
+                const SizedBox(height: 30),
+                const BoutiquesExclusives(),
 
-      child: Scaffold(
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.pushNamed(context, AppRoutes.addProduct, );
-          },
-          backgroundColor: AppColors.WHITE,
-          child: const Icon(Icons.add, color: AppColors.PRIMARY, size: 50,),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        bottomNavigationBar: const CustomBottomNavBar(home: true,),
-        appBar: appBar(isActiveSearchbar:true),
-        drawer: const AppDrawer(),
-        body: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 30),
-              const HomeSliders(),
-              //Boutiques Exlusives
-              const SizedBox(height: 30),
-              const BoutiquesExclusives(),
+                //Categories
+                const HomeCategories(),
 
-              //Categories
-              const HomeCategories(),
+                //Top annonces
+                const TopAnnoncesWidget(),
 
-              //Top annonces
-              const TopAnnoncesWidget(),
-
-              //banner image
-              Padding(
-                padding: const EdgeInsets.only(top: 30.0),
-                child: Container(
-                  height: 170,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(0),
-                    color: AppColors.BLACK,
-                    backgroundBlendMode: BlendMode.darken,
-                    image: DecorationImage(
-                        image:  Image.network('https://picsum.photos/250?image=41',).image,  fit: BoxFit.cover),
-                  ),
-                  child:  Center(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Text("Placer vos Annonces Ici",
-                          style: TextStyle(color: Colors.white, fontSize: 20),textAlign: TextAlign.center, ),
-                        Text("+221 77 888 888",
-                          style: TextStyle(color: Colors.white, fontSize: 20),textAlign: TextAlign.center, ),
-                      ],
+                //banner image
+                Padding(
+                  padding: const EdgeInsets.only(top: 30.0),
+                  child: Container(
+                    height: 170,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(0),
+                      color: AppColors.BLACK,
+                      backgroundBlendMode: BlendMode.darken,
+                      image: DecorationImage(
+                          image:  Image.network('https://picsum.photos/250?image=41',).image,  fit: BoxFit.cover),
+                    ),
+                    child:  Center(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Text("Placer vos Annonces Ici",
+                            style: TextStyle(color: Colors.white, fontSize: 20),textAlign: TextAlign.center, ),
+                          Text("+221 77 888 888",
+                            style: TextStyle(color: Colors.white, fontSize: 20),textAlign: TextAlign.center, ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
 
-              //Deal du jour
-              const DealDuJourWidget(),
+                //Deal du jour
+                const DealDuJourWidget(),
 
-              //top Boutqiues
-              const TopBoutiquesWidget(),
+                //top Boutqiues
+                const TopBoutiquesWidget(),
 
-              //banner image
-              Padding(
-                padding: const EdgeInsets.only(top: 30.0, ),
-                child: Container(
-                  height: 170,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(0),
-                    color: AppColors.BLACK,
-                    backgroundBlendMode: BlendMode.darken,
-                    image: DecorationImage(
-                        image:  Image.network('https://picsum.photos/250?image=41',).image,  fit: BoxFit.cover),
-                  ),
-                  child:  Center(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Text("Placer vos Annonces Ici",
-                          style: TextStyle(color: Colors.white, fontSize: 20),textAlign: TextAlign.center, ),
-                        Text("+221 77 888 888",
-                          style: TextStyle(color: Colors.white, fontSize: 20),textAlign: TextAlign.center, ),
-                      ],
+                //banner image
+                Padding(
+                  padding: const EdgeInsets.only(top: 30.0, ),
+                  child: Container(
+                    height: 170,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(0),
+                      color: AppColors.BLACK,
+                      backgroundBlendMode: BlendMode.darken,
+                      image: DecorationImage(
+                          image:  Image.network('https://picsum.photos/250?image=41',).image,  fit: BoxFit.cover),
+                    ),
+                    child:  Center(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Text("Placer vos Annonces Ici",
+                            style: TextStyle(color: Colors.white, fontSize: 20),textAlign: TextAlign.center, ),
+                          Text("+221 77 888 888",
+                            style: TextStyle(color: Colors.white, fontSize: 20),textAlign: TextAlign.center, ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
 
-              // Nouveautes
-              const NouveautesWidget(),
-              //load more
-              const SizedBox(height: 10),
+                // Nouveautes
+                const NouveautesWidget(),
+                //load more
+                const SizedBox(height: 10),
 
-              //end of page indicator
-              // _scrollController.position.pixels == _scrollController.position.maxScrollExtent
-              //     ? const Center(
-              //   child: Text(
-              //     "End of Page",
-              //     style: TextStyle(color: AppColors.PRIMARY),
-              //   ),
-              // )
-              //     : const SizedBox(),
+                //end of page indicator
+                // _scrollController.position.pixels == _scrollController.position.maxScrollExtent
+                //     ? const Center(
+                //   child: Text(
+                //     "End of Page",
+                //     style: TextStyle(color: AppColors.PRIMARY),
+                //   ),
+                // )
+                //     : const SizedBox(),
 
 
-            ],
+              ],
+            ) ,
           ),
+        ),
+      ),
+    ) : LoaderWidget();
+  }
+}
+
+class LoaderWidget extends StatelessWidget {
+  const LoaderWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: MediaQuery.of(context).size.height,
+      child:  Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: 80,
+              width: 80,
+              child: Image.asset('assets/images/logo.png', fit:BoxFit.cover,),
+            ),
+            const SizedBox(height: 30),
+            const CircularProgressIndicator(),
+            const SizedBox(height: 100),
+
+          ],
         ),
       ),
     );

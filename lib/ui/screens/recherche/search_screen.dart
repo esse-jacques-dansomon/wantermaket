@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:wantermarket/providers/search_provider.dart';
 import 'package:wantermarket/ui/basewidgets/app_bars/app_bar.dart';
 import 'package:wantermarket/ui/basewidgets/app_bars/app_bar_with_return_type2.dart';
 import 'package:wantermarket/ui/basewidgets/app_bars/drawer.dart';
@@ -22,20 +24,20 @@ class SearchScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(length: 2,
-        child: SafeArea(
-          child: Scaffold(
-            floatingActionButton: FloatingActionButton(
-              onPressed: () {
-                Navigator.pushNamed(context, AppRoutes.addProduct);
-              },
-              backgroundColor: AppColors.WHITE,
-              child: const Icon(Icons.add, color: AppColors.PRIMARY, size: 50,),
-            ),
-            floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-            appBar: appBar(isActiveSearchbar: true),
-            drawer: const AppDrawer(),
-            bottomNavigationBar: const CustomBottomNavBar(search: true),
-            body: Padding(
+        child: Scaffold(
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              Navigator.pushNamed(context, AppRoutes.addProduct);
+            },
+            backgroundColor: AppColors.PRIMARY,
+            child: const Icon(Icons.add, color: AppColors.WHITE, size: 50,),
+          ),
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+          appBar: appBar(isActiveSearchbar: true, isOnSearchPage: true),
+          drawer: const AppDrawer(),
+          bottomNavigationBar: const CustomBottomNavBar(search: true),
+          body: SafeArea(
+            child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15.0),
               child: Column(
                 children: [
@@ -68,8 +70,7 @@ class SearchScreen extends StatelessWidget {
               ),
             ),
           ),
-
-    ));
+        ));
   }
 }
 
@@ -140,20 +141,24 @@ class ProductsFound extends StatelessWidget {
           ),
         ),
 
-        Expanded(child: GridView.builder(
-          physics: const BouncingScrollPhysics(),
-          itemCount: 20,
-          scrollDirection: Axis.vertical,
-          itemBuilder : (context, index){
-            return  ProductByBoutique3(product: Product());
-          },
-          gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: AppHelper.getCrossAxisCount(context, width: 230),
-            childAspectRatio: 1,
-            crossAxisSpacing: 5,
-            mainAxisSpacing: 10,
-            mainAxisExtent: 315,
-          ),
+        Expanded(child: Consumer<SearchProvider>(
+          builder: (context, searchProvider, child){
+            return searchProvider.products.isNotEmpty ? GridView.builder(
+              physics: const BouncingScrollPhysics(),
+              itemCount: searchProvider.products.length,
+              scrollDirection: Axis.vertical,
+              itemBuilder : (context, index){
+                return ProductByBoutique3(product: searchProvider.products[index]);
+              },
+              gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: AppHelper.getCrossAxisCount(context, width: 230),
+                childAspectRatio: 1,
+                crossAxisSpacing: 5,
+                mainAxisSpacing: 10,
+                mainAxisExtent: 315,
+              ),
+            ) : const Center(child: Text('Aucun produit trouvé', style: TextStyle(color: AppColors.BLACK),),);
+          }
         ))
 
       ],
@@ -217,20 +222,24 @@ class BoutiquesFinded extends StatelessWidget {
           ),
         ),
 
-        Expanded(child: GridView.builder(
-          physics: const BouncingScrollPhysics(),
-          itemCount: 20,
-          scrollDirection: Axis.vertical,
-          itemBuilder : (context, index){
-            return  const BoutiqueCardBySecteur();
+        Expanded(child: Consumer<SearchProvider>(
+          builder: (context, searchProvider, child){
+            return searchProvider.boutiques.isNotEmpty ? GridView.builder(
+              physics: const BouncingScrollPhysics(),
+              itemCount: searchProvider.boutiques.length,
+              scrollDirection: Axis.vertical,
+              itemBuilder : (context, index){
+                return  BoutiqueCardBySecteur(boutique: searchProvider.boutiques[index]);
+              },
+              gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: AppHelper.getCrossAxisCount(context ),
+                childAspectRatio: 1,
+                crossAxisSpacing: 5,
+                mainAxisSpacing: 10,
+                mainAxisExtent: 190,
+              ),
+            ) : const Center(child: Text('Aucune boutique trouvé', style: TextStyle(color: AppColors.BLACK),),);
           },
-          gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: AppHelper.getCrossAxisCount(context ),
-            childAspectRatio: 1,
-            crossAxisSpacing: 5,
-            mainAxisSpacing: 10,
-            mainAxisExtent: 190,
-          ),
         ))
 
       ],

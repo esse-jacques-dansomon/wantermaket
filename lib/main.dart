@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:wantermarket/providers/auth_provider.dart';
 import 'package:wantermarket/providers/boutique_provider.dart';
 import 'package:wantermarket/providers/category_detail_provider.dart';
 import 'package:wantermarket/providers/category_provider.dart';
+import 'package:wantermarket/providers/plan_provider.dart';
 import 'package:wantermarket/providers/product_provider.dart';
+import 'package:wantermarket/providers/search_provider.dart';
 import 'package:wantermarket/providers/slider_provider.dart';
+import 'package:wantermarket/providers/vendor_provider.dart';
+import 'package:wantermarket/providers/wishlist_provider.dart';
 import 'package:wantermarket/route/routes.dart';
 import 'package:wantermarket/ui/screens/home/home_screen.dart';
 import './dependance_injector/dependance_injector.dart' as di;
@@ -24,11 +29,16 @@ Future<void> main() async {
   await di.init();
     runApp(MultiProvider(
     providers: [
+      ChangeNotifierProvider(create: (context) => di.sl<AuthProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<SliderProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<BoutiqueProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<CategoryProviderDetails>()),
       ChangeNotifierProvider(create: (context) => di.sl<CategoryProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<ProductProvider>()),
+      ChangeNotifierProvider(create: (context) => di.sl<SearchProvider>()),
+      ChangeNotifierProvider(create: (context) => di.sl<VendorProvider>()),
+      ChangeNotifierProvider(create: (context) => di.sl<WishlistProvider>()),
+      ChangeNotifierProvider(create: (context) => di.sl<PlanProvider>()),
     ],
     child: const MyApp(),),);
 }
@@ -36,7 +46,6 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -44,10 +53,8 @@ class MyApp extends StatelessWidget {
         onGenerateRoute: AppRoutes.onGenerateRoute,
         title: 'WANTERMARKET',
         theme: buildThemeData(),
-        home: const SafeArea(
-          child: Scaffold(
-            body: HomeScreen(),
-          ),
+        home: const Scaffold(
+          body: HomeScreen(),
         )
     );
   }

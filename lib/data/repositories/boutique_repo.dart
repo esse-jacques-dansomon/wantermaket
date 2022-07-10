@@ -8,6 +8,7 @@ class BoutiqueRepo {
   final DioClient dioClient;
   BoutiqueRepo({required this.dioClient});
 
+
   Future<ApiResponse> getBoutiquesExclusives() async {
     try {final response = await dioClient.get(AppConstants.BOUTIQUES_EXCLUSIVES);
       return ApiResponse.withSuccess(response);

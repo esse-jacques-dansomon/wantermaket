@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import '../../../../config/app_colors.dart';
+import '../../../../data/models/body/category.dart';
 import '../../../../route/routes.dart';
 
 class AllCategoryCard extends StatelessWidget {
-  final int index ;
+  final Category category ;
   const AllCategoryCard({
     Key? key,
-    required this.index
+    required this.category
 
   }) : super(key: key);
 
@@ -14,7 +15,7 @@ class AllCategoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-        Navigator.pushNamed(context, AppRoutes.category);
+        Navigator.pushNamed(context, AppRoutes.category, arguments: category);
       },
       child: Container(
         height: 150,
@@ -22,7 +23,7 @@ class AllCategoryCard extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           image: DecorationImage(
-              image:  Image.network('https://picsum.photos/250?image=${index*11}',).image, opacity: 0.7,  colorFilter: const ColorFilter.mode(Colors.black, BlendMode.lighten),  fit: BoxFit.cover),
+              image:  Image.network(category.imagePath!).image, opacity: 0.7,  colorFilter: const ColorFilter.mode(Colors.black, BlendMode.lighten),  fit: BoxFit.cover),
         ),
         child: Padding(
           padding: const EdgeInsets.all(15.0),
@@ -30,9 +31,8 @@ class AllCategoryCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Category $index', style: const TextStyle(fontSize: 20, color: AppColors.WHITE, fontWeight: FontWeight.w400),),
+              Text(category.name!, style: const TextStyle(fontSize: 20, color: AppColors.WHITE, fontWeight: FontWeight.w400),),
               const SizedBox(height: 5,),
-              Text('Description de la category $index', style: const TextStyle(fontSize: 15,color: AppColors.WHITE),),
             ],
           ),
         ),

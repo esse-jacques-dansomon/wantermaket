@@ -22,9 +22,9 @@ class HomeCategories extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 15.0, right: 15.0),
               child: SizedBox(
-                height: 105,
+                height: 120,
                 child: ListView.separated(
-                  separatorBuilder: ( context, int index) => const SizedBox(width: 15),
+                  separatorBuilder: ( context, int index) => const SizedBox(width: 25),
                   itemBuilder: ( context, int index) => CategoryCard(category : snapshot.categories[index]),
                   itemCount: snapshot.categories.length, scrollDirection: Axis.horizontal,),
               ),

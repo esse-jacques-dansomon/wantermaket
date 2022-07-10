@@ -14,13 +14,13 @@ class CategoryCard extends StatelessWidget {
           Navigator.pushNamed(context, AppRoutes.category, arguments: category);
         },
         child: SizedBox(
-          width: !categoriesPage ? 75: 110,
+          width: !categoriesPage ? 80: 110,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                width: !categoriesPage ?65: 100,
-                  height: !categoriesPage ?65: 100,
+                width: !categoriesPage ?75: 100,
+                  height: !categoriesPage ?75: 100,
                   decoration:  BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular( !categoriesPage ?50:0)),
                     image: DecorationImage(
@@ -35,9 +35,9 @@ class CategoryCard extends StatelessWidget {
                Expanded(
                 child: Text(
                   category.name!, textAlign: TextAlign.start,
-                  maxLines: 1,
+                  maxLines: 2,
                   style: const TextStyle(
-                    fontSize: 16,
+                    fontSize: 14,
                     overflow: TextOverflow.ellipsis
 
                   ),
