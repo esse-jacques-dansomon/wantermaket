@@ -1,7 +1,11 @@
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../config/app_colors.dart';
+import '../../../../data/models/body/register_model.dart';
+import '../../../../providers/auth_provider.dart';
+import '../../../../route/routes.dart';
 
 class RegisterFormWidget extends StatefulWidget {
   const RegisterFormWidget({Key? key}) : super(key: key);
@@ -13,8 +17,11 @@ class RegisterFormWidget extends StatefulWidget {
 class _RegisterFormWidgetState extends State<RegisterFormWidget> {
   bool _obscureText = true;
   bool _obscureTextConfirmedPassword = true;
-  String? _password, _email, _username, _confirmPassword, _phone, _countryCode, _nomButique;
+  String?  _username,_firstname , _address, _confirmPassword, _phone, _countryCode, _nomButique, _password, _email;
 
+  FocusNode? _firstnameNode;
+  FocusNode? _nomButiqueNode;
+  FocusNode? _addressNode;
   FocusNode? _passwordNode;
   FocusNode? _confirmedpasswordNode;
   FocusNode? _emailNode;
@@ -24,12 +31,12 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
   @override
   void initState() {
     super.initState();
-    _password='';
-    _email='';
-    _username='';
-    _confirmPassword='';
-    _phone='';
-    _countryCode= _nomButique ='';
+    _password=_email=_username=_firstname=_confirmPassword=_phone= _nomButique = _address='';
+    _countryCode='+221';
+    _usernameNode = FocusNode();
+    _firstnameNode = FocusNode();
+    _nomButiqueNode = FocusNode();
+    _addressNode = FocusNode();
     _usernameNode = FocusNode();
     _emailNode = FocusNode();
     _phoneNode = FocusNode();
@@ -37,9 +44,34 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
     _confirmedpasswordNode = FocusNode();
   }
 
+  Future<void> register() async {
+    try{
+      final authProvider = Provider.of<AuthProvider>(context, listen: false);
+      final registerModel = RegisterModel(
+        name: _username,
+        firstName: _firstname,
+        email: _email,
+        phone: _phone,
+        address: _address,
+        boutiqueName: _nomButique,
+        password: _password,
+      );
+      await authProvider.register(registerModel, context);
+      if (authProvider.isLoggedIn()) {
+        if (!mounted) return;
+        Navigator.of(context).pushReplacementNamed(AppRoutes.profile);
+      }
+    }catch(e){
+      print(e);
+    }
+  }
+
   @override
   void dispose() {
     super.dispose();
+    _firstnameNode?.dispose();
+    _nomButiqueNode?.dispose();
+    _addressNode?.dispose();
     _passwordNode?.dispose();
     _confirmedpasswordNode?.dispose();
     _emailNode?.dispose();
@@ -47,15 +79,206 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
     _usernameNode?.dispose();
   }
 
-  Widget _buildPasswordField(){
-    return SizedBox(
+
+  final _formKey = GlobalKey<FormState>();
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      key: _formKey,
+      child: Column(
+        children: [
+          const SizedBox(
+            height: 15,
+          ),
+          _buildUsernameField(),
+          _buildFirstnameField(),
+          _buildBoutiqueNameField(),
+          _buildAddressField(),
+          _buildPhoneField(),
+          _buildEmailField(),
+          _buildPasswordField(),
+          _buildConfirmedPasswordField(),
+          SizedBox(
+              width: double.infinity,
+              height: 45,
+              child: Provider.of<AuthProvider>(context, listen: false).isLoadingRegister ? const Center(child: CircularProgressIndicator()): ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(AppColors.PRIMARY),),
+                  onPressed: () {
+
+                    if(_formKey.currentState!.validate()){
+                      _formKey.currentState?.save();
+                      register();
+                    }
+                  }, child: const Text("Crée votre compte", style: TextStyle(color: Colors.white),)  )
+          ),
+        ],
+      ),
+
+    );
+  }
+
+
+  Widget _buildUsernameField(){
+    return Container(
+      margin: const EdgeInsets.only(bottom: 25),
       child: TextFormField(
+        initialValue: 'gato junior',
         validator: (value) {
           if (value!.isEmpty) {
-            return 'Please enter your password';
+            return 'Veuillez entre votre nom';
+          }
+          return null;
+        },
+        onSaved: (value) => _username = value!,
+        onEditingComplete: (){
+          // Once user click on Next then it go to password field
+          _firstnameNode!.requestFocus();
+        },
+
+        // validator: requiredValidator,
+        textInputAction: TextInputAction.next,
+        decoration:  InputDecoration(
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 15,
+            vertical: 18,
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(5),
+            borderSide: const BorderSide(
+              color: Colors.black,
+            ),
+          ),
+          hintText: 'Votre nom',
+          hintStyle: const TextStyle(color: AppColors.PRIMARY),
+        ),
+        focusNode: _usernameNode,
+      ),
+    );
+  }
+  Widget _buildFirstnameField(){
+    return Container(
+      margin: const EdgeInsets.only(bottom: 25),
+      child: TextFormField(
+        initialValue: 'gato junior',
+        validator: (value) {
+          if (value!.isEmpty) {
+            return 'Veuillez entre votre prenom';
+          }
+          return null;
+        },
+        onSaved: (value) => _firstname = value!,
+        onEditingComplete: (){
+          // Once user click on Next then it go to password field
+          _nomButiqueNode!.requestFocus();
+        },
+
+        // validator: requiredValidator,
+        textInputAction: TextInputAction.next,
+        decoration:  InputDecoration(
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 15,
+            vertical: 18,
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(5),
+            borderSide: const BorderSide(
+              color: Colors.black,
+            ),
+          ),
+          hintText: 'Votre prenon',
+          hintStyle: const TextStyle(color: AppColors.PRIMARY),
+        ),
+        focusNode: _firstnameNode,
+      ),
+    );
+  }
+  Widget _buildBoutiqueNameField(){
+    return Container(
+
+      margin: const EdgeInsets.only(bottom: 25),
+      child: TextFormField(
+        initialValue: 'gato junior',
+        validator: (value) {
+          if (value!.isEmpty) {
+            return 'Veuillez entre le nom de votre boutique';
+          }
+          return null;
+        },
+        onSaved: (value) => _nomButique = value!,
+        onEditingComplete: (){
+          // Once user click on Next then it go to password field
+          _addressNode!.requestFocus();
+        },
+
+        // validator: requiredValidator,
+        textInputAction: TextInputAction.next,
+        decoration:  InputDecoration(
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 15,
+            vertical: 18,
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(5),
+            borderSide: const BorderSide(
+              color: Colors.black,
+            ),
+          ),
+          hintText: 'Nom de la boutique',
+          hintStyle: const TextStyle(color: AppColors.PRIMARY),
+        ),
+        focusNode: _nomButiqueNode,
+      ),
+    );
+  }
+  Widget _buildAddressField(){
+    return Container(
+      margin: const EdgeInsets.only(bottom: 25),
+      child: TextFormField(
+        initialValue: "gato junior",
+        validator: (value) {
+          if (value!.isEmpty) {
+            return 'Veuillez entre votre adresse';
+          }
+          return null;
+        },
+        onSaved: (value) => _address = value!,
+        onEditingComplete: (){
+          // Once user click on Next then it go to password field
+          _phoneNode!.requestFocus();
+        },
+
+        // validator: requiredValidator,
+        textInputAction: TextInputAction.next,
+        decoration:  InputDecoration(
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 15,
+            vertical: 18,
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(5),
+            borderSide: const BorderSide(
+              color: Colors.black,
+            ),
+          ),
+          hintText: 'Votre Adresse',
+          hintStyle: const TextStyle(color: AppColors.PRIMARY),
+        ),
+        focusNode: _addressNode,
+      ),
+    );
+  }
+  Widget _buildPasswordField(){
+    return Container(
+      margin: const EdgeInsets.only(bottom: 25),
+        child: TextFormField(
+          initialValue: '123456',
+        validator: (value) {
+          if (value!.isEmpty) {
+            return 'Veuillez entrer un mot de passe';
           }
           if (value.length < 6) {
-            return 'Password must be at least 6 characters';
+            return 'Le mot de passe doit contenir au moins 6 caractères';
           }
           return null;
         },
@@ -97,21 +320,24 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
     );
   }
   Widget _buildConfirmedPasswordField(){
-    return SizedBox(
+    return Container(
+      margin: const EdgeInsets.only(bottom: 25),
+
       child: TextFormField(
+        initialValue: '123456',
         validator: (value) {
-          if (value!.isEmpty || value != _password) {
-            return 'Please enter your password';
+          if (value!.isEmpty ) {
+            return 'Veuillez confirmer votre mot de passe';
           }
-          if (value.length < 6 || value != _password) {
-            return 'Password must be at least 6 characters';
-          }
+          // if (value.length < 6 || value != _password) {
+          //   return 'Le mot de passe doit contenir au moins 6 caractères';
+          // }
           return null;
         },
         focusNode: _confirmedpasswordNode,
         obscureText: _obscureTextConfirmedPassword,
         decoration:  InputDecoration(
-          hintText: 'Confirmed Password',
+          hintText: 'Confirmer le mot de passe',
           hintStyle: const TextStyle(color: AppColors.PRIMARY),
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 15,
@@ -142,16 +368,18 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
     );
   }
   Widget _buildEmailField(){
-    return SizedBox(
+    return Container(
+      margin: const EdgeInsets.only(bottom: 25),
       child: TextFormField(
+        initialValue: '1@1.com',
         validator: (value) {
           if (value!.isEmpty) {
-            return 'Please enter your email';
+            return 'Veuillez entrer un email';
           }
           if (!RegExp(
               r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
               .hasMatch(value)) {
-            return 'Please enter a valid email';
+            return 'Veuillez entrer un email valide';
           }
           return null;
         },
@@ -180,22 +408,24 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
       ),
     );
   }
-  Widget _buildPhoneField(){return SizedBox(
-    height: 60,
+  Widget _buildPhoneField(){
+    return Container(
+      margin: const EdgeInsets.only(bottom: 25),
+      height: 60,
       child: TextFormField(
         validator: (value) {
           if (value!.isEmpty || value =='77 777 77 77') {
-            return 'Please enter your phone number';
+            return 'Veuillez entrer un numéro de téléphone';
           }
           if (value.length < 9 || value =='77 777 77 77') {
-            return 'Phone number must be at least 9 characters';
+            return 'Le numéro de téléphone doit contenir au moins 9 chiffres';
           }
           return null;
         },
         focusNode: _phoneNode,
-        initialValue: "77 777 77 77",
+        initialValue: "777777778",
         keyboardType: TextInputType.phone,
-        onSaved: (value) => _phone =  '${_countryCode}' + '${value?.replaceAll(' ', "")}',
+        onSaved: (value) => _phone =  '$_countryCode${value?.replaceAll(' ', '')}',
         // validator: senegalPhoneNumberValidator,
         textInputAction: TextInputAction.next,
         onEditingComplete: () {
@@ -223,7 +453,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
               },
 
               textStyle: const TextStyle(color: AppColors.PRIMARY, fontSize: 16.5,),
-              initialSelection: "SN",
+              initialSelection: "sn",
               showCountryOnly: false,
               enabled: true,
               searchDecoration: const InputDecoration(contentPadding: EdgeInsets.zero),
@@ -233,43 +463,6 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
 
       ),
     );  }
-  Widget _buildUserField(String? label){
-    return SizedBox(
-      child: TextFormField(
-        validator: (value) {
-          if (value!.isEmpty) {
-            return 'Please enter your $label';
-          }
-          if (value.length < 6) {
-            return '$label must be at least 6 characters';
-          }
-          return null;
-        },
-        onSaved: (value) => label = value,
-        onEditingComplete: (){
-          // Once user click on Next then it go to password field
-          _phoneNode!.requestFocus();
-        },
-
-        // validator: requiredValidator,
-        textInputAction: TextInputAction.next,
-        decoration:  InputDecoration(
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 15,
-            vertical: 18,
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5),
-            borderSide: const BorderSide(
-              color: Colors.black,
-            ),
-          ),
-          hintText: label,
-          hintStyle: const TextStyle(color: AppColors.PRIMARY),
-        ),
-      ),
-    );
-  }
 
   void displayDialog(BuildContext context, String title, String text) =>
       showDialog(
@@ -283,66 +476,6 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
 
 
 
-  final _formKey = GlobalKey<FormState>();
-  @override
-  Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: Column(
-        children: [
-          const SizedBox(
-            height: 15,
-          ),
-          _buildUserField('Nom Complet'),
-          const SizedBox(
-            height: 20,
-          ),
-          _buildUserField('Nom De La Boutique'),
-          const SizedBox(
-            height: 20,
-          ),
-          _buildUserField('Adresse De La Boutique'),
-          const SizedBox(
-            height: 20,
-          ),
-          _buildPhoneField(),
-          const SizedBox(
-            height: 20,
-          ),
-          _buildEmailField(),
 
-          const SizedBox(
-            height: 20,
-          ),
-
-          _buildPasswordField(),
-          const SizedBox(
-            height: 20,
-          ),
-          _buildConfirmedPasswordField(),
-          const SizedBox(
-            height: 20,
-          ),
-          SizedBox(
-              width: double.infinity,
-              height: 45,
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(AppColors.PRIMARY),),
-                onPressed: (){
-                  if(_formKey.currentState!.validate()){
-                    _formKey.currentState!.save();
-                    print('$_email $_password $_phone $_countryCode');
-                  }else{
-                    // displayDialog(context, 'Erreur', 'Veuillez remplir tous les champs');
-                  }
-                }, child: const Text('Se Connecter', style: TextStyle(
-                fontSize: 18,
-              ),), )),
-        ],
-      ),
-
-    );
-  }
 
 }

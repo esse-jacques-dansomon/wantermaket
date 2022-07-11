@@ -59,28 +59,28 @@ class LoginReponse {
   //     );
 
   factory LoginReponse.fromJson(Map<String, dynamic> json) => LoginReponse(
-    etat: json["etat"] ?? null,
-    canAddProduct: json["canAddProduct"] ?? null,
-    plan: json["plan"] ?? null,
-    profilImage: json["profil_image"] ?? null,
-    boutiqueName: json["boutique_name"] ?? null,
-    vendeurId: json["vendeur_id"] ?? null,
-    boutiqueId: json["boutique_id"] ?? null,
-    adresse: json["adresse"] ?? null,
-    accessToken: json["access_token"] ?? null,
-    tokenType: json["token_type"] ?? null,
+    etat: json["etat"],
+    canAddProduct: json["canAddProduct"],
+    plan: json["plan"],
+    profilImage: json["profil_image"],
+    boutiqueName: json["boutique_name"],
+    vendeurId: json["vendeur_id"],
+    boutiqueId: json["boutique_id"],
+    adresse: json["adresse"],
+    accessToken: json["access_token"],
+    tokenType: json["token_type"],
   );
 
   Map<String, dynamic> toJson() => {
-    "etat": etat ?? null,
-    "canAddProduct": canAddProduct ?? null,
-    "plan": plan ?? null,
-    "profil_image": profilImage ?? null,
-    "boutique_name": boutiqueName ?? null,
-    "vendeur_id": vendeurId ?? null,
-    "boutique_id": boutiqueId ?? null,
-    "adresse": adresse ?? null,
-    "access_token": accessToken ?? null,
-    "token_type": tokenType ?? null,
+    "etat": etat,
+    "canAddProduct": canAddProduct,
+    "plan": plan,
+    "profil_image": profilImage,
+    "boutique_name": boutiqueName,
+    "vendeur_id": vendeurId,
+    "boutique_id": boutiqueId,
+    "adresse": adresse,
+    "access_token": accessToken,
+    "token_type": tokenType,
   };
 }

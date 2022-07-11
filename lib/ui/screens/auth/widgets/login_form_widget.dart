@@ -24,20 +24,13 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
   FocusNode? _passwordNode;
 
   void _signIn() async {
-   try{
-     final authProvider = Provider.of<AuthProvider>(context, listen: false);
-     final loginModel = LoginModel(email: 'abakarmahamat1991@gmail.com', password: 'rasmuslerdorf');
-     await authProvider.login(loginModel);
-     if (authProvider.loginn) {
-       if (!mounted) return;
-       Navigator.of(context).pushReplacementNamed(AppRoutes.profile);
-     }else{
-       if (!mounted) return;
-       displayDialog(context, 'Error', 'Invalid email or password');
-     }
-   }catch(e){
-
-   }
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    final loginModel = LoginModel(email: _email!, password: _password!);
+    await authProvider.login(loginModel, context);
+    if (authProvider.isLoggedIn()) {
+      if (!mounted) return;
+      Navigator.of(context).pushReplacementNamed(AppRoutes.profile);
+    }
 
   }
 
@@ -62,12 +55,13 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
   Widget _buildPasswordField(){
     return SizedBox(
       child: TextFormField(
-        validator: (value) {
-          if (value?.isEmpty ?? true) {
-            return 'Please enter your password';
-          }
-          return null;
-        },
+        initialValue: '123456',
+        // validator: (value) {
+        //   if (value?.isEmpty ?? true) {
+        //     return 'Please enter your password';
+        //   }
+        //   return null;
+        // },
         focusNode: _passwordNode,
         obscureText: _obscureText,
         decoration:  InputDecoration(
@@ -101,8 +95,9 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
   Widget _buildEmailField(){
     return SizedBox(
       child: TextFormField(
+        initialValue: '1@1.com',
         onSaved: (value) => _email = value,
-        validator: (value) => value!.isEmpty ? 'Please enter your email' : null,
+        // validator: (value) => value!.isEmpty ? 'Please enter your email' : null,
         textInputAction: TextInputAction.next,
         onEditingComplete: () {
           // Once user click on Next then it go to password field
@@ -157,7 +152,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
           SizedBox(
               width: double.infinity,
               height: 45,
-              child: Provider.of<AuthProvider>(context).isLoading ? const Center(child: CircularProgressIndicator()): ElevatedButton(
+              child: false ? const Center(child: CircularProgressIndicator()): ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(AppColors.PRIMARY),),
                   onPressed: () {

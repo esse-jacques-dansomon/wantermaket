@@ -39,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _loadDataBoutique() async {
-    Provider.of<AuthProvider>(context, listen: false).logout();
+    Provider.of<AuthProvider>(context, listen: false).clearall();
     Provider.of<BoutiqueProvider>(context, listen: false).getBoutiquesExclusives();
     Provider.of<ProductProvider>(context, listen: false).getDealOfTheDay();
 

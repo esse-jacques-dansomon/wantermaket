@@ -14,8 +14,6 @@ class SliderProvider extends ChangeNotifier{
     final sliderResponse = await sliderRepo.getSliders();
     if(sliderResponse.error == null){
       _sliders.clear();
-      print(sliderResponse.response.data);
-
       sliderResponse.response.data.forEach((element) {
         _sliders.add(SliderItem.fromJson(element));
       });

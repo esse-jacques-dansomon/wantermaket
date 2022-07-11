@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wantermarket/data/models/body/login_model.dart';
+import 'package:wantermarket/data/models/body/register_model.dart';
 import 'package:wantermarket/data/models/body/user_base_info.dart';
 
 import '../../config/app_constantes.dart';
@@ -23,10 +24,30 @@ class AuthRepo {
     }
   }
 
+  Future<ApiResponse> register(RegisterModel registerModel) async {
+    try {
+      final response = await dioClient.post(AppConstants.VENDEUR_URI, data: registerModel.toJson());
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+
+  Future<ApiResponse> logout() async {
+    try {
+      final response = await dioClient.get(AppConstants.LOGOUT);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+
 
 
   Future<void> saveToken(String token) async {
     try {
+      print('save token');
+      print('$token');
       await sharedPreferences.setString(AppConstants.TOKEN, token);
     } catch (e) {
       throw e;
@@ -71,15 +92,31 @@ class AuthRepo {
     return sharedPreferences.getString(AppConstants.TOKEN)?? "";
   }
 
-  Future<String> getValueFromSh(String name) async {
+  Future<dynamic> getValueFromSh(String name) async {
     return sharedPreferences.getString(name)?? "";
   }
 
+
   bool  isLoggedIn() {
-    return sharedPreferences.containsKey(AppConstants.TOKEN) ;
+    return sharedPreferences.getString(AppConstants.TOKEN) != null;
   }
 
-  Future<void> logout() async {
+  Future<void> clearAll() async {
+    try {
+      var token;
+      await getToken().then((value) => token);
+      print(token);
+      await sharedPreferences.setString(AppConstants.TOKEN, '');
+      await sharedPreferences.clear();
+      await getToken().then((value) => token);
+      print(token);
+      print('clear sharedPreferences');
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  Future<void> clearSharedPreferences() async {
     try {
       await sharedPreferences.clear();
     } catch (e) {

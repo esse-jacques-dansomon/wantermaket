@@ -29,6 +29,7 @@ import '../ui/screens/recherche/search_screen.dart';
 class AppRoutes {
   static const String home = '/home';
   static const String login = '/login';
+  static const String logout = '/logout';
   static const String become_exclusive = '/become_exclusive';
   static const String register = '/register';
   static const String splash = '/';

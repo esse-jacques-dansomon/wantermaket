@@ -1,8 +1,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wantermarket/config/app_colors.dart';
+import 'package:wantermarket/config/app_constantes.dart';
 import 'package:wantermarket/providers/auth_provider.dart';
 import 'package:wantermarket/providers/vendor_provider.dart';
 import 'package:wantermarket/route/routes.dart';
@@ -10,15 +10,13 @@ import 'package:wantermarket/shared/app_helper.dart';
 import 'package:wantermarket/ui/basewidgets/app_bars/drawer.dart';
 import 'package:wantermarket/ui/screens/home/home_screen.dart';
 
-import '../../../config/app_constantes.dart';
-import '../../../config/app_images.dart';
 import '../../../data/models/body/product.dart';
 import '../../basewidgets/app_bars/app_bar.dart';
 import '../../basewidgets/bottom_bar/bottom_nav_bar.dart';
 
 
 class DashBoardScreen extends StatefulWidget {
-  DashBoardScreen({Key? key}) : super(key: key);
+  const DashBoardScreen({Key? key}) : super(key: key);
 
   @override
   State<DashBoardScreen> createState() => _DashBoardScreenState();
@@ -26,27 +24,29 @@ class DashBoardScreen extends StatefulWidget {
 
 class _DashBoardScreenState extends State<DashBoardScreen> {
 
-  _loadData(boutiqueId) async {
-    Provider.of<VendorProvider>(context, listen: false).getBoutique(boutiqueId);
-    Provider.of<VendorProvider>(context, listen: false).getVendorStat(boutiqueId);
-    Provider.of<VendorProvider>(context, listen: false).getVendorProducts(boutiqueId);
-
+  _loadData(idBoutique) async {
+    Provider.of<VendorProvider>(context, listen: false).getBoutique(idBoutique);
+    Provider.of<VendorProvider>(context, listen: false).getVendorStat(idBoutique);
+    Provider.of<VendorProvider>(context, listen: false).getVendorProducts(idBoutique);
   }
 
 
   @override
   initState()  {
-    // TODO: implement initState
     super.initState();
-    if(Provider.of<VendorProvider>(context, listen: false).products.isEmpty){
-      _loadData(Provider.of<AuthProvider>(context, listen: false).user.boutiqueId);
+    if(Provider.of<VendorProvider>(context, listen: false).isProudctLoad == false) {
+      Provider.of<AuthProvider>(context, listen: false).getUserConnected().whenComplete(() {
+        _loadData(Provider.of<AuthProvider>(context, listen: false).user.boutiqueId);
+        Provider.of<VendorProvider>(context, listen: false).isProudctLoad = true;
+      });
+      // _loadData(Provider.of<AuthProvider>(context, listen: false).user.boutiqueId);
     }
   }
 
   @override
   Widget build(BuildContext context) {
 
-    return Provider.of<VendorProvider>(context, listen: true ).products.isNotEmpty ? Scaffold(
+    return Provider.of<VendorProvider>(context, listen: true ).vendorStat.idBoutique !=null ? Scaffold(
       bottomNavigationBar: const CustomBottomNavBar(profile: true,),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -144,29 +144,12 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                     ),
                     Column(
                       children: [
-                        // const SizedBox(height: 10,),
-                        // Row(
-                        //   children:  const [
-                        //     Text('Membre depuis le',
-                        //       style: TextStyle(
-                        //         fontSize: 16,
-                        //         fontWeight: FontWeight.w300,
-                        //       ),
-                        //     ),
-                        //     SizedBox(width: 40,),
-                        //     Text('01/01/2020',
-                        //       style: TextStyle(
-                        //         fontSize: 16,
-                        //         fontWeight: FontWeight.w400,
-                        //       ),
-                        //     ),
-                        //   ],
-                        // ),
+
                         const SizedBox(height: 10,),
                         Row(
                           children: [
                             Expanded(child: ElevatedButton(onPressed: (){
-                              Navigator.pushNamed(context, AppRoutes.register);
+                              // Navigator.pushNamed(context, AppRoutes.register);
 
                             }, child: const Text('Editer Profile'))),
                             const SizedBox(width: 10,),
@@ -177,7 +160,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         ),
                         //STATISTIQUES
                         Consumer<VendorProvider>(
-                          builder: (__, vendorProvider, _){
+                          builder: (context, vendorProvider, _){
                             return Column(
                               children: [
                                 Container(
@@ -231,14 +214,14 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Expanded(child:  StatItem(name: 'Produits',value: vendorProvider.vendorStat.nombreAbonnes!,)),
+                                      Expanded(child:  StatItem(name: 'Produits',value: vendorProvider.vendorStat.produitsTotal!,)),
                                       Container(
                                         width: 2,
                                         height: 45,
                                         margin: const EdgeInsets.symmetric(horizontal: 0),
                                         color: AppColors.PRIMARY,
                                       ),
-                                      Expanded(child:  StatItem(name: 'Produits Restants',value: vendorProvider.vendorStat.nombreAbonnes!,)),
+                                      Expanded(child:  StatItem(name: 'Produits Restants',value: vendorProvider.vendorStat.produitsRestant!,)),
                                     ],
                                   ),
                                 ),
@@ -252,6 +235,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   ],
                 ),
               ),
+
 
               Container(
                 margin : const EdgeInsets.only(bottom: 20, top: 10),
@@ -267,7 +251,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
               ),
               Consumer<VendorProvider>(
                 builder: (context, vendorProvider, _){
-                  return GridView.builder(
+                  return vendorProvider.products.isNotEmpty ? GridView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
@@ -281,6 +265,9 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                       itemBuilder : (context, index){
                         return VendorProductCard(product: vendorProvider.products[index],);
                       }
+                  ) : Container(
+                      padding: const EdgeInsets.symmetric(vertical: 50),
+                    child: const Center(child: Text('Aucun Produit', textAlign: TextAlign.center, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),)),
                   );
                 },
               ),

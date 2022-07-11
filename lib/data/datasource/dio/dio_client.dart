@@ -15,7 +15,7 @@ class DioClient {
   String countryCode='SN';
 
   DioClient(this.baseUrl, Dio dioC, this.sharedPreferences) {
-      token = sharedPreferences.getString(AppConstants.TOKEN) ??  '';
+    token = sharedPreferences.getString(AppConstants.TOKEN) ??  '';
     // countryCode = sharedPreferences.getString(AppConstants.COUNTRY_CODE) ?? AppConstants.languages[0].countryCode;
     print("NNNN $token");
     dio = dioC;
@@ -52,10 +52,17 @@ class DioClient {
     CancelToken? cancelToken,
     ProgressCallback? onReceiveProgress,
   }) async {
-    print('=====get====>$uri');
-    print("NNNN $token");
 
     try {
+      dio.options.headers = {
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer ${sharedPreferences.getString(AppConstants.TOKEN) }',
+        // AppConstants.LANG_KEY: countryCode == 'US'? 'en':countryCode.toLowerCase(),
+      };
+      token = sharedPreferences.getString(AppConstants.TOKEN) ?? '';
+      print('=====get====> $uri');
+      print("=====TOKEN==> $token");
+      print("==shared token=> ${sharedPreferences.getString(AppConstants.TOKEN) }");
       var response = await dio.get(
         uri,
         queryParameters: queryParameters,

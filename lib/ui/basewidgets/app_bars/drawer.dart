@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:wantermarket/config/app_colors.dart';
 import 'package:wantermarket/config/app_constantes.dart';
 import 'package:wantermarket/config/app_dimenssions.dart';
+import 'package:wantermarket/config/app_images.dart';
+import 'package:wantermarket/providers/vendor_provider.dart';
 import 'package:wantermarket/route/routes.dart';
 
 import '../../../providers/auth_provider.dart';
@@ -18,8 +20,7 @@ class AppDrawer extends StatefulWidget {
 class _AppDrawerState extends State<AppDrawer> {
 
   Future<void> _loadDataBoutique() async {
-     Provider.of<AuthProvider>(context, listen: false).getUserShop();
-     Provider.of<AuthProvider>(context, listen: false).getUserConnectedInfo();
+     // Provider.of<AuthProvider>(context, listen: false).getUserConnectedInfo();
 
   }
 
@@ -27,9 +28,7 @@ class _AppDrawerState extends State<AppDrawer> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    if(Provider.of<AuthProvider>(context, listen: false).isLoggedIn()) {
-      _loadDataBoutique();
-    }
+    _loadDataBoutique();
   }
 
   @override
@@ -41,14 +40,14 @@ class _AppDrawerState extends State<AppDrawer> {
             decoration: const BoxDecoration(
               color: AppColors.PRIMARY,
             ),
-            child:  Provider.of<AuthProvider>(context).isLoggedIn() ? Consumer<AuthProvider>(
+            child:  Provider.of<AuthProvider>(context, listen: true).isLoggedIn() ? Consumer<AuthProvider>(
               builder: (context, authProvider, _){
                 return  Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     ClipOval(
                       child: Image.network(
-                        AppConstants.BASE_URL_IMAGE +Provider.of<AuthProvider>(context, listen: false).user.profilImage! ,
+                        Provider.of<AuthProvider>(context, listen: false).user.profilImage ==null ? AppImage.logo : AppConstants.BASE_URL_IMAGE + Provider.of<AuthProvider>(context, listen: false).user.profilImage! ,
                         fit: BoxFit.cover,
                         height: 70,
                         width: 70,
@@ -59,9 +58,9 @@ class _AppDrawerState extends State<AppDrawer> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children:  [
-                        Text(Provider.of<AuthProvider>(context, listen: false).user.boutiqueName!, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color: AppColors.WHITE),),
-                        const SizedBox(height: 5,),
-                        Text('@${Provider.of<AuthProvider>(context, listen: false).user.plan!}', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: AppColors.WHITE),),
+                        Text(Provider.of<AuthProvider>(context, listen: false).user.boutiqueName ??'Pas de Nom', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color: AppColors.WHITE),),
+                        Text('@${Provider.of<AuthProvider>(context, listen: false).user.plan ?? 'Plan Encore de Plan'}', style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: AppColors.WHITE),),
+                        Text('@${Provider.of<AuthProvider>(context, listen: false).user.boutiqueId ?? 'Plan de id'}', style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: AppColors.WHITE),),
                       ],
                     )
 
@@ -81,7 +80,7 @@ class _AppDrawerState extends State<AppDrawer> {
                       children: [
                         const Text('Bienvenue', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color: AppColors.WHITE),),
                         const SizedBox(height: 10,),
-                        SizedBox(width:MediaQuery.of(context).size.width*0.5 , child: Text('Merci de creer un compte pour continuer', maxLines: 3, style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: AppColors.WHITE),)),
+                        SizedBox(width:MediaQuery.of(context).size.width*0.5 , child: const Text('Merci de creer un compte pour continuer', maxLines: 3, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: AppColors.WHITE),)),
                       ],
                     ),
                   ],
@@ -101,7 +100,7 @@ class _AppDrawerState extends State<AppDrawer> {
             icon: Icons.category_outlined,
           ) ,
 
-          Provider.of<AuthProvider>(context).isLoggedIn() ?Column(
+          Provider.of<AuthProvider>(context, listen: false).isLoggedIn() ?Column(
             children: const [
               DrawerMenuItem(
                 menuName: 'Boutiques Favories',
@@ -132,9 +131,13 @@ class _AppDrawerState extends State<AppDrawer> {
             title: Text('Mon compte', style: TextStyle(fontSize: 17, color: Colors.grey[600]),),
           ),
 
+          const DrawerMenuItem(
+            menuName: 'Mot de Passe',
+            route: AppRoutes.forgotPassword,
+            icon: Icons.password_outlined,
+          ),
 
-
-          !Provider.of<AuthProvider>(context).isLoggedIn() ?
+          !Provider.of<AuthProvider>(context, listen: false).isLoggedIn() ?
           Column(
             children: const [
               DrawerMenuItem(
@@ -151,21 +154,22 @@ class _AppDrawerState extends State<AppDrawer> {
           )
 
           :Column(
-            children: const [
-               DrawerMenuItem(
+            children:  [
+               const DrawerMenuItem(
                 menuName: 'Dévénir exclusive',
                 route: AppRoutes.become_exclusive,
                 icon: Icons.star_half_outlined,
               ),
-              DrawerMenuItem(
-                menuName: 'Mot de Passe',
-                route: AppRoutes.forgotPassword,
-                icon: Icons.password_outlined,
-              ),
-              DrawerMenuItem(
-                menuName: 'Se Deconnecter',
-                route: AppRoutes.home,
-                icon: Icons.logout_outlined,
+              ListTile(
+                onTap: (){
+                  Provider.of<AuthProvider>(context, listen: false).logout();
+                  Provider.of<VendorProvider>(context, listen: false).clear();
+                  Navigator.popAndPushNamed(context, AppRoutes.home);
+                },
+                horizontalTitleGap: 5,
+                leading: const Icon( Icons.logout_outlined, color: AppColors.BLACK,),
+                title: const Text('Se Deconnecter', style: TextStyle(color: AppColors.BLACK, fontSize: AppDimensions.FONT_SIZE_DEFAULT+2),),
+
               ),
             ],
           )
@@ -190,9 +194,9 @@ class DrawerMenuItem extends StatelessWidget {
     return ListTile(
       horizontalTitleGap: 5,
       leading: Icon(icon, color: AppColors.BLACK,),
-      title: Text(menuName, style: TextStyle(color: AppColors.BLACK, fontSize: AppDimensions.FONT_SIZE_DEFAULT+2),  ),
+      title: Text(menuName, style: const TextStyle(color: AppColors.BLACK, fontSize: AppDimensions.FONT_SIZE_DEFAULT+2),  ),
       onTap: () {
-        Navigator.pushNamed(context, route);
+        Navigator.popAndPushNamed(context, route);
       },
     )  ;
   }

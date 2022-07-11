@@ -53,7 +53,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => ProductProvider(productsRepo: sl()));
   sl.registerLazySingleton(() => SliderProvider(sliderRepo: sl()));
   sl.registerLazySingleton(() => SearchProvider(searchRepo: sl()));
-  sl.registerLazySingleton(() => VendorProvider(vendorRepo: sl()));
+  sl.registerLazySingleton(() => VendorProvider(vendorRepo: sl(), sharedPreferences: sl()));
   sl.registerLazySingleton(() => PlanProvider(planRepo: sl()));
   sl.registerLazySingleton(() => WishlistProvider());
 

@@ -19,6 +19,7 @@ class AppConstants {
   static const String PLANS_URI = '/plans';
   static const String SEARCH_URI = '/search';
   static const String LOGIN_URI = '/login';
+  static const String LOGOUT = '/logout';
   static const String USER_CONNECTED_INFO = '/verify';
 
 

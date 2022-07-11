@@ -37,7 +37,7 @@ class ApiErrorHandler {
                     errorDescription = errorResponse;
                   } else {
                     errorDescription =
-                    "Failed to load data - status code: ${error.response?.statusCode}";
+                    "${error.response!.data['message']}";
                   }
               }
               break;
