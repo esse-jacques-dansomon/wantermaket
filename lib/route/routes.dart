@@ -60,11 +60,13 @@ class AppRoutes {
       builder: (context, auth, child) =>  Provider.of<AuthProvider>(context, listen : false).isLoggedIn() ? loggedWidget : notLogged ,
     );
 
+
     switch(settings.name) {
       case login:
-        return MaterialPageRoute(builder: (context) => isLoggedIn( DashBoardScreen()) );
+
+        return MaterialPageRoute(builder: (context) => isLoggedIn( const DashBoardScreen()) );
       case register:
-        return MaterialPageRoute(builder: (context) => isLoggedIn( DashBoardScreen(), notLogged: const RegisterScreen()) );
+        return MaterialPageRoute(builder: (context) => isLoggedIn( const DashBoardScreen(), notLogged: const RegisterScreen()) );
       case home:
         return MaterialPageRoute(builder: (context) => const HomeScreen());
       case shop:
@@ -74,7 +76,7 @@ class AppRoutes {
       case search:
         return MaterialPageRoute(builder: (context) => const SearchScreen());
       case profile:
-        return MaterialPageRoute(builder: (context) => isLoggedIn( DashBoardScreen()));
+        return MaterialPageRoute(builder: (context) => isLoggedIn( const DashBoardScreen()));
       case category:
         final category = settings.arguments as Category;
         return MaterialPageRoute(builder: (context) =>  CategoryScreen(category: category,));

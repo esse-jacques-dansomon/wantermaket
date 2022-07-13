@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wantermarket/data/fakedata/produit_json.dart';
 import 'package:wantermarket/data/repositories/auth_repo.dart';
+import 'package:wantermarket/data/repositories/boutique_favories_repo.dart';
 import 'package:wantermarket/data/repositories/boutique_repo.dart';
 import 'package:wantermarket/data/repositories/categories_repo.dart';
 import 'package:wantermarket/data/repositories/plan_repo.dart';
@@ -13,6 +14,7 @@ import 'package:wantermarket/data/repositories/search_repo.dart';
 import 'package:wantermarket/data/repositories/slider_repo.dart';
 import 'package:wantermarket/data/repositories/vendor_repo.dart';
 import 'package:wantermarket/providers/auth_provider.dart';
+import 'package:wantermarket/providers/boutique_favories_provider.dart';
 import 'package:wantermarket/providers/plan_provider.dart';
 import 'package:wantermarket/providers/slider_provider.dart';
 import 'package:wantermarket/providers/vendor_provider.dart';
@@ -43,6 +45,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => SearchRepo(dioClient: sl()));
   sl.registerLazySingleton(() => VendorRepo(dioClient: sl()));
   sl.registerLazySingleton(() => PlanRepo(dioClient: sl()));
+  sl.registerLazySingleton(() => BoutiqueFavoriesRepo(dioClient: sl()));
 
 
   //Provider
@@ -55,6 +58,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => SearchProvider(searchRepo: sl()));
   sl.registerLazySingleton(() => VendorProvider(vendorRepo: sl(), sharedPreferences: sl()));
   sl.registerLazySingleton(() => PlanProvider(planRepo: sl()));
+  sl.registerLazySingleton(() => BoutiqueFavoriesProvider(boutiqueFavoriesRepo: sl()));
   sl.registerLazySingleton(() => WishlistProvider());
 
   // External

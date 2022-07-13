@@ -33,6 +33,14 @@ class BoutiqueRepo {
     }
   }
 
+  Future<ApiResponse> updateBoutiqueViews(int boutiqueId) async {
+    try {final response = await dioClient.get('${AppConstants.BOUTIQUE_URI}/$boutiqueId/increment');
+    return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+
 
 
 

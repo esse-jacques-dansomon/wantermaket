@@ -48,8 +48,10 @@ class ProductsRepo {
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
     }
-
   }
+
+  //related products
+
 
 
 

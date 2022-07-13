@@ -5,6 +5,7 @@ import 'package:wantermarket/providers/auth_provider.dart';
 import 'package:wantermarket/route/routes.dart';
 
 import '../../../../config/app_colors.dart';
+import '../../../../providers/vendor_provider.dart';
 
 class LoginFormWidget extends StatefulWidget {
   const LoginFormWidget({Key? key}) : super(key: key);
@@ -23,11 +24,16 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
   String? _password, _email;
   FocusNode? _passwordNode;
 
-  void _signIn() async {
+  void _signIn()  {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
-    final loginModel = LoginModel(email: _email!, password: _password!);
-    await authProvider.login(loginModel, context);
+    // final loginModel = LoginModel(email: _email!, password: _password!);
+    final loginModel = LoginModel(email: 'abakarmahamat1991@gmail.com', password: 'rasmuslerdorf');
+     authProvider.login(loginModel, context);
     if (authProvider.isLoggedIn()) {
+      // while(authProvider.user.boutiqueId != null) {
+      //   await Future.delayed(const Duration(milliseconds: 100));
+      // }
+      // await Future.delayed(const Duration(milliseconds: 1000));
       if (!mounted) return;
       Navigator.of(context).pushReplacementNamed(AppRoutes.profile);
     }

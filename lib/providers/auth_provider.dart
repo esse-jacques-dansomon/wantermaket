@@ -29,35 +29,20 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
     if(response.error == null){
       await authRepo.saveToken(response.response.data['access_token']);
+      await authRepo.sharedPreferences.setInt(AppConstants.BOUTIQUE_ID,response.response.data['boutique_id']);
       //save token
       authRepo.saveInfoInShared(AppConstants.USER_CREDENTIALS, json.encode(response.response.data));
       //save user info
       user = LoginReponse.fromJson(response.response.data);
-      await Future.delayed(const Duration(seconds: 1));
+      // await Future.delayed(const Duration(seconds: 1));
+      //
+      // // getUserConnectedInfo();
+      // while(user.boutiqueId == null){
+      //   await Future.delayed(const Duration(seconds: 1));
+      //   user = LoginReponse.fromJson(response.response.data);
+      // }
       notifyListeners();
 
-      // getUserConnectedInfo();
-      while(user.boutiqueId == null){
-        await Future.delayed(const Duration(seconds: 1));
-        user = LoginReponse.fromJson(response.response.data);
-        notifyListeners();
-      }
-      notifyListeners();
-      print('user.boutiqueId ${user.boutiqueId}');
-      print('user.boutiqueId ${user.boutiqueId}');
-      print('user.boutiqueId ${user.boutiqueId}');
-      print('user.boutiqueId ${user.boutiqueId}');
-      print('user.boutiqueId ${user.boutiqueId}');
-      print('user.boutiqueId ${user.boutiqueId}');
-      print('user.boutiqueId ${user.boutiqueId}');
-      print('user.boutiqueId ${user.boutiqueId}');
-      print('user.boutiqueId ${user.boutiqueId}');
-      print('user.boutiqueId ${user.boutiqueId}');
-      print('user.boutiqueId ${user.boutiqueId}');
-      print('user.boutiqueId ${user.boutiqueId}');
-      print('user.boutiqueId ${user.boutiqueId}');
-      print('user.boutiqueId ${user.boutiqueId}');
-      print('user.boutiqueId ${user.boutiqueId}');
     }else{
       if(response.error is String){
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(response.error, style: TextStyle(color: Colors.white)), backgroundColor: Colors.red));
@@ -68,7 +53,7 @@ class AuthProvider extends ChangeNotifier {
 
   Future<void> register(RegisterModel registerModel,BuildContext context) async {
     try{
-      _isLoadingRegister = false;
+      _isLoadingRegister = true;
       notifyListeners();
       final response = await authRepo.register(registerModel);
       _isLoadingRegister = false;
@@ -79,21 +64,17 @@ class AuthProvider extends ChangeNotifier {
         authRepo.saveInfoInShared(AppConstants.USER_CREDENTIALS, json.encode(response.response.data));
         //save user info
         user = LoginReponse.fromJson(response.response.data);
-        await Future.delayed(const Duration(seconds: 1));
-        notifyListeners();
-        // getUserConnectedInfo();
-        while(user.boutiqueId == null){
-          await Future.delayed(const Duration(seconds: 1));
-          user = LoginReponse.fromJson(response.response.data);
-        }
         notifyListeners();
       }else{
+        _isLoadingRegister = false;
         if(response.error is String){
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(response.error, style: TextStyle(color: Colors.white)), backgroundColor: Colors.red));
 
         }
       }
     }catch(e){
+      _isLoadingRegister = false;
+      notifyListeners();
       print(e);
     }
 
@@ -121,12 +102,14 @@ class AuthProvider extends ChangeNotifier {
 
   Future<void> getUserConnectedInfo() async {
     print('getUserConnectedInfo');
-    dynamic userp = await getValueFromSP(AppConstants.USER_CREDENTIALS);
-    user = LoginReponse.fromJson(json.decode(userp));
-    print('=====================?${user.boutiqueId}');
-    notifyListeners();
+    // dynamic userp = await getValueFromSP(AppConstants.USER_CREDENTIALS);
+    // user = LoginReponse.fromJson(json.decode(userp));
+    // print('=====================?${user.boutiqueId}');
 
+  }
 
+  int get userBoutiqueId  {
+    return  authRepo.sharedPreferences.getInt(AppConstants.BOUTIQUE_ID) ?? 53;
   }
 
   Future<LoginReponse> getUserConnected()  async {

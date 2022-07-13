@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper_view/flutter_swiper_view.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:wantermarket/providers/vendor_provider.dart';
 import 'package:wantermarket/providers/wishlist_provider.dart';
 import 'package:wantermarket/shared/app_helper.dart';
 import 'package:wantermarket/ui/basewidgets/produit_by_boutique_3.dart';
@@ -29,6 +30,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   Future<void> _loadData() async {
     Provider.of<ProductProvider>(context, listen: false).getRelatedProducts(widget.product.idCategorie!);
+    Provider.of<VendorProvider>(context, listen: false).incrementProductView(widget.product.id!);
   }
 
 

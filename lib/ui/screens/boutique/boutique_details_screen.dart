@@ -3,7 +3,10 @@ import 'package:provider/provider.dart';
 import 'package:wantermarket/config/app_colors.dart';
 
 import 'package:wantermarket/data/models/body/boutique.dart';
+import 'package:wantermarket/providers/auth_provider.dart';
+import 'package:wantermarket/providers/boutique_favories_provider.dart';
 
+import '../../../config/app_images.dart';
 import '../../../providers/boutique_provider.dart';
 import '../../../shared/app_helper.dart';
 import '../../basewidgets/app_bars/app_bar_with_return.dart';
@@ -21,6 +24,11 @@ class _BoutiqueDetailsScreenState extends State<BoutiqueDetailsScreen> {
 
   Future<void> _loadData() async{
     Provider.of<BoutiqueProvider>(context, listen: false).getBoutiqueProduits(widget.boutique.id!);
+    //not the connected user views
+    if(widget.boutique.id != Provider.of<AuthProvider>(context, listen: false).user.boutiqueId){
+      Provider.of<BoutiqueProvider>(context, listen: false).upgradeViewBoutique(widget.boutique.id!);
+    }
+
   }
 
   @override
@@ -73,7 +81,7 @@ class _BoutiqueDetailsScreenState extends State<BoutiqueDetailsScreen> {
                               borderRadius: BorderRadius.circular(5),
                               image:  DecorationImage(
                                 image: NetworkImage(
-                                  widget.boutique.profilImage!
+                                  widget.boutique.profilImage ?? AppImage.logo,
                                 ),
                                 fit: BoxFit.cover,
                               ),
@@ -127,12 +135,20 @@ class _BoutiqueDetailsScreenState extends State<BoutiqueDetailsScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                  children: [
                    Expanded(
-                     child: ElevatedButton(
-                       onPressed: () {},
-                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(AppColors.PRIMARY)
-                       ),
-                       child: const Text('Suivre', style: TextStyle(color: Colors.white, fontSize: 18),),
+                     child: Consumer<BoutiqueFavoriesProvider>(
+                       builder: (context, boutiqueFovoriesProvider, _){
+                         return ElevatedButton(
+                           onPressed: () {
+                              boutiqueFovoriesProvider.isFavory(widget.boutique.id!) ?
+                                boutiqueFovoriesProvider.removeFavory(widget.boutique.id!) :
+                                boutiqueFovoriesProvider.addFavory(widget.boutique.id!);
+                           },
+                           style: ButtonStyle(
+                               backgroundColor: MaterialStateProperty.all(AppColors.PRIMARY)
+                           ),
+                           child:  Text(boutiqueFovoriesProvider.isFavory(widget.boutique.id!) ? 'Ne Plus Suivre' : "Suivre" , style: TextStyle(color: Colors.white, fontSize: 18),),
+                         );
+                       },
                      ),
                    ),
                    const SizedBox(width: 10,),

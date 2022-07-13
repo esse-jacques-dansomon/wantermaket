@@ -1,9 +1,8 @@
 
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wantermarket/config/app_colors.dart';
-import 'package:wantermarket/config/app_constantes.dart';
-import 'package:wantermarket/providers/auth_provider.dart';
 import 'package:wantermarket/providers/vendor_provider.dart';
 import 'package:wantermarket/route/routes.dart';
 import 'package:wantermarket/shared/app_helper.dart';
@@ -24,29 +23,25 @@ class DashBoardScreen extends StatefulWidget {
 
 class _DashBoardScreenState extends State<DashBoardScreen> {
 
-  _loadData(idBoutique) async {
-    Provider.of<VendorProvider>(context, listen: false).getBoutique(idBoutique);
-    Provider.of<VendorProvider>(context, listen: false).getVendorStat(idBoutique);
-    Provider.of<VendorProvider>(context, listen: false).getVendorProducts(idBoutique);
+  _loadData() async {
+    Provider.of<VendorProvider>(context, listen: false).getBoutique();
+    Provider.of<VendorProvider>(context, listen: false).getVendorStat();
+    Provider.of<VendorProvider>(context, listen: false).getVendorProducts();
   }
+
 
 
   @override
   initState()  {
     super.initState();
-    if(Provider.of<VendorProvider>(context, listen: false).isProudctLoad == false) {
-      Provider.of<AuthProvider>(context, listen: false).getUserConnected().whenComplete(() {
-        _loadData(Provider.of<AuthProvider>(context, listen: false).user.boutiqueId);
-        Provider.of<VendorProvider>(context, listen: false).isProudctLoad = true;
-      });
-      // _loadData(Provider.of<AuthProvider>(context, listen: false).user.boutiqueId);
-    }
+    _loadData();
+
   }
 
   @override
   Widget build(BuildContext context) {
 
-    return Provider.of<VendorProvider>(context, listen: true ).vendorStat.idBoutique !=null ? Scaffold(
+    return Scaffold(
       bottomNavigationBar: const CustomBottomNavBar(profile: true,),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -59,7 +54,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
       appBar: appBar(isActiveSearchbar: true),
       drawer: const AppDrawer(),
       backgroundColor: AppColors.WHITE,
-      body: SafeArea(
+      body:  Provider.of<VendorProvider>(context, listen: true).isProductsLoad ? SafeArea(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.symmetric(horizontal: 10) ,
@@ -114,7 +109,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children:  [
-                                  Text(vendorProvider.boutique.name!,
+                                  Text(vendorProvider.boutique.name ?? 'Pas encore de nom',
                                     style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w400,
@@ -129,7 +124,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                   ),
                                   const SizedBox(height: 5),
 
-                                  Text(vendorProvider.boutique.vendor!.address!,
+                                  Text(vendorProvider.boutique.vendor!.address ?? 'Pas encore d\'adresse',
                                     style: const TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.w300,
@@ -158,7 +153,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                             }, child: const Text('Editer Boutique'))),
                           ],
                         ),
-                        //STATISTIQUES
+                        // STATISTIQUES
                         Consumer<VendorProvider>(
                           builder: (context, vendorProvider, _){
                             return Column(
@@ -276,8 +271,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
           ),
 
         ),
-      ),
-    ): const LoaderWidget();
+      ) : const LoaderWidget(),
+    );
   }
 }
 

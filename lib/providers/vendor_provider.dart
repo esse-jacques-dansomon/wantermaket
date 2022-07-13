@@ -3,7 +3,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wantermarket/data/models/body/vendor.dart';
 import 'package:wantermarket/data/models/body/vendor_stat.dart';
 
-import '../config/app_constantes.dart';
 import '../data/models/body/boutique.dart';
 import '../data/models/body/product.dart';
 import '../data/repositories/vendor_repo.dart';
@@ -14,6 +13,7 @@ class VendorProvider extends ChangeNotifier {
 
   VendorProvider( {required this.vendorRepo, required this.sharedPreferences});
 
+  bool isLoaded= false;
   Boutique _boutique = Boutique();
   Boutique get boutique => _boutique;
 
@@ -23,52 +23,48 @@ class VendorProvider extends ChangeNotifier {
   VendorStat _vendorStat = VendorStat();
   VendorStat get vendorStat => _vendorStat;
 
-  final List<Product> _products = []  ;
-  bool isProudctLoad = false;
+  final List<Product> _products = [] ;
+  bool isProductsLoad = false;
   List<Product> get products => _products;
 
-  String get boutqueId => sharedPreferences.getString(AppConstants.BOUTIQUE_ID) ?? '53';
 
 
 
 
-  Future<void> getBoutique(int idBoutique) async {
-    print('getBoutique ${sharedPreferences.getString(AppConstants.BOUTIQUE_ID) }');
+  Future<void> getBoutique() async {
     try {
-      final response = await vendorRepo.getBoutiqueById(idBoutique);
+      final response = await vendorRepo.getUserConnectedBoutique();
       _boutique = Boutique.fromJson(response.response.data['data']);
-      notifyListeners();
-    } catch (e) {
-      throw e;
-    }
-  }
-
-  Future<void> getVendorStat(int idBoutique) async {
-    print('voir stat');
-    notifyListeners();
-    try {
-      final response = await vendorRepo.getVendorStat(idBoutique);
-      print(response.data);
-      _vendorStat = VendorStat.fromJson(response.data["data"]);
       notifyListeners();
     } catch (e) {
       rethrow;
     }
   }
 
-  Future<void> getVendorProducts(int idBoutique) async {
+  Future<void> getVendorStat() async {
     notifyListeners();
-
     try {
-      final response = await vendorRepo.getProductsByBoutique(idBoutique);
+      final response = await vendorRepo.getUserConnectedStat();
+      _vendorStat = VendorStat.fromJson(response.response.data["data"]);
+      notifyListeners();
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> getVendorProducts() async {
+    isProductsLoad = false;
+    notifyListeners();
+    try {
+      final response = await vendorRepo.getUserConnectedProducts();
       _products.clear();
       response.response.data['data'].forEach((element) {
         _products.add(Product.fromJson(element));
       });
-      isProudctLoad = true;
+      isProductsLoad = true;
       notifyListeners();
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -81,9 +77,14 @@ class VendorProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> incrementProductView(int idProduct) async {
+    await vendorRepo.incrementProductView(idProduct);
+    notifyListeners();
+  }
+
   void clear() {
     products.clear();
-    isProudctLoad = false;
+    isProductsLoad = false;
     _vendor= Vendor();
     _vendorStat = VendorStat();
     _boutique = Boutique();

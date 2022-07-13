@@ -41,4 +41,13 @@ class BoutiqueProvider extends ChangeNotifier{
     }
   }
 
+  Future<void> upgradeViewBoutique(int boutiqueId) async {
+    //is note the connected user shop
+    final response = await boutiqueRepo.updateBoutiqueViews(boutiqueId);
+    if(response.error == null){
+    }else{
+      print('error');
+    }
+  }
+
 }

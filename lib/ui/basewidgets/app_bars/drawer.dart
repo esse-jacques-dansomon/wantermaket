@@ -20,8 +20,7 @@ class AppDrawer extends StatefulWidget {
 class _AppDrawerState extends State<AppDrawer> {
 
   Future<void> _loadDataBoutique() async {
-     // Provider.of<AuthProvider>(context, listen: false).getUserConnectedInfo();
-
+     Provider.of<AuthProvider>(context, listen: false).getUserConnectedInfo();
   }
 
   @override

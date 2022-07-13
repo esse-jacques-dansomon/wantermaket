@@ -58,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Provider.of<ProductProvider>(context, listen: true).newArrivals.isNotEmpty ? Scaffold(
+    return true ? Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.pushNamed(context, AppRoutes.addProduct, );

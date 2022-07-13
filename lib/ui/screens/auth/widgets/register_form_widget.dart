@@ -101,7 +101,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
           SizedBox(
               width: double.infinity,
               height: 45,
-              child: Provider.of<AuthProvider>(context, listen: false).isLoadingRegister ? const Center(child: CircularProgressIndicator()): ElevatedButton(
+              child: Provider.of<AuthProvider>(context, listen: true).isLoadingRegister ? const Center(child: CircularProgressIndicator()): ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(AppColors.PRIMARY),),
                   onPressed: () {
