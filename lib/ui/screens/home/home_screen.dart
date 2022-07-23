@@ -29,6 +29,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final ScrollController _controller = ScrollController();
+
   Future<void> _loadData() async {
     Provider.of<SliderProvider>(context, listen: false).getHomeSliders();
     Provider.of<BoutiqueProvider>(context, listen: false).getBoutiquesExclusives();
@@ -39,9 +41,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _loadDataBoutique() async {
-    Provider.of<AuthProvider>(context, listen: false).clearall();
     Provider.of<BoutiqueProvider>(context, listen: false).getBoutiquesExclusives();
     Provider.of<ProductProvider>(context, listen: false).getDealOfTheDay();
+    Provider.of<ProductProvider>(context, listen: false).getNewArrivals(reload: true);
 
   }
 
@@ -49,16 +51,28 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (Provider.of<ProductProvider>(context, listen: false).newArrivals.isEmpty){
+        _loadData();
+      }
+    });
     super.initState();
-    if (Provider.of<ProductProvider>(context, listen: false).newArrivals.isEmpty){
-      _loadData();
+    _controller.addListener(_scrollListener);
+  }
+
+
+  void _scrollListener() {
+    if (_controller.position.pixels == _controller.position.maxScrollExtent ) {
+      print('fin des produits du listview builder');
+      Provider.of<ProductProvider>(context, listen: false).getNewArrivals();
     }
   }
 
 
+
   @override
   Widget build(BuildContext context) {
-    return true ? Scaffold(
+    return Provider.of<ProductProvider>(context, listen: true).topAnnonces.isNotEmpty ? Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.pushNamed(context, AppRoutes.addProduct, );
@@ -75,6 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: SafeArea(
           child: SingleChildScrollView(
             // physics: const BouncingScrollPhysics(),
+            controller: _controller,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -151,19 +166,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
 
                 // Nouveautes
-                const NouveautesWidget(),
+                 const NouveautesWidget(),
                 //load more
                 const SizedBox(height: 10),
 
-                //end of page indicator
-                // _scrollController.position.pixels == _scrollController.position.maxScrollExtent
-                //     ? const Center(
-                //   child: Text(
-                //     "End of Page",
-                //     style: TextStyle(color: AppColors.PRIMARY),
-                //   ),
-                // )
-                //     : const SizedBox(),
+                Provider.of<ProductProvider>(context, listen: false).isPaginationLoading ? const Center(child: CircularProgressIndicator(),) : const SizedBox(),
+                const SizedBox(height: 50),
 
 
               ],

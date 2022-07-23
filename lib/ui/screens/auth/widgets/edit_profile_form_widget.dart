@@ -1,29 +1,31 @@
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:wantermarket/providers/vendor_provider.dart';
+import 'package:wantermarket/route/routes.dart';
+import 'package:wantermarket/shared/app_helper.dart';
 
 import '../../../../config/app_colors.dart';
-import '../../../../data/models/body/register_model.dart';
+import '../../../../data/models/body/profil_model.dart';
+import '../../../../data/models/body/vendor.dart';
 import '../../../../providers/auth_provider.dart';
-import '../../../../route/routes.dart';
 
-class RegisterFormWidget extends StatefulWidget {
-  const RegisterFormWidget({Key? key}) : super(key: key);
+class EditProfileFormWidget extends StatefulWidget {
+  const EditProfileFormWidget({Key? key}) : super(key: key);
 
   @override
-  State<RegisterFormWidget> createState() => _RegisterFormWidgetState();
+  State<EditProfileFormWidget> createState() => _EditProfileFormWidgetState();
 }
 
-class _RegisterFormWidgetState extends State<RegisterFormWidget> {
-  bool _obscureText = true;
-  bool _obscureTextConfirmedPassword = true;
-  String?  _username,_firstname , _address, _confirmPassword, _phone, _countryCode, _nomButique, _password, _email;
-
+class _EditProfileFormWidgetState extends State<EditProfileFormWidget> {
+  String _countryCode= '+221';
+  final _usernameController = TextEditingController();
+  final _firstnameController = TextEditingController();
+  final _addressController = TextEditingController();
+  final _phoneController = TextEditingController();
+  final _emailController = TextEditingController();
   FocusNode? _firstnameNode;
-  FocusNode? _nomButiqueNode;
   FocusNode? _addressNode;
-  FocusNode? _passwordNode;
-  FocusNode? _confirmedpasswordNode;
   FocusNode? _emailNode;
   FocusNode? _phoneNode;
   FocusNode? _usernameNode;
@@ -31,51 +33,42 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
   @override
   void initState() {
     super.initState();
-    _password=_email=_username=_firstname=_confirmPassword=_phone= _nomButique = _address='';
-    _countryCode='+221';
+    final Vendor vendor = Provider.of<VendorProvider>(context, listen:false ).boutique.vendor!;
+    _usernameController.text = vendor.name!;
+    _firstnameController.text = vendor.firstName!;
+    _addressController.text = vendor.address!;
+    _phoneController.text = vendor.phone!;
+    _emailController.text = vendor.email!;
+
+
     _usernameNode = FocusNode();
     _firstnameNode = FocusNode();
-    _nomButiqueNode = FocusNode();
     _addressNode = FocusNode();
     _usernameNode = FocusNode();
     _emailNode = FocusNode();
     _phoneNode = FocusNode();
-    _passwordNode = FocusNode();
-    _confirmedpasswordNode = FocusNode();
   }
 
-  Future<void> register() async {
-    try{
-      final authProvider = Provider.of<AuthProvider>(context, listen: false);
-      final registerModel = RegisterModel(
-        name: _username,
-        firstName: _firstname,
-        email: _email,
-        phone: _phone,
-        address: _address,
-        boutiqueName: _nomButique,
-        password: _password,
-      );
-      await authProvider.register(registerModel, context);
-      if (authProvider.isLoggedIn()) {
-        if (!mounted) return;
-        Navigator.of(context).pushReplacementNamed(AppRoutes.profile);
+  Future<void> updateProfile(EditProfileModel editProfileModel) async {
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    authProvider.editProfile(editProfileModel).then((value){
+      if(value){
+        authProvider.getUserConnectedInfo();
+        Provider.of<VendorProvider>(context, listen: false).getBoutique();
+        Navigator.pushNamed(context, AppRoutes.profile);
+        //TODO: update vendor
       }else{
-
+        AppHelper.showErrorFlushBar(context, 'Error while updating profile');
       }
-    }catch(e){
-      print(e);
-    }
+    });
+
   }
 
   @override
   void dispose() {
     super.dispose();
     _firstnameNode?.dispose();
-    _nomButiqueNode?.dispose();
     _addressNode?.dispose();
-    _passwordNode?.dispose();
-    _confirmedpasswordNode?.dispose();
     _emailNode?.dispose();
     _phoneNode?.dispose();
     _usernameNode?.dispose();
@@ -88,18 +81,17 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
     return Form(
       key: _formKey,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const SizedBox(
             height: 15,
           ),
           _buildUsernameField(),
           _buildFirstnameField(),
-          _buildBoutiqueNameField(),
           _buildAddressField(),
           _buildPhoneField(),
           _buildEmailField(),
-          _buildPasswordField(),
-          _buildConfirmedPasswordField(),
           SizedBox(
               width: double.infinity,
               height: 45,
@@ -110,9 +102,21 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
 
                     if(_formKey.currentState!.validate()){
                       _formKey.currentState?.save();
-                      register();
+                      // print('username: ${_usernameController.text}');
+                      // print('firstname: ${_firstnameController.text}');
+                      // print('address: ${_addressController.text}');
+                      // print('phone: ${_phoneController.text}');
+                      // print('email: ${_emailController.text}');
+                      // print('countryCode: $_countryCode');
+                      updateProfile(EditProfileModel(
+                        name: _usernameController.text,
+                        firstName: _firstnameController.text,
+                        address: _addressController.text,
+                        phone: "$_countryCode${_phoneController.text}",
+                        email: _emailController.text,
+                      ));
                     }
-                  }, child: const Text("Créez votre compte", style: TextStyle(color: Colors.white),)  )
+                  }, child: const Text("Valider Les Modifications", style: TextStyle(color: Colors.white),)  )
           ),
         ],
       ),
@@ -125,18 +129,18 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
     return Container(
       margin: const EdgeInsets.only(bottom: 25),
       child: TextFormField(
-        initialValue: 'gato junior',
+        controller: _usernameController,
         validator: (value) {
           if (value!.isEmpty) {
             return 'Veuillez entre votre nom';
           }
           return null;
         },
-        onFieldSubmitted: (value) => _username = value,
         onEditingComplete: (){
           // Once user click on Next then it go to password field
           _firstnameNode!.requestFocus();
         },
+
 
         // validator: requiredValidator,
         textInputAction: TextInputAction.next,
@@ -145,6 +149,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
             horizontal: 15,
             vertical: 18,
           ),
+          label: const Text('Votre Nom'),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(5),
             borderSide: const BorderSide(
@@ -162,22 +167,22 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
     return Container(
       margin: const EdgeInsets.only(bottom: 25),
       child: TextFormField(
-        initialValue: 'gato junior',
+        controller: _firstnameController,
         validator: (value) {
           if (value!.isEmpty) {
             return 'Veuillez entre votre prenom';
           }
           return null;
         },
-        onFieldSubmitted: (value) => _firstname = value,
         onEditingComplete: (){
           // Once user click on Next then it go to password field
-          _nomButiqueNode!.requestFocus();
+          _addressNode!.requestFocus();
         },
 
         // validator: requiredValidator,
         textInputAction: TextInputAction.next,
         decoration:  InputDecoration(
+          labelText: 'Votre Prenom',
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 15,
             vertical: 18,
@@ -195,56 +200,17 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
       ),
     );
   }
-  Widget _buildBoutiqueNameField(){
-    return Container(
-
-      margin: const EdgeInsets.only(bottom: 25),
-      child: TextFormField(
-        initialValue: 'gato junior',
-        validator: (value) {
-          if (value!.isEmpty) {
-            return 'Veuillez entre le nom de votre boutique';
-          }
-          return null;
-        },
-        onFieldSubmitted: (value) => _nomButique = value,
-        onEditingComplete: (){
-          // Once user click on Next then it go to password field
-          _addressNode!.requestFocus();
-        },
-
-        // validator: requiredValidator,
-        textInputAction: TextInputAction.next,
-        decoration:  InputDecoration(
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 15,
-            vertical: 18,
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5),
-            borderSide: const BorderSide(
-              color: Colors.black,
-            ),
-          ),
-          hintText: 'Nom de la boutique',
-          hintStyle: const TextStyle(color: AppColors.PRIMARY),
-        ),
-        focusNode: _nomButiqueNode,
-      ),
-    );
-  }
   Widget _buildAddressField(){
     return Container(
       margin: const EdgeInsets.only(bottom: 25),
       child: TextFormField(
-        initialValue: "gato junior",
+        controller: _addressController,
         validator: (value) {
           if (value!.isEmpty) {
             return 'Veuillez entre votre adresse';
           }
           return null;
         },
-        onFieldSubmitted: (value) => _address = value,
         onEditingComplete: (){
           // Once user click on Next then it go to password field
           _phoneNode!.requestFocus();
@@ -253,6 +219,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
         // validator: requiredValidator,
         textInputAction: TextInputAction.next,
         decoration:  InputDecoration(
+          labelText: 'Votre Adresse',
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 15,
             vertical: 18,
@@ -270,110 +237,11 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
       ),
     );
   }
-  Widget _buildPasswordField(){
-    return Container(
-      margin: const EdgeInsets.only(bottom: 25),
-        child: TextFormField(
-          initialValue: '123456',
-        validator: (value) {
-          if (value!.isEmpty) {
-            return 'Veuillez entrer un mot de passe';
-          }
-          if (value.length < 6) {
-            return 'Le mot de passe doit contenir au moins 6 caractères';
-          }
-          return null;
-        },
-        focusNode: _passwordNode,
-        obscureText: _obscureText,
-        textInputAction: TextInputAction.next,
-        onEditingComplete: () {
-          // Once user click on Next then it go to password field
-          _confirmedpasswordNode!.requestFocus();
-        },
-        decoration:  InputDecoration(
-          hintText: 'Password',
-          hintStyle: const TextStyle(color: AppColors.PRIMARY),
-          suffixIcon: GestureDetector(
-            onTap: () {
-              setState(() {
-                _obscureText = !_obscureText;
-              });
-            },
-            child: _obscureText
-                ? const Icon(Icons.visibility_off, color: AppColors.PRIMARY)
-                : const Icon(Icons.visibility, color: AppColors.SECONDARY),
-          ),
-          labelStyle: const TextStyle(color: Colors.black),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5),
-            borderSide: const BorderSide(
-              color: Colors.black,
-            ),
-          ),
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 15,
-            vertical: 18,
-          ),
-        ),
-        onFieldSubmitted: (value) => _password = value,
-        // validator: passwordValidator,
-      ),
-    );
-  }
-  Widget _buildConfirmedPasswordField(){
-    return Container(
-      margin: const EdgeInsets.only(bottom: 25),
-
-      child: TextFormField(
-        initialValue: '123456',
-        validator: (value) {
-          if (value!.isEmpty ) {
-            return 'Veuillez confirmer votre mot de passe';
-          }
-          // if (value.length < 6 || value != _password) {
-          //   return 'Le mot de passe doit contenir au moins 6 caractères';
-          // }
-          return null;
-        },
-        focusNode: _confirmedpasswordNode,
-        obscureText: _obscureTextConfirmedPassword,
-        decoration:  InputDecoration(
-          hintText: 'Confirmer le mot de passe',
-          hintStyle: const TextStyle(color: AppColors.PRIMARY),
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 15,
-            vertical: 18,
-          ),
-          suffixIcon: GestureDetector(
-            onTap: () {
-              setState(() {
-                _obscureTextConfirmedPassword = !_obscureTextConfirmedPassword;
-              });
-            },
-            child: _obscureTextConfirmedPassword
-                ? const Icon(Icons.visibility_off, color: AppColors.PRIMARY)
-                : const Icon(Icons.visibility, color: AppColors.SECONDARY),
-          ),
-          labelStyle: const TextStyle(
-              color: Colors.black),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5),
-            borderSide: const BorderSide(
-              color: Colors.black,
-            ),
-          ),
-        ),
-        onFieldSubmitted: (value) => _confirmPassword = value,
-        // validator: passwordValidator,
-      ),
-    );
-  }
   Widget _buildEmailField(){
     return Container(
       margin: const EdgeInsets.only(bottom: 25),
       child: TextFormField(
-        initialValue: '1@1.com',
+        controller: _emailController,
         validator: (value) {
           if (value!.isEmpty) {
             return 'Veuillez entrer un email';
@@ -386,14 +254,10 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
           return null;
         },
         focusNode: _emailNode,
-        onFieldSubmitted: (value) => _email = value,
         // validator: emailValidator,
-        textInputAction: TextInputAction.next,
-        onEditingComplete: () {
-          // Once user click on Next then it go to password field
-          _passwordNode!.requestFocus();
-        },
+        textInputAction: TextInputAction.send,
         decoration:  InputDecoration(
+          labelText: 'Votre Email',
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 15,
             vertical: 18,
@@ -425,16 +289,16 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
           return null;
         },
         focusNode: _phoneNode,
-        initialValue: "777777778",
         keyboardType: TextInputType.phone,
-        onFieldSubmitted: (value) => _phone =  '$_countryCode${value.replaceAll(' ', '')}',
-        // validator: senegalPhoneNumberValidator,
+        controller: _phoneController,
+        // onFieldSubmitted: (value) => _phone =  '$_countryCode${value.replaceAll(' ', '')}',
         textInputAction: TextInputAction.next,
         onEditingComplete: () {
           // Once user click on Next then it go to password field
           _emailNode!.requestFocus();
         },
         decoration:  InputDecoration(
+          labelText: 'Votre Numéro de Téléphone',
           border: OutlineInputBorder(
 
             borderRadius: BorderRadius.circular(5),
@@ -447,11 +311,10 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
           hintStyle: const TextStyle(color: AppColors.PRIMARY),
           prefix: SizedBox(
             height: 60,
-            // For more check https://pub.dev/packages/country_code_picker
             child: CountryCodePicker(
               onChanged: (countryCode) => {
                 // Save your country code
-                _countryCode = countryCode.dialCode,
+                _countryCode = countryCode.dialCode!,
               },
 
               textStyle: const TextStyle(color: AppColors.PRIMARY, fontSize: 16.5,),
@@ -466,15 +329,6 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
       ),
     );  }
 
-  void displayDialog(BuildContext context, String title, String text) =>
-      showDialog(
-        context: context,
-        builder: (context) =>
-            AlertDialog(
-              title: Text(title, textAlign: TextAlign.center),
-              content: Text(text, textAlign: TextAlign.center, ),
-            ),
-      );
 
 
 

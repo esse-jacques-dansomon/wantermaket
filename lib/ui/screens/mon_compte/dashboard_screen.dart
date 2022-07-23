@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wantermarket/config/app_colors.dart';
+import 'package:wantermarket/config/app_images.dart';
 import 'package:wantermarket/providers/vendor_provider.dart';
 import 'package:wantermarket/route/routes.dart';
 import 'package:wantermarket/shared/app_helper.dart';
@@ -10,6 +11,7 @@ import 'package:wantermarket/ui/basewidgets/app_bars/drawer.dart';
 import 'package:wantermarket/ui/screens/home/home_screen.dart';
 
 import '../../../data/models/body/product.dart';
+import '../../../providers/curd_product_provider.dart';
 import '../../basewidgets/app_bars/app_bar.dart';
 import '../../basewidgets/bottom_bar/bottom_nav_bar.dart';
 
@@ -23,9 +25,8 @@ class DashBoardScreen extends StatefulWidget {
 
 class _DashBoardScreenState extends State<DashBoardScreen> {
 
-  _loadData() async {
+  _loadData()  {
     Provider.of<VendorProvider>(context, listen: false).getBoutique();
-    Provider.of<VendorProvider>(context, listen: false).getVendorStat();
     Provider.of<VendorProvider>(context, listen: false).getVendorProducts();
   }
 
@@ -34,7 +35,14 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   @override
   initState()  {
     super.initState();
-    _loadData();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<VendorProvider>(context, listen: false).getVendorStat();
+
+      if( Provider.of<VendorProvider>(context, listen: false).boutique.vendor?.firstName == null) {
+        _loadData();
+      }
+
+    });
 
   }
 
@@ -144,12 +152,12 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         Row(
                           children: [
                             Expanded(child: ElevatedButton(onPressed: (){
-                              // Navigator.pushNamed(context, AppRoutes.register);
+                              Navigator.pushNamed(context, AppRoutes.editProfile);
 
                             }, child: const Text('Editer Profile'))),
                             const SizedBox(width: 10,),
                             Expanded(child: ElevatedButton(onPressed: (){
-                              Navigator.pushNamed(context, AppRoutes.editboutiqueBySecteur);
+                              Navigator.pushNamed(context, AppRoutes.editBoutiqueBySecteur);
                             }, child: const Text('Editer Boutique'))),
                           ],
                         ),
@@ -178,7 +186,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                        Expanded( flex: 2, child:  StatItem(name: 'Abonnés',value: vendorProvider.vendorStat.nombreAbonnes!,),),
+                                        Expanded( flex: 2, child:  StatItem(name: 'Abonnés',value: vendorProvider.vendorStat.nombreAbonnes ?? 0,),),
                                       Container(
                                         width: 2,
                                         height: 45,
@@ -298,7 +306,7 @@ class VendorProductCard extends StatelessWidget {
                   width: double.infinity,
                   height: 180,
                   child: Image.network(
-                    product.images![0].path,
+                    product.images!.isNotEmpty ? product.images![0].path : AppImage.logo,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -347,7 +355,15 @@ class VendorProductCard extends StatelessWidget {
                           Switch(
                             value: product.disponibility == 'oui'? true : false,
                             onChanged: (value){
-                              Provider.of<VendorProvider>(context, listen: false).changeDisponibilityProduct(product.id!);
+                              Provider.of<CrudProductProvider>(context, listen: false).updateDisponibility(product).then((value){
+                                if(value){
+                                  Provider.of<VendorProvider>(context, listen: false).changeDisponibilityProduct(product.id!, context);
+                                  // Provider.of<VendorProvider>(context, listen: false).getVendorProducts();
+                                  AppHelper.showInfoFlushBar(context, 'Produit modifié');
+                                }else{
+                                  AppHelper.showInfoFlushBar(context, 'une erreur s\'est produite ', color: Colors.red);
+                                }
+                              });
                           },),
                         ],
                       )

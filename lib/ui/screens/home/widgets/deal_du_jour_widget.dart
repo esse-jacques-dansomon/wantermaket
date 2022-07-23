@@ -5,6 +5,7 @@ import 'package:wantermarket/providers/product_provider.dart';
 import 'package:wantermarket/ui/screens/home/widgets/title_and_more_widget.dart';
 
 import '../../../../config/app_colors.dart';
+import '../../../../route/routes.dart';
 import '../../../basewidgets/deal_du_jour_card.dart';
 import '../../sector/secteur_screen.dart';
 
@@ -17,7 +18,7 @@ class DealDuJourWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const TitleAndMoreText( title: 'En Promotion', moreText: 'Voir Plus', widget: SecteurScreen()),
+        const TitleAndMoreText( title: 'En Promotion', moreText: 'Voir Plus', route:  AppRoutes.search),
         SizedBox(
           height: 510,
           child: Consumer<ProductProvider>(

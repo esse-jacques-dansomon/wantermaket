@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper_view/flutter_swiper_view.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:wantermarket/config/app_images.dart';
 import 'package:wantermarket/providers/vendor_provider.dart';
 import 'package:wantermarket/providers/wishlist_provider.dart';
+import 'package:wantermarket/route/routes.dart';
 import 'package:wantermarket/shared/app_helper.dart';
 import 'package:wantermarket/ui/basewidgets/produit_by_boutique_3.dart';
 import '../../../config/app_colors.dart';
@@ -130,7 +132,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     width: double.infinity,
                     child: Swiper(
                       indicatorLayout: PageIndicatorLayout.COLOR,
-                      itemCount: widget.product.images!.length,
+                      itemCount: widget.product.images!.isNotEmpty ?  widget.product.images!.length : 1,
                       pagination: const SwiperPagination(
                         alignment: Alignment.bottomCenter,
                         margin: EdgeInsets.only(bottom: 15),
@@ -143,7 +145,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       ),
                       itemBuilder: (context, index) {
                         return Image.network(
-                          widget.product.images![index].path.replaceAll('\r\n', ''),
+                            widget.product.images!.isNotEmpty ?  widget.product.images![index].path.replaceAll('\r\n', '') : AppImage.logo,
                           fit: BoxFit.cover,
                         );
                       },
@@ -179,8 +181,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               ),
                               onPressed: (){
                                 !Provider.of<WishlistProvider>(context, listen: false).isInWishlist(widget.product) ?
-                                Provider.of<WishlistProvider>(context, listen: false).addToWishlist(widget.product) :
-                                Provider.of<WishlistProvider>(context, listen: false).removeFromWishlist(widget.product);
+                                Provider.of<WishlistProvider>(context, listen: false).addToWishlist(widget.product, context) :
+                                Provider.of<WishlistProvider>(context, listen: false).removeFromWishlist(widget.product, context);
                               },
                             ),
                           ],
@@ -227,17 +229,22 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         const SizedBox(height: 10,),
                         const Text('Vendeur', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),),
                         const SizedBox(height: 10,),
-                        Row(
-                          children: [
-                            CircleAvatar(
-                              backgroundImage: NetworkImage(widget.product.boutique!.profilImage!),
-                              radius: 20,
-                            ),
-                            const SizedBox(width: 10,),
-                            Text(widget.product.boutique!.name!, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w300, color: Colors.black),),
-                            const SizedBox(width: 20,),
-                            const Icon(Icons.verified, color: AppColors.SECONDARY,)
-                          ],
+                        InkWell(
+                          onTap: (){
+                            Navigator.of(context).pushNamed(AppRoutes.vendor, arguments: widget.product.boutique!);
+                          },
+                          child: Row(
+                            children: [
+                              CircleAvatar(
+                                backgroundImage: NetworkImage(widget.product.boutique!.profilImage!),
+                                radius: 20,
+                              ),
+                              const SizedBox(width: 10,),
+                              Text(widget.product.boutique!.name!, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w300, color: Colors.black),),
+                              const SizedBox(width: 20,),
+                              const Icon(Icons.verified, color: AppColors.SECONDARY,)
+                            ],
+                          ),
                         )
 
                       ],
@@ -277,58 +284,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 ),
               ),
               const SizedBox(height: 10,),
-
-
-
-              //get in touch with teh seller
-              // Container(
-              //   padding: const EdgeInsets.symmetric(horizontal: 10),
-              //   child: Column(
-              //     crossAxisAlignment: CrossAxisAlignment.start,
-              //     children: [
-              //       SizedBox(
-              //       height: 10,),
-              //       const Text('Get in touch with the seller', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),),
-              //       Container(
-              //         padding: const EdgeInsets.symmetric( vertical: 5),
-              //         child: Card(
-              //           child: Row(
-              //             crossAxisAlignment: CrossAxisAlignment.center,
-              //             children: [
-              //               Container(
-              //                 width: 100, height: 100,
-              //                 decoration: BoxDecoration(
-              //                   borderRadius: BorderRadius.circular(10),
-              //                   image: const DecorationImage(
-              //                     image: const NetworkImage('https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60'),
-              //                     fit: BoxFit.cover,
-              //                   ),
-              //                 ),
-              //               ),
-              //               const SizedBox(width: 10),
-              //               Column(
-              //                 crossAxisAlignment: CrossAxisAlignment.start,
-              //                 mainAxisAlignment: MainAxisAlignment.center,
-              //                 children: const [
-              //                   Text('Nom du vendeur', style: TextStyle(fontSize: 16,  color: Colors.black),),
-              //                   SizedBox(height: 5,),
-              //                   Text('Boutique : Amama', style: TextStyle(fontSize: 16, color: Colors.black),),
-              //                   SizedBox(height: 5,),
-              //                   Text('Categorie : Phones ! Electoniques', style: TextStyle(fontSize: 12, color: Colors.black),),
-              //                   SizedBox(height: 5,),
-              //                   Text('Senagal Medina Rue 31x2 Bis', style: TextStyle(fontSize: 15, color: Colors.black),),
-              //                 ],
-              //               )
-              //             ],
-              //           ),
-              //         ),
-              //       ),
-              //       const SizedBox(width: 20),
-              //     ],
-              //   ),
-              // )
-
-
             ],
           ),
         ),

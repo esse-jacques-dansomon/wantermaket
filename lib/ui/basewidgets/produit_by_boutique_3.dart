@@ -50,8 +50,8 @@ class ProductByBoutique3 extends StatelessWidget {
                         child: InkWell(
                             onTap: (){
                               isWishlist ?
-                              Provider.of<WishlistProvider>(context, listen: false).removeFromWishlist(product) :
-                              Provider.of<WishlistProvider>(context, listen: false).addToWishlist(product);
+                              Provider.of<WishlistProvider>(context, listen: false).removeFromWishlist(product, context) :
+                              Provider.of<WishlistProvider>(context, listen: false).addToWishlist(product, context);
                             },
                             child:  Icon( !isWishlist ? Icons.favorite_border_outlined :Icons.favorite , color: !isWishlist ? Colors.blueAccent : Colors.red,))),),
                   ],

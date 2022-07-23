@@ -16,12 +16,13 @@ AppBar appBarWithReturn({required String title, required BuildContext context}){
               icon: const Icon(Icons.arrow_back_ios, size: 22, color: AppColors.WHITE, ),
               onPressed: () => Navigator.pop(context),
             ),
-            Center(child: Row(
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
               children:  [
-                Text(title, style: const TextStyle(fontSize: 20, color: AppColors.WHITE),),
+                SizedBox(width: MediaQuery.of(context).size.width*0.8 , child: Text(title, style: const TextStyle( fontSize: 20, color: AppColors.WHITE), textAlign: TextAlign.end, overflow: TextOverflow.ellipsis,)),
                 const SizedBox(width: 15,)
               ],
-            )),
+            ),
           ],
         ),
       )

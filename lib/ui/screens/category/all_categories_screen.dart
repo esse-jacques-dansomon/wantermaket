@@ -19,9 +19,7 @@ class AllCategoriesScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // const Padding(padding: EdgeInsets.fromLTRB(15, 0, 15, 15),
-              // child: Text('Categories', style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
-              // ),
+
               Padding(
                 padding : const EdgeInsets.only(left: 15.0, right: 15.0, top: 20),
                 child: Consumer<CategoryProvider>(

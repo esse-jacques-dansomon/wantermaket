@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:wantermarket/route/routes.dart';
+import 'package:wantermarket/ui/screens/auth/widgets/login_form_widget.dart';
 import 'package:wantermarket/ui/screens/auth/widgets/reset_password_form_widget.dart';
 
 import '../../../config/app_colors.dart';
 
-class ResetPasswordFromScreen extends StatelessWidget {
-  const ResetPasswordFromScreen({Key? key}) : super(key: key);
+class ForgotPasswordFromScreen extends StatelessWidget {
+  const ForgotPasswordFromScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +34,7 @@ class ResetPasswordFromScreen extends StatelessWidget {
                     const SizedBox(
                       height: 30,
                     ),
-                    const Text('Changement de mot de passe', style: TextStyle(color: Colors.white,  fontWeight: FontWeight.bold, fontSize: 22),),
+                    Text('Mot de Passe Oublié', style: TextStyle(color: Colors.white,  fontWeight: FontWeight.bold, fontSize: 22),),
                   ],
                 ),
               ),
@@ -49,15 +51,17 @@ class ResetPasswordFromScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
+                  children: [
                     //welcome ac texte
-                 SizedBox(
+                 const SizedBox(
                       height: 20,
                     ),
+                    Text('Veuillez entre votre email', style: TextStyle(color: Colors.grey, fontSize: 16),),
 
                     //form
                     ResetPasswordFromWidget(),
 
+                    Expanded(child: Container(),),
                     //bottom
 
                   ],

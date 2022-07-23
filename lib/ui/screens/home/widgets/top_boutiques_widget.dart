@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:wantermarket/providers/boutique_provider.dart';
 import 'package:wantermarket/ui/screens/home/widgets/title_and_more_widget.dart';
 
+import '../../../../route/routes.dart';
 import '../../../basewidgets/boutique_card.dart';
 import '../../sector/secteur_screen.dart';
 
@@ -16,7 +17,7 @@ class TopBoutiquesWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const TitleAndMoreText( title: 'Top Boutiques', moreText: 'Voir toutes', widget:  SecteurScreen()),
+        const TitleAndMoreText( title: 'Top Boutiques', moreText: 'Voir toutes', route:  AppRoutes.search),
         Padding(
           padding: const EdgeInsets.only(left: 15.0, right: 15.0),
           child: SizedBox(

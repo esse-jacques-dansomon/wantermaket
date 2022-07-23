@@ -1,5 +1,7 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:wantermarket/config/app_colors.dart';
 import 'package:wantermarket/config/app_dimenssions.dart';
 
 class AppHelper {
@@ -28,4 +30,19 @@ class AppHelper {
     final double medium  = width==0 ? AppDimensions.MEDIA_SCREEN_MEDIUM : width*3;
     return MediaQuery.of(context).size.width > large ? 4 : (MediaQuery.of(context).size.width > medium? 3 : 2);
   }
+
+  static void showInfoFlushBar(BuildContext context, String s, {Color color = AppColors.PRIMARY}) {
+    Flushbar(
+      message: s,
+      duration: const Duration(seconds: 3),
+      backgroundColor: color,
+      flushbarPosition: FlushbarPosition.BOTTOM,
+      icon: const Icon(
+        Icons.info,
+        color: Colors.white,
+      ),
+    ).show(context);
+  }
+
+  static showErrorFlushBar(BuildContext context, String string) {}
 }

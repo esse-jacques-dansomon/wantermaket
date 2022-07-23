@@ -26,9 +26,9 @@ class CategoryRepo {
     }
   }
 
-  Future<ApiResponse> getCategoryProducts(int id) async {
+  Future<ApiResponse> getCategoryProducts(int id, int currentPage) async {
     try {
-      final response = await dioClient.get('${AppConstants.CATEGORIES_URI}/$id/produits');
+      final response = await dioClient.get('${AppConstants.CATEGORIES_URI}/$id/produits', queryParameters: {'page': currentPage});
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -62,9 +62,9 @@ class CategoryRepo {
     }
   }
 
-  Future<ApiResponse> getSubCategoryProducts(int id) async {
+  Future<ApiResponse> getSubCategoryProducts(int id, int currentPage) async {
     try {
-      final response = await dioClient.get('${AppConstants.SOUS_CATEGORIES_URI}/$id/produits');
+      final response = await dioClient.get('${AppConstants.SOUS_CATEGORIES_URI}/$id/produits', queryParameters: {'page': currentPage});
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

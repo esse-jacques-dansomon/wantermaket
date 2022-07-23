@@ -24,7 +24,7 @@ class NoNotificationWidget extends StatelessWidget {
         const SizedBox(height: 10,),
         ElevatedButton(
             onPressed: (){
-              Navigator.popAndPushNamed(context, AppRoutes.hasnotification);
+              Navigator.popAndPushNamed(context, AppRoutes.hasNotification);
             },
             child:const  SizedBox( child: Text('Paramettres'),
             ))

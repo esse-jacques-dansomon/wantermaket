@@ -1,5 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:wantermarket/data/repositories/product_repo.dart';
+import 'package:wantermarket/shared/app_helper.dart';
 
 import '../data/models/body/product.dart';
 
@@ -7,11 +9,21 @@ class ProductProvider extends ChangeNotifier{
   final ProductsRepo productsRepo;
   ProductProvider({required this.productsRepo});
 
-  List<Product> _topAnnonces = [];
-  List<Product> _dealsOfTheDay = [];
-  List<Product> _newArrivals = [];
-  List<Product> _relatedProducts = [];
-  int nextPage = 1;
+  final List<Product> _topAnnonces = [];
+  final List<Product> _dealsOfTheDay = [];
+  final List<Product> _newArrivals = [];
+  final List<Product> _relatedProducts = [];
+
+  bool isPaginationLoading = false;
+  String? nextPageLink;
+
+  int _page = 1;
+  int get page => _page;
+
+  set page(int value) {
+    _page = value;
+    notifyListeners();
+  }
 
   List<Product> get topAnnonces => _topAnnonces;
   List<Product> get dealsOfTheDay => _dealsOfTheDay;
@@ -41,16 +53,28 @@ class ProductProvider extends ChangeNotifier{
     }
   }
 
-  Future<void> getNewArrivals() async {
-    final newArrivalsResponse = await productsRepo.getNewProducts();
-    if(newArrivalsResponse.error == null ){
+  Future<void> getNewArrivals({reload = false}) async {
+    if(reload){
       _newArrivals.clear();
+      _page = 1;
+    }
+    isPaginationLoading = true;
+    notifyListeners();
+    final newArrivalsResponse = await productsRepo.getNewProducts(page : page);
+    if(newArrivalsResponse.error == null ){
       newArrivalsResponse.response.data['data'].forEach((element) {
         _newArrivals.add(Product.fromJson(element));
       });
+      if(newArrivalsResponse.response.data['links']['next'] != null){
+        page++;
+      }
+      isPaginationLoading = false;
       notifyListeners();
     }
   }
+
+
+
 
   Future<void> getRelatedProducts(int categoryId) async {
     final newArrivalsResponse = await productsRepo.getRelatedProducts(categoryId);

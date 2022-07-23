@@ -2,7 +2,9 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wantermarket/data/models/body/login_model.dart';
+import 'package:wantermarket/data/models/body/profil_model.dart';
 import 'package:wantermarket/data/models/body/register_model.dart';
+import 'package:wantermarket/data/models/body/reset_password_model.dart';
 import 'package:wantermarket/data/models/body/user_base_info.dart';
 
 import '../../config/app_constantes.dart';
@@ -20,7 +22,17 @@ class AuthRepo {
       final response = await dioClient.post(AppConstants.LOGIN_URI, data: loginModel.toJson());
       return ApiResponse.withSuccess(response);
     } catch (e) {
-      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e.toString()));
+    }
+  }
+
+  Future<ApiResponse> resetPassword(ResetPasswordModel passwordModel) async {
+
+    try {
+      final response = await dioClient.post(AppConstants.RESET_PASSWORD_URI, data: passwordModel.toJson());
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e.toString()));
     }
   }
 
@@ -29,7 +41,17 @@ class AuthRepo {
       final response = await dioClient.post(AppConstants.VENDEUR_URI, data: registerModel.toJson());
       return ApiResponse.withSuccess(response);
     } catch (e) {
-      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+      print(e.toString());
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e.toString()));
+    }
+  }
+
+  Future<ApiResponse> editProfile(EditProfileModel editProfileModel) async {
+    try {
+      final response = await dioClient.post(AppConstants.VENDOR_BOUTIQUE_URI, data: editProfileModel.toJson());
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e.toString()));
     }
   }
 
@@ -123,10 +145,6 @@ class AuthRepo {
       throw e;
     }
   }
-
-
-
-
 
 
 }

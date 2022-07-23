@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:wantermarket/providers/vendor_provider.dart';
 import 'package:wantermarket/ui/basewidgets/app_bars/app_bar_with_return.dart';
 import 'package:wantermarket/ui/screens/edit_boutique/widgets/boutique_form.dart';
 
@@ -19,11 +21,8 @@ class EditBoutiqueScreen extends StatelessWidget {
             margin: const EdgeInsets.symmetric(horizontal: 15),
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  // SizedBox(height: 20,),
-                  // Text("Editer votre boutique", textAlign: TextAlign.start, style: TextStyle(fontSize: AppDimensions.FONT_SIZE_EXTRA_LARGE, color: AppColors.BLACK),),
-                  // SizedBox(height: 10,),
-                  BoutiqueForm(),
+                children:  [
+                  BoutiqueForm(boutique: Provider.of<VendorProvider>(context, listen: false ).boutique,),
                 ]
             ),
           ),

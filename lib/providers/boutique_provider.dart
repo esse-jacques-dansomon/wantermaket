@@ -28,9 +28,10 @@ class BoutiqueProvider extends ChangeNotifier{
 
 
   Future<void> getBoutiqueProduits(int boutiqueId) async {
-    final response = await boutiqueRepo.getProductsByBoutique(boutiqueId);
     boutiqueProduits.clear();
-
+    notifyListeners();
+    final response = await boutiqueRepo.getProductsByBoutique(boutiqueId);
+    notifyListeners();
     if(response.error == null){
       response.response.data['data'].forEach((element) {
         boutiqueProduits.add(Product.fromJson(element));

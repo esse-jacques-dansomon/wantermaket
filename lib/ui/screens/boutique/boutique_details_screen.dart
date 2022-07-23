@@ -22,7 +22,7 @@ class BoutiqueDetailsScreen extends StatefulWidget {
 
 class _BoutiqueDetailsScreenState extends State<BoutiqueDetailsScreen> {
 
-  Future<void> _loadData() async{
+   _loadData() {
     Provider.of<BoutiqueProvider>(context, listen: false).getBoutiqueProduits(widget.boutique.id!);
     //not the connected user views
     if(widget.boutique.id != Provider.of<AuthProvider>(context, listen: false).user.boutiqueId){
@@ -35,9 +35,13 @@ class _BoutiqueDetailsScreenState extends State<BoutiqueDetailsScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _loadData();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _loadData();
+    });
 
   }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -135,24 +139,31 @@ class _BoutiqueDetailsScreenState extends State<BoutiqueDetailsScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                  children: [
                    Expanded(
+                     flex: 4,
                      child: Consumer<BoutiqueFavoriesProvider>(
                        builder: (context, boutiqueFovoriesProvider, _){
                          return ElevatedButton(
                            onPressed: () {
-                              boutiqueFovoriesProvider.isFavory(widget.boutique.id!) ?
-                                boutiqueFovoriesProvider.removeFavory(widget.boutique.id!) :
-                                boutiqueFovoriesProvider.addFavory(widget.boutique.id!);
+                             if(Provider.of<AuthProvider>(context, listen: false).isLoggedIn()){
+                               boutiqueFovoriesProvider.isFavory(widget.boutique.id!) ?
+                               boutiqueFovoriesProvider.removeFavory(widget.boutique.id!) :
+                               boutiqueFovoriesProvider.addFavory(widget.boutique.id!);
+                             }else{
+                                AppHelper.showInfoFlushBar(context, 'Vous devez être connecté pour effectuer cette action');
+                             }
+
                            },
                            style: ButtonStyle(
                                backgroundColor: MaterialStateProperty.all(AppColors.PRIMARY)
                            ),
-                           child:  Text(boutiqueFovoriesProvider.isFavory(widget.boutique.id!) ? 'Ne Plus Suivre' : "Suivre" , style: TextStyle(color: Colors.white, fontSize: 18),),
+                           child:  Text(boutiqueFovoriesProvider.isFavory(widget.boutique.id!) ? 'Ne Plus Suivre' : "Suivre" , style: const TextStyle(color: Colors.white, fontSize: 15),),
                          );
                        },
                      ),
                    ),
                    const SizedBox(width: 10,),
                    Expanded(
+                     flex: 3,
                      child: ElevatedButton(
                        onPressed: () {
                          showModalBottomSheet(
@@ -163,11 +174,12 @@ class _BoutiqueDetailsScreenState extends State<BoutiqueDetailsScreen> {
                        style: ButtonStyle(
                            backgroundColor: MaterialStateProperty.all(AppColors.PRIMARY)
                        ),
-                       child: const Text('Infos', style: TextStyle(color: Colors.white, fontSize: 18),),
+                       child: const Text('Infos', style: TextStyle(color: Colors.white, fontSize: 15),),
                      ),
                    ),
                    const SizedBox(width: 10,),
                    Expanded(
+                     flex: 2,
                      child: ElevatedButton(
                        onPressed: () {
                          showModalBottomSheet(
@@ -178,7 +190,7 @@ class _BoutiqueDetailsScreenState extends State<BoutiqueDetailsScreen> {
                        style: ButtonStyle(
                            backgroundColor: MaterialStateProperty.all(AppColors.WHITE)
                        ),
-                       child: const Text('Partager', style: TextStyle(color: AppColors.PRIMARY, fontSize: 18),),
+                       child: const Icon(Icons.share, color: AppColors.PRIMARY,),
                      ),
                    ),
                  ],

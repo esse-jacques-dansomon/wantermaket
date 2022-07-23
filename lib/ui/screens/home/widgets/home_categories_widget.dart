@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:wantermarket/providers/category_provider.dart';
 import 'package:wantermarket/ui/screens/home/widgets/title_and_more_widget.dart';
 
+import '../../../../route/routes.dart';
 import '../../../basewidgets/category_card.dart';
 import '../../sector/secteur_screen.dart';
 
@@ -18,7 +19,7 @@ class HomeCategories extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const TitleAndMoreText( title: 'Categories', moreText: 'Voir Plus', widget:  SecteurScreen()),
+            const TitleAndMoreText( title: 'Categories', moreText: 'Voir Plus', route:  AppRoutes.categories),
             Padding(
               padding: const EdgeInsets.only(left: 15.0, right: 15.0),
               child: SizedBox(

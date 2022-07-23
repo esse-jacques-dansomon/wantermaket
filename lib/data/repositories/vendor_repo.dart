@@ -1,4 +1,6 @@
 
+import 'package:dio/dio.dart';
+
 import '../../config/app_constantes.dart';
 import '../datasource/dio/dio_client.dart';
 import '../datasource/exception/api_error_handler.dart';
@@ -33,16 +35,6 @@ class VendorRepo {
     }
   }
 
-  Future<ApiResponse> getVendorId(int vendeurId) async {
-    try {final response = await dioClient.get('${AppConstants.VENDEUR_URI}/$vendeurId');
-    return ApiResponse.withSuccess(response);
-    } catch (e) {
-      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
-    }
-  }
-
-
-
   Future<ApiResponse> incrementProductView(int idProduct) async {
     try {
       final response = await dioClient.get('${AppConstants.PRODUITS_URI}/$idProduct/views');
@@ -52,11 +44,14 @@ class VendorRepo {
     }
   }
 
-  Future<ApiResponse> updateBoutique(int boutiqueId, Map<String, dynamic> data) async {
+  Future<ApiResponse> updateBoutique(FormData data) async {
+    final response = await dioClient.post(AppConstants.BOUTIQUE_update_URI, data: data);
     try {
-      final response = await dioClient.put('${AppConstants.BOUTIQUE_URI}/$boutiqueId', data: data);
+      print(response.statusCode);
       return ApiResponse.withSuccess(response);
     } catch (e) {
+      print('failure') ;
+      print(response.statusMessage);
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
     }
   }

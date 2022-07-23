@@ -24,19 +24,25 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
   String? _password, _email;
   FocusNode? _passwordNode;
 
-  void _signIn()  {
+  void _signIn()   {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
-    // final loginModel = LoginModel(email: _email!, password: _password!);
-    final loginModel = LoginModel(email: 'abakarmahamat1991@gmail.com', password: 'rasmuslerdorf');
-     authProvider.login(loginModel, context);
-    if (authProvider.isLoggedIn()) {
-      // while(authProvider.user.boutiqueId != null) {
-      //   await Future.delayed(const Duration(milliseconds: 100));
-      // }
-      // await Future.delayed(const Duration(milliseconds: 1000));
-      if (!mounted) return;
-      Navigator.of(context).pushReplacementNamed(AppRoutes.profile);
-    }
+    final loginModel = LoginModel(email: _email!, password: _password!);
+    // final loginModel = LoginModel(email: "abakarmahamat1991@gmail.com", password: "rasmuslerdorf");
+     authProvider.login(loginModel, context).whenComplete(() {
+       if (authProvider.isLoggedIn()) {
+         if (!mounted) return;
+         Navigator.of(context).pushReplacementNamed(AppRoutes.profile);
+       }else{
+         if (!mounted )  return;
+         if(!authProvider.isLoggedIn()) {
+           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+           content: Text('Email ou mot de passe incorrect'),
+           backgroundColor: Colors.red,
+         ));
+         }
+       }
+     });
+
 
   }
 
@@ -139,7 +145,6 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-;
     return Form(
       key: _formKey,
       child: Column(
@@ -158,7 +163,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
           SizedBox(
               width: double.infinity,
               height: 45,
-              child: false ? const Center(child: CircularProgressIndicator()): ElevatedButton(
+              child: Provider.of<AuthProvider>(context, listen: true).isLoading ? const Center(child: CircularProgressIndicator()): ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(AppColors.PRIMARY),),
                   onPressed: () {

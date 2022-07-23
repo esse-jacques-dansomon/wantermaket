@@ -19,6 +19,7 @@ class SearchProvider extends ChangeNotifier {
     products.clear();
     boutiques.clear();
     searchText= query;
+    notifyListeners();
     try{
       final response = await searchRepo.search(query);
       if(response.error == null ){

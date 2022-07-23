@@ -7,58 +7,70 @@ import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
 import 'package:multi_select_flutter/util/multi_select_list_type.dart';
 import 'package:provider/provider.dart';
+import 'package:wantermarket/data/models/body/boutique_update_model.dart';
+import 'package:wantermarket/providers/auth_provider.dart';
+import 'package:wantermarket/shared/app_helper.dart';
 
-import '../../../../config/app_colors.dart';
 import '../../../../config/app_dimenssions.dart';
+import '../../../../data/models/body/boutique.dart';
 import '../../../../providers/category_provider.dart';
+import '../../../../providers/vendor_provider.dart';
+import '../../../../route/routes.dart';
 
 class BoutiqueForm extends StatefulWidget {
-  const BoutiqueForm({Key? key}) : super(key: key);
+  final Boutique boutique;
+  const BoutiqueForm({Key? key, required this.boutique}) : super(key: key);
 
   @override
   State<BoutiqueForm> createState() => _BoutiqueFormState();
 }
 
 class _BoutiqueFormState extends State<BoutiqueForm> {
+  final _nomBoutiqueController = TextEditingController( );
+  final _latitudeController = TextEditingController();
+  final _longitudeController = TextEditingController();
+  final _descriptionController = TextEditingController();
 
-  Future pickImageProfile({ImageSource imageSource = ImageSource.gallery}) async {
-    try {
-      final photoProfile = (await ImagePicker().pickImage(source: imageSource, imageQuality: 100, ));
-      if(photoProfile == null) return;
-      final imageTemp = File(photoProfile.path);
-      setState(() => this.photoProfile = imageTemp);
-    } on PlatformException catch(e) {
-      print('Failed to pick image: $e');
-    }
-  }
-
-
-  Future pickImageCover({ImageSource imageSource = ImageSource.gallery}) async {
-    try {
-      final photoCouverture = (await ImagePicker().pickImage(source: imageSource, imageQuality: 100, ));
-      if(photoCouverture == null) return;
-      final imageTemp = File(photoCouverture.path);
-      setState(() => this.photoCouverture = imageTemp);
-    } on PlatformException catch(e) {
-      print('Failed to pick image: $e');
-    }
-  }
-
-  String? _nomBoutique, _latitude, _longitude, _description;
   FocusNode? _nomBoutiqueNode, _latitudeNode, _longitudeNode, _descriptionNode;
 
 
   List<dynamic> _selectedItems = [];
   File? photoCouverture, photoProfile ;
 
+
+  updateBoutique(BoutiqueUpdateModel boutiqueUpdateModel, List<File> files) async {
+    print(boutiqueUpdateModel.toJson());
+     Provider.of<VendorProvider>(context, listen: false).updateBoutique(boutiqueUpdateModel, files).then((value) => {
+      if(value){
+        Provider.of<AuthProvider>(context, listen: false).verifyIsAuthenticated(),
+        Provider.of<AuthProvider>(context, listen: false).getUserConnectedInfo(),
+        // Provider.of<VendorProvider>(context, listen: false).getBoutique(),
+        AppHelper.showInfoFlushBar(context, 'Vous avez bien modifié vos informations'),
+        Navigator.pushNamed(context, AppRoutes.profile)
+      }else{
+        AppHelper.showInfoFlushBar(context, 'une erreue s\'est produite')
+      }
+
+    });
+
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    Provider.of<AuthProvider>(context, listen: false).verifyIsAuthenticated();
     _nomBoutiqueNode = FocusNode();
     _latitudeNode = FocusNode();
     _longitudeNode = FocusNode();
     _descriptionNode = FocusNode();
+
+
+    _nomBoutiqueController.text = (widget.boutique.name?.trim()) ?? '';
+    _latitudeController.text = widget.boutique.latitude?.trim() ?? '';
+    _longitudeController.text = widget.boutique.longitude?.trim() ?? '';
+    _descriptionController.text = widget.boutique.bio?.trim() ?? "";
+
 
   }
 
@@ -71,20 +83,15 @@ class _BoutiqueFormState extends State<BoutiqueForm> {
     _longitudeNode?.dispose();
     _descriptionNode?.dispose();
 
+
   }
+  var key = GlobalKey<FormState>();
+
 
   @override
   Widget build(BuildContext context) {
-
     var categories = Provider.of<CategoryProvider>(context, listen: false).categories;
 
-
-
-    void addProduct(){
-
-    }
-
-    var key = GlobalKey<FormState>();
     return Form(
         key: key,
         child: Column(
@@ -100,7 +107,8 @@ class _BoutiqueFormState extends State<BoutiqueForm> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 color: Colors.grey[200],
-                image: photoCouverture != null ? DecorationImage(image: FileImage(photoCouverture!), fit: BoxFit.cover) : null,
+                image: photoCouverture != null ? DecorationImage(image: FileImage(photoCouverture!), fit: BoxFit.cover) :
+                (widget.boutique.coverImage != null ? DecorationImage(image: NetworkImage(widget.boutique.coverImage!), fit: BoxFit.cover) : null),
               ),
               child: IconButton(
                 icon: const Icon(Icons.add_a_photo, color: Colors.black,),
@@ -156,7 +164,8 @@ class _BoutiqueFormState extends State<BoutiqueForm> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: Colors.grey[200],
-                  image: photoProfile != null ? DecorationImage(image: FileImage(photoProfile!), fit: BoxFit.cover) : null,
+                  image: photoProfile != null ? DecorationImage(image: FileImage(photoProfile!), fit: BoxFit.cover) :
+                  (widget.boutique.profilImage != null ? DecorationImage(image: NetworkImage(widget.boutique.profilImage!), fit: BoxFit.cover) : null),
                 ),
                 child: IconButton(
                   icon: const Icon(Icons.add_a_photo, color: Colors.black, size: 60,),
@@ -204,6 +213,8 @@ class _BoutiqueFormState extends State<BoutiqueForm> {
                 ),
               ),
             ),
+
+
             //mutiselect
             const SizedBox(height: 15,),
             MultiSelectDialogField(
@@ -226,15 +237,14 @@ class _BoutiqueFormState extends State<BoutiqueForm> {
                 _selectedItems = values;
               },
             ),
+
+
             //nom boutique
             Container(
               margin: const EdgeInsets.only(bottom: 15, top: 15),
               child: TextFormField(
-                onSaved: (value) => _nomBoutique = value!,
-                onEditingComplete: (){
-                  // Once user click on Next then it go to password field
-                  _latitudeNode!.requestFocus();
-                },
+                controller: _nomBoutiqueController,
+
                 focusNode: _nomBoutiqueNode,
                 textInputAction: TextInputAction.next,
                 decoration: const InputDecoration(
@@ -250,14 +260,13 @@ class _BoutiqueFormState extends State<BoutiqueForm> {
                   }
                   return null;
                 },
-                onTap: (){},
               ),
             ),
             //latitude
             Container(
               margin: const EdgeInsets.only(bottom: 15),
               child: TextFormField(
-                onSaved: (value) => _latitude = value!,
+                controller: _latitudeController,
                 onEditingComplete: (){
                   // Once user click on Next then it go to password field
                   _longitudeNode!.requestFocus();
@@ -285,7 +294,7 @@ class _BoutiqueFormState extends State<BoutiqueForm> {
             Container(
               margin: const EdgeInsets.only(bottom: 15),
               child: TextFormField(
-                onSaved: (value) => _longitude = value!,
+                controller: _longitudeController,
                 onEditingComplete: (){
                   // Once user click on Next then it go to password field
                   _descriptionNode!.requestFocus();
@@ -313,7 +322,7 @@ class _BoutiqueFormState extends State<BoutiqueForm> {
             Container(
               margin: const EdgeInsets.only(bottom: 15),
               child: TextFormField(
-                onSaved: (value) => _description = value!,
+                controller: _descriptionController,
                 focusNode: _descriptionNode,
                 textInputAction: TextInputAction.send,
                 minLines: 3,
@@ -339,128 +348,56 @@ class _BoutiqueFormState extends State<BoutiqueForm> {
               onPressed: () {
                 if (key.currentState!.validate()) {
                   key.currentState?.save();
-                  print("$_nomBoutique, $_latitude, $_longitude, $_description, $_selectedItems");
+                  List<File> files = [];
+                  if(photoProfile != null){
+                    files.add(photoProfile!);
+                  }
+                  if(photoCouverture != null){
+                    files.add(photoCouverture!);
+                  }
+                  BoutiqueUpdateModel boutiqueUpdateModel = BoutiqueUpdateModel(
+                    name: _nomBoutiqueController.text,
+                    latitude: (_latitudeController.text),
+                    longitude: (_longitudeController.text),
+                    bio: _descriptionController.text,
+                    secteursId: _selectedItems.cast(),
+                  );
+                  //TODO: update boutique
+                  updateBoutique(boutiqueUpdateModel , files);
                 }
               },
             ),
+            SizedBox(height: 150,),
 
           ],
         ));
   }
 
 
-  Widget _buildBoutiqueNameField(){
-    return Container(
-
-      margin: const EdgeInsets.only(bottom: 25),
-      child: TextFormField(
-        initialValue: 'gato junior',
-        validator: (value) {
-          if (value!.isEmpty) {
-            return 'Veuillez entre le nom de votre boutique';
-          }
-          return null;
-        },
-        onSaved: (value) => _nomBoutique = value!,
-        onEditingComplete: (){
-          // Once user click on Next then it go to password field
-          _latitudeNode!.requestFocus();
-        },
-        focusNode: _nomBoutiqueNode,
-        textInputAction: TextInputAction.next,
 
 
-
-        // validator: requiredValidator,
-        decoration:  InputDecoration(
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 15,
-            vertical: 18,
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5),
-            borderSide: const BorderSide(
-              color: Colors.black,
-            ),
-          ),
-          hintText: 'Nom de la boutique',
-          hintStyle: const TextStyle(color: AppColors.PRIMARY),
-        ),
-      ),
-    );
+  Future pickImageProfile({ImageSource imageSource = ImageSource.gallery}) async {
+    try {
+      final photoProfile = (await ImagePicker().pickImage(source: imageSource, imageQuality: 100, ));
+      if(photoProfile == null) return;
+      final imageTemp = File(photoProfile.path);
+      setState(() => this.photoProfile = imageTemp);
+    } on PlatformException catch(e) {
+      print('Failed to pick image: $e');
+    }
   }
-  Widget _buildLatitudeField(){
-    return Container(
-      margin: const EdgeInsets.only(bottom: 25),
-      child: TextFormField(
-        validator: (value) {
-          if (value!.isEmpty) {
-            return 'Veuillez entre votre latitude';
-          }
-          return null;
-        },
-        onSaved: (value) => _latitude = value!,
-        onEditingComplete: (){
-          // Once user click on Next then it go to password field
-          _longitudeNode!.requestFocus();
-        },
 
-        // validator: requiredValidator,
-        textInputAction: TextInputAction.next,
-        decoration:  InputDecoration(
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 15,
-            vertical: 18,
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5),
-            borderSide: const BorderSide(
-              color: Colors.black,
-            ),
-          ),
-          hintText: 'votre latitude',
-          hintStyle: const TextStyle(color: AppColors.PRIMARY),
-        ),
-        focusNode: _latitudeNode,
-      ),
-    );
+  Future pickImageCover({ImageSource imageSource = ImageSource.gallery}) async {
+    try {
+      final photoCouverture = (await ImagePicker().pickImage(source: imageSource, imageQuality: 100, ));
+      if(photoCouverture == null) return;
+      final imageTemp = File(photoCouverture.path);
+      setState(() => this.photoCouverture = imageTemp);
+    } on PlatformException catch(e) {
+      print('Failed to pick image: $e');
+    }
   }
-  Widget _buildLongitudeField(){
-    return Container(
-      margin: const EdgeInsets.only(bottom: 25),
-      child: TextFormField(
-        validator: (value) {
-          if (value!.isEmpty) {
-            return 'Veuillez entre votre longitude';
-          }
-          return null;
-        },
-        onSaved: (value) => _longitude = value!,
-        onEditingComplete: (){
-          // Once user click on Next then it go to password field
-          _descriptionNode!.requestFocus();
-        },
 
-        // validator: requiredValidator,
-        textInputAction: TextInputAction.next,
-        decoration:  InputDecoration(
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 15,
-            vertical: 18,
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5),
-            borderSide: const BorderSide(
-              color: Colors.black,
-            ),
-          ),
-          hintText: 'Votre logitude',
-          hintStyle: const TextStyle(color: AppColors.PRIMARY),
-        ),
-        focusNode: _longitudeNode,
-      ),
-    );
-  }
 
 }
 

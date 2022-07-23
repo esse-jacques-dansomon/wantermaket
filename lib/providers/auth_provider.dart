@@ -6,6 +6,8 @@ import 'package:wantermarket/data/models/body/login_model.dart';
 import 'package:wantermarket/data/models/body/register_model.dart';
 
 import '../data/models/body/login_response.dart';
+import '../data/models/body/profil_model.dart';
+import '../data/models/body/reset_password_model.dart';
 import '../data/repositories/auth_repo.dart';
 
 class AuthProvider extends ChangeNotifier {
@@ -15,39 +17,28 @@ class AuthProvider extends ChangeNotifier {
   bool _isLoading = false;
   bool _isLoadingRegister = false;
   bool loginn = false;
-  int boutiqueId = 53;
+  int boutiqueId = 0;
   LoginReponse user = LoginReponse();
   bool get isLoading => _isLoading;
   bool get isLoadingRegister => _isLoadingRegister;
 
 
-  Future<void> login(LoginModel loginModel, BuildContext context) async {
-    _isLoading = false;
+  Future<bool> login(LoginModel loginModel, BuildContext context) async {
+    _isLoading =  true;
     notifyListeners();
     final response = await authRepo.login(loginModel);
     _isLoading = false;
     notifyListeners();
     if(response.error == null){
       await authRepo.saveToken(response.response.data['access_token']);
-      await authRepo.sharedPreferences.setInt(AppConstants.BOUTIQUE_ID,response.response.data['boutique_id']);
-      //save token
       authRepo.saveInfoInShared(AppConstants.USER_CREDENTIALS, json.encode(response.response.data));
       //save user info
       user = LoginReponse.fromJson(response.response.data);
-      // await Future.delayed(const Duration(seconds: 1));
-      //
-      // // getUserConnectedInfo();
-      // while(user.boutiqueId == null){
-      //   await Future.delayed(const Duration(seconds: 1));
-      //   user = LoginReponse.fromJson(response.response.data);
-      // }
-      notifyListeners();
+      return true;
 
     }else{
-      if(response.error is String){
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(response.error, style: TextStyle(color: Colors.white)), backgroundColor: Colors.red));
 
-      }
+      return false;
     }
   }
 
@@ -58,6 +49,7 @@ class AuthProvider extends ChangeNotifier {
       final response = await authRepo.register(registerModel);
       _isLoadingRegister = false;
       notifyListeners();
+
       if(response.error == null){
         await authRepo.saveToken(response.response.data['access_token']);
         //save token
@@ -66,12 +58,15 @@ class AuthProvider extends ChangeNotifier {
         user = LoginReponse.fromJson(response.response.data);
         notifyListeners();
       }else{
-        _isLoadingRegister = false;
-        if(response.error is String){
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(response.error, style: TextStyle(color: Colors.white)), backgroundColor: Colors.red));
+        print(' erreurs');
 
-        }
+        print(response.error.toString());
+        _isLoadingRegister = false;
+        notifyListeners();
+        ScaffoldMessenger.of(context).showSnackBar( SnackBar(content: Text('${response.error.toString()}', style: TextStyle(color: Colors.white)), backgroundColor: Colors.red));
+
       }
+
     }catch(e){
       _isLoadingRegister = false;
       notifyListeners();
@@ -79,6 +74,33 @@ class AuthProvider extends ChangeNotifier {
     }
 
   }
+
+  Future<bool> editProfile(EditProfileModel editProfileModel) async {
+    print(editProfileModel.toJson());
+    final response = await authRepo.editProfile(editProfileModel);
+    print(response.response.statusCode);
+     if(response.error == null){
+      return true;
+     }else {
+      return false;
+     }
+  }
+
+
+  Future<bool> resetPassword(ResetPasswordModel passwordModel) async {
+    _isLoading =  true;
+    notifyListeners();
+    final response = await authRepo.resetPassword(passwordModel);
+    _isLoading = false;
+    notifyListeners();
+    print(response.response.statusCode);
+    if(response.error == null){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
 
   Future<void> logout() async {
     _isLoading = true;
@@ -100,38 +122,35 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> getUserConnectedInfo() async {
-    print('getUserConnectedInfo');
-    // dynamic userp = await getValueFromSP(AppConstants.USER_CREDENTIALS);
-    // user = LoginReponse.fromJson(json.decode(userp));
-    // print('=====================?${user.boutiqueId}');
-
+  Future<void> verifyIsAuthenticated() async {
+    final response = await authRepo.getUserConnectedInfo();
+    if(response.error == null){
+      loginn = true;
+      user = LoginReponse.fromJson(response.response.data);
+      authRepo.saveInfoInShared(AppConstants.USER_CREDENTIALS, json.encode(response.response.data));
+      notifyListeners();
+    }else{
+      clearall();
+      notifyListeners();
+    }
   }
 
-  int get userBoutiqueId  {
-    return  authRepo.sharedPreferences.getInt(AppConstants.BOUTIQUE_ID) ?? 53;
+  LoginReponse? getUserConnectedInfo()  {
+    String? response =  authRepo.sharedPreferences.getString(AppConstants.USER_CREDENTIALS);
+    if (response == null) return null;
+    return LoginReponse.fromJson(json.decode(response));
   }
 
-  Future<LoginReponse> getUserConnected()  async {
-    print('getUserConnectedInfo');
-    dynamic userp ;
-    await getValueFromSP(AppConstants.USER_CREDENTIALS).then((value) => userp = value).whenComplete(() => print('getUserConnectedInfo'));
-    user = LoginReponse.fromJson(json.decode(userp));
-    print('=====================?${user.boutiqueId}');
-    notifyListeners();
-    return user;
-
+  int? get userConnectedBoutiqueId  {
+    return  authRepo.sharedPreferences.getInt(AppConstants.BOUTIQUE_ID) ;
   }
 
-  Future<void> getUserShop() async {
-    // var p = await getValueFromSP(AppConstants.BOUTIQUE_ID);
-    // shop = int.parse(p);
-    // notifyListeners();
 
-  }
 
   Future<void> clearall() async {
     await authRepo.clearAll();
+    user = LoginReponse();
+    loginn = false;
     notifyListeners();
   }
 

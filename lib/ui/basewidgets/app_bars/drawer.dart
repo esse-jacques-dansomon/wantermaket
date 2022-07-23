@@ -19,7 +19,7 @@ class AppDrawer extends StatefulWidget {
 
 class _AppDrawerState extends State<AppDrawer> {
 
-  Future<void> _loadDataBoutique() async {
+  _loadDataBoutique()  {
      Provider.of<AuthProvider>(context, listen: false).getUserConnectedInfo();
   }
 
@@ -46,7 +46,7 @@ class _AppDrawerState extends State<AppDrawer> {
                   children: [
                     ClipOval(
                       child: Image.network(
-                        Provider.of<AuthProvider>(context, listen: false).user.profilImage ==null ? AppImage.logo : AppConstants.BASE_URL_IMAGE + Provider.of<AuthProvider>(context, listen: false).user.profilImage! ,
+                        Provider.of<AuthProvider>(context, listen: false).getUserConnectedInfo()?.profilImage ==null ? AppImage.logo : AppConstants.BASE_URL_IMAGE + Provider.of<AuthProvider>(context, listen: false).getUserConnectedInfo()!.profilImage! ,
                         fit: BoxFit.cover,
                         height: 70,
                         width: 70,
@@ -57,34 +57,29 @@ class _AppDrawerState extends State<AppDrawer> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children:  [
-                        Text(Provider.of<AuthProvider>(context, listen: false).user.boutiqueName ??'Pas de Nom', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color: AppColors.WHITE),),
-                        Text('@${Provider.of<AuthProvider>(context, listen: false).user.plan ?? 'Plan Encore de Plan'}', style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: AppColors.WHITE),),
-                        Text('@${Provider.of<AuthProvider>(context, listen: false).user.boutiqueId ?? 'Plan de id'}', style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: AppColors.WHITE),),
+                        Text(Provider.of<AuthProvider>(context, listen: false).getUserConnectedInfo()?.boutiqueName ??'Pas de Nom', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color: AppColors.WHITE),),
+                        Text('@${Provider.of<AuthProvider>(context, listen: false).getUserConnectedInfo()?.plan ?? 'Plan Encore de Plan'}', style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: AppColors.WHITE),),
+                        Text('@${Provider.of<AuthProvider>(context, listen: false).getUserConnectedInfo()?.adresse ?? 'Plan de id'}', style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: AppColors.WHITE),),
                       ],
                     )
 
                   ],
                 );
               }
-            ) : Padding(
-              padding: const EdgeInsets.all(0.0),
-              child: Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text('Bienvenue', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color: AppColors.WHITE),),
-                        const SizedBox(height: 10,),
-                        SizedBox(width:MediaQuery.of(context).size.width*0.5 , child: const Text('Merci de creer un compte pour continuer', maxLines: 3, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: AppColors.WHITE),)),
-                      ],
-                    ),
+            ) : Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children:  const [
+                    Text('Bienvenue', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color: AppColors.WHITE),),
+                    SizedBox(height: 5,),
+                    Text('Connectez Vous Pour continuer', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: AppColors.WHITE),),
                   ],
-                ),
-              ),
+                )
+
+              ],
             ),
           ),
 
@@ -131,8 +126,8 @@ class _AppDrawerState extends State<AppDrawer> {
           ),
 
           const DrawerMenuItem(
-            menuName: 'Mot de Passe',
-            route: AppRoutes.forgotPassword,
+            menuName: 'Changer de Mot de Passe',
+            route: AppRoutes.resetPassword,
             icon: Icons.password_outlined,
           ),
 
@@ -156,7 +151,7 @@ class _AppDrawerState extends State<AppDrawer> {
             children:  [
                const DrawerMenuItem(
                 menuName: 'Dévénir exclusive',
-                route: AppRoutes.become_exclusive,
+                route: AppRoutes.becomeExclusive,
                 icon: Icons.star_half_outlined,
               ),
               ListTile(

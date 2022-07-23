@@ -5,6 +5,8 @@ import 'package:wantermarket/data/models/body/product.dart';
 import 'package:wantermarket/providers/auth_provider.dart';
 import 'package:wantermarket/ui/screens/abonnement/abonnement_screen.dart';
 import 'package:wantermarket/ui/screens/add_product/add_product_screen.dart';
+import 'package:wantermarket/ui/screens/auth/edit_profil_screen.dart';
+import 'package:wantermarket/ui/screens/auth/forgot_password_screen.dart';
 import 'package:wantermarket/ui/screens/auth/reset_password_screen.dart';
 import 'package:wantermarket/ui/screens/become_exclusive/become_exclusive.dart';
 import 'package:wantermarket/ui/screens/boutique/boutique_details_screen.dart';
@@ -30,11 +32,13 @@ class AppRoutes {
   static const String home = '/home';
   static const String login = '/login';
   static const String logout = '/logout';
-  static const String become_exclusive = '/become_exclusive';
+  static const String becomeExclusive = '/become_exclusive';
   static const String register = '/register';
   static const String splash = '/';
   static const String forgotPassword = '/forgot_password';
+  static const String resetPassword = '/reset_password';
   static const String profile = '/profile';
+  static const String editProfile = '/edit_profile';
   static const String search = '/search';
   static const String product = '/product';
   static const String addProduct = '/add_product';
@@ -42,10 +46,10 @@ class AppRoutes {
   static const String categories = '/categories';
   static const String vendor = '/vendor';
   static const String boutiqueBySecteur = '/boutique_by_secteur';
-  static const String editboutiqueBySecteur = '/egit_boutique_by_secteur';
+  static const String editBoutiqueBySecteur = '/egit_boutique_by_secteur';
   static const String shop = '/secteur';
   static const String notification = '/notifications';
-  static const String hasnotification = '/has_notifications';
+  static const String hasNotification = '/has_notifications';
   static const String wishList = '/wish_list';
   static const String favoritesBoutiques = '/boutique_favories';
   static const String abonnements = '/abonnements';
@@ -72,11 +76,18 @@ class AppRoutes {
       case shop:
         return MaterialPageRoute(builder: (context) => const SecteurScreen());
       case addProduct:
-        return MaterialPageRoute(builder: (context) => isLoggedIn( const AddProductScreen()));
+        if(settings.arguments != null) {
+          return MaterialPageRoute(builder: (context) =>  AddProductScreen(product: settings.arguments as Product));
+        } else {
+          return MaterialPageRoute(builder: (context) =>  const AddProductScreen());
+        }
+
       case search:
         return MaterialPageRoute(builder: (context) => const SearchScreen());
       case profile:
         return MaterialPageRoute(builder: (context) => isLoggedIn( const DashBoardScreen()));
+      case editProfile:
+        return MaterialPageRoute(builder: (context) => const EditProfileScreen());
       case category:
         final category = settings.arguments as Category;
         return MaterialPageRoute(builder: (context) =>  CategoryScreen(category: category,));
@@ -107,11 +118,13 @@ class AppRoutes {
         return MaterialPageRoute(builder: (context) => const LoginOrLogupScreen());
       case abonnements:
         return MaterialPageRoute(builder: (context) => const AbonnementScreen());
-      case editboutiqueBySecteur:
+      case editBoutiqueBySecteur:
         return MaterialPageRoute(builder: (context) => const EditBoutiqueScreen( ));
       case forgotPassword:
+        return MaterialPageRoute(builder: (context) => const ForgotPasswordFromScreen());
+      case resetPassword:
         return MaterialPageRoute(builder: (context) => const ResetPasswordFromScreen());
-      case become_exclusive:
+      case becomeExclusive:
         return MaterialPageRoute(builder: (context) => const BecomeExclusiveScreen());
       default:
         return MaterialPageRoute(builder: (context) => const HomeScreen());

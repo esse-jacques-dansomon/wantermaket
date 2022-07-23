@@ -59,9 +59,9 @@ class RegisterScreen extends StatelessWidget {
                     children: [
 
                       //form
-                      RegisterFormWidget(),
+                      const RegisterFormWidget(),
 
-                      SizedBox(height: 20,),
+                      const SizedBox(height: 20,),
 
                       //bottom
                       Container(
@@ -70,7 +70,7 @@ class RegisterScreen extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text('Déja inscrit ?', style: const TextStyle(color: Colors.grey, fontSize: 16),),
+                            const Text('Déja inscrit ?', style: TextStyle(color: Colors.grey, fontSize: 16),),
                             const SizedBox(
                               width: 10,
                             ),

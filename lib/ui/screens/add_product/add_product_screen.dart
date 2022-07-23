@@ -3,26 +3,21 @@ import 'package:wantermarket/config/app_colors.dart';
 import 'package:wantermarket/config/app_dimenssions.dart';
 import 'package:wantermarket/ui/screens/add_product/widgets/product_form.dart';
 
-import '../../basewidgets/app_bars/app_bar.dart';
+import '../../../data/models/body/product.dart';
+import '../../basewidgets/app_bars/app_bar_with_return.dart';
 import '../../basewidgets/app_bars/drawer.dart';
 import '../../basewidgets/bottom_bar/bottom_nav_bar.dart';
 
 class AddProductScreen extends StatelessWidget {
-  const AddProductScreen({Key? key}) : super(key: key);
+  final Product? product;
+  const AddProductScreen({Key? key,  this.product}) : super(key: key);
 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-        },
-        backgroundColor: AppColors.PRIMARY,
-        child: const Icon(Icons.add, color: AppColors.WHITE, size: 50,),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: const CustomBottomNavBar(add_product: true,),
-      appBar: appBar(isActiveSearchbar:true),
+      appBar: appBarWithReturn(title: product?.id != null ? "Modifier ${product!.name!}" : 'Ajouter un produit', context: context),
       drawer: const AppDrawer(),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -31,11 +26,13 @@ class AddProductScreen extends StatelessWidget {
             margin: const EdgeInsets.symmetric(horizontal: 15),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                SizedBox(height: 20,),
-                Text("Ajouter Un Produit", textAlign: TextAlign.start, style: TextStyle(fontSize: AppDimensions.FONT_SIZE_EXTRA_LARGE+3, color: AppColors.BLACK),),
-                SizedBox(height: 10,),
-                ProductAddForm(),
+              children:  [
+                const SizedBox(height: 20,),
+                const Text("Ajouter Un Produit", textAlign: TextAlign.start, style:  TextStyle(fontSize: AppDimensions.FONT_SIZE_EXTRA_LARGE+3, color: AppColors.BLACK),),
+                const SizedBox(height: 10,),
+                product?.id != null ? ProductAddForm(product: product,) : const ProductAddForm(),
+                const SizedBox(height: 30,),
+
               ]
             ),
           ),

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wantermarket/providers/auth_provider.dart';
@@ -5,6 +7,8 @@ import 'package:wantermarket/providers/boutique_favories_provider.dart';
 import 'package:wantermarket/providers/boutique_provider.dart';
 import 'package:wantermarket/providers/category_detail_provider.dart';
 import 'package:wantermarket/providers/category_provider.dart';
+import 'package:wantermarket/providers/curd_product_provider.dart';
+import 'package:wantermarket/providers/payment_provider.dart';
 import 'package:wantermarket/providers/plan_provider.dart';
 import 'package:wantermarket/providers/product_provider.dart';
 import 'package:wantermarket/providers/search_provider.dart';
@@ -25,7 +29,17 @@ import './dependance_injector/dependance_injector.dart' as di;
 //     child: const MyApp(),),);
 // }
 
+class MyHttpOverrides extends HttpOverrides{
+  @override
+  HttpClient createHttpClient(SecurityContext? context){
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
+  }
+}
+
 Future<void> main() async {
+
+  // HttpOverrides.global = MyHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
   await di.init();
     runApp(MultiProvider(
@@ -40,9 +54,12 @@ Future<void> main() async {
       ChangeNotifierProvider(create: (context) => di.sl<VendorProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<WishlistProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<PlanProvider>()),
+      ChangeNotifierProvider(create: (context) => di.sl<PaymentProvider>()),
+      ChangeNotifierProvider(create: (context) => di.sl<CrudProductProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<BoutiqueFavoriesProvider>()),
     ],
     child: const MyApp(),),);
+
 }
 
 class MyApp extends StatelessWidget {

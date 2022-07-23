@@ -30,6 +30,7 @@ class DioClient {
         // AppConstants.LANG_KEY : countryCode == 'US'? 'en':countryCode.toLowerCase(),
 
       };
+
     // dio.interceptors.add(loggingInterceptor);
   }
 
@@ -182,5 +183,6 @@ class DioClient {
       throw e;
     }
   }
+
 
 }
