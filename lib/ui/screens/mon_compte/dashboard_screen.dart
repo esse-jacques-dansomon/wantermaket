@@ -34,7 +34,6 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
 
   @override
   initState()  {
-    super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<VendorProvider>(context, listen: false).getVendorStat();
 
@@ -43,6 +42,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
       }
 
     });
+    super.initState();
+
 
   }
 

@@ -115,7 +115,7 @@ class PlanItem extends StatelessWidget {
               child: TextButton(
 
                 onPressed: () {},
-                child: const Text('   Choisir le plan PREMIUM  ', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+                child:  Text('   Choisir le plan ${plan.name!}  ', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
               )
           ),
 

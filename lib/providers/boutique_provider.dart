@@ -10,6 +10,7 @@ class BoutiqueProvider extends ChangeNotifier{
 
   final List<Boutique> _boutiquesExclusives = [];
   final List<Product> _boutiqueProduits = [];
+  final List<Product> productsSearch = [];
   List<Product> get boutiqueProduits => _boutiqueProduits;
   List<Boutique> get boutiquesExclusives => _boutiquesExclusives;
 
@@ -26,9 +27,9 @@ class BoutiqueProvider extends ChangeNotifier{
     }
   }
 
-
   Future<void> getBoutiqueProduits(int boutiqueId) async {
     boutiqueProduits.clear();
+    productsSearch.clear();
     notifyListeners();
     final response = await boutiqueRepo.getProductsByBoutique(boutiqueId);
     notifyListeners();
@@ -36,6 +37,7 @@ class BoutiqueProvider extends ChangeNotifier{
       response.response.data['data'].forEach((element) {
         boutiqueProduits.add(Product.fromJson(element));
       });
+      productsSearch.addAll(boutiqueProduits) ;
       notifyListeners();
     }else{
       print('error');
@@ -49,6 +51,14 @@ class BoutiqueProvider extends ChangeNotifier{
     }else{
       print('error');
     }
+  }
+
+  void searchProduct(String text) {
+    productsSearch.clear();
+    productsSearch.addAll(
+      boutiqueProduits.where((element) => element.name!.toLowerCase().contains(text.toLowerCase())).toList()
+    );
+    notifyListeners();
   }
 
 }

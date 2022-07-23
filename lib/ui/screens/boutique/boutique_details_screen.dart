@@ -5,6 +5,7 @@ import 'package:wantermarket/config/app_colors.dart';
 import 'package:wantermarket/data/models/body/boutique.dart';
 import 'package:wantermarket/providers/auth_provider.dart';
 import 'package:wantermarket/providers/boutique_favories_provider.dart';
+import 'package:wantermarket/providers/vendor_provider.dart';
 
 import '../../../config/app_images.dart';
 import '../../../providers/boutique_provider.dart';
@@ -28,6 +29,8 @@ class _BoutiqueDetailsScreenState extends State<BoutiqueDetailsScreen> {
     if(widget.boutique.id != Provider.of<AuthProvider>(context, listen: false).user.boutiqueId){
       Provider.of<BoutiqueProvider>(context, listen: false).upgradeViewBoutique(widget.boutique.id!);
     }
+
+
 
   }
 
@@ -205,13 +208,16 @@ class _BoutiqueDetailsScreenState extends State<BoutiqueDetailsScreen> {
 
                   ),
                   child: Row(
-                    children: const [
-                      SizedBox(width: 15,),
+                    children:  [
+                      const SizedBox(width: 15,),
                       Expanded(child: TextField(
-                        decoration: InputDecoration(
+                        onChanged: (value){
+                          Provider.of<BoutiqueProvider>(context, listen: false).searchProduct(value);
+                        },
+                        decoration: const InputDecoration(
                           border: InputBorder.none,
                           hintText: 'Rechercher',
-                          hintStyle: const TextStyle(color: Colors.black),
+                          hintStyle: TextStyle(color: Colors.black),
                         ),
                       ),),
                       const SizedBox(width: 15,),
@@ -227,7 +233,7 @@ class _BoutiqueDetailsScreenState extends State<BoutiqueDetailsScreen> {
                 const SizedBox(height: 10,),
                 Consumer<BoutiqueProvider>(builder: (context, boutiqueProvider, child){
                   return GridView.builder(
-                      itemCount: boutiqueProvider.boutiqueProduits.length,
+                      itemCount: boutiqueProvider.productsSearch.length,
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -238,7 +244,7 @@ class _BoutiqueDetailsScreenState extends State<BoutiqueDetailsScreen> {
                           childAspectRatio: 1.5
                       ),
                       itemBuilder: (context, index){
-                        return SizedBox(width: 230, child: ProductByBoutique3(product: boutiqueProvider.boutiqueProduits[index],));
+                        return SizedBox(width: 230, child: ProductByBoutique3(product: boutiqueProvider.productsSearch[index],));
                       });
                 }),
 
