@@ -17,6 +17,7 @@ import 'package:wantermarket/ui/screens/notification/notification_screen.dart';
 import 'package:wantermarket/ui/screens/sector/secteur_screen.dart';
 import 'package:wantermarket/ui/screens/mon_compte/dashboard_screen.dart';
 import 'package:wantermarket/ui/screens/produit/produit_details_screen.dart';
+import 'package:wantermarket/ui/screens/user-actions-account-status/no_internet_screen.dart';
 import 'package:wantermarket/ui/screens/wishlist/wishlist_screen.dart';
 
 import '../data/models/body/category.dart';
@@ -53,21 +54,22 @@ class AppRoutes {
   static const String wishList = '/wish_list';
   static const String favoritesBoutiques = '/boutique_favories';
   static const String abonnements = '/abonnements';
+  static const String noInternet = '/no-internet';
 
 
 
 
 
   static Route<dynamic> onGenerateRoute(RouteSettings settings){
-
     Widget isLoggedIn(Widget loggedWidget, { Widget notLogged=const LoginScreen() }) => Consumer<AuthProvider>(
-      builder: (context, auth, child) =>  Provider.of<AuthProvider>(context, listen : false).isLoggedIn() ? loggedWidget : notLogged ,
+      builder: (context, auth, child) {
+      return  auth.isLoggedIn() ? (loggedWidget) : notLogged;
+      },
     );
 
 
     switch(settings.name) {
       case login:
-
         return MaterialPageRoute(builder: (context) => isLoggedIn( const DashBoardScreen()) );
       case register:
         return MaterialPageRoute(builder: (context) => isLoggedIn( const DashBoardScreen(), notLogged: const RegisterScreen()) );
@@ -81,7 +83,6 @@ class AppRoutes {
         } else {
           return MaterialPageRoute(builder: (context) =>  const AddProductScreen());
         }
-
       case search:
         return MaterialPageRoute(builder: (context) => const SearchScreen());
       case profile:
@@ -125,7 +126,9 @@ class AppRoutes {
       case resetPassword:
         return MaterialPageRoute(builder: (context) => const ResetPasswordFromScreen());
       case becomeExclusive:
-        return MaterialPageRoute(builder: (context) => const BecomeExclusiveScreen());
+        return MaterialPageRoute(builder: (context) =>  BecomeExclusiveScreen());
+      case noInternet:
+        return MaterialPageRoute(builder: (context) => const NoInternetScreen());
       default:
         return MaterialPageRoute(builder: (context) => const HomeScreen());
     }

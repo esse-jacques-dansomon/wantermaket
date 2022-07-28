@@ -1,7 +1,14 @@
+import 'dart:convert';
+
 import 'package:wantermarket/data/models/body/vendor.dart';
 
 import 'boutique.dart';
 import 'image.dart';
+
+
+List<Product> productFromMap(String str) => List<Product>.from(json.decode(str).map((x) => Product.fromJson(x)));
+
+String productToMap(List<Product> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class Product {
   int? id;

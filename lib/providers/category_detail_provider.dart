@@ -34,30 +34,23 @@ class CategoryProviderDetails extends ChangeNotifier{
 
 
   void controlPagination(isPagination, {int subCategoryId = 0}) {
-    if(_dataState == DataState.noMoreData){
-      notifyListeners();
-      return ;
-    }
+    selectedSubCategory = subCategoryId;
     if(isPagination){
       currentPage++;
       _dataState = DataState.loadingPagination;
       notifyListeners();
     }else{
       currentPage = 1;
-      selectedSubCategory = subCategoryId;
       _dataState = DataState.loading;
       _products.clear();
       notifyListeners();
     }
-    if(noMoreData){
-      notifyListeners();
-      return;
-    }
+
   }
   Future<void> getCategoryProducts(int id,{isPagination = false} ) async {
     controlPagination(isPagination);
     final response = await categoryRepo.getCategoryProducts(id, currentPage);
-    if(response.error == null){
+    if(response.error == null ){
       if(response.response.data['data'].length == 0 && currentPage == 1){
         _dataState = DataState.noMoreData;
       }else{
@@ -75,20 +68,26 @@ class CategoryProviderDetails extends ChangeNotifier{
 
   Future<void> getSubCategoryProducts(int id, {isPagination = false}) async {
     controlPagination(isPagination, subCategoryId: id);
-    final response = await categoryRepo.getSubCategoryProducts(id, currentPage);
-    if(response.error == null){
-      if(response.response.data['data'].length == 0 && currentPage == 1){
-        _dataState = DataState.noMoreData;
-      }else{
-        response.response.data['data'].forEach((element) {
-          _products.add(Product.fromJson(element));
-        });
-        _dataState = DataState.loaded;
+    try{
+      final response = await categoryRepo.getSubCategoryProducts(id, currentPage);
+      if(response.error == null){
+        if(response.response.data['data'].length == 0 && currentPage == 1){
+          _dataState = DataState.noMoreData;
+        }else{
+          response.response.data['data'].forEach((element) {
+            _products.add(Product.fromJson(element));
+          });
+          _dataState = DataState.loaded;
+        }
       }
-    }else{
+      notifyListeners();
+    }catch(e){
       _dataState = DataState.error;
+      notifyListeners();
+
+
     }
-    notifyListeners();
+
   }
 
   Future<void> getSubCategoriesOfCategory(int id) async {

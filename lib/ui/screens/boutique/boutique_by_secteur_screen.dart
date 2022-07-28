@@ -47,39 +47,60 @@ class _BoutiqueBySecteurScreenState extends State<BoutiqueBySecteurScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
 
           children:  [
-            const SizedBox(
-              height: 8,
-            ),
+
             //button change item style
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  width: 15,
-                ),
-                InkWell(child: Icon(Icons.table_rows_outlined, color: AppColors.PRIMARY,), onTap: (){
-                  if (!two_items) {
-                    setState(() {
-                      two_items = true;
-                    });
-                  }
-                },),
-                const SizedBox(
-                  width: 8,
-                ),
-                InkWell(child: Icon(Icons.tab_sharp, color: AppColors.PRIMARY,), onTap: (){
+            Container(
+              padding: EdgeInsets.only(bottom: 10),
+              color: AppColors.PRIMARY,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
 
-                  if (two_items) {
-                    setState(() {
-                      two_items = false;
-                    });
-                  }
+                    children: const [
+                      SizedBox(
+                        width: 15,
+                      ),
+                    Icon(Icons.filter_list, color: AppColors.WHITE, size: 25,),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      Text('Filtres', style: TextStyle(color: AppColors.WHITE, fontSize: 18),)
+                  ],),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      const SizedBox(
+                        width: 15,
+                      ),
+                      InkWell(child:  Icon(Icons.grid_view_sharp, color: !two_items ? AppColors.WHITE : AppColors.PLACEHOLDERBg,), onTap: (){
+                        if (!two_items) {
+                          setState(() {
+                            two_items = true;
+                          });
+                        }
+                      },),
+                      const SizedBox(
+                        width: 12,
+                      ),
+                      InkWell(child:  Icon(Icons.view_stream_sharp, color: two_items ? AppColors.WHITE : AppColors.PLACEHOLDERBg, size: 30,), onTap: (){
 
-                },),
-                const SizedBox(
-                  width: 15,
-                ),
-              ],
+                        if (two_items) {
+                          setState(() {
+                            two_items = false;
+                          });
+                        }
+
+                      },),
+                      const SizedBox(
+                        width: 15,
+                      ),
+                    ],
+                  ),
+                  
+                ],
+              ),
             ),
             const SizedBox(
               height: 8,

@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wantermarket/config/app_colors.dart';
 import 'package:wantermarket/config/app_images.dart';
+import 'package:wantermarket/providers/auth_provider.dart';
 import 'package:wantermarket/providers/vendor_provider.dart';
 import 'package:wantermarket/route/routes.dart';
 import 'package:wantermarket/shared/app_helper.dart';
+import 'package:wantermarket/shared/contact_vendor.dart';
 import 'package:wantermarket/ui/basewidgets/app_bars/drawer.dart';
 import 'package:wantermarket/ui/screens/home/home_screen.dart';
 
@@ -14,6 +16,7 @@ import '../../../data/models/body/product.dart';
 import '../../../providers/curd_product_provider.dart';
 import '../../basewidgets/app_bars/app_bar.dart';
 import '../../basewidgets/bottom_bar/bottom_nav_bar.dart';
+import '../user-actions-account-status/expire-subscription.dart';
 
 
 class DashBoardScreen extends StatefulWidget {
@@ -40,9 +43,12 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
       if( Provider.of<VendorProvider>(context, listen: false).boutique.vendor?.firstName == null) {
         _loadData();
       }
+      ContactVendor.showCanAddProductDialog(context);
 
     });
     super.initState();
+
+
 
 
   }

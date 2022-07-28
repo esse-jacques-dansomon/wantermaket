@@ -2,8 +2,8 @@
 class AppConstants {
   static const String APP_NAME = 'WANTERMARKET';
   // static const String BASE_URL = 'https://wantermarket.sn';
-  // static const String BASE_URL = 'http://10.0.2.2:8000/api';
-  static const String BASE_URL = 'https://squid-app-ldgyy.ondigitalocean.app/api';
+  static const String BASE_URL = 'http://10.0.2.2:8000/api';
+  // static const String BASE_URL = 'https://squid-app-ldgyy.ondigitalocean.app/api';
   static const String BASE_URL_IMAGE = 'https://wantermarket.sn/';
   static const String SLIDER_URI= '/sliders';
   static const String CATEGORIES_URI = '/categories';
@@ -34,6 +34,7 @@ class AppConstants {
   //PAYMENT LINK
   static const String PAY_BECOME_EXCLUSIVE_URI = '/exclusive';
   static const String PAY_ABONNEMENT_URI = '/abonnement';
+  static const String PAY_ETAT_URI = '/paiement/verif';
 
 
 
@@ -45,6 +46,7 @@ class AppConstants {
   static const String BOUTIQUE_NAME = 'boutique_name';
   static const String USER_CREDENTIALS = 'user_id';
   static const String ADRESSE = 'adresse';
+  static const String WISHLIST = 'wishlist';
 
 
   static const String ETAT_ABONNEMENT = 'etat_abonnement';

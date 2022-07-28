@@ -14,6 +14,7 @@ class CrudProductRepo{
   Future<ApiResponse> createProduct(FormData product) async{
     try{
      final response = await dioClient.post(AppConstants.PRODUITS_URI, data: product);
+     print(response.statusCode);
       return ApiResponse.withSuccess(response);
     }catch(e){
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

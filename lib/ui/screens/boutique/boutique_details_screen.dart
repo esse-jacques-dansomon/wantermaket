@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:wantermarket/config/app_colors.dart';
 
 import 'package:wantermarket/data/models/body/boutique.dart';
 import 'package:wantermarket/providers/auth_provider.dart';
 import 'package:wantermarket/providers/boutique_favories_provider.dart';
-import 'package:wantermarket/providers/vendor_provider.dart';
+import 'package:wantermarket/shared/contact_vendor.dart';
 
 import '../../../config/app_images.dart';
 import '../../../providers/boutique_provider.dart';
@@ -44,6 +45,22 @@ class _BoutiqueDetailsScreenState extends State<BoutiqueDetailsScreen> {
 
   }
 
+
+   void onShare(BuildContext context) async {
+     // A builder is used to retrieve the context immediately
+     // surrounding the ElevatedButton.
+     //
+     // The context's `findRenderObject` returns the first
+     // RenderObject in its descendent tree when it's not
+     // a RenderObjectWidget. The ElevatedButton's RenderObject
+     // has its position and size after it's built.
+     final box = context.findRenderObject() as RenderBox?;
+
+       await Share.share('exemple de titre',
+           subject: 'link boutique',
+           sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size);
+
+   }
 
   @override
   Widget build(BuildContext context) {
@@ -141,6 +158,7 @@ class _BoutiqueDetailsScreenState extends State<BoutiqueDetailsScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                  children: [
+                   Provider.of<AuthProvider>(context, listen: false).getUserConnectedInfo()?.boutiqueId != widget.boutique.id ?
                    Expanded(
                      flex: 4,
                      child: Consumer<BoutiqueFavoriesProvider>(
@@ -163,7 +181,7 @@ class _BoutiqueDetailsScreenState extends State<BoutiqueDetailsScreen> {
                          );
                        },
                      ),
-                   ),
+                   ) : Container() ,
                    const SizedBox(width: 10,),
                    Expanded(
                      flex: 3,
@@ -184,12 +202,9 @@ class _BoutiqueDetailsScreenState extends State<BoutiqueDetailsScreen> {
                    Expanded(
                      flex: 2,
                      child: ElevatedButton(
-                       onPressed: () {
-                         showModalBottomSheet(
-                             constraints:  BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.5),
-                             isScrollControlled: true,
-                             context: context, builder: (context) =>  FicheVendeur(boutique: widget.boutique,));
-                       },
+                       onPressed: () async {
+                           ContactVendor.shareShop();
+                         },
                        style: ButtonStyle(
                            backgroundColor: MaterialStateProperty.all(AppColors.WHITE)
                        ),
@@ -247,10 +262,7 @@ class _BoutiqueDetailsScreenState extends State<BoutiqueDetailsScreen> {
                         return SizedBox(width: 230, child: ProductByBoutique3(product: boutiqueProvider.productsSearch[index],));
                       });
                 }),
-
-
                 const SizedBox(height: 25,),
-
               ],
             ),
           ),
@@ -318,12 +330,17 @@ class FicheVendeur extends StatelessWidget {
                     Text(boutique.vendor!.phone!, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),),
                   ],
                 ),         const SizedBox(height: 5,),
-                Row(
-                  children:  [
-                    const Icon(Icons.whatsapp, size: 18,),
-                    const SizedBox(width: 5,),
-                    Text(boutique.vendor!.phone!, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),),
-                  ],
+                InkWell(
+                  onTap: (){
+                    ContactVendor.lauchWhastapp(boutique.vendor!.phone!, context);
+                  },
+                  child: Row(
+                    children:  [
+                      const Icon(Icons.whatsapp, size: 18,),
+                      const SizedBox(width: 5,),
+                      Text(boutique.vendor!.phone!, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 5,),
                 Row(
@@ -332,7 +349,6 @@ class FicheVendeur extends StatelessWidget {
                     const SizedBox(width: 5,),
                     Text(boutique.vendor!.email!, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),),
                   ],
-
                 ),
               ],
             ),
@@ -340,7 +356,9 @@ class FicheVendeur extends StatelessWidget {
 
             //onpen location in maps
             const SizedBox(height: 15,),
-            ElevatedButton(onPressed: (){}, child:Text('Localisation') )
+            ElevatedButton(onPressed: (){
+              ContactVendor.launchMaps(boutique);
+            }, child:Text('Localisation') )
 
           ],
         ),

@@ -31,7 +31,7 @@ class CrudProductProvider extends ChangeNotifier {
       data.files.add(MapEntry('image_level3', await MultipartFile.fromFile(imageLevel3.path, filename: imageLevel3.path.split('/').last)));
     }
     final response = await crudProductRepo.createProduct(data);
-    if(response.response.statusCode == 200 || response.response.statusCode == 201) {
+    if(response.error == null) {
       isLoading = false;
       isError = false;
       errorMessage = "";

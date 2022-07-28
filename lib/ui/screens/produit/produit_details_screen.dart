@@ -32,7 +32,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   Future<void> _loadData() async {
     Provider.of<ProductProvider>(context, listen: false).getRelatedProducts(widget.product.idCategorie!);
-    Provider.of<VendorProvider>(context, listen: false).incrementProductView(widget.product.id!);
+    if(Provider.of<VendorProvider>(context, listen: false).boutique.id != widget.product.idBoutique) {
+      Provider.of<VendorProvider>(context, listen: false).incrementProductView(widget.product.id!);
+    }
   }
 
 
@@ -208,7 +210,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         RichText(text:  TextSpan(text: 'Categorie', style: const TextStyle(fontWeight: FontWeight.w300, color: Colors.black),
                             children: [
                               const TextSpan(text: ' : ', style: TextStyle(fontWeight: FontWeight.w300, color: Colors.black)),
-                              TextSpan(text: '${widget.product.idCategorie!}', style: const TextStyle(fontWeight: FontWeight.w300, color: Colors.black)),
+                              TextSpan(text: '${widget.product.idCategorie?? 1}', style: const TextStyle(fontWeight: FontWeight.w300, color: Colors.black)),
                             ]),),
                         const SizedBox(height: 10,),
                         Column(

@@ -2,21 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wantermarket/providers/search_provider.dart';
 import 'package:wantermarket/ui/basewidgets/app_bars/app_bar.dart';
-import 'package:wantermarket/ui/basewidgets/app_bars/app_bar_with_return_type2.dart';
 import 'package:wantermarket/ui/basewidgets/app_bars/drawer.dart';
-import 'package:wantermarket/ui/basewidgets/boutique_card.dart';
 import 'package:wantermarket/ui/basewidgets/produit_by_boutique_3.dart';
-import 'package:wantermarket/ui/screens/boutique/boutique_by_secteur_screen.dart';
 import 'package:wantermarket/ui/screens/boutique/widgets/boutique_card.dart';
 import 'package:wantermarket/ui/screens/recherche/widget/product_found_fliter_widget.dart';
 
 import '../../../config/app_colors.dart';
-import '../../../data/models/body/product.dart';
 import '../../../route/routes.dart';
 import '../../../shared/app_helper.dart';
 import '../../basewidgets/bottom_bar/bottom_nav_bar.dart';
-import '../../basewidgets/produit_by_boutique_2.dart';
-import '../../basewidgets/produit_card_without_vendor.dart';
 
 class SearchScreen extends StatelessWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -44,8 +38,10 @@ class SearchScreen extends StatelessWidget {
                   TabBar(
                     labelColor: Colors.white,
                       unselectedLabelColor: AppColors.BLACK,
+                  unselectedLabelStyle : TextStyle(fontSize: 17),
+                      labelStyle :TextStyle(fontSize: 18),
                       indicator: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(0),
                         color: AppColors.PRIMARY,
                       ),
 
@@ -121,8 +117,9 @@ class ProductsFound extends StatelessWidget {
                     isScrollControlled: true,
                     isDismissible: false,
                     builder: (BuildContext context) {
-                      return SizedBox(
-                          child: const ProductFoundFilter());
+                      return  SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.95,
+                          child: ProductFoundFilter());
                     },
                   );
                 },
@@ -210,7 +207,7 @@ class BoutiquesFinded extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   child: Row(
-                    children: [
+                    children: const [
                       Text('Filter'),
                       SizedBox(width: 10,),
                       Icon(Icons.filter_alt_rounded, color: AppColors.PRIMARY,size: 28,)

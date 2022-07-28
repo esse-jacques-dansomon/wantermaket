@@ -68,7 +68,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => BoutiqueFavoriesProvider(boutiqueFavoriesRepo: sl()));
   sl.registerLazySingleton(() => CrudProductProvider(crudProductRepo: sl()));
   sl.registerLazySingleton(() => PaymentProvider(paymentRepo: sl()));
-  sl.registerLazySingleton(() => WishlistProvider());
+  sl.registerLazySingleton(() => WishlistProvider(prefs: sl()));
 
   // External
   final sharedPreferences = await SharedPreferences.getInstance();

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wantermarket/providers/category_detail_provider.dart';
-import 'package:wantermarket/shared/app_helper.dart';
 import 'package:wantermarket/ui/basewidgets/produit_by_boutique_3.dart';
 import 'package:wantermarket/ui/screens/category/widget/filters_widget.dart';
 import 'package:wantermarket/ui/screens/category/widget/short_item_widget.dart';
@@ -37,7 +36,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
   void _scrollListener() {
     if (_controller.position.pixels  == _controller.position.maxScrollExtent ) {
-      print('fin des produits du listview builder');
       if(Provider.of<CategoryProviderDetails>(context, listen: false).selectedSubCategory == 0) {
         Provider.of<CategoryProviderDetails>(context, listen: false).getCategoryProducts(widget.category.id!, isPagination: true);
       }else{
@@ -85,8 +83,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (BuildContext context, int index) {
                       return InkWell(
-                        onTap: (){
-                         Provider.of<CategoryProviderDetails>(context, listen: false).getSubCategoryProducts(cp.souscategories[index].id!);
+                        onTap: ()async {
+                         await Provider.of<CategoryProviderDetails>(context, listen: false).getSubCategoryProducts(cp.souscategories[index].id!);
                         },
                         child: Container(
                           padding: const EdgeInsets.only(right: 12, left: 12),
@@ -106,39 +104,40 @@ class _CategoryScreenState extends State<CategoryScreen> {
             ),
             Container(
               margin: const EdgeInsets.only( top: 10),
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  InkWell(
-                    onTap: (){
-                      showModalBottomSheet(
-                          isScrollControlled: true,
-                          context: context, builder: (context){
-                        return const FilterWidget();
-                      });
-                    },
-                    child: Row(
-                        children:const [
-                          Icon(Icons.filter_alt_rounded, color: AppColors.PRIMARY,),
-                          Text('Filtres', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
-                        ]
-                    ),
-                  ), InkWell(
-                    onTap: (){
-                      showModalBottomSheet(context: context, builder: (context){
-                        return const SortItemsWidget();
-                      });
-                    },
-                    child: Row(
-                        children: const [
-                          Icon(Icons.arrow_upward_outlined, color: AppColors.PRIMARY,),
-                          Icon(Icons.arrow_downward_outlined, color: AppColors.PRIMARY,),
-                          Text('Prix', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
-                          SizedBox(width: 10,),
-                        ]
-                    ),
-                  ),
+                  // InkWell(
+                  //   onTap: (){
+                  //     showModalBottomSheet(
+                  //         isScrollControlled: true,
+                  //         context: context, builder: (context){
+                  //       return const FilterWidget();
+                  //     });
+                  //   },
+                  //   child: Row(
+                  //       children:const [
+                  //         Icon(Icons.filter_alt_rounded, color: AppColors.PRIMARY,),
+                  //         Text('Filtres', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+                  //       ]
+                  //   ),
+                  // ),
+                  // InkWell(
+                  //   onTap: (){
+                  //     showModalBottomSheet(context: context, builder: (context){
+                  //       return const SortItemsWidget();
+                  //     });
+                  //   },
+                  //   child: Row(
+                  //       children: const [
+                  //         Icon(Icons.arrow_upward_outlined, color: AppColors.PRIMARY,),
+                  //         Icon(Icons.arrow_downward_outlined, color: AppColors.PRIMARY,),
+                  //         Text('Prix', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
+                  //         SizedBox(width: 10,),
+                  //       ]
+                  //   ),
+                  // ),
                 ],
               ),
             ),
@@ -179,10 +178,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         ],
                       ),
                     );
-                  case DataState.error:
-                    return const Center(child: Text('Erreur de chargement'));
                   case  DataState.noMoreData:
                     return const Expanded(child: Center(child: Text('pas de produits')));
+                  case DataState.error:
+                    return const Center(child: Text('Erreur de chargement'));
                 }
 
 

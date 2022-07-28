@@ -86,7 +86,6 @@ class AuthProvider extends ChangeNotifier {
      }
   }
 
-
   Future<bool> resetPassword(ResetPasswordModel passwordModel) async {
     _isLoading =  true;
     notifyListeners();
@@ -100,7 +99,6 @@ class AuthProvider extends ChangeNotifier {
       return false;
     }
   }
-
 
   Future<void> logout() async {
     _isLoading = true;
@@ -128,10 +126,8 @@ class AuthProvider extends ChangeNotifier {
       loginn = true;
       user = LoginReponse.fromJson(response.response.data);
       authRepo.saveInfoInShared(AppConstants.USER_CREDENTIALS, json.encode(response.response.data));
-      notifyListeners();
     }else{
       clearall();
-      notifyListeners();
     }
   }
 
@@ -140,12 +136,6 @@ class AuthProvider extends ChangeNotifier {
     if (response == null) return null;
     return LoginReponse.fromJson(json.decode(response));
   }
-
-  int? get userConnectedBoutiqueId  {
-    return  authRepo.sharedPreferences.getInt(AppConstants.BOUTIQUE_ID) ;
-  }
-
-
 
   Future<void> clearall() async {
     await authRepo.clearAll();
@@ -165,6 +155,8 @@ class AuthProvider extends ChangeNotifier {
   bool isLoggedIn() {
     return authRepo.isLoggedIn();
   }
+
+
 
 
 }

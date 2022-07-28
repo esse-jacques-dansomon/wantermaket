@@ -154,6 +154,11 @@ class _AppDrawerState extends State<AppDrawer> {
                 route: AppRoutes.becomeExclusive,
                 icon: Icons.star_half_outlined,
               ),
+              const DrawerMenuItem(
+                menuName: 'No Internet ',
+                route: AppRoutes.noInternet,
+                icon: Icons.star_half_outlined,
+              ),
               ListTile(
                 onTap: (){
                   Provider.of<AuthProvider>(context, listen: false).logout();

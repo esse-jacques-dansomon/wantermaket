@@ -10,8 +10,8 @@ String loginReponseToJson(LoginReponse data) => json.encode(data.toJson());
 
 class LoginReponse {
   LoginReponse({
-    this.etat,
-    this.canAddProduct,
+    this.etat, // null, true, false
+    this.canAddProduct, //true,
     this.plan,
     this.profilImage,
     this.boutiqueName,
@@ -20,10 +20,12 @@ class LoginReponse {
     this.adresse,
     this.accessToken,
     this.tokenType,
+    this.isExclusive,
   });
 
   final bool? etat;
   final bool? canAddProduct;
+  final bool? isExclusive;
   final String? plan;
   final String? profilImage;
   final String? boutiqueName;
@@ -61,6 +63,7 @@ class LoginReponse {
   factory LoginReponse.fromJson(Map<String, dynamic> json) => LoginReponse(
     etat: json["etat"],
     canAddProduct: json["canAddProduct"],
+    isExclusive: json["isExclusive"],
     plan: json["plan"],
     profilImage: json["profil_image"],
     boutiqueName: json["boutique_name"],
@@ -74,6 +77,7 @@ class LoginReponse {
   Map<String, dynamic> toJson() => {
     "etat": etat,
     "canAddProduct": canAddProduct,
+    "isExclusive": isExclusive,
     "plan": plan,
     "profil_image": profilImage,
     "boutique_name": boutiqueName,

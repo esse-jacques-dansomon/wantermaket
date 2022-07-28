@@ -18,6 +18,7 @@ import '../../../../data/models/body/category.dart';
 import '../../../../data/models/body/product.dart';
 import '../../../../data/models/body/product_crud_model.dart';
 import '../../../../providers/category_provider.dart';
+import '../../../../shared/contact_vendor.dart';
 import '../../home/home_screen.dart';
 
 class ProductAddForm extends StatefulWidget {
@@ -49,7 +50,12 @@ class _ProductAddFormState extends State<ProductAddForm> {
   @override
   void initState() {
     // TODO: implement initState
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   ContactVendor.showCanAddProductDialog(context);
+    //
+    // });
     super.initState();
+
     _nameNode = FocusNode();
     _priceNode = FocusNode();
     _priceBeforeNode = FocusNode();
@@ -279,6 +285,7 @@ class _ProductAddFormState extends State<ProductAddForm> {
                       );
                     }else{
                       addProduct(productCrudModel, image!, image_level_2, image_level_3);
+                      print(productCrudModel.toJson());
                     }
                   }else{
                     upDateProduct(widget.product!.id!, productCrudModel, image, image_level_2, image_level_3);

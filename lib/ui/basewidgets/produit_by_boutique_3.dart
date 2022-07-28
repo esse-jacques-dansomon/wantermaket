@@ -49,12 +49,25 @@ class ProductByBoutique3 extends StatelessWidget {
                       ),
                         padding: const EdgeInsets.all(2),
                         child: InkWell(
+                            // onTap: (){
+                            //   print(isWishlist);
+                            //   isWishlist ?
+                            //   Provider.of<WishlistProvider>(context, listen: false).removeFromWishlist(product, context) :
+                            //   Provider.of<WishlistProvider>(context, listen: false).addToWishlist(product, context);
+                            // },
+                          child: Consumer<WishlistProvider>(
+                              builder: (context, wishProvider, _){
+                                return Icon( !wishProvider.isInWishlist(product) ? Icons.favorite_border : Icons.favorite, color: !wishProvider.isInWishlist(product) ?AppColors.SECONDARY : Colors.red);
+                              }
+                             ),
                             onTap: (){
-                              isWishlist ?
-                              Provider.of<WishlistProvider>(context, listen: false).removeFromWishlist(product, context) :
-                              Provider.of<WishlistProvider>(context, listen: false).addToWishlist(product, context);
+                              !Provider.of<WishlistProvider>(context, listen: false).isInWishlist(product) ?
+                              Provider.of<WishlistProvider>(context, listen: false).addToWishlist(product, context) :
+                              Provider.of<WishlistProvider>(context, listen: false).removeFromWishlist(product, context);
                             },
-                            child:  Icon( !isWishlist ? Icons.favorite_border_outlined :Icons.favorite , color: !isWishlist ? Colors.blueAccent : Colors.red,))),),
+                            // child:  Icon( !isWishlist ? Icons.favorite_border_outlined :Icons.favorite , color: !isWishlist ? Colors.blueAccent : Colors.red,)
+
+                        )),),
                   ],
                 ),
               ),
@@ -91,7 +104,7 @@ class ProductByBoutique3 extends StatelessWidget {
                             InkWell
                               (
                                 onTap: (){
-                                  Navigator.of(context).pushNamed(AppRoutes.vendor, arguments: product.vendor!);
+                                  Navigator.of(context).pushNamed(AppRoutes.vendor, arguments: product.boutique!);
                                 },
                                 child:  SizedBox(width: 135, child: Text(product.boutique!.name ?? product.vendor!.email! , style: const TextStyle(fontSize: 10, color: Colors.black, ), overflow: TextOverflow.ellipsis,)), ),
                           ],
