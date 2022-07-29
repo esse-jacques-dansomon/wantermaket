@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "383496699885",
+    "project_id": "pushnotification-750e4",
+    "storage_bucket": "pushnotification-750e4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:383496699885:android:64d7b3117b21bd367eb1e4",
+        "android_client_info": {
+          "package_name": "com.wantermarket.wantermarket"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "383496699885-b9jammk7a1cjsks5rllr02242cq7qrir.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.wantermarket.wantermarket",
+            "certificate_hash": "2a8b42d22e7b08a697d5009a9688b70232deaf9f"
+          }
+        },
+        {
+          "client_id": "383496699885-7glknq0ev0qkg1b0echgfg3sod76i0tb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCe9_qf4dWPDaDcFhEx3MHNKdw7UGjRd2w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "383496699885-7glknq0ev0qkg1b0echgfg3sod76i0tb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
