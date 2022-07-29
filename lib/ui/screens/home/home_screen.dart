@@ -1,6 +1,10 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:overlay_support/overlay_support.dart';
 import 'package:provider/provider.dart';
 import 'package:wantermarket/config/app_colors.dart';
+import 'package:wantermarket/data/models/body/pushnotification_model.dart';
 import 'package:wantermarket/providers/auth_provider.dart';
 import 'package:wantermarket/providers/boutique_provider.dart';
 import 'package:wantermarket/providers/category_provider.dart';
@@ -18,6 +22,7 @@ import '../../../providers/slider_provider.dart';
 import '../../../route/routes.dart';
 import '../../basewidgets/app_bars/app_bar.dart';
 import '../../basewidgets/bottom_bar/bottom_nav_bar.dart';
+import '../notification/notification_badge.dart';
 
 
 
@@ -47,11 +52,66 @@ class _HomeScreenState extends State<HomeScreen> {
 
   }
 
+  late final FirebaseMessaging _messaging;
+  late int _totalNotificationCounter;
+  late Pushnotification? _notificationInfo;
+
+  //register firebase messaging
+
+  void registerNotification () async {
+    await Firebase.initializeApp();
+    _messaging = FirebaseMessaging.instance;
+
+    NotificationSettings settings = await _messaging.requestPermission(
+      alert: true,
+      sound: true,
+      badge: true,
+      provisional: false,
+    );
+
+    if(settings.authorizationStatus == AuthorizationStatus.authorized) {
+      
+      print('AuthorizationStatus.authorized');
+
+      FirebaseMessaging.onMessage.listen((RemoteMessage message){
+        Pushnotification notification = Pushnotification(
+          title: message.notification?.title,
+          body: message.notification?.body,
+          dataBody: message.data['body'],
+          dataTitle: message.data['title'],
+        );
+        setState(() {
+          _totalNotificationCounter++;
+          _notificationInfo = notification;
+        });
+
+        if(notification != null){
+          showSimpleNotification(
+            Text(_notificationInfo?.title ?? 'Notification'),
+            leading: Icon(Icons.notifications),
+            background: Colors.red,
+            autoDismiss: true,
+
+            
+
+
+          );
+        }
+      });
+    }
+
+    
+  }
+
 
 
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      _totalNotificationCounter = 0;
+      //initialize _notificationInfo
+      _notificationInfo = null;
+      registerNotification();
       if (Provider.of<ProductProvider>(context, listen: false).newArrivals.isEmpty){
         _loadData();
       }
@@ -134,6 +194,20 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 //Deal du jour
                 const DealDuJourWidget(),
+                NotificationBadge (
+                    totalNotification : _totalNotificationCounter,
+                  ),
+
+                  _notificationInfo != null ? Column(
+                    children: [
+                      const SizedBox(height: 30),
+                      Text(_notificationInfo?.title ?? '', style: const 
+                      TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+                    ],
+                 
+                  ) : Container(
+
+                  ),
 
                 //top Boutqiues
                 const TopBoutiquesWidget(),
@@ -172,6 +246,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 Provider.of<ProductProvider>(context, listen: false).isPaginationLoading ? const Center(child: CircularProgressIndicator(),) : const SizedBox(),
                 const SizedBox(height: 50),
+                
 
 
               ],
@@ -179,6 +254,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
+      
     ) : LoaderWidget();
   }
 }

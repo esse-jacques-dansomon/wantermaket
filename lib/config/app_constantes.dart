@@ -2,8 +2,8 @@
 class AppConstants {
   static const String APP_NAME = 'WANTERMARKET';
   // static const String BASE_URL = 'https://wantermarket.sn';
-  static const String BASE_URL = 'http://10.0.2.2:8000/api';
-  // static const String BASE_URL = 'https://squid-app-ldgyy.ondigitalocean.app/api';
+  //static const String BASE_URL = 'http://10.0.2.2:8000/api';
+  static const String BASE_URL = 'https://squid-app-ldgyy.ondigitalocean.app/api';
   static const String BASE_URL_IMAGE = 'https://wantermarket.sn/';
   static const String SLIDER_URI= '/sliders';
   static const String CATEGORIES_URI = '/categories';
