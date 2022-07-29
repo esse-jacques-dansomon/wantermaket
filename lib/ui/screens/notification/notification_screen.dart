@@ -39,11 +39,11 @@ class NotificationScreen extends StatelessWidget {
                                 child: Image.network('', fit: BoxFit.cover,),
                               ),
                             ),
-                            SizedBox(width: 10,),
+                            const SizedBox(width: 10,),
                             Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
+                              children: const [
                                 Text('Amama', style: TextStyle(fontSize: AppDimensions.FONT_SIZE_EXTRA_LARGE, color: AppColors.BLACK, fontWeight: FontWeight.w300),),
                                 SizedBox(height: 5,),
                                 Text('jute de publier un nouveau produit')
@@ -53,8 +53,8 @@ class NotificationScreen extends StatelessWidget {
                         ),
                         Row(
                           children: [
-                            TextButton(onPressed: (){}, child: Text('Voir', style: TextStyle(color: AppColors.SECONDARY),)),
-                            TextButton(onPressed: (){}, child: Text('Archiver', style: TextStyle(color: AppColors.SECONDARY),))
+                            TextButton(onPressed: (){}, child: const Text('Voir', style: TextStyle(color: AppColors.SECONDARY),)),
+                            TextButton(onPressed: (){}, child: const Text('Archiver', style: const TextStyle(color: AppColors.SECONDARY),))
                           ],
                         )
                       ],
