@@ -4,7 +4,7 @@ import 'package:wantermarket/providers/vendor_provider.dart';
 import 'package:wantermarket/ui/basewidgets/app_bars/app_bar_with_return.dart';
 import 'package:wantermarket/ui/screens/edit_boutique/widgets/boutique_form.dart';
 
-import '../../basewidgets/app_bars/drawer.dart';
+import '../../basewidgets/drawer/drawer.dart';
 
 class EditBoutiqueScreen extends StatelessWidget {
   const EditBoutiqueScreen({Key? key}) : super(key: key);

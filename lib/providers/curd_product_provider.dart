@@ -100,10 +100,6 @@ class CrudProductProvider extends ChangeNotifier {
 
   Future<bool> updateDisponibility(Product product) async {
     product.disponibility == 'oui' ? product.disponibility = 'non' : product.disponibility = 'oui';
-
-    // isLoading = false;
-    // isError = false;
-    // notifyListeners();
     errorMessage = "";
     ProductCrudModel productCrudModel = ProductCrudModel(
       disponibility: product.disponibility!,
@@ -114,20 +110,18 @@ class CrudProductProvider extends ChangeNotifier {
       idCategory: product.idCategorie!,
 
     );
-    print(productCrudModel.toJson());
     final response = await crudProductRepo.updateDisponibility(product.id!, productCrudModel);
-    print(response.response.statusCode);
     if(response.response.statusCode == 200 || response.response.statusCode == 201) {
       isLoading = false;
       isError = false;
       errorMessage = "";
-      // notifyListeners();
+      notifyListeners();
       return true;
     }else{
       isLoading = false;
       isError = true;
       errorMessage = ApiErrorHandler.getMessage(response.error);
-      // notifyListeners();
+      notifyListeners();
       return false;
     }
 

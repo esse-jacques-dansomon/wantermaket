@@ -5,8 +5,8 @@ import 'package:wantermarket/providers/product_provider.dart';
 import 'package:wantermarket/shared/app_helper.dart';
 import 'package:wantermarket/ui/screens/home/widgets/title_and_more_widget.dart';
 
-import '../../../basewidgets/produit_by_boutique_3.dart';
-import '../../sector/secteur_screen.dart';
+import '../../../basewidgets/cards/produit_by_boutique.dart';
+import '../../sector/sector_screen.dart';
 
 class NouveautesWidget extends StatelessWidget {
   const NouveautesWidget({
@@ -36,7 +36,7 @@ class NouveautesWidget extends StatelessWidget {
                   childAspectRatio: 1.5
               ),
               itemBuilder: (context, index){
-                return ProductByBoutique3(product: productProvider.newArrivals[index] ,);
+                return ProductByBoutique(product: productProvider.newArrivals[index] ,);
               });
         } ),
         const SizedBox(height: 15,),

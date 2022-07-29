@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../data/models/body/plan.dart';
 import '../data/repositories/payment_repo.dart';
 
 
@@ -10,9 +11,18 @@ enum PaymentLinkStatus {
   error
 
 }
+
+enum PaymentPlanType{
+  loadingBasic,
+  loadingPremium,
+  loadingGold,
+  loaded,
+  error,
+}
 class PaymentProvider extends ChangeNotifier {
 
   final PaymentRepo paymentRepo;
+  PaymentPlanType paymentPlanType = PaymentPlanType.loaded;
   var paymentLinkStatus = PaymentLinkStatus.initial;
   PaymentProvider({ required this.paymentRepo });
 
@@ -32,16 +42,22 @@ class PaymentProvider extends ChangeNotifier {
   }
 
 
-  Future<String> getAbonnementLink(int idPlan) async {
-    paymentLinkStatus = PaymentLinkStatus.loading;
+  Future<String> getAbonnementLink(Plan plan) async {
+    if(plan.name == 'Gold') {
+      paymentPlanType = PaymentPlanType.loadingGold;
+    }else if(plan.name == 'Premium') {
+      paymentPlanType = PaymentPlanType.loadingPremium;
+    } else {
+      paymentPlanType = PaymentPlanType.loadingBasic;
+    }
     notifyListeners();
-    final response = await paymentRepo.getAbonnementLink(idPlan);
+    final response = await paymentRepo.getAbonnementLink(plan.id!);
     if (response.error == null) {
-      paymentLinkStatus = PaymentLinkStatus.loaded;
+      paymentPlanType = PaymentPlanType.loaded;
       notifyListeners();
       return response.response.data['url'];
     } else {
-      paymentLinkStatus = PaymentLinkStatus.error;
+      paymentPlanType = PaymentPlanType.error;
       notifyListeners();
       return '';
     }

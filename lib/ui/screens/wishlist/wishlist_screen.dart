@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wantermarket/providers/wishlist_provider.dart';
 import 'package:wantermarket/ui/basewidgets/app_bars/app_bar_with_return.dart';
-import 'package:wantermarket/ui/basewidgets/produit_by_boutique_3.dart';
+import 'package:wantermarket/ui/basewidgets/cards/produit_by_boutique.dart';
 
 import '../../../shared/app_helper.dart';
 
@@ -35,7 +35,7 @@ class WishlistScreen extends StatelessWidget {
                             mainAxisExtent: 315
                         ),
                         itemBuilder: (context, index){
-                          return ProductByBoutique3(product: wishlistProvider.wishlist[index], isWishlist: true,);
+                          return ProductByBoutique(product: wishlistProvider.wishlist[index], isWishlist: true,);
                         }
                     );
                   }

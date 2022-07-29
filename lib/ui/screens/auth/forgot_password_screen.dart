@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:wantermarket/route/routes.dart';
-import 'package:wantermarket/ui/screens/auth/widgets/login_form_widget.dart';
 import 'package:wantermarket/ui/screens/auth/widgets/reset_password_form_widget.dart';
 
 import '../../../config/app_colors.dart';
@@ -26,7 +24,7 @@ class ForgotPasswordFromScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    InkWell(child: Icon(Icons.arrow_back_ios, color: Colors.white,),
+                    InkWell(child: const Icon(Icons.arrow_back_ios, color: Colors.white,),
                       onTap: (){
                         Navigator.of(context).pop();
                       },
@@ -34,10 +32,11 @@ class ForgotPasswordFromScreen extends StatelessWidget {
                     const SizedBox(
                       height: 30,
                     ),
-                    Text('Mot de Passe Oublié', style: TextStyle(color: Colors.white,  fontWeight: FontWeight.bold, fontSize: 22),),
+                    const Text('Mot de Passe Oublié', style: TextStyle(color: Colors.white,  fontWeight: FontWeight.bold, fontSize: 22),),
                   ],
                 ),
               ),
+
               Container(
                 decoration: const BoxDecoration(
                   color: Colors.white,
@@ -56,10 +55,10 @@ class ForgotPasswordFromScreen extends StatelessWidget {
                  const SizedBox(
                       height: 20,
                     ),
-                    Text('Veuillez entre votre email', style: TextStyle(color: Colors.grey, fontSize: 16),),
+                    const Text('Veuillez entre votre email', style: TextStyle(color: Colors.grey, fontSize: 16),),
 
                     //form
-                    ResetPasswordFromWidget(),
+                    const ResetPasswordFromWidget(),
 
                     Expanded(child: Container(),),
                     //bottom

@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-import '../../../config/app_colors.dart';
-import '../../../config/app_dimenssions.dart';
+import 'package:wantermarket/config/app_colors.dart';
+import 'package:wantermarket/config/app_dimenssions.dart';
 import '../../../providers/payment_provider.dart';
 import '../../basewidgets/app_bars/app_bar_with_return.dart';
 import '../payment_api/paytech_api_payment_screen.dart';

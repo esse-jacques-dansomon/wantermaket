@@ -39,7 +39,6 @@ class _BoutiqueFormState extends State<BoutiqueForm> {
 
 
   updateBoutique(BoutiqueUpdateModel boutiqueUpdateModel, List<File> files) async {
-    print(boutiqueUpdateModel.toJson());
      Provider.of<VendorProvider>(context, listen: false).updateBoutique(boutiqueUpdateModel, files).then((value) => {
       if(value){
         Provider.of<AuthProvider>(context, listen: false).verifyIsAuthenticated(),

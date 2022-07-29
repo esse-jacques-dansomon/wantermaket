@@ -3,12 +3,12 @@ import 'package:provider/provider.dart';
 import 'package:wantermarket/config/app_colors.dart';
 import 'package:wantermarket/config/app_dimenssions.dart';
 import 'package:wantermarket/ui/screens/add_product/widgets/product_form.dart';
-import 'package:wantermarket/ui/screens/user-actions-account-status/expire-subscription.dart';
+import 'package:wantermarket/ui/basewidgets/user-actions-account-status/expire-subscription.dart';
 
 import '../../../data/models/body/product.dart';
 import '../../../providers/auth_provider.dart';
 import '../../basewidgets/app_bars/app_bar_with_return.dart';
-import '../../basewidgets/app_bars/drawer.dart';
+import '../../basewidgets/drawer/drawer.dart';
 import '../../basewidgets/bottom_bar/bottom_nav_bar.dart';
 
 class AddProductScreen extends StatelessWidget {
@@ -22,7 +22,7 @@ class AddProductScreen extends StatelessWidget {
       bottomNavigationBar: const CustomBottomNavBar(add_product: true,),
       appBar: appBarWithReturn(title: product?.id != null ? "Modifier ${product!.name!}" : 'Ajouter un produit', context: context),
       drawer: const AppDrawer(),
-      body: Provider.of<AuthProvider>(context, listen: false).getUserConnectedInfo()?.canAddProduct == false ? SafeArea(
+      body: Provider.of<AuthProvider>(context, listen: false).getUserConnectedInfo()?.canAddProduct == true ? SafeArea(
         child: SingleChildScrollView(
           physics:  const BouncingScrollPhysics(),
           child: Container(
@@ -40,7 +40,7 @@ class AddProductScreen extends StatelessWidget {
             ),
           ),
         ),
-      ) : ExpireSubscription() ,
+      ) : const ExpireSubscription() ,
     );
   }
 }

@@ -15,7 +15,7 @@ class FilterWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Row(
-                children: [
+                children: const [
                   SizedBox(
                       width: 15
                   ),
@@ -28,7 +28,7 @@ class FilterWidget extends StatelessWidget {
               IconButton(onPressed: (){
                 Navigator.pop(context);
               },
-                icon: Icon(Icons.close),
+                icon: const Icon(Icons.close),
 
               )
             ],
@@ -40,12 +40,12 @@ class FilterWidget extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Filter Par Prix', style: TextStyle(
+                 const Text('Filter Par Prix', style:  TextStyle(
                   fontSize: 18,
                   color: Colors.black,
                 ),),
                 //rangeSlider
-                Container(
+                SizedBox(
                   height: 50,
                   width: MediaQuery.of(context).size.width,
                   child: RangeSlider(
@@ -59,34 +59,34 @@ class FilterWidget extends StatelessWidget {
                 ),
 
                 //Localisation
-                Text('Locatisation', style: TextStyle(
+                const Text('Locatisation', style: TextStyle(
                   fontSize: 18,
                   color: Colors.black,
                 ),),
-                Container(
+                SizedBox(
                   height: 20,
                   child: DropdownButton(
                     hint: const Text('Localisation'),
                     value: 'Dakar',
                     items: const [
                       DropdownMenuItem(
-                        child: Text('Dakar'),
                         value: 'Dakar',
+                        child: Text('Dakar'),
                       ),
                       DropdownMenuItem(
-                        child: Text('Thies'),
                         value: 'Thies',
+                        child: Text('Thies'),
                       ),
                       DropdownMenuItem(
-                        child: Text('kaolack'),
                         value: 'kaolack',
+                        child: Text('kaolack'),
                       ),
                     ], onChanged: (String? value) {  },
                   ),
                 ),
 
                 //ChexBox Item
-                Text('Categories', style: TextStyle(
+                const Text('Categories', style: TextStyle(
                   fontSize: 18,
                   color: Colors.black,
                 ),),

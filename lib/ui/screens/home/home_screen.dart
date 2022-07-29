@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:wantermarket/config/app_colors.dart';
 import 'package:wantermarket/providers/auth_provider.dart';
 import 'package:wantermarket/providers/boutique_provider.dart';
 import 'package:wantermarket/providers/category_provider.dart';
 import 'package:wantermarket/providers/product_provider.dart';
-import 'package:wantermarket/ui/basewidgets/app_bars/drawer.dart';
+import 'package:wantermarket/ui/basewidgets/drawer/drawer.dart';
 import 'package:wantermarket/ui/screens/home/widgets/home_categories_widget.dart';
 import 'package:wantermarket/ui/screens/home/widgets/boutiques_exclusives_widget.dart';
 import 'package:wantermarket/ui/screens/home/widgets/deal_du_jour_widget.dart';
@@ -16,13 +17,15 @@ import 'package:wantermarket/ui/screens/home/widgets/top_boutiques_widget.dart';
 
 import '../../../providers/slider_provider.dart';
 import '../../../route/routes.dart';
+import '../../../shared/network_info.dart';
 import '../../basewidgets/app_bars/app_bar.dart';
 import '../../basewidgets/bottom_bar/bottom_nav_bar.dart';
 
 
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  final reload;
+  const HomeScreen({Key? key, this.reload=false}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -52,18 +55,24 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (Provider.of<ProductProvider>(context, listen: false).newArrivals.isEmpty){
+      if (widget.reload) {
         _loadData();
+      } else {
+        if (Provider.of<ProductProvider>(context, listen: false).newArrivals.isEmpty){
+          _loadData();
+        }
       }
+
     });
     super.initState();
     _controller.addListener(_scrollListener);
+    NetworkInfo.checkConnectivity(context);
+
   }
 
 
   void _scrollListener() {
     if (_controller.position.pixels == _controller.position.maxScrollExtent ) {
-      print('fin des produits du listview builder');
       Provider.of<ProductProvider>(context, listen: false).getNewArrivals();
     }
   }
@@ -72,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Provider.of<ProductProvider>(context, listen: true).topAnnonces.isNotEmpty ? Scaffold(
+    return true? Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.pushNamed(context, AppRoutes.addProduct, );

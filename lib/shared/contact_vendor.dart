@@ -1,19 +1,15 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:maps_launcher/maps_launcher.dart';
 import 'package:provider/provider.dart';
-import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:wantermarket/data/models/body/product.dart';
-import 'package:wantermarket/ui/screens/user-actions-account-status/expire-subscription.dart';
-import 'package:wantermarket/ui/screens/user-actions-account-status/payment-fail.dart';
+import 'package:wantermarket/ui/basewidgets/user-actions-account-status/expire-subscription.dart';
 import 'package:whatsapp_unilink/whatsapp_unilink.dart';
 
 import '../data/models/body/boutique.dart';
 import '../data/models/body/vendor.dart';
 import '../providers/auth_provider.dart';
-import '../route/routes.dart';
 
 class ContactVendor {
 
@@ -24,16 +20,16 @@ class ContactVendor {
       );
       await canLaunchUrl(Uri.parse(link.toString())).then((value){
         if(value){
-          launch(link.toString());
+          launchUrl(Uri.parse(link.toString()));
         }else{
           showDialog(
             context: context,
             builder: (context) => AlertDialog(
-              title: Text('Erreur'),
-              content: Text('Impossible de lancer l\'application WhatsApp'),
+              title: const Text('Erreur'),
+              content: const Text('Impossible de lancer l\'application WhatsApp'),
               actions: [
-                FlatButton(
-                  child: Text('OK'),
+                TextButton(
+                  child: const Text('OK'),
                   onPressed: () => Navigator.pop(context),
                 )
               ],
@@ -58,11 +54,11 @@ class ContactVendor {
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: Text('Erreur'),
-            content: Text('Impossible de lancer l\'application WhatsApp'),
+            title: const Text('Erreur'),
+            content: const Text('Impossible de lancer l\'application WhatsApp'),
             actions: [
               TextButton(
-                child: Text('OK'),
+                child: const Text('OK'),
                 onPressed: () => Navigator.pop(context),
               )
             ],
@@ -85,11 +81,11 @@ class ContactVendor {
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: Text('Erreur'),
-            content: Text('Impossible de lancer l\'application WhatsApp'),
+            title: const Text('Erreur'),
+            content: const Text('Impossible de lancer l\'application WhatsApp'),
             actions: [
               TextButton(
-                child: Text('OK'),
+                child: const Text('OK'),
                 onPressed: () => Navigator.pop(context),
               )
             ],
@@ -119,18 +115,17 @@ class ContactVendor {
     }
   }
 
-  static void shareShop() async{
+  static void shareShop(Boutique boutique) async{
       await FlutterShare.share(
-          title: 'Example share',
-          text: 'Example share text',
-          linkUrl: 'https://flutter.dev/',
-          chooserTitle: 'Example Chooser Title'
+          title: 'Boutique ${boutique.name}',
+          text: 'Je vous invite à visiter la boutique "${boutique.name}" sur Wanter Market en cliquant sur ce lien :',
+          linkUrl: 'https://wantermarket.sn/boutiques/${boutique.name}_${boutique.id}',
       );
 
   }
 
   static void showCanAddProductDialog(BuildContext context){
-    (Provider.of<AuthProvider>(context, listen: false).getUserConnectedInfo()?.canAddProduct == true ||
+    (Provider.of<AuthProvider>(context, listen: false).getUserConnectedInfo()?.canAddProduct == false ||
         Provider.of<AuthProvider>(context, listen: false).getUserConnectedInfo()?.canAddProduct == null) ? showDialog(
         context: context,
         barrierDismissible: false,

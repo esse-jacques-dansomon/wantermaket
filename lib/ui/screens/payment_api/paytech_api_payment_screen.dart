@@ -5,10 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wantermarket/providers/auth_provider.dart';
 import 'package:wantermarket/providers/payment_provider.dart';
-import 'package:wantermarket/ui/basewidgets/app_bars/app_bar_with_return.dart';
-import 'package:wantermarket/ui/screens/user-actions-account-status/payement-pending.dart';
-import 'package:wantermarket/ui/screens/user-actions-account-status/payement-success.dart';
-import 'package:wantermarket/ui/screens/user-actions-account-status/payment-fail.dart';
+import 'package:wantermarket/ui/basewidgets/user-actions-account-status/payement-pending.dart';
+import 'package:wantermarket/ui/basewidgets/user-actions-account-status/payement-success.dart';
+import 'package:wantermarket/ui/basewidgets/user-actions-account-status/payment-fail.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 
@@ -59,9 +58,6 @@ class _PayTechApiPaymentScreen extends State<PayTechApiPaymentScreen> {
               (  WebViewController webViewController) {
             _controller.complete(webViewController);
 
-          },
-          onProgress: (int progress) {
-            print('WebView is loading (progress : $progress%)');
           },
 
           onPageStarted: (String url) {

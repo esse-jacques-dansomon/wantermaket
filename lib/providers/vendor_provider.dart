@@ -6,7 +6,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wantermarket/data/models/body/boutique_update_model.dart';
 import 'package:wantermarket/data/models/body/vendor.dart';
 import 'package:wantermarket/data/models/body/vendor_stat.dart';
-import 'package:wantermarket/shared/app_helper.dart';
 
 import '../data/models/body/boutique.dart';
 import '../data/models/body/product.dart';
@@ -40,7 +39,6 @@ class VendorProvider extends ChangeNotifier {
     try {
       final response = await vendorRepo.getUserConnectedBoutique();
       _boutique = Boutique.fromJson(response.response.data['data']);
-      print(_boutique.toJson());
       notifyListeners();
     } catch (e) {
       rethrow;
@@ -58,20 +56,25 @@ class VendorProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> getVendorProducts() async {
-    isProductsLoad = false;
+  Future<void> getVendorProducts({reload = true}) async {
+    if(reload){
+      isProductsLoad = false;
+    }
     _products.clear();
-
     notifyListeners();
     try {
       final response = await vendorRepo.getUserConnectedProducts();
       response.response.data['data'].forEach((element) {
         _products.add(Product.fromJson(element));
       });
-      isProductsLoad = true;
+      if(reload){
+        isProductsLoad = true;
+      }
       notifyListeners();
     } catch (e) {
-      isProductsLoad = true;
+      if(reload){
+        isProductsLoad = true;
+      }
       notifyListeners();
       rethrow;
     }
@@ -95,21 +98,19 @@ class VendorProvider extends ChangeNotifier {
         throw Exception("Erreur lors de la mise à jour de la boutique");
       }
     }catch(e){
-      print(e);
+      throw Exception("Erreur lors de la mise à jour de la boutique");
     }
-    return false;
 
   }
 
   void changeDisponibilityProduct(int productId, BuildContext context) {
-    for (var element in _products) {
+    for (var element in products) {
       if (element.id == productId) {
-        element.disponibility == 'oui' ? element.disponibility = 'non' : element.disponibility = 'oui';
-        print('fuck');
+        element.disponibility == 'oui' ? element.disponibility = 'oui' : element.disponibility = 'non';
+        notifyListeners();
+        break;
       }
     }
-    AppHelper.showInfoFlushBar(context, "Produit mis à jour putain");
-    notifyListeners();
   }
 
   Future<void> incrementProductView(int idProduct) async {

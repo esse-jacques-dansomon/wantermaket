@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wantermarket/providers/category_provider.dart';
-import 'package:wantermarket/ui/screens/category/widget/all_category_card.dart';
+import 'package:wantermarket/ui/basewidgets/cards/all_category_card.dart';
 
 import '../../basewidgets/app_bars/app_bar_with_return.dart';
 

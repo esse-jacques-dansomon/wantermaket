@@ -1,12 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
+import 'package:multi_select_flutter/util/multi_select_item.dart';
+import 'package:multi_select_flutter/util/multi_select_list_type.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../config/app_colors.dart';
+import '../../../../providers/category_provider.dart';
 
-class ProductFoundFilter extends StatelessWidget {
+class ProductFoundFilter extends StatefulWidget {
   const ProductFoundFilter({Key? key}) : super(key: key);
 
   @override
+  State<ProductFoundFilter> createState() => _ProductFoundFilterState();
+}
+
+class _ProductFoundFilterState extends State<ProductFoundFilter> {
+
+  List<dynamic> _selectedItems = [];
+  int? groupValue;
+  int min = 0;
+  int max = 0;
+  @override
   Widget build(BuildContext context) {
+    const List<String> selections = <String>[
+      'Propularité',
+      'Prix le plus élévé',
+      'Prix le plus bas',
+      'Nouveautés',
+      'Promotion',
+    ];
+    var categories = Provider.of<CategoryProvider>(context, listen: false).categories;
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -19,13 +43,16 @@ class ProductFoundFilter extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children:  [
-                  const Text('Cancel', style:TextStyle(
-                    fontSize: 20,color: AppColors.BLACK
-                  )),
+                  TextButton(onPressed: (){
+                    Navigator.pop(context);
+                  }, child: const Text('Cancel', style:TextStyle(
+                      fontSize: 20,color: AppColors.BLACK
+                  ))),
                   const Text('Filtres', style:TextStyle(
                     fontSize: 20, color: AppColors.BLACK
                   )),
                   TextButton(onPressed: (){
+                    print("min : $min, max : $max, groupValue : ${selections[groupValue??0]}, sectors : $_selectedItems");
                     Navigator.pop(context);
                   }, child: const Text('Done', style:TextStyle(
                     fontSize: 20, color: AppColors.BLACK,
@@ -53,31 +80,60 @@ class ProductFoundFilter extends StatelessWidget {
                           width: MediaQuery.of(context).size.width,
                           padding: const EdgeInsets.all(15),color: Colors.grey[200], child: const Text('Prix', textAlign: TextAlign.start, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),)),
 
-                      Padding(
-                        padding: const EdgeInsets.only(left: 15.0, right: 15),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children:  const [
-                           Divider(
-                              color: Colors.grey,
-                              height: 1,
-                            ),
-                          ],
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                         children: [
+                           SizedBox(
+                             width: 150,
+                             child: TextFormField(
+                               onChanged: (value) {
+                                 min = int.parse(value);
+                               },
+                               decoration: InputDecoration(
+                                 hintText: 'min',
+                                 contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                                 hintStyle: const TextStyle(fontSize: 16),
+
+                                 border: OutlineInputBorder(
+                                   borderRadius: BorderRadius.circular(0),
+                                 ),
+                               ),
+                             ),
+                           ),
+                           Container(
+                             width: 150,
+                             child: TextFormField(
+                               onChanged: (value) {
+                                 max = int.parse(value);
+                               },
+                               decoration: InputDecoration(
+                                 hintText: 'max',
+                                 contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                                 hintStyle: const TextStyle(fontSize: 16),
+                                 border: OutlineInputBorder(
+                                   borderRadius: BorderRadius.circular(0),
+                                 ),
+                               ),
+                             ),
+                           )
+                         ],
                         ),
                       ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        child: Slider(
-                          value: 20,
-                          min: 0,
-                          max: 100,
-                          divisions: 10,
-                          label: '${(0.5 * 1000).toInt()}',
-                          activeColor: Colors.green,
-                          inactiveColor: Colors.grey,
-                          onChanged: (value) {},
-                        ),
-                      ),
+                      // SizedBox(
+                      //   width: MediaQuery.of(context).size.width,
+                      //   child: Slider(
+                      //     value: 20,
+                      //     min: 0,
+                      //     max: 100,
+                      //     divisions: 10,
+                      //     label: '${(0.5 * 1000).toInt()}',
+                      //     activeColor: Colors.green,
+                      //     inactiveColor: Colors.grey,
+                      //     onChanged: (value) {},
+                      //   ),
+                      // ),
                     ],
                   ),
                  //by attribute
@@ -90,43 +146,31 @@ class ProductFoundFilter extends StatelessWidget {
                     children: [
                       Container(
                           width: MediaQuery.of(context).size.width,
-                          padding: EdgeInsets.all(15),color: Colors.grey[200], child: Text('Trier par', textAlign: TextAlign.start, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),)
+                          padding: const EdgeInsets.all(15),color: Colors.grey[200], child: const Text('Trier par', textAlign: TextAlign.start, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),)
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 0.0, right: 15),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children:  const [
-                            ListTile(
-                              title: Text('Popularité'),
-                              trailing: Icon(Icons.check_circle, color: AppColors.PRIMARY,),
-                            ),
-
-                             Divider(
-                              color: Colors.grey,
-                              height: 1,
-                            ),
-                            ListTile(
-                              title: Text('Nouveautés'),
-                              trailing: Icon(Icons.check_circle, color: AppColors.PRIMARY,),
-                            ),
-                            Divider(
-                              color: Colors.grey,
-                              height: 1,
-                            ),
-                            ListTile(
-                              title: Text('Prix le plus bas'),
-                              trailing: Icon(Icons.check_circle, color: AppColors.PRIMARY,),
-                            ),
-                            Divider(
-                              color: Colors.grey,
-                              height: 1,
-                            ),
-                            ListTile(
-                              title: Text('Prix le plus élevé'),
-                              trailing: Icon(Icons.check_circle, color: AppColors.PRIMARY,),
-                            ),
-                          ],
+                      SizedBox(
+                        height: (60 * selections.length).toDouble(),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 0.0, right: 15),
+                          child: ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemBuilder: (BuildContext context, int index) {
+                              return RadioListTile<int>(
+                                value: index,
+                                groupValue: groupValue,
+                                toggleable: true,
+                                title: Text(selections[index]),
+                                onChanged: (int? value) {
+                                  setState(() {
+                                    print(value);
+                                    groupValue = value;
+                                  });
+                                },
+                              );
+                            },
+                            itemCount: selections.length,
+                          ),
                         ),
                       ),
 
@@ -137,56 +181,51 @@ class ProductFoundFilter extends StatelessWidget {
                       width: MediaQuery.of(context).size.width,
                       padding: EdgeInsets.all(15),color: Colors.grey[200], child: Text('Secteurs', textAlign: TextAlign.start, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),)
                   ),
-                  Expanded(
-                    child: ListView.separated(
-                      padding: const EdgeInsets.only(left: 15, right: 15 ),
-                      itemBuilder: (context, index) {
-                        return Container(
-                          height: 50,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(0),
-                            border: Border.all(color: Colors.white, width: 0),
-                            color: Colors.white,
+                  Container(
+                    // color: Colors.grey[200],
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: MultiSelectDialogField(
 
-                          ),
-                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                               Text('Nouveautés  $index',
-                                style: const TextStyle(fontSize: 16, color: Colors.black),),
-                              //chekbox
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Checkbox(
-                                value: false, onChanged: (bool? value) {
-
-                              },
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                      itemCount: 10,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      separatorBuilder: (context, index) {
-                        return const SizedBox(height: 10,);
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(0),
+                        // color: Colors.grey[200],
+                      ),
+                      cancelText: const Text('annuler'),
+                      confirmText: const Text('choisir'),
+                      searchable: true,
+                      items: categories.map((e) => MultiSelectItem(e.id, e.name!)).toList(),
+                      listType: MultiSelectListType.CHIP,
+                      buttonText:  const Text('Veuillez Choisir une ou plusieurs', textAlign: TextAlign.start, style: TextStyle(fontSize: 16),),
+                      onConfirm: (values) {
+                        _selectedItems = values;
                       },
                     ),
                   ),
-
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop(context);
+                  SizedBox(height: 10,),
+                  //LOCALISATION
+                  Container(
+                      width: MediaQuery.of(context).size.width,
+                      padding: EdgeInsets.all(15),color: Colors.grey[200], child: Text('Localisation', textAlign: TextAlign.start, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),)
+                  ),
+                  Container(
+                    // color: Colors.grey[200],
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: MultiSelectDialogField(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(0),
+                        // color: Colors.grey[200],
+                      ),
+                      cancelText: const Text('annuler'),
+                      confirmText: const Text('choisir'),
+                      searchable: true,
+                      items: categories.map((e) => MultiSelectItem(e.id, e.name!)).toList(),
+                      listType: MultiSelectListType.CHIP,
+                      buttonText:  const Text('Veuillez Choisir une ou plusieurs', textAlign: TextAlign.start, style: TextStyle(fontSize: 16),),
+                      onConfirm: (values) {
+                        _selectedItems = values;
                       },
-                      child: const Text('Filtrer', style: TextStyle(color: Colors.white, fontSize: 20),),
-
                     ),
-                  )
+                  ),
 
 
                 ],

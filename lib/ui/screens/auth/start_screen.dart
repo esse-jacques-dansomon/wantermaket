@@ -27,7 +27,7 @@ class LoginOrLogupScreen extends StatelessWidget {
               ),
             ),
             Positioned(
-              child: Container(
+              child: SizedBox(
               width: MediaQuery.of(context).size.width-40,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -86,7 +86,7 @@ class LoginOrLogupScreen extends StatelessWidget {
                         const SizedBox(
                           height: 20,
                         ),
-                        Container(
+                        SizedBox(
                           width: MediaQuery.of(context).size.width*0.75,
                           height: 50,
                           child: ElevatedButton(
@@ -112,7 +112,7 @@ class LoginOrLogupScreen extends StatelessWidget {
                           height: 25,
 
                         ),
-                        Container(
+                        SizedBox(
                           width: MediaQuery.of(context).size.width*0.75,
                           height: 50,
                           child: ElevatedButton(
@@ -140,7 +140,7 @@ class LoginOrLogupScreen extends StatelessWidget {
                         const SizedBox(
                           height: 20,
                         ),
-                        Container(
+                        SizedBox(
                           width: MediaQuery.of(context).size.width*0.75,
                           height: 50,
                           child: ElevatedButton(

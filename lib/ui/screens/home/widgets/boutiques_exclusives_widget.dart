@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wantermarket/providers/boutique_provider.dart';
-import '../../../basewidgets/boutique_card.dart';
+import '../../../basewidgets/cards/boutique_card.dart';
 
 class BoutiquesExclusives extends StatelessWidget {
 

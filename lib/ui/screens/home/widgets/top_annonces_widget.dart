@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wantermarket/providers/product_provider.dart';
 import 'package:wantermarket/route/routes.dart';
-import 'package:wantermarket/ui/basewidgets/produit_by_boutique_3.dart';
+import 'package:wantermarket/ui/basewidgets/cards/produit_by_boutique.dart';
 import 'package:wantermarket/ui/screens/home/widgets/title_and_more_widget.dart';
 
 import '../../../../data/models/body/product.dart';
-import '../../sector/secteur_screen.dart';
+import '../../sector/sector_screen.dart';
 
 class TopAnnoncesWidget extends StatelessWidget {
   const TopAnnoncesWidget({
@@ -31,7 +31,7 @@ class TopAnnoncesWidget extends StatelessWidget {
                       itemCount: productProvider.topAnnonces.length,
                       scrollDirection: Axis.horizontal,
                       separatorBuilder: (BuildContext context, int index) => const SizedBox(width: 10),
-                      itemBuilder: (BuildContext context, int index) => SizedBox(width:200, child: ProductByBoutique3(product: productProvider.topAnnonces[index],)),
+                      itemBuilder: (BuildContext context, int index) => SizedBox(width:200, child: ProductByBoutique(product: productProvider.topAnnonces[index],)),
                     );
                   },
                 ),

@@ -33,10 +33,11 @@ class LoginScreen extends StatelessWidget {
                     const SizedBox(
                       height: 30,
                     ),
-                    Text('Se Connecter', style: const TextStyle(color: Colors.white,  fontWeight: FontWeight.bold, fontSize: 22),),
+                    const Text('Se Connecter', style: TextStyle(color: Colors.white,  fontWeight: FontWeight.bold, fontSize: 22),),
                   ],
                 ),
               ),
+
               Container(
                 decoration: const BoxDecoration(
                   color: Colors.white,
@@ -59,7 +60,7 @@ class LoginScreen extends StatelessWidget {
                     const SizedBox(
                       height: 7,
                     ),
-                    Text('Veuillez vous authentificer pour continuer', style: const TextStyle(color: Colors.grey, fontSize: 16),),
+                    const Text('Veuillez vous authentificer pour continuer', style: TextStyle(color: Colors.grey, fontSize: 16),),
 
                     //form
                     const LoginFormWidget(),

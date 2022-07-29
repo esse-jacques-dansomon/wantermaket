@@ -50,10 +50,15 @@ dependencies:
   another_flushbar: ^1.10.29
   dropdown_button2: ^1.6.3
   share_plus: ^4.0.10
+  share: ^2.0.1
   maps_launcher: ^2.0.1
   whatsapp_unilink: ^2.0.2
   flutter_share: ^2.0.0
   webview_flutter: ^3.0.4
+  connectivity_plus: ^2.3.6
+  connectivity_wrapper: ^1.1.0
+  shimmer: ^2.0.0
+  cached_network_image: ^3.2.1
 
 dev_dependencies:
   flutter_test:

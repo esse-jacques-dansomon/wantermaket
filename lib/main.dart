@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:connectivity_wrapper/connectivity_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wantermarket/providers/auth_provider.dart';
@@ -18,16 +19,9 @@ import 'package:wantermarket/providers/wishlist_provider.dart';
 import 'package:wantermarket/route/routes.dart';
 import 'package:wantermarket/ui/screens/home/home_screen.dart';
 import './dependance_injector/dependance_injector.dart' as di;
+import 'config/app_colors.dart';
 
 
-
-// void main() {
-//   runApp(MultiProvider(
-//     providers: [
-//       ChangeNotifierProvider(create: (_) => sl),
-//     ],
-//     child: const MyApp(),),);
-// }
 
 class MyHttpOverrides extends HttpOverrides{
   @override
@@ -57,8 +51,10 @@ Future<void> main() async {
       ChangeNotifierProvider(create: (context) => di.sl<PaymentProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<CrudProductProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<BoutiqueFavoriesProvider>()),
+
+      // ChangeNotifierProvider(create: (context) => di.sl<ConnectivityProvider>()),
     ],
-    child: const MyApp(),),);
+    child: const MyApp()),);
 
 }
 
@@ -67,14 +63,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        onGenerateRoute: AppRoutes.onGenerateRoute,
-        title: 'WANTERMARKET',
-        theme: buildThemeData(),
-        home: const Scaffold(
-          body: HomeScreen(),
-        )
+    return ConnectivityAppWrapper(
+      app: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          onGenerateRoute: AppRoutes.onGenerateRoute,
+          title: 'WANTERMARKET',
+          theme: buildThemeData(),
+          home: const Scaffold(
+            body: HomeScreen(),
+          ),
+      ),
     );
   }
 
@@ -89,7 +87,7 @@ class MyApp extends StatelessWidget {
         unselectedLabelStyle: TextStyle(
           fontSize: 12,
         ),
-        selectedItemColor: Colors.blue,
+        selectedItemColor: AppColors.PRIMARY,
         unselectedItemColor: Colors.black45,
 
       ),

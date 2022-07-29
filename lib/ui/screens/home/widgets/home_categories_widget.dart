@@ -4,8 +4,7 @@ import 'package:wantermarket/providers/category_provider.dart';
 import 'package:wantermarket/ui/screens/home/widgets/title_and_more_widget.dart';
 
 import '../../../../route/routes.dart';
-import '../../../basewidgets/category_card.dart';
-import '../../sector/secteur_screen.dart';
+import '../../../basewidgets/cards/category_card.dart';
 
 class HomeCategories extends StatelessWidget {
   const HomeCategories({

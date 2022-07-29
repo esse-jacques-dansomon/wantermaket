@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wantermarket/providers/category_detail_provider.dart';
-import 'package:wantermarket/ui/basewidgets/produit_by_boutique_3.dart';
-import 'package:wantermarket/ui/screens/category/widget/filters_widget.dart';
-import 'package:wantermarket/ui/screens/category/widget/short_item_widget.dart';
+import 'package:wantermarket/ui/basewidgets/cards/produit_by_boutique.dart';
 
 import '../../../config/app_colors.dart';
 import '../../../data/models/body/category.dart';
@@ -169,7 +167,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                           crossAxisCount: MediaQuery.of(context).size.width > 230*4 ? 4 : (MediaQuery.of(context).size.width > 230*3 ? 3 : 2),
                                         ),
                                         itemBuilder: (context, index){
-                                          return ProductByBoutique3(product: cp.products[index],);
+                                          return ProductByBoutique(product: cp.products[index],);
                                         });
                                   }
                               ))),
@@ -187,7 +185,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
               },
             ),
-
           ],
         ),
       ),
