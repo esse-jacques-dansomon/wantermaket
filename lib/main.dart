@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:connectivity_wrapper/connectivity_wrapper.dart';
 import 'package:flutter/material.dart';
+import 'package:overlay_support/overlay_support.dart';
 import 'package:provider/provider.dart';
 import 'package:wantermarket/providers/auth_provider.dart';
 import 'package:wantermarket/providers/boutique_favories_provider.dart';
@@ -62,15 +63,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ConnectivityAppWrapper(
-      app: MaterialApp(
+    return  OverlaySupport(
+      child: MaterialApp(
           debugShowCheckedModeBanner: false,
           onGenerateRoute: AppRoutes.onGenerateRoute,
           title: 'WANTERMARKET',
           theme: buildThemeData(),
           home: const Scaffold(
             body: HomeScreen(),
-          ),
+          )
       ),
     );
   }

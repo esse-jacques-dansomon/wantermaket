@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wantermarket/config/app_colors.dart';
+import 'package:wantermarket/providers/auth_provider.dart';
 import 'package:wantermarket/providers/vendor_provider.dart';
 import 'package:wantermarket/route/routes.dart';
 import 'package:wantermarket/shared/contact_vendor.dart';
@@ -25,22 +26,25 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
 
   _loadData()  {
     Provider.of<VendorProvider>(context, listen: false).getBoutique();
+    Provider.of<VendorProvider>(context, listen: false).getVendorProducts();
+
   }
 
 
 
   @override
   initState()  {
+    super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<VendorProvider>(context, listen: false).getVendorStat();
-      Provider.of<VendorProvider>(context, listen: false).getVendorProducts();
       if( Provider.of<VendorProvider>(context, listen: false).boutique.vendor?.firstName == null) {
         _loadData();
-      }
+        Provider.of<AuthProvider>(context, listen: false).updateToken();
+    }
       ContactVendor.showCanAddProductDialog(context);
 
     });
-    super.initState();
+
 
 
 
@@ -63,7 +67,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
       appBar: appBar(isActiveSearchbar: true),
       drawer: const AppDrawer(),
       backgroundColor: AppColors.WHITE,
-      body:  Provider.of<VendorProvider>(context, listen: true).isProductsLoad ? SafeArea(
+      body:  Provider.of<VendorProvider>(context, listen: true).isProductsLoad? SafeArea(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.symmetric(horizontal: 10) ,

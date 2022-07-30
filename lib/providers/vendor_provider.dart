@@ -127,6 +127,11 @@ class VendorProvider extends ChangeNotifier {
     ChangeNotifier();
   }
 
+  deleteProduct(int i) {
+    products.removeWhere((element) => element.id == i);
+    notifyListeners();
+  }
+
 
 
 

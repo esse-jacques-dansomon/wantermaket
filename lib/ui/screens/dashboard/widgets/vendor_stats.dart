@@ -76,7 +76,7 @@ class VendorDashboardStats extends StatelessWidget {
                         ),
                         const SizedBox(height: 5),
 
-                        Text(vendorProvider.boutique.vendor!.address ?? 'Pas encore d\'adresse',
+                        Text(vendorProvider.boutique.vendor?.address ?? 'Pas encore d\'adresse',
                           style: const TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w300,

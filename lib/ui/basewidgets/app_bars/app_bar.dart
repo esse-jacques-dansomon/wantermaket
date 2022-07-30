@@ -1,7 +1,6 @@
 import 'package:circle_flags/circle_flags.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:wantermarket/data/fakedata/categorie_json.dart';
 import 'package:wantermarket/providers/search_provider.dart';
 import 'package:wantermarket/route/routes.dart';
 
@@ -118,27 +117,6 @@ AppBar appBar({bool isActiveSearchbar=false, bool isOnSearchPage=false}) {
 
 
 
-Drawer newDrawer(double height){
-  return  Drawer(
-    elevation: 0,
-
-    child: ListView(
-      children: [
-        SizedBox(
-          height: height,
-          child: ListView.builder(
-            itemCount: categories.length,
-            itemBuilder: (BuildContext context, int index) {
-              return MenuItem(name:categories[index]['name']+index.toString()+'/'+ categories.length.toString(), sousCategories: categories[index]['name'],);
-            },
-          ),
-        ),
-
-
-      ],
-    ),
-  );
-}
 
 class MenuItem extends StatelessWidget {
   final String name;

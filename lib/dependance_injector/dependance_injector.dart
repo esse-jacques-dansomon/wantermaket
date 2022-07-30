@@ -4,7 +4,6 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:wantermarket/data/fakedata/produit_json.dart';
 import 'package:wantermarket/data/repositories/auth_repo.dart';
 import 'package:wantermarket/data/repositories/boutique_favories_repo.dart';
 import 'package:wantermarket/data/repositories/boutique_repo.dart';

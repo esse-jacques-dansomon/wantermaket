@@ -72,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
       print('AuthorizationStatus.authorized');
-
+      // await Firebase.initializeApp();
       FirebaseMessaging.onMessage.listen((RemoteMessage message) {
         Pushnotification notification = Pushnotification(
           title: message.notification?.title,
@@ -80,8 +80,10 @@ class _HomeScreenState extends State<HomeScreen> {
           dataBody: message.data['body'],
           dataTitle: message.data['title'],
         );
-        setState(() {
-          _notificationInfo = notification;
+        print('j ai une notification');
+
+            setState(() {
+              _notificationInfo = notification;
         });
 
         if (notification != null) {

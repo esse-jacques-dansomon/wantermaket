@@ -122,7 +122,7 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> updateToken(BuildContext context) async {
+  Future<void> updateToken() async {
     ApiResponse apiResponse = await authRepo.updateToken();
     if (apiResponse.response.statusCode == 200) {
        return ;

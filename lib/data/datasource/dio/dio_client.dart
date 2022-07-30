@@ -26,6 +26,7 @@ class DioClient {
       ..httpClientAdapter
       ..options.headers = {
         'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
         'Authorization': 'Bearer $token',
         // AppConstants.LANG_KEY : countryCode == 'US'? 'en':countryCode.toLowerCase(),
 
@@ -42,6 +43,7 @@ class DioClient {
     print('===Country code====>$countryCode');
     dio.options.headers = {
       'Content-Type': 'application/json; charset=UTF-8',
+      'Accept': 'application/json',
       'Authorization': 'Bearer $token',
       // AppConstants.LANG_KEY: countryCode == 'US'? 'en':countryCode.toLowerCase(),
     };
@@ -57,6 +59,8 @@ class DioClient {
     try {
       dio.options.headers = {
         'Content-Type': 'application/json; charset=UTF-8',
+        'Accept': 'application/json',
+
         'Authorization': 'Bearer ${sharedPreferences.getString(AppConstants.TOKEN) }',
         // AppConstants.LANG_KEY: countryCode == 'US'? 'en':countryCode.toLowerCase(),
       };
@@ -92,6 +96,7 @@ class DioClient {
   }) async {
     dio.options.headers = {
       'Content-Type': 'application/json; charset=UTF-8',
+      'Accept': 'application/json',
       'Authorization': 'Bearer ${sharedPreferences.getString(AppConstants.TOKEN) }',
       // AppConstants.LANG_KEY: countryCode == 'US'? 'en':countryCode.toLowerCase(),
     };
@@ -128,6 +133,8 @@ class DioClient {
   }) async {
     dio.options.headers = {
       'Content-Type': 'application/json; charset=UTF-8',
+      'Accept': 'application/json',
+
       'Authorization': 'Bearer ${sharedPreferences.getString(AppConstants.TOKEN) }',
       // AppConstants.LANG_KEY: countryCode == 'US'? 'en':countryCode.toLowerCase(),
     };
@@ -161,6 +168,7 @@ class DioClient {
   }) async {
     dio.options.headers = {
       'Content-Type': 'application/json; charset=UTF-8',
+      'Accept': 'application/json',
       'Authorization': 'Bearer ${sharedPreferences.getString(AppConstants.TOKEN) }',
       // AppConstants.LANG_KEY: countryCode == 'US'? 'en':countryCode.toLowerCase(),
     };

@@ -58,8 +58,8 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
       );
       await authProvider.register(registerModel, context);
       if (authProvider.isLoggedIn()) {
+        authProvider.updateToken();
         if (!mounted) return;
-        authProvider.updateToken(context);
         Navigator.of(context).pushReplacementNamed(AppRoutes.profile);
       }else{
 

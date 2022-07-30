@@ -78,21 +78,10 @@ class CrudProductProvider extends ChangeNotifier {
   }
 
   Future<bool> deleteProduct(int idProduct) async {
-    isLoading = true;
-    isError = false;
-    notifyListeners();
-    errorMessage = "";
     final response = await crudProductRepo.deleteProduct(idProduct);
     if(response.response.statusCode == 200 || response.response.statusCode == 201) {
-      isLoading = false;
-      isError = false;
-      errorMessage = "";
-      // notifyListeners();
       return true;
     }else{
-      isLoading = false;
-      isError = true;
-      errorMessage = ApiErrorHandler.getMessage(response.error);
       notifyListeners();
       return false;
     }

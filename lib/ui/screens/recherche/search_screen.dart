@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wantermarket/ui/basewidgets/app_bars/app_bar.dart';
 import 'package:wantermarket/ui/basewidgets/drawer/drawer.dart';
 import 'package:wantermarket/ui/screens/recherche/widget/boutiques_found_tabbar_view.dart';
+import 'package:wantermarket/ui/screens/recherche/widget/product_found_fliter_widget.dart';
 import 'package:wantermarket/ui/screens/recherche/widget/products_found_tabbar_view.dart';
 
 import '../../../config/app_colors.dart';
@@ -13,8 +14,10 @@ class SearchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(length: 2,
+    return DefaultTabController(
+        length: 2,
         child: Scaffold(
+            backgroundColor : AppColors.WHITE,
           floatingActionButton: FloatingActionButton(
             onPressed: () {
               Navigator.pushNamed(context, AppRoutes.addProduct);
@@ -27,31 +30,62 @@ class SearchScreen extends StatelessWidget {
           drawer: const AppDrawer(),
           bottomNavigationBar: const CustomBottomNavBar(search: true),
           body: SafeArea(
+
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15.0),
               child: Column(
                 children: [
-                  TabBar(
-                    labelColor: Colors.white,
-                      unselectedLabelColor: AppColors.BLACK,
-                  unselectedLabelStyle : const TextStyle(fontSize: 17),
-                      labelStyle :const TextStyle(fontSize: 18),
-                      indicator: BoxDecoration(
-                        borderRadius: BorderRadius.circular(0),
-                        color: AppColors.PRIMARY,
-                      ),
+                  Row(
+                    children: [
+                       Expanded(
+                        child: TabBar(
+                          labelColor: Colors.white,
+                            unselectedLabelColor: AppColors.BLACK,
+                        unselectedLabelStyle : const TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
+                            labelStyle :const TextStyle(fontSize: 18.5, fontWeight: FontWeight.w500),
+                          indicator: BoxDecoration(
+                            borderRadius: BorderRadius.circular(0),
+                            color: AppColors.PRIMARY,
+                          ),
+                          indicatorColor: AppColors.PRIMARY,
 
-                      tabs:
-                      const [
-                       Tab(
-                         text: 'Produits',
-                       ),
-                       Tab(
-                         text: 'boutiques',
-                       ),
-                     ]
+                            tabs:
+                            const [
+                             Tab(
+                               text: 'Produits',
+                             ),
+                             Tab(
+                               text: 'Boutiques',
+                             ),
+                           ]
+                        ),
+                      ),
+                      InkWell(
+                        onTap: (){
+                          showModalBottomSheet(
+                            context: context,
+                            isDismissible: false,
+                            isScrollControlled: true,
+                            builder: (BuildContext context) {
+
+                              return  SizedBox(
+                                  height: MediaQuery.of(context).size.height*0.9,
+                                  child: const ProductFoundFilter());
+                            },
+                          );
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric( vertical: 10, horizontal: 10),
+                          child: Row(
+                            children: const [
+                              Icon(Icons.filter_alt_rounded, color: AppColors.PRIMARY,size: 28,)
+                            ],
+                          ),),
+                      ),
+                    ],
                   ),
 
+                  const SizedBox(height: 10,),
                   const Expanded(child: TabBarView(
                       children: [
                         ProductsFound(),

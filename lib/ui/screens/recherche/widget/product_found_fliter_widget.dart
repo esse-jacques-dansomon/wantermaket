@@ -31,42 +31,40 @@ class _ProductFoundFilterState extends State<ProductFoundFilter> {
     ];
     var categories = Provider.of<CategoryProvider>(context, listen: false).categories;
 
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white70,
-          elevation: 0,
-          automaticallyImplyLeading: false,
-          actions: [
-            Expanded(child: Container(
-              margin: const EdgeInsets.only(right: 10, left: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children:  [
-                  TextButton(onPressed: (){
-                    Navigator.pop(context);
-                  }, child: const Text('Cancel', style:TextStyle(
-                      fontSize: 20,color: AppColors.BLACK
-                  ))),
-                  const Text('Filtres', style:TextStyle(
-                    fontSize: 20, color: AppColors.BLACK
-                  )),
-                  TextButton(onPressed: (){
-                    print("min : $min, max : $max, groupValue : ${selections[groupValue??0]}, sectors : $_selectedItems");
-                    Navigator.pop(context);
-                  }, child: const Text('Done', style:TextStyle(
-                    fontSize: 20, color: AppColors.BLACK,
-                  )))
-                  ,
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white70,
+        elevation: 0,
+        automaticallyImplyLeading: false,
+        actions: [
+          Expanded(child: Container(
+            margin: const EdgeInsets.only(right: 10, left: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children:  [
+                TextButton(onPressed: (){
+                  Navigator.pop(context);
+                }, child: const Text('Cancel', style:TextStyle(
+                    fontSize: 20,color: AppColors.BLACK
+                ))),
+                const Text('Filtres', style:TextStyle(
+                  fontSize: 20, color: AppColors.BLACK
+                )),
+                TextButton(onPressed: (){
+                  print("min : $min, max : $max, groupValue : ${selections[groupValue??0]}, sectors : $_selectedItems");
+                  Navigator.pop(context);
+                }, child: const Text('Done', style:TextStyle(
+                  fontSize: 20, color: AppColors.BLACK,
+                )))
+                ,
 
-                ],
-              ),
-            ))
-          ],
-        ),
-        body: SingleChildScrollView(
-          child: SizedBox(
-            height: MediaQuery.of(context).size.height,
+              ],
+            ),
+          ))
+        ],
+      ),
+      body:  SingleChildScrollView(
+        child: SizedBox(
             child: Padding(
               padding: const EdgeInsets.only(top: 0.0, ),
               child: Column(
@@ -81,7 +79,7 @@ class _ProductFoundFilterState extends State<ProductFoundFilter> {
                           padding: const EdgeInsets.all(15),color: Colors.grey[200], child: const Text('Prix', textAlign: TextAlign.start, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),)),
 
                       Container(
-                        margin: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                        margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                          children: [
@@ -203,38 +201,14 @@ class _ProductFoundFilterState extends State<ProductFoundFilter> {
                   ),
                   SizedBox(height: 10,),
                   //LOCALISATION
-                  Container(
-                      width: MediaQuery.of(context).size.width,
-                      padding: EdgeInsets.all(15),color: Colors.grey[200], child: Text('Localisation', textAlign: TextAlign.start, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),)
-                  ),
-                  Container(
-                    // color: Colors.grey[200],
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: MultiSelectDialogField(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(0),
-                        // color: Colors.grey[200],
-                      ),
-                      cancelText: const Text('annuler'),
-                      confirmText: const Text('choisir'),
-                      searchable: true,
-                      items: categories.map((e) => MultiSelectItem(e.id, e.name!)).toList(),
-                      listType: MultiSelectListType.CHIP,
-                      buttonText:  const Text('Veuillez Choisir une ou plusieurs', textAlign: TextAlign.start, style: TextStyle(fontSize: 16),),
-                      onConfirm: (values) {
-                        _selectedItems = values;
-                      },
-                    ),
-                  ),
 
 
                 ],
               ),
             ),
           ),
-        )
-        ),
-    );
+      ),
+      );
 
 
   }

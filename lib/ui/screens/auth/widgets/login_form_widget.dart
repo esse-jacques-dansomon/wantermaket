@@ -25,21 +25,18 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
     final loginModel = LoginModel(email: _email!, password: _password!);
     // final loginModel = LoginModel(email: "abakarmahamat1991@gmail.com", password: "rasmuslerdorf");
-     authProvider.login(loginModel, context).whenComplete(() {
-       if (authProvider.isLoggedIn()) {
-         authProvider.updateToken(context);
-         if (!mounted) return;
-         Navigator.of(context).pushReplacementNamed(AppRoutes.profile);
-       }else{
-         if (!mounted )  return;
-         if(!authProvider.isLoggedIn()) {
-           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-           content: Text('Email ou mot de passe incorrect'),
-           backgroundColor: Colors.red,
-         ));
-         }
-       }
-     });
+    authProvider.login(loginModel, context).then((value) async => {
+      if (authProvider.isLoggedIn()) {
+        Navigator.of(context).pushReplacementNamed(AppRoutes.profile),
+      }else{
+        if(!authProvider.isLoggedIn()) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('Email ou mot de passe incorrect'),
+            backgroundColor: Colors.red,
+          )),
+        }
+      }
+    });
 
 
   }
@@ -171,7 +168,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
                       _signIn();
                     }
                   }, child: const Text("Se Connecter", style: TextStyle(color: Colors.white),)  )
-    ),
+          ),
         ],
       ),
 

@@ -10,6 +10,7 @@ import '../../../providers/curd_product_provider.dart';
 import '../../../providers/vendor_provider.dart';
 import '../../../route/routes.dart';
 import '../../../shared/app_helper.dart';
+import 'package:flutter/material.dart';
 
 class VendorProductCard extends StatelessWidget {
   final Product product;
@@ -37,6 +38,55 @@ class VendorProductCard extends StatelessWidget {
                     fit: BoxFit.cover,
                   ),
                 ),
+                Positioned(top: 5, right: 0,child: Container(
+                    decoration:  BoxDecoration(
+                      borderRadius: const BorderRadius.all(Radius.circular(2)),
+                      color: Colors.grey[100],
+                    ),
+                    padding: const EdgeInsets.all(2),
+                    child:  InkWell(
+
+                      onTap: (){
+                        // set up the AlertDialog
+                        AlertDialog alert = AlertDialog(
+                          title: const Text("Supprimer"),
+                          content: const Text("Voulez vous vraiment supprimer ce produit ?"),
+                          actions: [
+                            TextButton(
+                              child: const Text("Annuler"),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                            TextButton(
+                              child: const Text("Supprimer"),
+                              onPressed: () {
+                                Provider.of<CrudProductProvider>(context, listen: false).deleteProduct(product.id!).then((value) => {
+                                  if(value){
+                                    AppHelper.showInfoFlushBar(context, 'Produit supprimé avec succès', color: AppColors.PRIMARY),
+                                    Provider.of<VendorProvider>(context, listen: false).deleteProduct(product.id!),
+                                  }else{
+                                    AppHelper.showInfoFlushBar(context, 'Produit supprimé avec succès', color: Colors.redAccent),
+                                  }
+                                });
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        );
+                        // show the dialog
+                        showCupertinoDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return alert;
+                          },
+                        );
+                      },
+                      child:  const Icon(Icons.restore_from_trash, color: Colors.red, size: 29,),
+
+                    ),),)
+
+
               ],
             ),
             const SizedBox(height: 5,),
