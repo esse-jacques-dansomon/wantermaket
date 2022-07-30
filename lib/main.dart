@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:connectivity_wrapper/connectivity_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

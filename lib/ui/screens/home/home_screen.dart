@@ -67,8 +67,8 @@ class _HomeScreenState extends State<HomeScreen> {
       badge: true,
       provisional: false,
     );
-    _messaging.subscribeToTopic('all');
-    // _messaging.getToken().then((token) => print(token));
+    //_messaging.subscribeToTopic('all');
+    _messaging.getToken().then((token) => print(token));
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
       print('AuthorizationStatus.authorized');
@@ -124,7 +124,10 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       //initialize _notificationInfo
-      _notificationInfo = null;
+      _notificationInfo = null; 
+      registerNotification();
+      //app terminated
+      checkForInitialMessage();
       //en dehors de l'application
       FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
         Pushnotification notification = Pushnotification(
@@ -144,10 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
           autoDismiss: true,
         );
       });
-      registerNotification();
-
-      //app terminated
-      checkForInitialMessage();
+      
       //app launched
       if (widget.reload) {
         _loadData();
