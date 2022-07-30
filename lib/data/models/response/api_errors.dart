@@ -11,7 +11,8 @@ class ErrorResponse {
   }
 
   ErrorResponse.fromJson(dynamic json) {
-    if (json["errors"] != null) {
+    print("errors jsocn $json");
+    if (json["errors"] && json["errors"] != null) {
       _errors = [];
       json["errors"].forEach((v) {
         _errors.add(Errors.fromJson(v));

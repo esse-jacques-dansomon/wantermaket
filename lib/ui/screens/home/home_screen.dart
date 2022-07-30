@@ -1,4 +1,7 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:overlay_support/overlay_support.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:wantermarket/config/app_colors.dart';
@@ -15,6 +18,7 @@ import 'package:wantermarket/ui/screens/home/widgets/nouveautes_widget.dart';
 import 'package:wantermarket/ui/screens/home/widgets/top_annonces_widget.dart';
 import 'package:wantermarket/ui/screens/home/widgets/top_boutiques_widget.dart';
 
+import '../../../data/models/body/pushnotification_model.dart';
 import '../../../providers/slider_provider.dart';
 import '../../../route/routes.dart';
 import '../../../shared/network_info.dart';
@@ -50,11 +54,101 @@ class _HomeScreenState extends State<HomeScreen> {
 
   }
 
+  late final FirebaseMessaging _messaging;
+  late Pushnotification? _notificationInfo;
+
+  void registerNotification() async {
+    await Firebase.initializeApp();
+    _messaging = FirebaseMessaging.instance;
+
+    NotificationSettings settings = await _messaging.requestPermission(
+      alert: true,
+      sound: true,
+      badge: true,
+      provisional: false,
+    );
+    _messaging.subscribeToTopic('all');
+    // _messaging.getToken().then((token) => print(token));
+
+    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+      print('AuthorizationStatus.authorized');
+
+      FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+        Pushnotification notification = Pushnotification(
+          title: message.notification?.title,
+          body: message.notification?.body,
+          dataBody: message.data['body'],
+          dataTitle: message.data['title'],
+        );
+        setState(() {
+          _notificationInfo = notification;
+        });
+
+        if (notification != null) {
+          showSimpleNotification(
+            Text(_notificationInfo?.title ?? 'Notification'),
+            leading: const Icon(Icons.notifications),
+            background: Colors.red,
+            autoDismiss: true,
+          );
+        }
+      });
+    }
+  }
+
+  checkForInitialMessage() async {
+    await Firebase.initializeApp();
+    RemoteMessage? initialMessage = await FirebaseMessaging.instance.getInitialMessage();
+    if (initialMessage != null) {
+      Pushnotification notification = Pushnotification(
+        title: initialMessage.notification?.title,
+        body: initialMessage.notification?.body,
+        dataBody: initialMessage.data['body'],
+        dataTitle: initialMessage.data['title'],
+      );
+      setState(() {
+        _notificationInfo = notification;
+      });
+
+      showSimpleNotification(
+        Text(_notificationInfo?.title ?? 'Notification'),
+        leading: const Icon(Icons.notifications),
+        background: Colors.red,
+        autoDismiss: true,
+      );
+    }
+  }
 
 
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      //initialize _notificationInfo
+      _notificationInfo = null;
+      //en dehors de l'application
+      FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+        Pushnotification notification = Pushnotification(
+          title: message.notification?.title,
+          body: message.notification?.body,
+          dataBody: message.data['body'],
+          dataTitle: message.data['title'],
+        );
+        setState(() {
+          _notificationInfo = notification;
+        });
+
+        showSimpleNotification(
+          Text(_notificationInfo?.title ?? 'Notification'),
+          leading: const Icon(Icons.notifications),
+          background: Colors.red,
+          autoDismiss: true,
+        );
+      });
+      registerNotification();
+
+      //app terminated
+      checkForInitialMessage();
+      //app launched
       if (widget.reload) {
         _loadData();
       } else {
@@ -70,14 +164,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   }
 
-
   void _scrollListener() {
     if (_controller.position.pixels == _controller.position.maxScrollExtent ) {
       Provider.of<ProductProvider>(context, listen: false).getNewArrivals();
     }
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -179,8 +270,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 //load more
                 const SizedBox(height: 10),
 
-                Provider.of<ProductProvider>(context, listen: false).isPaginationLoading ? const Center(child: CircularProgressIndicator(),) : const SizedBox(),
-                const SizedBox(height: 50),
+                Provider.of<ProductProvider>(context, listen: true).isPaginationLoading ? const Center(child: CircularProgressIndicator(),) : const SizedBox(),
 
 
               ],

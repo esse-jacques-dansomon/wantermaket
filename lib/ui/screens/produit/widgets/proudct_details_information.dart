@@ -62,7 +62,7 @@ class ProductDetailsInformation extends StatelessWidget {
                       radius: 20,
                     ),
                     const SizedBox(width: 10,),
-                    Text(product.boutique!.name!, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w300, color: Colors.black),),
+                    Flexible(child: Text(product.boutique!.name!, maxLines: 3,  overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w300, color: Colors.black),)),
                     const SizedBox(width: 20,),
                     const Icon(Icons.verified, color: AppColors.SECONDARY,)
                   ],

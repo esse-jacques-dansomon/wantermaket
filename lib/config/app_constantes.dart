@@ -26,6 +26,7 @@ class AppConstants {
   static const String RESET_PASSWORD_URI = '/password/update';
   static const String LOGOUT = '/logout';
   static const String USER_CONNECTED_INFO = '/verify';
+  static const String TOKEN_URI = '/store/usertoken';
   //SELLER
   static const String VENDOR_BOUTIQUE_URI = '/vendeur';
   static const String VENDOR_STATS_URI= '/boutique/stats';
@@ -35,9 +36,6 @@ class AppConstants {
   static const String PAY_BECOME_EXCLUSIVE_URI = '/exclusive';
   static const String PAY_ABONNEMENT_URI = '/abonnement';
   static const String PAY_ETAT_URI = '/paiement/verif';
-
-
-
 
   // sharePreference
   static const String TOKEN = 'token';

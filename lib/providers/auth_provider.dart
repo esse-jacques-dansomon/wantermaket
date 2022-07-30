@@ -8,7 +8,9 @@ import 'package:wantermarket/data/models/body/register_model.dart';
 import '../data/models/body/login_response.dart';
 import '../data/models/body/profil_model.dart';
 import '../data/models/body/reset_password_model.dart';
+import '../data/models/response/api_response.dart';
 import '../data/repositories/auth_repo.dart';
+import '../shared/api_checker.dart';
 
 class AuthProvider extends ChangeNotifier {
   final AuthRepo authRepo;
@@ -101,25 +103,34 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<void> logout() async {
-    _isLoading = true;
+
+    loginn = false;
+    user = LoginReponse();
+    boutiqueId = 0;
+    await authRepo.clearSharedPreferences();
     notifyListeners();
     final response = await authRepo.logout();
-    _isLoading = false;
-    notifyListeners();
     if(response.error == null){
       loginn = false;
-      _isLoadingRegister = false;
-      _isLoading  = false;
       user = LoginReponse();
       boutiqueId = 0;
       await authRepo.clearSharedPreferences();
-
       notifyListeners();
     }else{
+      await authRepo.clearSharedPreferences();
       print(response.error);
     }
   }
 
+  Future<void> updateToken(BuildContext context) async {
+    ApiResponse apiResponse = await authRepo.updateToken();
+    if (apiResponse.response.statusCode == 200) {
+       return ;
+    } else {
+    }
+    // ApiChecker.checkApi(context, apiResponse);
+
+  }
   Future<void> verifyIsAuthenticated() async {
     final response = await authRepo.getUserConnectedInfo();
     if(response.error == null){

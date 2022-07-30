@@ -13,12 +13,9 @@ class LoginFormWidget extends StatefulWidget {
   @override
   State<LoginFormWidget> createState() => _LoginFormWidgetState();
 
-
 }
 
 class _LoginFormWidgetState extends State<LoginFormWidget> {
-
-
 
   bool _obscureText = true;
   String? _password, _email;
@@ -30,6 +27,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
     // final loginModel = LoginModel(email: "abakarmahamat1991@gmail.com", password: "rasmuslerdorf");
      authProvider.login(loginModel, context).whenComplete(() {
        if (authProvider.isLoggedIn()) {
+         authProvider.updateToken(context);
          if (!mounted) return;
          Navigator.of(context).pushReplacementNamed(AppRoutes.profile);
        }else{

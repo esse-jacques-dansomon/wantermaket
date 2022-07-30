@@ -1,5 +1,8 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:dio/dio.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wantermarket/data/models/body/login_model.dart';
 import 'package:wantermarket/data/models/body/profil_model.dart';
@@ -64,12 +67,36 @@ class AuthRepo {
     }
   }
 
+  Future<ApiResponse> updateToken() async {
+    try {
+      String deviceToken = await _getDeviceToken();
+      Response response = await dioClient.post(
+        AppConstants.TOKEN_URI,
+        data: { "firebaseUserToken": deviceToken},
+      );
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
 
+  Future<String> _getDeviceToken() async {
+    String? deviceToken;
+
+    if(Platform.isIOS) {
+      deviceToken = await FirebaseMessaging.instance.getAPNSToken() ;
+    }else {
+      deviceToken = await FirebaseMessaging.instance.getToken() ;
+    }
+
+    if (deviceToken != null) {
+      print('--------Device Token---------- $deviceToken');
+    }
+    return deviceToken ?? "";
+  }
 
   Future<void> saveToken(String token) async {
     try {
-      print('save token');
-      print('$token');
       await sharedPreferences.setString(AppConstants.TOKEN, token);
     } catch (e) {
       throw e;
@@ -118,7 +145,6 @@ class AuthRepo {
     return sharedPreferences.getString(name)?? "";
   }
 
-
   bool  isLoggedIn() {
     return sharedPreferences.getString(AppConstants.TOKEN) != null;
   }
@@ -127,12 +153,9 @@ class AuthRepo {
     try {
       var token;
       await getToken().then((value) => token);
-      print(token);
       await sharedPreferences.setString(AppConstants.TOKEN, '');
       await sharedPreferences.clear();
       await getToken().then((value) => token);
-      print(token);
-      print('clear sharedPreferences');
     } catch (e) {
       throw e;
     }
@@ -146,5 +169,5 @@ class AuthRepo {
     }
   }
 
-
 }
+

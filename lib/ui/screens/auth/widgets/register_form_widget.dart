@@ -45,7 +45,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
   }
 
   Future<void> register() async {
-    try{
+
       final authProvider = Provider.of<AuthProvider>(context, listen: false);
       final registerModel = RegisterModel(
         name: _username,
@@ -59,13 +59,12 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
       await authProvider.register(registerModel, context);
       if (authProvider.isLoggedIn()) {
         if (!mounted) return;
+        authProvider.updateToken(context);
         Navigator.of(context).pushReplacementNamed(AppRoutes.profile);
       }else{
 
       }
-    }catch(e){
-      print(e);
-    }
+
   }
 
   @override
