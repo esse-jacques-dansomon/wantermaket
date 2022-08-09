@@ -64,8 +64,16 @@ dependencies:
   overlay_support: ^2.0.1
 
 dev_dependencies:
+  flutter_launcher_icons: ^0.10.0
   flutter_test:
     sdk: flutter
+
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/1024.png"
+  adaptive_icon_foreground: "assets/images/logo_adaptive_fore.png"
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
