@@ -133,7 +133,7 @@ class AuthRepo {
       final response = await dioClient.get(AppConstants.USER_CONNECTED_INFO);
       return ApiResponse.withSuccess(response);
     } catch (e) {
-      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+      rethrow;
     }
   }
 

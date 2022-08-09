@@ -132,14 +132,21 @@ class AuthProvider extends ChangeNotifier {
 
   }
   Future<void> verifyIsAuthenticated() async {
-    final response = await authRepo.getUserConnectedInfo();
-    if(response.error == null){
-      loginn = true;
-      user = LoginReponse.fromJson(response.response.data);
-      authRepo.saveInfoInShared(AppConstants.USER_CREDENTIALS, json.encode(response.response.data));
-    }else{
+    try{
+      final response0 = await authRepo.getUserConnectedInfo();
+      final response = response0.response;
+      if(response.statusCode == 200){
+        loginn = true;
+        user = LoginReponse.fromJson(response.data);
+        authRepo.saveInfoInShared(AppConstants.USER_CREDENTIALS, json.encode(response.data));
+      }else{
+        clearall();
+      }
+    }catch(e){
       clearall();
+
     }
+
   }
 
   LoginReponse? getUserConnectedInfo()  {

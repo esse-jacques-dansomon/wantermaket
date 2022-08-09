@@ -16,6 +16,7 @@ enum PaymentPlanType{
   loadingBasic,
   loadingPremium,
   loadingGold,
+  loadingEcommerce,
   loaded,
   error,
 }
@@ -47,12 +48,23 @@ class PaymentProvider extends ChangeNotifier {
       paymentPlanType = PaymentPlanType.loadingGold;
     }else if(plan.name == 'Premium') {
       paymentPlanType = PaymentPlanType.loadingPremium;
+    }else if(plan.name == 'Ecommerce') {
+      paymentPlanType = PaymentPlanType.loadingEcommerce;
     } else {
       paymentPlanType = PaymentPlanType.loadingBasic;
     }
     notifyListeners();
     final response = await paymentRepo.getAbonnementLink(plan.id!);
     if (response.error == null) {
+
+
+      if(paymentPlanType==PaymentPlanType.loadingEcommerce){
+        paymentPlanType = PaymentPlanType.loaded;
+        notifyListeners();
+        return 'ecom';
+      }
+      paymentPlanType = PaymentPlanType.loaded;
+      notifyListeners();
       paymentPlanType = PaymentPlanType.loaded;
       notifyListeners();
       return response.response.data['url'];

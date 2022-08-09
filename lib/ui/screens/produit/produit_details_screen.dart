@@ -1,16 +1,8 @@
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_swiper_view/flutter_swiper_view.dart';
 import 'package:provider/provider.dart';
-import 'package:share/share.dart';
-import 'package:wantermarket/config/app_images.dart';
+
 import 'package:wantermarket/providers/vendor_provider.dart';
-import 'package:wantermarket/providers/wishlist_provider.dart';
-import 'package:wantermarket/route/routes.dart';
-import 'package:wantermarket/shared/app_helper.dart';
-import 'package:wantermarket/ui/basewidgets/cards/produit_by_boutique.dart';
-import '../../../config/app_colors.dart';
 import '../../../data/models/body/product.dart';
 import '../../../providers/product_provider.dart';
 import '../../basewidgets/bottom_bar/bottom_bar_vendor.dart';

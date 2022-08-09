@@ -1,6 +1,7 @@
 import 'package:circle_flags/circle_flags.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:wantermarket/data/models/body/filter_model.dart';
 import 'package:wantermarket/providers/search_provider.dart';
 import 'package:wantermarket/route/routes.dart';
 
@@ -14,7 +15,6 @@ AppBar appBar({bool isActiveSearchbar=false, bool isOnSearchPage=false}) {
     backgroundColor: AppColors.WHITE,
     iconTheme: const IconThemeData(color: AppColors.PRIMARY, size: 28),
     actions: [
-
       Builder(
         builder: (context) => IconButton(
           icon: const Icon(Icons.menu_sharp),
@@ -44,7 +44,7 @@ AppBar appBar({bool isActiveSearchbar=false, bool isOnSearchPage=false}) {
                       textAlignVertical : TextAlignVertical.center,
                     onSubmitted: (value) {
                       Provider.of<SearchProvider>(context, listen: false)
-                          .search(value);
+                          .search(filterModel: FilterModel(keyWorld: value, max: null, min: null, priceFilter: null, isNew: null, isPopular: null, isPromo: null));
                       if (!isOnSearchPage) {
                         Navigator.of(context).pushNamed(AppRoutes.search);
                       }

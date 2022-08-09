@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wantermarket/config/app_colors.dart';
 import 'package:wantermarket/config/app_dimenssions.dart';
-import 'package:wantermarket/route/routes.dart';
 
 import '../../basewidgets/app_bars/app_bar_with_return.dart';
 
@@ -54,7 +53,7 @@ class NotificationScreen extends StatelessWidget {
                         Row(
                           children: [
                             TextButton(onPressed: (){}, child: const Text('Voir', style: TextStyle(color: AppColors.SECONDARY),)),
-                            TextButton(onPressed: (){}, child: const Text('Archiver', style: const TextStyle(color: AppColors.SECONDARY),))
+                            TextButton(onPressed: (){}, child: const Text('Archiver', style: TextStyle(color: AppColors.SECONDARY),))
                           ],
                         )
                       ],

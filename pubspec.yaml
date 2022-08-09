@@ -87,7 +87,14 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-     - assets/images/
+    - assets/fonts/.gitignore
+    - assets/icons/.gitignore
+    - assets/images/.gitignore
+    - assets/images/agroalimentaire.png
+    - assets/images/icon-filters-12.png
+    - assets/images/logo.png
+    - assets/images/no-internet.jpg
+    - assets/images/no-internet.webp
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

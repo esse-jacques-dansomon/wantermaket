@@ -17,7 +17,7 @@ import 'package:wantermarket/data/repositories/slider_repo.dart';
 import 'package:wantermarket/data/repositories/vendor_repo.dart';
 import 'package:wantermarket/providers/auth_provider.dart';
 import 'package:wantermarket/providers/boutique_favories_provider.dart';
-import 'package:wantermarket/providers/curd_product_provider.dart';
+import 'package:wantermarket/providers/crud_product_provider.dart';
 import 'package:wantermarket/providers/payment_provider.dart';
 import 'package:wantermarket/providers/plan_provider.dart';
 import 'package:wantermarket/providers/slider_provider.dart';

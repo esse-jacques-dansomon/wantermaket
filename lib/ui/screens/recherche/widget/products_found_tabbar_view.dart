@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:wantermarket/ui/screens/recherche/widget/product_found_fliter_widget.dart';
 
 import '../../../../config/app_colors.dart';
 import '../../../../providers/search_provider.dart';
@@ -15,65 +13,6 @@ class ProductsFound extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            // Row(
-            //   children: [
-            //     Text('Trier par'.toUpperCase()),
-            //     const SizedBox(
-            //       width: 10,
-            //     ),
-            //     DropdownButton(
-            //       hint: const Text('Prix'),
-            //       value: 'Prix',
-            //       items: const [
-            //         DropdownMenuItem(
-            //           child: Text('Prix'),
-            //           value: 'Prix',
-            //         ),
-            //         DropdownMenuItem(
-            //           child: Text('Nom'),
-            //           value: 'Nom',
-            //         ),
-            //         DropdownMenuItem(
-            //           child: Text('Popularité'),
-            //           value: 'Popularité',
-            //         ),
-            //       ], onChanged: (String? value) {  },
-            //     ),
-            //   ],
-            // ),
-
-            // InkWell(
-            //   onTap: (){
-            //     //on bottom sheet
-            //     showModalBottomSheet(
-            //       context: context,
-            //       isDismissible: false,
-            //       isScrollControlled: true,
-            //       builder: (BuildContext context) {
-            //
-            //         return  SizedBox(
-            //             height: MediaQuery.of(context).size.height*0.9,
-            //             child: const ProductFoundFilter());
-            //       },
-            //     );
-            //   },
-            //   child: Container(
-            //     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            //     child: Row(
-            //       children: const [
-            //         Text('Filter', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
-            //         SizedBox(width: 10,),
-            //         Icon(Icons.filter_alt_rounded, color: AppColors.PRIMARY,size: 28,)
-            //       ],
-            //     ),
-            //   ),
-            // ),
-          ],
-        ),
-
         Expanded(child: Consumer<SearchProvider>(
             builder: (context, searchProvider, child){
               switch(searchProvider.state){
@@ -95,7 +34,6 @@ class ProductsFound extends StatelessWidget {
                       mainAxisExtent: 315,
                     ),
                   );
-                  break;
                 case SearchProductState.initial:
                 case SearchProductState.noProducts:
                   return const Center(child: Text('Aucun produit trouvé', style: TextStyle(color: AppColors.BLACK),),);

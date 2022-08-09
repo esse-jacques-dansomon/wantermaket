@@ -15,20 +15,20 @@ class RelatedProducts extends StatelessWidget {
       child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children:  [
-            const SizedBox(height: 10,),
+            const SizedBox(height: 15,),
             const Text('Produits Similaires : ', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),),
-            const SizedBox(height: 10,),
+            const SizedBox(height: 15,),
             SizedBox(
-              height: 325,
+              height: 250,
               child:  Consumer<ProductProvider>(
                 builder: (ctx, productProvider, child){
                   return ListView.separated(
                       itemCount: productProvider.relatedProducts.length,
                       scrollDirection: Axis.horizontal,
                       shrinkWrap: true,
-                      separatorBuilder: (context, index) => const SizedBox(width: 10,),
+                      separatorBuilder: (context, index) => const SizedBox(width: 20,),
                       itemBuilder: (context, index){
-                        return  SizedBox(width: 230, child: ProductByBoutique(product: productProvider.relatedProducts[index],));
+                        return  SizedBox(width: 200, child: ProductByBoutique(product: productProvider.relatedProducts[index], isRelated: true,));
                       }
                   );
                 },

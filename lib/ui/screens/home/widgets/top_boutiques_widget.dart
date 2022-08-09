@@ -5,7 +5,6 @@ import 'package:wantermarket/ui/screens/home/widgets/title_and_more_widget.dart'
 
 import '../../../../route/routes.dart';
 import '../../../basewidgets/cards/boutique_card.dart';
-import '../../sector/sector_screen.dart';
 
 class TopBoutiquesWidget extends StatelessWidget {
   const TopBoutiquesWidget({

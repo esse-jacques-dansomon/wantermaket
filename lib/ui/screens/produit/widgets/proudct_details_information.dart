@@ -16,7 +16,7 @@ class ProductDetailsInformation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -26,31 +26,26 @@ class ProductDetailsInformation extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children:  [
               Text(product.name!, style: const TextStyle(fontSize: 21, fontWeight: FontWeight.bold, color: Colors.black),),
-              const SizedBox(height: 10,),
-              RichText(text:  TextSpan(text: 'Categorie', style: const TextStyle(fontWeight: FontWeight.w300, color: Colors.black),
-                  children: [
-                    const TextSpan(text: ' : ', style: TextStyle(fontWeight: FontWeight.w300, color: Colors.black)),
-                    TextSpan(text: '${product.idCategorie?? 1}', style: const TextStyle(fontWeight: FontWeight.w300, color: Colors.black)),
-                  ]),),
-              const SizedBox(height: 10,),
+              const SizedBox(height: 15,),
               Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   (product.priceBefore != null && product.priceBefore != 0) ?Column(children: [
-                    Text(AppHelper.priceFormat(price: '${product.price}'), style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),),
+                    Text(AppHelper.priceFormat(price: '${product.price}'), style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.PRIMARY),),
+                    const SizedBox(height: 7,),
                     Text(AppHelper.priceFormat(price: '${product.priceBefore}'),  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w300, color: Colors.black, decoration: TextDecoration.lineThrough), )
                   ],):
                   Text(AppHelper.priceFormat(price: '${product.price}'),  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w300, color: Colors.black), ),
                 ],
               ),
-              const SizedBox(height: 10,),
+              const SizedBox(height: 15,),
               const Text('Description', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),),
-              const SizedBox(height: 10,),
+              const SizedBox(height: 6,),
               Text(product.descriptionBrief!, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w300, color: Colors.black),),
-              const SizedBox(height: 10,),
+              const SizedBox(height: 15,),
               const Text('Vendeur', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),),
-              const SizedBox(height: 10,),
+              const SizedBox(height: 6,),
               InkWell(
                 onTap: (){
                   Navigator.of(context).pushNamed(AppRoutes.vendor, arguments:product.boutique!);
@@ -61,7 +56,7 @@ class ProductDetailsInformation extends StatelessWidget {
                       backgroundImage: CachedNetworkImageProvider(product.boutique!.profilImage!),
                       radius: 20,
                     ),
-                    const SizedBox(width: 10,),
+                    const SizedBox(width: 12,),
                     Flexible(child: Text(product.boutique!.name!, maxLines: 3,  overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w300, color: Colors.black),)),
                     const SizedBox(width: 20,),
                     const Icon(Icons.verified, color: AppColors.SECONDARY,)

@@ -8,7 +8,7 @@ import 'package:wantermarket/providers/boutique_favories_provider.dart';
 import 'package:wantermarket/providers/boutique_provider.dart';
 import 'package:wantermarket/providers/category_detail_provider.dart';
 import 'package:wantermarket/providers/category_provider.dart';
-import 'package:wantermarket/providers/curd_product_provider.dart';
+import 'package:wantermarket/providers/crud_product_provider.dart';
 import 'package:wantermarket/providers/payment_provider.dart';
 import 'package:wantermarket/providers/plan_provider.dart';
 import 'package:wantermarket/providers/product_provider.dart';

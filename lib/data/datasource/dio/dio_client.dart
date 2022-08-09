@@ -65,9 +65,7 @@ class DioClient {
         // AppConstants.LANG_KEY: countryCode == 'US'? 'en':countryCode.toLowerCase(),
       };
       token = sharedPreferences.getString(AppConstants.TOKEN) ?? '';
-      print('=====get====> $uri');
-      print("=====TOKEN==> $token");
-      print("==shared token=> ${sharedPreferences.getString(AppConstants.TOKEN) }");
+
       var response = await dio.get(
         uri,
         queryParameters: queryParameters,
@@ -75,6 +73,10 @@ class DioClient {
         cancelToken: cancelToken,
         onReceiveProgress: onReceiveProgress,
       );
+      print('=====get====> $uri');
+      print('=====get====> $queryParameters');
+      print("=====TOKEN==> $token");
+      print("==shared token=> ${sharedPreferences.getString(AppConstants.TOKEN) }");
       return response;
     } on SocketException catch (e) {
       throw SocketException(e.toString());

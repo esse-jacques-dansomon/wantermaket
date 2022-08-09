@@ -22,7 +22,7 @@ class Product {
   String? disponibility;
   int? nombre_vues;
   List<Image>? images;
-  Vendor? vendor;
+
   Boutique? boutique;
 
 
@@ -38,7 +38,6 @@ class Product {
       this.disponibility,
       this.nombre_vues,
       this.images,
-      this.vendor,
       this.boutique
       });
 
@@ -54,7 +53,6 @@ class Product {
     nombre_vues = json['nombre_vues'];
     disponibility = json['disponibility']??true;
     boutique = json['boutique'] != null ? Boutique.fromJson(json['boutique']) : null;
-    vendor = json['vendeur'] != null ? Vendor.fromJson(json['vendeur']) : null;
     if (json['images'] != null) {
       images = <Image>[];
       json['images'].forEach((v) {
@@ -75,7 +73,6 @@ class Product {
     data['price'] = price;
     data['price_before'] = priceBefore;
     data['disponibility'] = disponibility;
-    data['vendeur'] = vendor?.toJson();
     data['boutique'] = boutique?.toJson();
     if (images != null) {
       data['images'] = images!.map((v) => v.toJson()).toList();

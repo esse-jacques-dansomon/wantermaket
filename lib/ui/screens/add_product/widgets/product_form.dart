@@ -9,7 +9,7 @@ import 'package:wantermarket/config/app_colors.dart';
 import 'package:wantermarket/data/models/body/subCategory.dart';
 import 'package:wantermarket/providers/auth_provider.dart';
 import 'package:wantermarket/providers/category_detail_provider.dart';
-import 'package:wantermarket/providers/curd_product_provider.dart';
+import 'package:wantermarket/providers/crud_product_provider.dart';
 import 'package:wantermarket/providers/vendor_provider.dart';
 import 'package:wantermarket/shared/app_helper.dart';
 

@@ -27,18 +27,13 @@ class _PayTechApiPaymentScreen extends State<PayTechApiPaymentScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    if (Platform.isAndroid) WebView.platform = AndroidWebView();
+    if(widget.initialUrl == 'ecom'){
+      Provider.of<AuthProvider>(context, listen: false).verifyIsAuthenticated();
+    }else if (Platform.isAndroid) {
+      WebView.platform = AndroidWebView();
+    }
   }
 
-  // @override
-  // void dispose(){
-  //   if(pay == 0 ){
-  //     showDialog(context: context, barrierDismissible: false, builder: (context){
-  //       return  const PaymentFail();
-  //     });
-  //   }
-  //   super.dispose();
-  // }
 
   bool getStatusPayment()  {
     var status = false;
@@ -49,10 +44,9 @@ class _PayTechApiPaymentScreen extends State<PayTechApiPaymentScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      // appBar: appBarWithReturn(title: 'Devenir Exclusive', context: context),
+    return  Scaffold(
       body: SafeArea(
-        child:  WebView(
+        child: widget.initialUrl == 'ecom' ?  Container( margin: const EdgeInsets.all(25),child: const Center(child:  PaymentSuccessBox())) :  WebView(
           javascriptMode: JavascriptMode.unrestricted,
           onWebViewCreated:
               (  WebViewController webViewController) {

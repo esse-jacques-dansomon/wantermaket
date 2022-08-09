@@ -15,7 +15,8 @@ import '../../../shared/contact_vendor.dart';
 class ProductByBoutique extends StatelessWidget {
   final Product product;
   final bool isWishlist;
-  const ProductByBoutique({Key? key, required this.product,  this.isWishlist=false}) : super(key: key);
+  final bool isRelated;
+  const ProductByBoutique({Key? key, required this.product,  this.isWishlist=false, this.isRelated=false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,13 +39,13 @@ class ProductByBoutique extends StatelessWidget {
                       width: 230,
                     ),
                     Positioned(top: 5, right: 5,child: Container(
+                      alignment: Alignment.center,
                       decoration:  BoxDecoration(
-                        borderRadius: const BorderRadius.all(Radius.circular(2)),
+                        borderRadius: const BorderRadius.all(Radius.circular(10)),
                         color: Colors.grey[200],
                       ),
                         padding: const EdgeInsets.all(2),
                         child: InkWell(
-
                           child: Consumer<WishlistProvider>(
                               builder: (context, wishProvider, _){
                                 return Icon( !wishProvider.isInWishlist(product) ? Icons.favorite_border : Icons.favorite, color: !wishProvider.isInWishlist(product) ?AppColors.SECONDARY : Colors.red);
@@ -71,74 +72,81 @@ class ProductByBoutique extends StatelessWidget {
                     const SizedBox(height: 5),
                     SizedBox(width: 215, child: Text(product.name!,  maxLines: 2, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 12, color: Colors.black, fontWeight: FontWeight.bold),)),
                     // contact button
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 8,),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children:  [
-                            //localisation icon
-                            const Icon(Icons.location_on_outlined, color: AppColors.BLACK, size: 14, ),
-                            const SizedBox(width: 5,),
-                            SizedBox(width:135, child: Text("${ product.vendor!.city!  } ${ product.vendor!.country == "SN" ? "Sénégal": "Togo"  }" , style: const TextStyle(fontSize: 10, color: Colors.black, overflow: TextOverflow.ellipsis),)),
-                          ],
-                        ) ,
-                        const SizedBox(height: 5,),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children:  [
-                            //localisation icon
-                            const Icon(Icons.person_outline_outlined, color: AppColors.BLACK, size: 14,),
-                            const SizedBox(width: 5,),
-                            InkWell
-                              (
-                                onTap: (){
-                                  Navigator.of(context).pushNamed(AppRoutes.vendor, arguments: product.boutique!);
-                                },
-                                child:  SizedBox(width: 135, child: Text(product.boutique!.name ?? product.vendor!.email! , style: const TextStyle(fontSize: 10, color: Colors.black, ), overflow: TextOverflow.ellipsis,)), ),
-                          ],
-                        )
-
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    Row(
-                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: InkWell(
-                            onTap: (){
-                              showDialog(
-                                context: context,
-                                builder: (context) =>  ContactsDialog(vendor: product.vendor!),
-                              );
-                            },
-                            child: Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: AppColors.SECONDARY, width: 1),
-                                ),
-                                height: 25, child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
-                                    Icon(Icons.phone, color: AppColors.SECONDARY, size: 15,),
-                                    SizedBox(width: 5,),
-                                    Text('Contacts le vendeur', overflow: TextOverflow.ellipsis, style: TextStyle( color: AppColors.SECONDARY ,fontSize: AppDimensions.FONT_SIZE_EXTRA_SMALL-1), textAlign: TextAlign.left, ),
+                    !isRelated?
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(height: 8,),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children:  [
+                                    //localisation icon
+                                    const Icon(Icons.location_on_outlined, color: AppColors.BLACK, size: 14, ),
+                                    const SizedBox(width: 5,),
+                                    SizedBox(width:135, child: Text("${ product.boutique?.vendor?.city ?? ''  } ${  product.boutique?.vendor?.country == "SN" ? "Sénégal": "Togo"  }" , style: const TextStyle(fontSize: 10, color: Colors.black, overflow: TextOverflow.ellipsis),)),
                                   ],
-                                )),
-                          ),
-                        ),
-                        Container(
-                          margin: const EdgeInsets.only(left: 0),
-                          padding: const EdgeInsets.only(left: 5, right: 5),
-                          height: 25,
-                          color: Colors.grey[200],
-                          child: const Center(
-                            child: Icon(Icons.verified, color: AppColors.SECONDARY, size: 18,),
-                          ),
+                                ) ,
+                                const SizedBox(height: 5,),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children:  [
+                                    //localisation icon
+                                    const Icon(Icons.person_outline_outlined, color: AppColors.BLACK, size: 14,),
+                                    const SizedBox(width: 5,),
+                                    InkWell
+                                      (
+                                      onTap: (){
+                                        Navigator.of(context).pushNamed(AppRoutes.vendor, arguments: product.boutique!);
+                                      },
+                                      child:  SizedBox(width: 135, child: Text(product.boutique!.name ??  product.boutique!.vendor!.email! , style: const TextStyle(fontSize: 10, color: Colors.black, ), overflow: TextOverflow.ellipsis,)), ),
+                                  ],
+                                )
+
+                              ],
+                            ),
+                            const SizedBox(height: 10),
+                            Row(
+                              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: InkWell(
+                                    onTap: (){
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) =>  ContactsDialog(vendor: product.boutique!.vendor!),
+                                      );
+                                    },
+                                    child: Container(
+                                        decoration: BoxDecoration(
+                                          border: Border.all(color: AppColors.SECONDARY, width: 1),
+                                        ),
+                                        height: 25, child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: const [
+                                        Icon(Icons.phone, color: AppColors.SECONDARY, size: 15,),
+                                        SizedBox(width: 5,),
+                                        Text('Contacts le vendeur', overflow: TextOverflow.ellipsis, style: TextStyle( color: AppColors.SECONDARY ,fontSize: AppDimensions.FONT_SIZE_EXTRA_SMALL-1), textAlign: TextAlign.left, ),
+                                      ],
+                                    )),
+                                  ),
+                                ),
+                                Container(
+                                  margin: const EdgeInsets.only(left: 0),
+                                  padding: const EdgeInsets.only(left: 5, right: 5),
+                                  height: 25,
+                                  color: Colors.grey[200],
+                                  child: const Center(
+                                    child: Icon(Icons.verified, color: AppColors.SECONDARY, size: 18,),
+                                  ),
+                                )
+                              ],
+                            )
+                          ],
                         )
-                      ],
-                    ),
+                   : Container(),
 
                   ],
                 ),

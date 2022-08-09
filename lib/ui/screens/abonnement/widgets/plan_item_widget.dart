@@ -67,6 +67,7 @@ class PlanItem extends StatelessWidget {
                   case PaymentPlanType.loadingBasic :
                   case PaymentPlanType.loadingPremium :
                   case PaymentPlanType.loadingGold :
+                  case PaymentPlanType.loadingEcommerce :
                   case PaymentPlanType.loaded:
                     if(paymentProvider.paymentPlanType == PaymentPlanType.loadingBasic && plan.name == "Basic"){
                       return Column(
@@ -75,7 +76,9 @@ class PlanItem extends StatelessWidget {
                           Container(height: 50,),
                         ],
                       );
-                    }else if(paymentProvider.paymentPlanType == PaymentPlanType.loadingPremium && plan.name == "Premium"){
+                    }
+
+                    else if(paymentProvider.paymentPlanType == PaymentPlanType.loadingPremium && plan.name == "Premium"){
                       return Column(
                         children:  [
                           const CircularProgressIndicator(),
@@ -83,6 +86,13 @@ class PlanItem extends StatelessWidget {
                         ],
                       );
                     }else if(paymentProvider.paymentPlanType == PaymentPlanType.loadingGold && plan.name == "Gold") {
+                      return Column(
+                        children:  [
+                          const CircularProgressIndicator(),
+                          Container(height: 50,),
+                        ],
+                      );
+                    }else if(paymentProvider.paymentPlanType == PaymentPlanType.loadingEcommerce && plan.name == "Ecommerce") {
                       return Column(
                         children:  [
                           const CircularProgressIndicator(),
@@ -112,8 +122,7 @@ class PlanItem extends StatelessWidget {
                     );
                   case PaymentPlanType.error:
                     return const Text('Erreur');
-
-                }
+               }
               },) else Container(),
 
 

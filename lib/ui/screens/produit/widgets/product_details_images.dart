@@ -46,37 +46,64 @@ class ProductDetailsImagesView extends StatelessWidget {
           ),
         ),
         Positioned(child: Padding(
-          padding: const EdgeInsets.only(right: 8.0),
+          padding: const EdgeInsets.only(right: 10, left: 10, top: 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               //button back
-              IconButton(
-                icon: const Icon(Icons.arrow_back_ios_rounded, color: AppColors.SECONDARY,),
-                onPressed: () => Navigator.pop(context),
+              InkWell(
+                onTap: (){
+                  Navigator.of(context).pop();
+                },
+                child: ClipOval(
+                  child: Container(
+                    color: Colors.grey[200],
+                    height: 35,
+                    width: 35,
+                    alignment: Alignment.center,
+                    child: const Icon(Icons.arrow_back_ios_rounded, color: AppColors.SECONDARY,),
+                  ),
+                ),
               ),
               Column(
                 children: [
                   //button share
-                  IconButton(
-                    icon: const Icon(Icons.share, color: AppColors.SECONDARY,),
-                    onPressed: () async{
+                  InkWell(
+                    onTap: () async {
                       Share.share('${product.name} à ${product.priceBefore ?? product.price} F CFA chez ${product.boutique!.name!} sur Wanter Market. Visitez en cliquant sur ce lien : https://wantermarket.sn/produit${Uri.encodeFull('&prid=${product.id}')}');
                     },
+                    child: ClipOval(
+                      child: Container(
+                        color: Colors.grey[200],
+                        height: 35,
+                        width: 35,
+                        alignment: Alignment.center,
+                        child: const Icon(Icons.share, color: AppColors.SECONDARY,),
+                      ),
+                    ),
                   ),
                   //button favorite
-                  IconButton(
-                    icon: Consumer<WishlistProvider>(
-                        builder: (context, wishProvider, _){
-                          return Icon( !wishProvider.isInWishlist(product) ? Icons.favorite_border : Icons.favorite, color: !wishProvider.isInWishlist(product) ?AppColors.SECONDARY : Colors.red);
-                        }
+                  const SizedBox(height: 10,),
+                  InkWell(
+                  onTap: (){
+                  !Provider.of<WishlistProvider>(context, listen: false).isInWishlist(product) ?
+                  Provider.of<WishlistProvider>(context, listen: false).addToWishlist(product, context) :
+                  Provider.of<WishlistProvider>(context, listen: false).removeFromWishlist(product, context);
+                  },
+                    child: ClipOval(
+                      child: Container(
+                        color: Colors.grey[200],
+                        height: 35,
+                        width: 35,
+                        alignment: Alignment.center,
+                        child: Consumer<WishlistProvider>(
+                            builder: (context, wishProvider, _){
+                              return Icon( !wishProvider.isInWishlist(product) ? Icons.favorite_border : Icons.favorite, color: !wishProvider.isInWishlist(product) ?AppColors.SECONDARY : Colors.red);
+                            }
+                        ),
+                      ),
                     ),
-                    onPressed: (){
-                      !Provider.of<WishlistProvider>(context, listen: false).isInWishlist(product) ?
-                      Provider.of<WishlistProvider>(context, listen: false).addToWishlist(product, context) :
-                      Provider.of<WishlistProvider>(context, listen: false).removeFromWishlist(product, context);
-                    },
                   ),
                 ],
               )

@@ -6,11 +6,10 @@ import 'package:provider/provider.dart';
 import '../../../config/app_colors.dart';
 import '../../../config/app_images.dart';
 import '../../../data/models/body/product.dart';
-import '../../../providers/curd_product_provider.dart';
+import '../../../providers/crud_product_provider.dart';
 import '../../../providers/vendor_provider.dart';
 import '../../../route/routes.dart';
 import '../../../shared/app_helper.dart';
-import 'package:flutter/material.dart';
 
 class VendorProductCard extends StatelessWidget {
   final Product product;

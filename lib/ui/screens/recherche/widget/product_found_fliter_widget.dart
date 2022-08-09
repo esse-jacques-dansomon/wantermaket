@@ -5,7 +5,9 @@ import 'package:multi_select_flutter/util/multi_select_list_type.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../config/app_colors.dart';
+import '../../../../data/models/body/filter_model.dart';
 import '../../../../providers/category_provider.dart';
+import '../../../../providers/search_provider.dart';
 
 class ProductFoundFilter extends StatefulWidget {
   const ProductFoundFilter({Key? key}) : super(key: key);
@@ -18,17 +20,25 @@ class _ProductFoundFilterState extends State<ProductFoundFilter> {
 
   List<dynamic> _selectedItems = [];
   int? groupValue;
+  int? priceFilter;
   int min = 0;
   int max = 0;
+  int isPromo = 0;
+  int isPopular  = 0;
+  int isNew = 0;
   @override
   Widget build(BuildContext context) {
-    const List<String> selections = <String>[
-      'Propularité',
-      'Prix le plus élévé',
+
+    const List<String> selectionsPrice = <String>[
       'Prix le plus bas',
-      'Nouveautés',
-      'Promotion',
+      'Prix le plus élévé',
     ];
+
+    const List<Map<String, int>> selectionsPriceValue = [
+      {'Prix le plus élévé': 1},
+      {'Prix le plus bas': 0},
+    ];
+
     var categories = Provider.of<CategoryProvider>(context, listen: false).categories;
 
     return Scaffold(
@@ -51,7 +61,16 @@ class _ProductFoundFilterState extends State<ProductFoundFilter> {
                   fontSize: 20, color: AppColors.BLACK
                 )),
                 TextButton(onPressed: (){
-                  print("min : $min, max : $max, groupValue : ${selections[groupValue??0]}, sectors : $_selectedItems");
+
+                  Provider.of<SearchProvider>(context, listen: false).filter(filterModel: FilterModel(
+                      min: min,
+                      max: max,
+                      secteurs: _selectedItems ,
+                      priceFilter: priceFilter,
+                      isNew: isNew,
+                      isPopular: isPopular,
+                      isPromo: isPromo
+                  ));
                   Navigator.pop(context);
                 }, child: const Text('Done', style:TextStyle(
                   fontSize: 20, color: AppColors.BLACK,
@@ -100,7 +119,7 @@ class _ProductFoundFilterState extends State<ProductFoundFilter> {
                                ),
                              ),
                            ),
-                           Container(
+                           SizedBox(
                              width: 150,
                              child: TextFormField(
                                onChanged: (value) {
@@ -119,19 +138,7 @@ class _ProductFoundFilterState extends State<ProductFoundFilter> {
                          ],
                         ),
                       ),
-                      // SizedBox(
-                      //   width: MediaQuery.of(context).size.width,
-                      //   child: Slider(
-                      //     value: 20,
-                      //     min: 0,
-                      //     max: 100,
-                      //     divisions: 10,
-                      //     label: '${(0.5 * 1000).toInt()}',
-                      //     activeColor: Colors.green,
-                      //     inactiveColor: Colors.grey,
-                      //     onChanged: (value) {},
-                      //   ),
-                      // ),
+
                     ],
                   ),
                  //by attribute
@@ -147,7 +154,66 @@ class _ProductFoundFilterState extends State<ProductFoundFilter> {
                           padding: const EdgeInsets.all(15),color: Colors.grey[200], child: const Text('Trier par', textAlign: TextAlign.start, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),)
                       ),
                       SizedBox(
-                        height: (60 * selections.length).toDouble(),
+
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 0.0, right: 15),
+                          child: ListView (
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            children : [
+                              CheckboxListTile(
+                                title: const Text("En Promotion"),
+                                value: isPromo == 1,
+                                onChanged: (newValue) {
+                                  setState(() {
+                                    isPromo = newValue! ? 1 : 0;
+                                  });
+                                },
+                                controlAffinity: ListTileControlAffinity.leading,  //  <-- leading Checkbox
+                              ),
+                              CheckboxListTile(
+                                title: const Text("Populaire"),
+                                value: isPopular  == 1,
+                                onChanged: (newValue) {
+                                  setState(() {
+                                    isPopular  = newValue! ? 1 : 0;
+                                  });
+                                },
+                                controlAffinity: ListTileControlAffinity.leading,  //  <-- leading Checkbox
+                              ),
+                              CheckboxListTile(
+                                title: const Text("Nouveautés"),
+                                value: isNew == 1,
+                                onChanged: (newValue) {
+                                  setState(() {
+                                    isNew = newValue! ? 1 : 0;
+                                  });
+                                },
+                                controlAffinity: ListTileControlAffinity.leading,  //  <-- leading Checkbox
+                              ),
+                              const  SizedBox(height: 5,),
+
+                            ]
+                          ),
+                        ),
+                      ),
+
+                    ],
+                  ),
+                  //par prix au plus ou au moins
+                  const Divider(
+                    color: Colors.grey,
+                    height: 1,
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                          width: MediaQuery.of(context).size.width,
+                          padding: const EdgeInsets.all(15),color: Colors.grey[200], child: const Text('Trier par prix', textAlign: TextAlign.start, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),)
+                      ),
+                      SizedBox(
+                        height: (60 * selectionsPrice.length).toDouble(),
                         child: Padding(
                           padding: const EdgeInsets.only(left: 0.0, right: 15),
                           child: ListView.builder(
@@ -156,18 +222,17 @@ class _ProductFoundFilterState extends State<ProductFoundFilter> {
                             itemBuilder: (BuildContext context, int index) {
                               return RadioListTile<int>(
                                 value: index,
-                                groupValue: groupValue,
+                                groupValue: priceFilter,
                                 toggleable: true,
-                                title: Text(selections[index]),
+                                title: Text(selectionsPrice[index]),
                                 onChanged: (int? value) {
                                   setState(() {
-                                    print(value);
-                                    groupValue = value;
+                                    priceFilter = value;
                                   });
                                 },
                               );
                             },
-                            itemCount: selections.length,
+                            itemCount: selectionsPrice.length,
                           ),
                         ),
                       ),
@@ -177,7 +242,7 @@ class _ProductFoundFilterState extends State<ProductFoundFilter> {
 
                   Container(
                       width: MediaQuery.of(context).size.width,
-                      padding: EdgeInsets.all(15),color: Colors.grey[200], child: Text('Secteurs', textAlign: TextAlign.start, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),)
+                      padding: EdgeInsets.all(15),color: Colors.grey[200], child: Text('Secteurs', textAlign: TextAlign.start, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),)
                   ),
                   Container(
                     // color: Colors.grey[200],
@@ -199,7 +264,7 @@ class _ProductFoundFilterState extends State<ProductFoundFilter> {
                       },
                     ),
                   ),
-                  SizedBox(height: 10,),
+                  const SizedBox(height: 10,),
                   //LOCALISATION
 
 

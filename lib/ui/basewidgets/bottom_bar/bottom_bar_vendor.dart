@@ -14,13 +14,13 @@ class BottomBarVendor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 50,
+      height: 60,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           //whatSapp
           SizedBox(
-            height: 40,
+            height: 35,
             child: ElevatedButton(
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.green),
@@ -32,7 +32,7 @@ class BottomBarVendor extends StatelessWidget {
                   ContactVendor.openWhatsapp(context: context, product: product);
                 }, child: Row(
               children: const [
-                Icon(Icons.whatsapp, size: 25),
+                Icon(Icons.whatsapp, size: 22),
                 SizedBox(width: 5,),
                 Text('WhatsApp', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),),
               ],
@@ -41,7 +41,7 @@ class BottomBarVendor extends StatelessWidget {
 
           //phone call
           SizedBox(
-            height: 40,
+            height: 35,
             child: ElevatedButton(
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.black54),
@@ -50,11 +50,11 @@ class BottomBarVendor extends StatelessWidget {
                     ),)
                 ),
                 onPressed: (){
-                  ContactVendor.openPhone(context: context, number:product.vendor!.phone!);
+                  ContactVendor.openPhone(context: context, number: product.boutique?.vendor?.phone?? '');
 
                 }, child: Row(
               children: const [
-                Icon(Icons.call_outlined, size: 25),
+                Icon(Icons.call_outlined, size: 22),
                 SizedBox(width: 5,),
                 Text('Appel', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),),
               ],
@@ -63,20 +63,20 @@ class BottomBarVendor extends StatelessWidget {
 
           //message
           SizedBox(
-            height: 40,
+            height: 35,
             child: ElevatedButton(
                 style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.black54),
+                    backgroundColor: MaterialStateProperty.all(Colors.blue[900]),
                     shape: MaterialStateProperty.all(RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(50),
                     ),)
                 ),
                 onPressed: (){
-                  ContactVendor.openMessage(context: context, number:product.vendor!.phone!);
+                  ContactVendor.openMessage(context: context, number: product.boutique?.vendor?.phone?? '');
 
                 }, child: Row(
               children: const [
-                Icon(Icons.sms_outlined, size: 25),
+                Icon(Icons.sms_outlined, size: 22),
                 SizedBox(width: 5,),
                 Text('SMS', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),),
               ],

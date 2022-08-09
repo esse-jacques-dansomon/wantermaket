@@ -39,17 +39,20 @@ class _HomeScreenState extends State<HomeScreen> {
   final ScrollController _controller = ScrollController();
 
   Future<void> _loadData() async {
+    Provider.of<AuthProvider>(context, listen: false).verifyIsAuthenticated();
     Provider.of<SliderProvider>(context, listen: false).getHomeSliders();
     Provider.of<BoutiqueProvider>(context, listen: false).getBoutiquesExclusives();
     Provider.of<CategoryProvider>(context, listen: false).getCategories();
     Provider.of<ProductProvider>(context, listen: false).getTopAnnonces();
     Provider.of<ProductProvider>(context, listen: false).getDealOfTheDay();
     Provider.of<ProductProvider>(context, listen: false).getNewArrivals();
+
   }
 
   Future<void> _loadDataBoutique() async {
     Provider.of<BoutiqueProvider>(context, listen: false).getBoutiquesExclusives();
     Provider.of<ProductProvider>(context, listen: false).getDealOfTheDay();
+    // Provider.of<AuthProvider>(context, listen: false).verifyIsAuthenticated();
     Provider.of<ProductProvider>(context, listen: false).getNewArrivals(reload: true);
 
   }
@@ -68,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
       provisional: false,
     );
     //_messaging.subscribeToTopic('all');
-    _messaging.getToken().then((token) => print(token));
+    // _messaging.getToken().then((token) => print(token));
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
       print('AuthorizationStatus.authorized');
@@ -80,7 +83,6 @@ class _HomeScreenState extends State<HomeScreen> {
           dataBody: message.data['body'],
           dataTitle: message.data['title'],
         );
-        print('j ai une notification');
 
             setState(() {
               _notificationInfo = notification;

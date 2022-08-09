@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../../config/app_colors.dart';
-import '../../../../route/routes.dart';
 
 class TitleAndMoreText extends StatelessWidget {
   final String moreText;
