@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:connectivity_wrapper/connectivity_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:provider/provider.dart';
@@ -33,7 +32,7 @@ class MyHttpOverrides extends HttpOverrides{
 
 Future<void> main() async {
 
-  // HttpOverrides.global = MyHttpOverrides();
+  HttpOverrides.global = MyHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
   await di.init();
     runApp(MultiProvider(

@@ -44,9 +44,20 @@ class PlanItem extends StatelessWidget {
                 child: Center(child:  Text(plan.name!, style: const TextStyle(fontSize: 22, color: AppColors.WHITE),)),
               ),
               Container(
+                padding: const EdgeInsets.only(bottom: 5, top: 15),
+                alignment: Alignment.center,
+                child: Text("${plan.price ?? '0'} / FCFA", style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold, color: Colors.black),),
+              ),
+              Divider(color: AppColors.SECONDARY,),
+              Container(
                 alignment: Alignment.topLeft,
-                padding: const EdgeInsets.fromLTRB(25, 25, 15, 25),
-                child: Column(
+                padding: const EdgeInsets.fromLTRB(25, 10, 15, 25),
+                child: plan.name=="Ecommerce"?
+                Container(
+                    padding: const EdgeInsets.only(left: 20, right: 25),
+                    child: Text(plan.description ?? "Pas de description",
+                      style: const TextStyle(fontSize: 18, color: AppColors.BLACK, fontWeight: FontWeight.bold),))
+                    :Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children:  [
                     Text('* Validité : ${plan.validite} jours', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),

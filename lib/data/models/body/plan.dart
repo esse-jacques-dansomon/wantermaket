@@ -17,6 +17,8 @@ class Plan {
     this.banner,
     this.nbrDeal,
     this.nbrProduit,
+    this.price,
+    this.description,
   });
 
   int? id;
@@ -26,6 +28,8 @@ class Plan {
   int? banner;
   int? nbrDeal;
   int? nbrProduit;
+  int? price;
+  String ? description;
 
   factory Plan.fromJson(Map<String, dynamic> json) => Plan(
     id: json["id"],
@@ -35,6 +39,8 @@ class Plan {
     banner: json["banner"],
     nbrDeal: json["nbr_deal"],
     nbrProduit: json["nbr_produit"],
+    price: json["price"],
+    description: json["description"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -45,5 +51,7 @@ class Plan {
     "banner": banner,
     "nbr_deal": nbrDeal,
     "nbr_produit": nbrProduit,
+    "price": nbrDeal,
+    "description": nbrProduit,
   };
 }
