@@ -20,19 +20,26 @@ class BecomeExclusiveScreen extends StatefulWidget {
 }
 
 class _BecomeExclusiveScreenState extends State<BecomeExclusiveScreen> {
-  final Completer<WebViewController> _controller =
-  Completer<WebViewController>();
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     if (Platform.isAndroid) WebView.platform = AndroidWebView();
+    Provider.of<PaymentProvider>(context, listen: false).paymentLinkStatus = PaymentLinkStatus.initial;
   }
 
   void _launchPayTechPaymentUrl() async {
     final paymentProvider = Provider.of<PaymentProvider>(context, listen: false);
     await paymentProvider.getBecameExclusiveLink().then((url) async {
-      await (Navigator.push(context, MaterialPageRoute(builder: (context) =>  PayTechApiPaymentScreen( initialUrl : url)),) );
+      if(url != "" )
+        {
+          await (Navigator.push(context, MaterialPageRoute(builder: (context) =>  PayTechApiPaymentScreen( initialUrl : url)),) );
+
+        }else{
+          print("url is empty");
+        }
+
     });
 
 
@@ -41,42 +48,52 @@ class _BecomeExclusiveScreenState extends State<BecomeExclusiveScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-          appBar: appBarWithReturn(title: 'Devenir Exclusive', context: context),
-          body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children:  [
-                  const Text('Devenez Exclusive', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold,color: AppColors.BLACK),),
-                  const SizedBox(height: 20,),
-                  const Text('Envoyez votre demande pour passez exclusive. Notre equipe va prendre un certain temps pour traiter votre demande. ', textAlign: TextAlign.center, style: const TextStyle(fontSize: AppDimensions.FONT_SIZE_DEFAULT+3, fontWeight: FontWeight.bold,color: Colors.grey),),
-                  const SizedBox(height: 20,),
-                  const Text('50.000 F CFA / 30 jours', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: AppColors.BLACK),),
-                  const SizedBox(height: 20,),
-                  Consumer<PaymentProvider>(
-                    builder: (context, paymentProvider, child){
-                       switch(paymentProvider.paymentLinkStatus){
-                         case PaymentLinkStatus.loading:
-                           return const CircularProgressIndicator();
-                         case PaymentLinkStatus.initial:
-                         case PaymentLinkStatus.loaded:
-                           return  ElevatedButton(
-                               style: ButtonStyle(backgroundColor: MaterialStateProperty.all(AppColors.PRIMARY)),
-                               onPressed: (){
-                                 _launchPayTechPaymentUrl();
-                               },
-                               child: const Text('   Envoyer la demande  '));
-                        case PaymentLinkStatus.error:
-                          return const Text('Erreur');
-                       }
-                    },
-                  )
-                ],
-              ),
+        appBar: appBarWithReturn(title: 'Devenir Exclusive', context: context),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children:  [
+                const Text('Devenez Exclusive', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold,color: AppColors.BLACK),),
+                const SizedBox(height: 20,),
+                const Text('Envoyez votre demande pour passez exclusive. Notre equipe va prendre un certain temps pour traiter votre demande. ', textAlign: TextAlign.center, style: const TextStyle(fontSize: AppDimensions.FONT_SIZE_DEFAULT+3, fontWeight: FontWeight.bold,color: Colors.grey),),
+                const SizedBox(height: 20,),
+                const Text('50.000 F CFA / 30 jours', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: AppColors.BLACK),),
+                const SizedBox(height: 20,),
+                Consumer<PaymentProvider>(
+                  builder: (context, paymentProvider, child){
+                    switch(paymentProvider.paymentLinkStatus){
+                      case PaymentLinkStatus.loading:
+                        return const CircularProgressIndicator();
+                      case PaymentLinkStatus.initial:
+                      case PaymentLinkStatus.loaded:
+                        return  ElevatedButton(
+                            style: ButtonStyle(backgroundColor: MaterialStateProperty.all(AppColors.PRIMARY)),
+                            onPressed: (){
+                              _launchPayTechPaymentUrl();
+                            },
+                            child: const Text('   Envoyer la demande  '));
+                      case PaymentLinkStatus.error:
+                        return Column(
+                          children: [
+                            const Text('Erreur'),
+                            ElevatedButton(
+                                style: ButtonStyle(backgroundColor: MaterialStateProperty.all(AppColors.PRIMARY)),
+                                onPressed: (){
+                                  _launchPayTechPaymentUrl();
+                                },
+                                child: const Text('   Envoyer une nouvelle demande  ')),
+                          ],
+                        );
+                    }
+                  },
+                )
+              ],
             ),
-          )
+          ),
+        )
     );
   }
 }

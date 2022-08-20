@@ -65,6 +65,25 @@ class LoginScreen extends StatelessWidget {
                     //form
                     const LoginFormWidget(),
 
+                    Container(
+                      padding: const EdgeInsets.only(bottom: 30, top: 30),
+                      width: double.infinity,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text('Mot de passe oublié  ?', style: TextStyle(color: Colors.grey, fontSize: 16),),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          InkWell(
+                            child: const Text('Cliquez ici', style: TextStyle(color: AppColors.PRIMARY, fontSize: 16, fontWeight: FontWeight.bold),),
+                            onTap: (){
+                              Navigator.of(context).popAndPushNamed(AppRoutes.forgotPassword);
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
                     Expanded(child: Container(),),
                     //bottom
                     Container(

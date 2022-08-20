@@ -1,8 +1,10 @@
 import 'dart:convert';
 
+import 'package:wantermarket/data/models/body/subCategory.dart';
 import 'package:wantermarket/data/models/body/vendor.dart';
 
 import 'boutique.dart';
+import 'category.dart';
 import 'image.dart';
 
 
@@ -24,21 +26,27 @@ class Product {
   List<Image>? images;
 
   Boutique? boutique;
+  Category? categorie;
+  SousCategorie? sousCategorie;
+
 
 
   Product(
       {this.id,
-      this.code,
-      this.idBoutique,
-      this.idCategorie,
-      this.name,
-      this.descriptionBrief,
-      this.price,
-      this.priceBefore,
-      this.disponibility,
-      this.nombre_vues,
-      this.images,
-      this.boutique
+        this.code,
+        this.idBoutique,
+        this.idCategorie,
+        this.name,
+        this.descriptionBrief,
+        this.price,
+        this.priceBefore,
+        this.disponibility,
+        this.nombre_vues,
+        this.images,
+
+        this.boutique,
+        this.categorie,
+        this.sousCategorie
       });
 
   Product.fromJson(Map<String, dynamic> json) {
@@ -53,6 +61,8 @@ class Product {
     nombre_vues = json['nombre_vues'];
     disponibility = json['disponibility']??true;
     boutique = json['boutique'] != null ? Boutique.fromJson(json['boutique']) : null;
+    categorie = json['categorie'] != null ? Category.fromJson(json['categorie']) : null;
+    sousCategorie = json['sous_categorie'] != null ? SousCategorie.fromJson(json['sous_categorie']) : null;
     if (json['images'] != null) {
       images = <Image>[];
       json['images'].forEach((v) {

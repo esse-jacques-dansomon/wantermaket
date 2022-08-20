@@ -33,6 +33,7 @@ class PaymentProvider extends ChangeNotifier {
     final response = await paymentRepo.getBecameExclusiveLink();
     if (response.error == null) {
       paymentLinkStatus = PaymentLinkStatus.loaded;
+      print(response.response.data);
       notifyListeners();
       return response.response.data['url'];
     } else {

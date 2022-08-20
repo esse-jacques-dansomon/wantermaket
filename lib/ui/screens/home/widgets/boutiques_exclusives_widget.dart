@@ -18,7 +18,7 @@ class BoutiquesExclusives extends StatelessWidget {
           children: [
             // const TitleAndMoreText( title: 'Boutique Exlusives', moreText: 'Voir tous', widget:  SecteurScreen()),
             Container(
-              height: 165,
+              height: 147,
               margin: const EdgeInsets.only(left: 15, right: 15),
               child: ListView.separated(
                 itemCount: boutiqueExclusiveProvider.boutiquesExclusives.length,

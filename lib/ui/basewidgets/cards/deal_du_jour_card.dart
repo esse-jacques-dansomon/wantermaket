@@ -17,6 +17,7 @@ class DealDuJour extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        Navigator.pushNamed(context, AppRoutes.product, arguments: product);
 
       },
       child: SizedBox(
@@ -53,7 +54,7 @@ class DealDuJour extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(5),
                               ),
                               child: const Center(
-                                child: Text('En promotion -10%', textAlign: TextAlign.start,
+                                child: Text('En Promo -10%', textAlign: TextAlign.start,
                                   style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.w500,

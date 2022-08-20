@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:wantermarket/shared/contact_vendor.dart';
 
 import '../../../config/app_images.dart';
 import '../../../data/models/body/boutique.dart';
@@ -60,20 +61,26 @@ class BoutiqueCardBySecteur extends StatelessWidget {
                     //call button
                     IconButton(
                       icon: const Icon(Icons.call, color: Colors.green,),
-                      onPressed: (){},
+                      onPressed: (){
+                        ContactVendor.openPhone(context: context, number: boutique.vendor!.phone!);
+                      },
                     ),
 
                     //whatsapp button
                     IconButton(
                       icon: const Icon(Icons.whatsapp, color: Colors.green,),
-                      onPressed: (){},
+                      onPressed: (){
+                        ContactVendor.openWhatsappVendor(context: context, vendor: boutique.vendor!);
+                      },
                     ),
 
                     //gps button
                     //message button
                     IconButton(
                       icon: const Icon(Icons.location_on_outlined, color: Colors.grey,),
-                      onPressed: (){},
+                      onPressed: (){
+                        ContactVendor.launchMaps(boutique);
+                      },
                     ),
                   ]
                 )

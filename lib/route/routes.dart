@@ -7,6 +7,7 @@ import 'package:wantermarket/ui/screens/abonnement/abonnement_screen.dart';
 import 'package:wantermarket/ui/screens/add_product/add_product_screen.dart';
 import 'package:wantermarket/ui/screens/auth/edit_profil_screen.dart';
 import 'package:wantermarket/ui/screens/auth/forgot_password_screen.dart';
+import 'package:wantermarket/ui/screens/auth/otp_screen.dart';
 import 'package:wantermarket/ui/screens/auth/reset_password_screen.dart';
 import 'package:wantermarket/ui/screens/become_exclusive/become_exclusive.dart';
 import 'package:wantermarket/ui/screens/boutique_details/boutique_details_screen.dart';
@@ -38,6 +39,7 @@ class AppRoutes {
   static const String splash = '/';
   static const String forgotPassword = '/forgot_password';
   static const String resetPassword = '/reset_password';
+  static const String otp = '/otp';
   static const String profile = '/profile';
   static const String editProfile = '/edit_profile';
   static const String search = '/search';
@@ -55,9 +57,6 @@ class AppRoutes {
   static const String favoritesBoutiques = '/boutique_favories';
   static const String abonnements = '/abonnements';
   static const String noInternet = '/no-internet';
-
-
-
 
 
   static Route<dynamic> onGenerateRoute(RouteSettings settings){
@@ -125,8 +124,11 @@ class AppRoutes {
         return MaterialPageRoute(builder: (context) => const ForgotPasswordFromScreen());
       case resetPassword:
         return MaterialPageRoute(builder: (context) => const ResetPasswordFromScreen());
+      case otp:
+        final email = settings.arguments as String;
+        return MaterialPageRoute(builder: (context) =>  OtpScreen(email: email,));
       case becomeExclusive:
-        return MaterialPageRoute(builder: (context) =>  BecomeExclusiveScreen());
+        return MaterialPageRoute(builder: (context) => const BecomeExclusiveScreen());
       case noInternet:
         return MaterialPageRoute(builder: (context) => const NoInternetScreen());
       default:

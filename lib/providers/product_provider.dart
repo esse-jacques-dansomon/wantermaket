@@ -76,12 +76,14 @@ class ProductProvider extends ChangeNotifier{
 
 
 
-  Future<void> getRelatedProducts(int categoryId) async {
+  Future<void> getRelatedProducts(int categoryId, int productId) async {
     final newArrivalsResponse = await productsRepo.getRelatedProducts(categoryId);
     if(newArrivalsResponse.error == null ){
       relatedProducts.clear();
       newArrivalsResponse.response.data['data'].forEach((element) {
-        relatedProducts.add(Product.fromJson(element));
+        if(element['id'] != productId){
+          relatedProducts.add(Product.fromJson(element));
+        }
       });
       notifyListeners();
     }

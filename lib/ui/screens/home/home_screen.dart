@@ -3,7 +3,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:provider/provider.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:wantermarket/config/app_colors.dart';
 import 'package:wantermarket/providers/auth_provider.dart';
 import 'package:wantermarket/providers/boutique_provider.dart';
@@ -244,7 +243,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 //banner image
                 Padding(
-                  padding: const EdgeInsets.only(top: 30.0, ),
+                  padding: const EdgeInsets.only(top: 30.0, bottom: 10 ),
                   child: Container(
                     height: 170,
                     decoration: BoxDecoration(
@@ -274,8 +273,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 //load more
                 const SizedBox(height: 10),
 
-                Provider.of<ProductProvider>(context, listen: true).isPaginationLoading ? const Center(child: CircularProgressIndicator(),) : const SizedBox(),
-
+                Provider.of<ProductProvider>(context, listen: true).isPaginationLoading ? const Center(child: CircularProgressIndicator(),) :  SizedBox(height: 10),
 
               ],
             ) ,
@@ -307,7 +305,6 @@ class LoaderWidget extends StatelessWidget {
             ),
             const SizedBox(height: 30),
             const CircularProgressIndicator(),
-            const SizedBox(height: 100),
 
           ],
         ),

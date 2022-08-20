@@ -21,7 +21,7 @@ class ProductDetailsScreen extends StatefulWidget {
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   Future<void> _loadData() async {
-    Provider.of<ProductProvider>(context, listen: false).getRelatedProducts(widget.product.idCategorie!);
+    Provider.of<ProductProvider>(context, listen: false).getRelatedProducts(widget.product.idCategorie!, widget.product.id!);
     if(Provider.of<VendorProvider>(context, listen: false).boutique.id != widget.product.idBoutique) {
       Provider.of<VendorProvider>(context, listen: false).incrementProductView(widget.product.id!);
     }

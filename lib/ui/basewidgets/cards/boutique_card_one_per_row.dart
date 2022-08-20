@@ -5,6 +5,7 @@ import 'package:wantermarket/config/app_colors.dart';
 
 import '../../../data/models/body/boutique.dart';
 import '../../../route/routes.dart';
+import '../../../shared/contact_vendor.dart';
 
 class BoutiqueCardBySecteurOnePerRow extends StatelessWidget {
   final Boutique boutique;
@@ -68,20 +69,26 @@ class BoutiqueCardBySecteurOnePerRow extends StatelessWidget {
                         //call button
                         IconButton(
                           icon: Icon(Icons.call, color: Colors.green,),
-                          onPressed: (){},
+                          onPressed: (){
+                            ContactVendor.openPhone(context: context, number: boutique.vendor!.phone!);
+                          },
                         ),
 
                         //whatsapp button
                         IconButton(
                           icon: Icon(Icons.whatsapp, color: Colors.green,),
-                          onPressed: (){},
+                          onPressed: (){
+                            ContactVendor.openWhatsappVendor(context: context, vendor: boutique.vendor!);
+                          },
                         ),
 
                         //gps button
                         //message button
                         IconButton(
                           icon: Icon(Icons.gps_fixed, color: Colors.grey,),
-                          onPressed: (){},
+                          onPressed: (){
+                            ContactVendor.launchMaps(boutique);
+                          },
                         ),
                       ]
                     )

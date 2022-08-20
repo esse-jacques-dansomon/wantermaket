@@ -20,7 +20,7 @@ class TopBoutiquesWidget extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(left: 15.0, right: 15.0),
           child: SizedBox(
-            height: 340,
+            height: 310,
             child: Consumer<BoutiqueProvider>(
               builder: (context, boutiqueProvider, child){
                 return GridView.builder(
@@ -33,7 +33,7 @@ class TopBoutiquesWidget extends StatelessWidget {
                     crossAxisSpacing: 10,
                     mainAxisSpacing: 10,
                     childAspectRatio: 1,
-                    mainAxisExtent: 150,
+                    mainAxisExtent: 140,
                   ),
                 );
               }

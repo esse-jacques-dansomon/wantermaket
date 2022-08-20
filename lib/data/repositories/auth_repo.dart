@@ -30,7 +30,6 @@ class AuthRepo {
   }
 
   Future<ApiResponse> resetPassword(ResetPasswordModel passwordModel) async {
-
     try {
       final response = await dioClient.post(AppConstants.RESET_PASSWORD_URI, data: passwordModel.toJson());
       return ApiResponse.withSuccess(response);
@@ -49,6 +48,30 @@ class AuthRepo {
     }
   }
 
+
+  Future<ApiResponse>  forgotPassword(String email) async {
+    try {
+      final response = await dioClient.post(AppConstants.PASSWORD_FORGOT_URI, data: {
+        "email": email
+      });
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e.toString()));
+    }
+  }  Future<ApiResponse>  verifyOtp(String email,String otp) async {
+    try {
+
+      final response = await dioClient.post(AppConstants.PASSWORD_OTP_URI, data: {
+        "email": email,
+        "otp": otp
+      });
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e.toString()));
+    }
+  }
+
+
   Future<ApiResponse> editProfile(EditProfileModel editProfileModel) async {
     try {
       final response = await dioClient.post(AppConstants.VENDOR_BOUTIQUE_URI, data: editProfileModel.toJson());
@@ -57,6 +80,7 @@ class AuthRepo {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e.toString()));
     }
   }
+
 
   Future<ApiResponse> logout() async {
     try {
@@ -168,6 +192,8 @@ class AuthRepo {
       throw e;
     }
   }
+
+
 
 }
 

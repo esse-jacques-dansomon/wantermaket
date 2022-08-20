@@ -21,9 +21,13 @@ class AppConstants {
   static const String TOP_CATEGORIES_URI = '/categorie/top';
   static const String BOUTIQUES_EXCLUSIVES = '/boutique/exclusive';
   static const String PLANS_URI = '/plans';
+
+  //AUTH
   static const String SEARCH_URI = '/search';
   static const String LOGIN_URI = '/login';
   static const String RESET_PASSWORD_URI = '/password/update';
+  static const String PASSWORD_FORGOT_URI = '/password/forget';
+  static const String PASSWORD_OTP_URI = '/password/otp/verif';
   static const String LOGOUT = '/logout';
   static const String USER_CONNECTED_INFO = '/verify';
   static const String TOKEN_URI = '/store/usertoken';

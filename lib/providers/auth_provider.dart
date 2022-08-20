@@ -60,9 +60,6 @@ class AuthProvider extends ChangeNotifier {
         user = LoginReponse.fromJson(response.response.data);
         notifyListeners();
       }else{
-        print(' erreurs');
-
-        print(response.error.toString());
         _isLoadingRegister = false;
         notifyListeners();
         ScaffoldMessenger.of(context).showSnackBar( SnackBar(content: Text('${response.error.toString()}', style: TextStyle(color: Colors.white)), backgroundColor: Colors.red));
@@ -78,12 +75,16 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<bool> editProfile(EditProfileModel editProfileModel) async {
-    print(editProfileModel.toJson());
+    _isLoadingRegister = true;
+    notifyListeners();
     final response = await authRepo.editProfile(editProfileModel);
-    print(response.response.statusCode);
      if(response.error == null){
+       _isLoadingRegister = false;
+       notifyListeners();
       return true;
      }else {
+       _isLoadingRegister = false;
+       notifyListeners();
       return false;
      }
   }
@@ -95,6 +96,32 @@ class AuthProvider extends ChangeNotifier {
     _isLoading = false;
     notifyListeners();
     print(response.response.statusCode);
+    if(response.error == null){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  Future<bool> forgotPassword(String email) async {
+    _isLoading =  true;
+    notifyListeners();
+    final response = await authRepo.forgotPassword(email);
+    _isLoading = false;
+    notifyListeners();
+    if(response.error == null){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  Future<bool> verifyOpt(String email, String otp) async {
+    _isLoading =  true;
+    notifyListeners();
+    final response = await authRepo.verifyOtp(email, otp);
+    _isLoading = false;
+    notifyListeners();
     if(response.error == null){
       return true;
     }else{
@@ -131,6 +158,7 @@ class AuthProvider extends ChangeNotifier {
     // ApiChecker.checkApi(context, apiResponse);
 
   }
+
   Future<void> verifyIsAuthenticated() async {
     try{
       final response0 = await authRepo.getUserConnectedInfo();
@@ -173,7 +201,6 @@ class AuthProvider extends ChangeNotifier {
   bool isLoggedIn() {
     return authRepo.isLoggedIn();
   }
-
 
 
 

@@ -18,6 +18,8 @@ class VendorProvider extends ChangeNotifier {
   VendorProvider( {required this.vendorRepo, required this.sharedPreferences});
 
   bool isLoaded= false;
+  bool isUpdateBoutiqueLoading= false;
+
   Boutique _boutique = Boutique();
   Boutique get boutique => _boutique;
 
@@ -81,6 +83,8 @@ class VendorProvider extends ChangeNotifier {
   }
 
   Future<bool> updateBoutique(BoutiqueUpdateModel boutiqueUpdateModel, List<File> files) async {
+    this.isUpdateBoutiqueLoading = true;
+    notifyListeners();
     FormData data = FormData.fromMap(boutiqueUpdateModel.toJson(), ListFormat.multiCompatible);
     try{
       if(files.isNotEmpty){
@@ -92,12 +96,17 @@ class VendorProvider extends ChangeNotifier {
       var reponse = await vendorRepo.updateBoutique(data);
       if(reponse.error == null){
         getBoutique();
+        this.isUpdateBoutiqueLoading = false;
         notifyListeners();
         return true;
       }else{
+        this.isUpdateBoutiqueLoading = false;
+        notifyListeners();
         throw Exception("Erreur lors de la mise à jour de la boutique");
       }
     }catch(e){
+      this.isUpdateBoutiqueLoading = false;
+      notifyListeners();
       throw Exception("Erreur lors de la mise à jour de la boutique");
     }
 

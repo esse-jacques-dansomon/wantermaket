@@ -18,7 +18,6 @@ import '../../../../data/models/body/category.dart';
 import '../../../../data/models/body/product.dart';
 import '../../../../data/models/body/product_crud_model.dart';
 import '../../../../providers/category_provider.dart';
-import '../../../../shared/contact_vendor.dart';
 import '../../home/home_screen.dart';
 
 class ProductAddForm extends StatefulWidget {
@@ -49,11 +48,6 @@ class _ProductAddFormState extends State<ProductAddForm> {
 
   @override
   void initState() {
-    // TODO: implement initState
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   ContactVendor.showCanAddProductDialog(context);
-    //
-    // });
     super.initState();
 
     _nameNode = FocusNode();
@@ -63,17 +57,26 @@ class _ProductAddFormState extends State<ProductAddForm> {
     _categoryNode = FocusNode();
     _subCategoryNode = FocusNode();
     _categories = Provider.of<CategoryProvider>(context, listen: false).categories;
+    if(widget.product?.categorie != null){
+      _selectedCategory = _categories.firstWhere((element) => element.id == widget.product?.categorie?.id);
+    }else{
+      _selectedCategory = _categories.first;
+    }
     _nomProductController.text = widget.product?.name ?? '';
     _descriptionProductController.text = widget.product?.descriptionBrief ?? '';
     _priceProductController.text = widget.product?.price?.toString() ?? '';
     _priceBeforeProductController.text = widget.product?.priceBefore?.toString() ?? '' ;
-    _selectedCategory = _categories.first;
     Provider.of<CategoryProviderDetails>(context, listen: false).getSubCategoriesOfCategory(_selectedCategory!.id!).then((value){
       setState(() {
         _subCategories = Provider.of<CategoryProviderDetails>(context, listen: false).souscategories;
-        _selectedSubCategory = _subCategories.first;
+        if(widget.product?.categorie != null){
+          _selectedSubCategory = _subCategories.firstWhere((element) => element.id == widget.product?.sousCategorie?.id);
+        }else{
+          _selectedSubCategory = _subCategories.first;
+        }
       });
     });
+
 
 
   }
@@ -259,8 +262,11 @@ class _ProductAddFormState extends State<ProductAddForm> {
 
             //submit button
             const SizedBox(height: 15,),
+            Provider.of<CrudProductProvider>(context, listen: true).isLoading ?const Center(child: CircularProgressIndicator()) :
             ElevatedButton(
-              child: Provider.of<CrudProductProvider>(context, listen: true).isLoading ? const LoaderWidget() : SizedBox(height: 45, width: double.infinity, child:  Center(child: Text(widget.product == null ? 'Ajouter Le produit' : 'Envoyer les modifications', style: const TextStyle(fontSize: AppDimensions.FONT_SIZE_LARGE, fontWeight: FontWeight.bold),),),),
+              child : SizedBox(height: 45, width: double.infinity, child:
+              Center(child: Text(widget.product == null ? 'Ajouter Le produit' : 'Envoyer les modifications',
+                style: const TextStyle(fontSize: AppDimensions.FONT_SIZE_LARGE, fontWeight: FontWeight.bold),),),),
               onPressed: () {
                 if (key.currentState!.validate()) {
                   key.currentState?.save();
@@ -285,7 +291,6 @@ class _ProductAddFormState extends State<ProductAddForm> {
                       );
                     }else{
                       addProduct(productCrudModel, image!, image_level_2, image_level_3);
-                      print(productCrudModel.toJson());
                     }
                   }else{
                     upDateProduct(widget.product!.id!, productCrudModel, image, image_level_2, image_level_3);
@@ -489,18 +494,18 @@ class _ProductAddFormState extends State<ProductAddForm> {
             ),
           ))
               .toList(),
-          value: _selectedCategory,
+          value:   _selectedCategory,
           onChanged: (value) {
             setState(() {
               _selectedCategory = value as Category;
-              _selectedSubCategory = null;
-
               Provider.of<CategoryProviderDetails>(context, listen: false).getSubCategoriesOfCategoryDp(value.id!, _subCategories).then((value) => setState(() {
                  if(value.isEmpty){
-                  _subCategories.add(SousCategorie(id: 0, name: "Aucune sous categorie"));
-                }
-                 _subCategories = value;
-                 _selectedSubCategory = _subCategories.first;
+                  _subCategories.add(SousCategorie(id: 0, name: "Pas de Sous categorie",imagePath: ""));
+                  _categories.add(Category(id: 0, name: "Pas de categorie",imagePath: ""));
+                }else{
+                  _subCategories = value;
+                   _selectedSubCategory = _subCategories.first;
+                 }
 
                }));
             });
@@ -546,6 +551,7 @@ class _ProductAddFormState extends State<ProductAddForm> {
         width: MediaQuery.of(context).size.width,
         margin: const EdgeInsets.only(top: 10),
         child: DropdownButton2(
+          focusNode: _subCategoryNode,
           isExpanded: true,
           hint: Row(
             children: const [

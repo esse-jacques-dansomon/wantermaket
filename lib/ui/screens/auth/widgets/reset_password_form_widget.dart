@@ -43,8 +43,10 @@ class _ResetPasswordFromWidgetState extends State<ResetPasswordFromWidget> {
         SizedBox(
           child: TextFormField(
             validator: (value) {
-              if (value!.isEmpty) {
+              if (value!.isEmpty ) {
                 return 'Entrer un mot de passe';
+              }else if(value.length < 6){
+                return 'Le mot de passe doit contenir au moins 6 caractères';
               }
               return null;
             },
@@ -170,24 +172,13 @@ class _ResetPasswordFromWidgetState extends State<ResetPasswordFromWidget> {
 
 
 
-
-  void displayDialog(BuildContext context, String title, String text) =>
-      showDialog(
-        context: context,
-        builder: (context) =>
-            AlertDialog(
-              title: Text(title, textAlign: TextAlign.center),
-              content: Text(text, textAlign: TextAlign.center, ),
-            ),
-      );
-
   void _resetPassword(ResetPasswordModel model, BuildContext context) async {
     Provider.of<AuthProvider>(context, listen: false).resetPassword(model).then((value) {
       if(value){
-        AppHelper.showInfoFlushBar(context,  'Votre mot de passe a été réinitialisé avec succès');
         Navigator.of(context).pushNamed(AppRoutes.profile);
+        AppHelper.showInfoFlushBar(context,  'Votre mot de passe a été réinitialisé avec succès');
       }else{
-        AppHelper.showInfoFlushBar(context,  'Une erreur s\'est produite',color: Colors.red);
+        AppHelper.showInfoFlushBar(context,  'Veuillez verifier votre mot de passe',color: Colors.red);
       }
     });
 
@@ -223,7 +214,6 @@ class _ResetPasswordFromWidgetState extends State<ResetPasswordFromWidget> {
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(AppColors.PRIMARY),),
                 onPressed: (){
-                  print("$_oldPassword, $_password, $_passwordConfirmed");
                   if(_formKey.currentState!.validate()){
                     _formKey.currentState!.save();
                     if(_password!=_passwordConfirmed){

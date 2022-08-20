@@ -124,7 +124,6 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
     return Container(
       margin: const EdgeInsets.only(bottom: 25),
       child: TextFormField(
-        initialValue: 'gato junior',
         validator: (value) {
           if (value!.isEmpty) {
             return 'Veuillez entre votre nom';
@@ -150,7 +149,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
               color: Colors.black,
             ),
           ),
-          hintText: 'Votre nom',
+          hintText: 'Nom',
           hintStyle: const TextStyle(color: AppColors.PRIMARY),
         ),
         focusNode: _usernameNode,
@@ -161,7 +160,6 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
     return Container(
       margin: const EdgeInsets.only(bottom: 25),
       child: TextFormField(
-        initialValue: 'gato junior',
         validator: (value) {
           if (value!.isEmpty) {
             return 'Veuillez entre votre prenom';
@@ -187,7 +185,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
               color: Colors.black,
             ),
           ),
-          hintText: 'Votre prenon',
+          hintText: 'Prenon',
           hintStyle: const TextStyle(color: AppColors.PRIMARY),
         ),
         focusNode: _firstnameNode,
@@ -199,7 +197,6 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
 
       margin: const EdgeInsets.only(bottom: 25),
       child: TextFormField(
-        initialValue: 'gato junior',
         validator: (value) {
           if (value!.isEmpty) {
             return 'Veuillez entre le nom de votre boutique';
@@ -236,7 +233,6 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
     return Container(
       margin: const EdgeInsets.only(bottom: 25),
       child: TextFormField(
-        initialValue: "gato junior",
         validator: (value) {
           if (value!.isEmpty) {
             return 'Veuillez entre votre adresse';
@@ -262,7 +258,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
               color: Colors.black,
             ),
           ),
-          hintText: 'Votre Adresse',
+          hintText: 'Adresse',
           hintStyle: const TextStyle(color: AppColors.PRIMARY),
         ),
         focusNode: _addressNode,
@@ -273,7 +269,6 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
     return Container(
       margin: const EdgeInsets.only(bottom: 25),
         child: TextFormField(
-          initialValue: '123456',
         validator: (value) {
           if (value!.isEmpty) {
             return 'Veuillez entrer un mot de passe';
@@ -291,7 +286,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
           _confirmedpasswordNode!.requestFocus();
         },
         decoration:  InputDecoration(
-          hintText: 'Password',
+          hintText: 'Mot de Passe',
           hintStyle: const TextStyle(color: AppColors.PRIMARY),
           suffixIcon: GestureDetector(
             onTap: () {
@@ -325,7 +320,6 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
       margin: const EdgeInsets.only(bottom: 25),
 
       child: TextFormField(
-        initialValue: '123456',
         validator: (value) {
           if (value!.isEmpty ) {
             return 'Veuillez confirmer votre mot de passe';
@@ -372,7 +366,6 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
     return Container(
       margin: const EdgeInsets.only(bottom: 25),
       child: TextFormField(
-        initialValue: '1@1.com',
         validator: (value) {
           if (value!.isEmpty) {
             return 'Veuillez entrer un email';

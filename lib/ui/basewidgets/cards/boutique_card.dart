@@ -1,11 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:wantermarket/config/app_constantes.dart';
 
 import '../../../data/models/body/boutique.dart';
 import '../../../route/routes.dart';
-import '../../screens/boutique_details/boutique_details_screen.dart';
 
 class BoutiqueCard extends StatelessWidget {
   final Boutique boutique;
@@ -26,7 +24,7 @@ class BoutiqueCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
                SizedBox(
-                width: 115,
+                width: 105,
                 child: Padding(
                   padding: const EdgeInsets.only( left: 5),
                   child: Text(boutique.name!.toUpperCase(),overflow: TextOverflow.ellipsis, textAlign: TextAlign.center,
@@ -37,7 +35,8 @@ class BoutiqueCard extends StatelessWidget {
               ),
               const SizedBox(height: 8,),
               SizedBox(
-                width: 112,
+                width: 90,
+                height: 90,
                 child: CachedNetworkImage(
                     imageUrl: boutique.profilImage!,
                     placeholder: (context, url) =>  Shimmer.fromColors(baseColor: Colors.grey.shade100, highlightColor: Colors.grey.shade100 ,  child: const SizedBox(height: 100,)),

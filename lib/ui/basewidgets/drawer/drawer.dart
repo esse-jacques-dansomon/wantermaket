@@ -132,11 +132,11 @@ class _AppDrawerState extends State<AppDrawer> {
             title: Text('Mon compte', style: TextStyle(fontSize: 17, color: Colors.grey[600]),),
           ),
 
-          const DrawerMenuItem(
-            menuName: 'Changer de Mot de Passe',
-            route: AppRoutes.resetPassword,
-            icon: Icons.password_outlined,
-          ),
+          // const DrawerMenuItem(
+          //   menuName: 'Mot de Passe',
+          //   route: AppRoutes.resetPassword,
+          //   icon: Icons.password_outlined,
+          // ),
 
           !Provider.of<AuthProvider>(context, listen: false).isLoggedIn() ?
           Column(
@@ -156,6 +156,11 @@ class _AppDrawerState extends State<AppDrawer> {
 
           :Column(
             children:  [
+              const DrawerMenuItem(
+                menuName: 'Changer de Mot de Passe',
+                route: AppRoutes.resetPassword,
+                icon: Icons.password_outlined,
+              ),
                const DrawerMenuItem(
                 menuName: 'Dévénir exclusive',
                 route: AppRoutes.becomeExclusive,

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:wantermarket/route/routes.dart';
 
 import '../../../../config/app_colors.dart';
+import '../../../../providers/auth_provider.dart';
+import '../../../../shared/app_helper.dart';
 
 class ForgotPasswordFromWidget extends StatefulWidget {
   const ForgotPasswordFromWidget({Key? key}) : super(key: key);
@@ -10,14 +14,23 @@ class ForgotPasswordFromWidget extends StatefulWidget {
 }
 
 class _ForgotPasswordFromWidgetState extends State<ForgotPasswordFromWidget> {
-  bool _obscureText = true;
   String? _email;
-
 
   @override
   void initState() {
     super.initState();
     _email='';
+  }
+
+  void _receiveMail(String mail, BuildContext context) async {
+    Provider.of<AuthProvider>(context, listen: false).forgotPassword(mail).then((value) {
+      if(value){
+        Navigator.of(context).popAndPushNamed(AppRoutes.otp, arguments: _email);
+        AppHelper.showInfoFlushBar(context,  'Un email vous a été envoyé pour réinitialiser votre mot de passe');
+      }else{
+        AppHelper.showInfoFlushBar(context,  'Veuillez vérifir votre mail',color: Colors.red);
+      }
+    });
 
   }
 
@@ -28,44 +41,20 @@ class _ForgotPasswordFromWidgetState extends State<ForgotPasswordFromWidget> {
   }
 
 
-  // Widget _buildPasswordField(){
-  //   return SizedBox(
-  //     child: TextFormField(
-  //       obscureText: _obscureText,
-  //       decoration:  InputDecoration(
-  //         hintText: 'Password',
-  //         hintStyle: const TextStyle(color: AppColors.PRIMARY),
-  //         suffixIcon: GestureDetector(
-  //           onTap: () {
-  //             setState(() {
-  //               _obscureText = !_obscureText;
-  //             });
-  //           },
-  //           child: _obscureText
-  //               ? const Icon(Icons.visibility_off, color: AppColors.PRIMARY)
-  //               : const Icon(Icons.visibility, color: AppColors.PRIMARY),
-  //         ),
-  //         labelStyle: const TextStyle(
-  //             color: Colors.black),
-  //         border: OutlineInputBorder(
-  //           borderRadius: BorderRadius.circular(10),
-  //           borderSide: const BorderSide(
-  //             color: Colors.black,
-  //           ),
-  //         ),
-  //       ),
-  //       onSaved: (value) => _password = value,
-  //       // validator: passwordValidator,
-  //     ),
-  //   );
-  // }
 
   Widget _buildEmailField(){
     return SizedBox(
-      height: 45,
       child: TextFormField(
         onSaved: (value) => _email = value,
         // validator: emailValidator,
+        validator: (value) {
+          if (value!.isEmpty) {
+            return 'Veuillez entrer votre email';
+          }else if(!value.contains('@')){
+            return 'Veuillez entrer un email valide';
+          }
+          return null;
+        },
         textInputAction: TextInputAction.next,
         decoration:  InputDecoration(
           border: OutlineInputBorder(
@@ -75,8 +64,8 @@ class _ForgotPasswordFromWidgetState extends State<ForgotPasswordFromWidget> {
             ),
 
           ),
-          contentPadding: const EdgeInsets.symmetric(horizontal: 20),
           hintText: 'Email',
+          contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
           hintStyle: const TextStyle(color: AppColors.BLACK),
         ),
       ),
@@ -84,22 +73,10 @@ class _ForgotPasswordFromWidgetState extends State<ForgotPasswordFromWidget> {
   }
 
 
-  void displayDialog(BuildContext context, String title, String text) =>
-      showDialog(
-        context: context,
-        builder: (context) =>
-            AlertDialog(
-              title: Text(title, textAlign: TextAlign.center),
-              content: Text(text, textAlign: TextAlign.center, ),
-            ),
-      );
-
-
 
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-;
     return Form(
       key: _formKey,
       child: Column(
@@ -114,10 +91,17 @@ class _ForgotPasswordFromWidgetState extends State<ForgotPasswordFromWidget> {
           Container(
               width: double.infinity,
               height: 45,
-              child: ElevatedButton(
+              child:  Provider.of<AuthProvider>(context, listen: true).isLoading ?
+              const Center(child: CircularProgressIndicator(color: AppColors.PRIMARY,),) :
+              ElevatedButton(
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(AppColors.PRIMARY),),
-                onPressed: (){}, child: const Text('Reinitialiser', style: TextStyle(
+                onPressed: (){
+                  if(_formKey.currentState!.validate()){
+                    _formKey.currentState?.save();
+                    _receiveMail(_email!, context);
+                  }
+                }, child: const Text('Recevoir', style: TextStyle(
                 fontSize: 18,
               ),), )),
         ],

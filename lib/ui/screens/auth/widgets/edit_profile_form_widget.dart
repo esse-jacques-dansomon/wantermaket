@@ -37,7 +37,7 @@ class _EditProfileFormWidgetState extends State<EditProfileFormWidget> {
     _usernameController.text = vendor.name!;
     _firstnameController.text = vendor.firstName!;
     _addressController.text = vendor.address!;
-    _phoneController.text = vendor.phone!;
+    _phoneController.text = vendor.phone!.replaceAll("+221", "");
     _emailController.text = vendor.email!;
 
 
@@ -56,9 +56,10 @@ class _EditProfileFormWidgetState extends State<EditProfileFormWidget> {
         authProvider.getUserConnectedInfo();
         Provider.of<VendorProvider>(context, listen: false).getBoutique();
         Navigator.pushNamed(context, AppRoutes.profile);
-        //TODO: update vendor
+        AppHelper.showInfoFlushBar(context, 'Profil mis à jour avec succès');
+
       }else{
-        AppHelper.showErrorFlushBar(context, 'Error while updating profile');
+        AppHelper.showErrorFlushBar(context, 'Error lors de la modification du profil');
       }
     });
 
@@ -95,26 +96,23 @@ class _EditProfileFormWidgetState extends State<EditProfileFormWidget> {
           SizedBox(
               width: double.infinity,
               height: 45,
-              child: Provider.of<AuthProvider>(context, listen: true).isLoadingRegister ? const Center(child: CircularProgressIndicator()): ElevatedButton(
+              child: Provider.of<AuthProvider>(context, listen: true).isLoadingRegister ?
+              const Center(child: CircularProgressIndicator()):
+              ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(AppColors.PRIMARY),),
                   onPressed: () {
-
                     if(_formKey.currentState!.validate()){
                       _formKey.currentState?.save();
-                      // print('username: ${_usernameController.text}');
-                      // print('firstname: ${_firstnameController.text}');
-                      // print('address: ${_addressController.text}');
-                      // print('phone: ${_phoneController.text}');
-                      // print('email: ${_emailController.text}');
-                      // print('countryCode: $_countryCode');
                       updateProfile(EditProfileModel(
                         name: _usernameController.text,
                         firstName: _firstnameController.text,
                         address: _addressController.text,
                         phone: "$_countryCode${_phoneController.text}",
                         email: _emailController.text,
-                      ));
+                      )).then((value) => {
+
+                      });
                     }
                   }, child: const Text("Valider Les Modifications", style: TextStyle(color: Colors.white),)  )
           ),
@@ -291,10 +289,8 @@ class _EditProfileFormWidgetState extends State<EditProfileFormWidget> {
         focusNode: _phoneNode,
         keyboardType: TextInputType.phone,
         controller: _phoneController,
-        // onFieldSubmitted: (value) => _phone =  '$_countryCode${value.replaceAll(' ', '')}',
         textInputAction: TextInputAction.next,
         onEditingComplete: () {
-          // Once user click on Next then it go to password field
           _emailNode!.requestFocus();
         },
         decoration:  InputDecoration(

@@ -39,9 +39,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
       Provider.of<VendorProvider>(context, listen: false).getVendorStat();
       if( Provider.of<VendorProvider>(context, listen: false).boutique.vendor?.firstName == null) {
         _loadData();
-        Provider.of<AuthProvider>(context, listen: false).updateToken();
+        Provider.of<AuthProvider>(context, listen: false).updateToken().whenComplete(() => {
+        ContactVendor.showCanAddProductDialog(context)
+        });
     }
-      ContactVendor.showCanAddProductDialog(context);
 
     });
 

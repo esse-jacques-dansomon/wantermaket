@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:wantermarket/config/app_images.dart';
 import 'package:wantermarket/providers/auth_provider.dart';
 import 'package:wantermarket/providers/boutique_favories_provider.dart';
+import 'package:wantermarket/route/routes.dart';
 import 'package:wantermarket/shared/app_helper.dart';
 
 import '../../../../config/app_colors.dart';
@@ -72,7 +73,7 @@ class VendorInformationWidget extends StatelessWidget {
                     Row(
                       children:  [
                         const Icon(Icons.location_on, size: 18,color: AppColors.SECONDARY,),
-                        const SizedBox(width: 5,),
+                        const SizedBox(width: 5),
                         Text('${boutique.vendor!.city!}  ${boutique.vendor!.country!}', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),),
                       ],
                     ),
@@ -120,9 +121,9 @@ class VendorInformationWidget extends StatelessWidget {
                         boutiqueFovoriesProvider.removeFavory(boutique.id!) :
                         boutiqueFovoriesProvider.addFavory(boutique.id!);
                       }else{
+                        Navigator.of(context).pushNamed(AppRoutes.login);
                         AppHelper.showInfoFlushBar(context, 'Vous devez être connecté pour effectuer cette action');
                       }
-
                     },
                     style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(AppColors.PRIMARY)

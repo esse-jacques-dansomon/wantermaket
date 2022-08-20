@@ -31,7 +31,7 @@ class FicheVendeur extends StatelessWidget {
                   },),
               ],
             ),
-            const SizedBox(height: 10,),
+            const SizedBox(height: 20,),
             const Text('Biographie', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
             const SizedBox(height: 10,),
             Text(boutique.bio!, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),),
@@ -44,7 +44,7 @@ class FicheVendeur extends StatelessWidget {
                 const Text('Nom vendeur', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
                 const SizedBox(height: 5,),
                 Text(boutique.vendor!.name!, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),),
-                const SizedBox(height: 10,),
+                const SizedBox(height: 20,),
               ],
             ): Container(),
 
@@ -53,44 +53,79 @@ class FicheVendeur extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
+                const SizedBox(height: 10,),
                 const Text('Coordonnees', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
-                const SizedBox(height: 5,),
-                Row(
-                  children:  [
-                    const Icon(Icons.phone, size: 18,),
-                    const SizedBox(width: 5,),
-                    Text(boutique.vendor!.phone!, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),),
-                  ],
-                ),         const SizedBox(height: 5,),
-                InkWell(
-                  onTap: (){
-                    ContactVendor.lauchWhastapp(boutique.vendor!.phone!, context);
+                const SizedBox(height: 10,),
+                ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.green),
+                    padding: MaterialStateProperty.all(EdgeInsets.symmetric(horizontal: 20, vertical: 10)),
+                  ),
+                  onPressed: (){
+                    ContactVendor.openPhone(number :boutique.vendor!.phone!, context: context);
+
+                  },
+                  child: Row(
+                    children:  [
+                      const Icon(Icons.phone, size: 18,),
+                      const SizedBox(width: 5,),
+                      Text("Téléphone", style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 10,),
+                //WHATSAPP BUTTON
+                ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.green),
+                    padding: MaterialStateProperty.all(EdgeInsets.symmetric(horizontal: 20, vertical: 10)),
+                  ),
+                  onPressed: (){
+                    ContactVendor.openWhatsappVendor(vendor :boutique.vendor!, context: context);
                   },
                   child: Row(
                     children:  [
                       const Icon(Icons.whatsapp, size: 18,),
                       const SizedBox(width: 5,),
-                      Text(boutique.vendor!.phone!, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),),
+                      Text("Whatsapp", style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),),
                     ],
                   ),
                 ),
                 const SizedBox(height: 5,),
-                Row(
-                  children:  [
-                    const Icon(Icons.email, size: 18,),
-                    const SizedBox(width: 5,),
-                    Text(boutique.vendor!.email!, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),),
-                  ],
+
+                ElevatedButton(
+                  onPressed: (){},
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.blue),
+                    padding: MaterialStateProperty.all(EdgeInsets.symmetric(horizontal: 20, vertical: 10)),
+                  ),
+                  child: Row(
+                    children:  [
+                      const Icon(Icons.email, size: 18,),
+                      const SizedBox(width: 5,),
+                      Text(boutique.vendor!.email!, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),),
+                    ],
+                  ),
                 ),
+
               ],
             ),
 
 
-            //onpen location in maps
-            const SizedBox(height: 15,),
-            ElevatedButton(onPressed: (){
+            //Onpen location in maps
+            const SizedBox(height: 5,),
+            ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.black45),
+                  padding: MaterialStateProperty.all(EdgeInsets.symmetric(horizontal: 20, vertical: 10)),
+                ),
+                onPressed: (){
               ContactVendor.launchMaps(boutique);
-            }, child:const Text('Localisation') )
+            }, child:Row(
+              children: [
+                const Text('Localisation'),
+              ],
+            ) )
 
           ],
         ),

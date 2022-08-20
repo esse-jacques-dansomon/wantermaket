@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wantermarket/ui/screens/auth/widgets/forgot_password_form_widget.dart';
 import 'package:wantermarket/ui/screens/auth/widgets/reset_password_form_widget.dart';
 
 import '../../../config/app_colors.dart';
@@ -58,7 +59,7 @@ class ForgotPasswordFromScreen extends StatelessWidget {
                     const Text('Veuillez entre votre email', style: TextStyle(color: Colors.grey, fontSize: 16),),
 
                     //form
-                    const ResetPasswordFromWidget(),
+                    const ForgotPasswordFromWidget(),
 
                     Expanded(child: Container(),),
                     //bottom

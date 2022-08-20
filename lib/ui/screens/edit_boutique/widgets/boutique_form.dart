@@ -39,13 +39,13 @@ class _BoutiqueFormState extends State<BoutiqueForm> {
 
 
   updateBoutique(BoutiqueUpdateModel boutiqueUpdateModel, List<File> files) async {
-     Provider.of<VendorProvider>(context, listen: false).updateBoutique(boutiqueUpdateModel, files).then((value) => {
+    Provider.of<VendorProvider>(context, listen: false).updateBoutique(boutiqueUpdateModel, files).then((value) => {
       if(value){
         Provider.of<AuthProvider>(context, listen: false).verifyIsAuthenticated(),
         Provider.of<AuthProvider>(context, listen: false).getUserConnectedInfo(),
-        // Provider.of<VendorProvider>(context, listen: false).getBoutique(),
+        Navigator.pushNamed(context, AppRoutes.profile),
         AppHelper.showInfoFlushBar(context, 'Vous avez bien modifié vos informations'),
-        Navigator.pushNamed(context, AppRoutes.profile)
+
       }else{
         AppHelper.showInfoFlushBar(context, 'une erreue s\'est produite')
       }
@@ -342,8 +342,11 @@ class _BoutiqueFormState extends State<BoutiqueForm> {
             ),
 
             //submit button
-            ElevatedButton(
-              child: const SizedBox(width: double.infinity, child:  Center(child: Text('Enregistrer', style: TextStyle(fontSize: AppDimensions.FONT_SIZE_EXTRA_LARGE, fontWeight: FontWeight.bold),),),),
+            Provider.of<VendorProvider>(context, listen: true ).isUpdateBoutiqueLoading ?
+            const Center(child: CircularProgressIndicator())
+                : ElevatedButton(
+              child:  SizedBox(width: double.infinity, child:
+              Center(child: Text(widget.boutique.id != null ? "Valider Les Modifications" :'Enregistrer', style: TextStyle(fontSize: AppDimensions.FONT_SIZE_EXTRA_LARGE, fontWeight: FontWeight.bold),),),),
               onPressed: () {
                 if (key.currentState!.validate()) {
                   key.currentState?.save();
@@ -382,7 +385,7 @@ class _BoutiqueFormState extends State<BoutiqueForm> {
       final imageTemp = File(photoProfile.path);
       setState(() => this.photoProfile = imageTemp);
     } on PlatformException catch(e) {
-      print('Failed to pick image: $e');
+
     }
   }
 
