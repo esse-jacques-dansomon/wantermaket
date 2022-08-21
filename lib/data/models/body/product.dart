@@ -61,8 +61,8 @@ class Product {
     nombre_vues = json['nombre_vues'];
     disponibility = json['disponibility']??true;
     boutique = json['boutique'] != null ? Boutique.fromJson(json['boutique']) : null;
-    categorie = json['categorie'] != null ? Category.fromJson(json['categorie']) : null;
-    sousCategorie = json['sous_categorie'] != null ? SousCategorie.fromJson(json['sous_categorie']) : null;
+    categorie = json['categorie'] != null && json['categorie'] !='' ? Category.fromJson(json['categorie']) : null;
+    sousCategorie = json['sous_categorie'] != null && json['sous_categorie'] !=''? SousCategorie.fromJson(json['sous_categorie']) : null;
     if (json['images'] != null) {
       images = <Image>[];
       json['images'].forEach((v) {

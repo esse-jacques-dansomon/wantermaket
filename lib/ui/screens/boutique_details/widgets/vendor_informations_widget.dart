@@ -68,21 +68,24 @@ class VendorInformationWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(boutique.name!, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+                    Text(boutique.name!, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, overflow: TextOverflow.ellipsis),),
                     const SizedBox(height: 5,),
                     Row(
                       children:  [
                         const Icon(Icons.location_on, size: 18,color: AppColors.SECONDARY,),
                         const SizedBox(width: 5),
-                        Text('${boutique.vendor!.city!}  ${boutique.vendor!.country!}', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),),
+                        Text('${boutique.vendor?.city?? 'Ville'}  ${boutique.vendor?.country ?? ' Pays'}', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),),
                       ],
                     ),
                     const SizedBox(height: 5,),
                     Row(
-                      children: const [
+                      children:  [
                         Icon(Icons.category, size: 18,color : AppColors.SECONDARY),
                         SizedBox(width: 5,),
-                        Text('Prêtes à porter', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),),
+                        Text(boutique.secteurs!.length > 0 ?
+                        boutique.secteurs![0].name ?? 'Aucun Secteur'
+                            :"Aucun Secteur"  , style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),),
+                        Text(' ... ', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),),
                       ],
                     ),
                     const SizedBox(height: 5,),

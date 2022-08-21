@@ -2,6 +2,7 @@ import 'package:wantermarket/config/app_images.dart';
 import 'package:wantermarket/data/models/body/vendor.dart';
 
 import '../../../config/app_constantes.dart';
+import 'category.dart';
 
 class Boutique {
   int? id;
@@ -13,17 +14,19 @@ class Boutique {
   String? coverImage;
   int? idVendor;
   Vendor? vendor;
+  List<Category>? secteurs = [];
 
 
   Boutique(
       {this.id,
-      this.name,
-      this.bio,
-      this.latitude,
-      this.longitude,
-      this.profilImage,
-      this.coverImage,
+        this.name,
+        this.bio,
+        this.latitude,
+        this.longitude,
+        this.profilImage,
+        this.coverImage,
         this.vendor,
+        this.secteurs,
         this.idVendor});
 
   Boutique.fromJson(Map<String, dynamic> json) {
@@ -36,7 +39,9 @@ class Boutique {
     coverImage = (json['cover_image'] != null ? AppConstants.BASE_URL_IMAGE +  json['cover_image']: AppImage.logo);
     idVendor = json['id_vendor'];
     vendor = json['vendeur'] != null ? Vendor.fromJson(json['vendeur']) : null;
-
+    if (json['secteurs'] != null) {
+      secteurs = List<Category>.from(json['secteurs'].map((x) => Category.fromJson(x)));
+    }
 
 
   }

@@ -63,12 +63,12 @@ class VendorDashboardStats extends StatelessWidget {
                       children:  [
                         Text(vendorProvider.boutique.name ?? 'Pas encore de nom',
                           style: const TextStyle(
-                            fontSize: 16,
+                            fontSize: 18,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
                         const SizedBox(height: 5),
-                        const Text('Marketing & Communication',
+                         Text( "${vendorProvider.boutique.vendor?.city?? ''} " + " ${vendorProvider.boutique.vendor?.country?? ''}",
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w300,

@@ -46,7 +46,7 @@ class PlanItem extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.only(bottom: 5, top: 15),
                 alignment: Alignment.center,
-                child: Text("${plan.price ?? '0'} / FCFA", style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold, color: Colors.black),),
+                child: Text("${plan.price == 0 ?'Gratuit' : '${plan.price} / FCFA'}" , style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold, color: Colors.black),),
               ),
               Divider(color: AppColors.SECONDARY,),
               Container(
