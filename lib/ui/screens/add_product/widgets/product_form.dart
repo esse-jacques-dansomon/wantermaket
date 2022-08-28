@@ -18,7 +18,6 @@ import '../../../../data/models/body/category.dart';
 import '../../../../data/models/body/product.dart';
 import '../../../../data/models/body/product_crud_model.dart';
 import '../../../../providers/category_provider.dart';
-import '../../home/home_screen.dart';
 
 class ProductAddForm extends StatefulWidget {
   final Product? product;
@@ -153,7 +152,7 @@ class _ProductAddFormState extends State<ProductAddForm> {
        AppHelper.showInfoFlushBar(context, error.toString(), color: Colors.red);
      });
   }
-  upDateProduct(int id, ProductCrudModel productCrudModel, File? image, File? imageLevel2, File? imageLevel3)   {
+   upDateProduct(int id, ProductCrudModel productCrudModel, File? image, File? imageLevel2, File? imageLevel3)   {
     Provider.of<CrudProductProvider>(context, listen: false).updateProduct( id, productCrudModel, image, imageLevel2, imageLevel2).then((value) => {
       Provider.of<VendorProvider>(context, listen: false).getVendorProducts(),
       Provider.of<AuthProvider>(context, listen: false).verifyIsAuthenticated(),
@@ -274,7 +273,7 @@ class _ProductAddFormState extends State<ProductAddForm> {
                   ProductCrudModel productCrudModel = ProductCrudModel(
                     disponibility: 'oui',
                     price: int.parse(_priceProductController.text),
-                    priceBefore: int.parse(_priceBeforeProductController.text),
+                    priceBefore: _priceBeforeProductController.text.isNotEmpty ?int.parse(_priceBeforeProductController.text):0,
                     name: _nomProductController.text,
                     descriptionBrief: _descriptionProductController.text,
                     idCategory: _selectedSubCategory!.id!,
@@ -298,7 +297,8 @@ class _ProductAddFormState extends State<ProductAddForm> {
 
 
                   }
-                }
+                },
+              style: ButtonStyle(backgroundColor: MaterialStateProperty.all(AppColors.PRIMARY),),
 
             ),
 
@@ -391,12 +391,7 @@ class _ProductAddFormState extends State<ProductAddForm> {
 
         ),
         keyboardType: TextInputType.number,
-        validator: (value) {
-          if (value!.isEmpty) {
-            return "Veuillez entrer un prix de produit";
-          }
-          return null;
-        },
+
       ),
     );
   }

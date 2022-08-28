@@ -184,7 +184,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: const Icon(Icons.add, color: AppColors.WHITE, size: 50,),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: const CustomBottomNavBar(home: true,),
+      bottomNavigationBar:  CustomBottomNavBar(home: true, scrollController: _controller),
       appBar: appBar(isActiveSearchbar:true),
       drawer: const AppDrawer(),
       body: RefreshIndicator(

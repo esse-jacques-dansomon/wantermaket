@@ -5,6 +5,8 @@ import 'package:wantermarket/config/app_colors.dart';
 import 'package:wantermarket/data/models/body/plan.dart';
 import 'package:wantermarket/providers/auth_provider.dart';
 import 'package:wantermarket/providers/payment_provider.dart';
+import 'package:wantermarket/route/routes.dart';
+import 'package:wantermarket/shared/app_helper.dart';
 import 'package:wantermarket/ui/screens/payment_api/paytech_api_payment_screen.dart';
 
 class PlanItem extends StatelessWidget {
@@ -123,9 +125,13 @@ class PlanItem extends StatelessWidget {
                         child: TextButton(
 
                           onPressed: () async {
+                            Provider.of<AuthProvider>(context, listen: false).isLoggedIn()?
                             await  Provider.of<PaymentProvider>(context, listen: false).getAbonnementLink(plan).then((url) async {
                               await (Navigator.push(context, MaterialPageRoute(builder: (context) =>  PayTechApiPaymentScreen( initialUrl : url)),) );
-                            });
+                            }) : {
+                              (Navigator.popAndPushNamed(context, AppRoutes.login)),
+                              AppHelper.showInfoFlushBar(context, "Vous devez vous connecter pour continuer")
+                            };
 
                           },
                           child:  Text('   Choisir le plan ${plan.name!}  ', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),

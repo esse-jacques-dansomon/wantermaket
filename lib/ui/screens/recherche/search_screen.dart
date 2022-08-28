@@ -11,9 +11,10 @@ import '../../basewidgets/bottom_bar/bottom_nav_bar.dart';
 
 class SearchScreen extends StatelessWidget {
   const SearchScreen({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
+
+
     return DefaultTabController(
         length: 2,
         child: Scaffold(
@@ -28,7 +29,8 @@ class SearchScreen extends StatelessWidget {
           floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
           appBar: appBar(isActiveSearchbar: true, isOnSearchPage: true),
           drawer: const AppDrawer(),
-          bottomNavigationBar: const CustomBottomNavBar(search: true),
+
+          bottomNavigationBar:  CustomBottomNavBar(search: true),
           body: SafeArea(
 
             child: Padding(
@@ -84,9 +86,8 @@ class SearchScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-
                   const SizedBox(height: 10,),
-                  const Expanded(child: TabBarView(
+                   const Expanded(child: TabBarView(
                       children: [
                         ProductsFound(),
                         BoutiquesFounded(),
@@ -97,6 +98,7 @@ class SearchScreen extends StatelessWidget {
               ),
             ),
           ),
+
         ));
   }
 }

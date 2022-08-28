@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:wantermarket/data/models/body/boutique.dart';
 import 'package:wantermarket/data/models/body/filter_model.dart';
@@ -26,7 +29,7 @@ class SearchProvider extends ChangeNotifier {
   SearchBoutiqueState searchBoutiqueState = SearchBoutiqueState.initial;
   SearchProvider({required this.searchRepo});
 
-  String searchText = '';
+  String searchText = ' ';
   final List<Product> _products = [];
   List<Product> get products => _products;
 
@@ -41,12 +44,13 @@ class SearchProvider extends ChangeNotifier {
     searchBoutiqueState = SearchBoutiqueState.loading;
     notifyListeners();
     try{
-       var response = await searchRepo.search(filterModel: filterModel);
-      if(response.error == null ){
-        response.response.data['data']['boutiques'].forEach((element) {
+       Response response = await searchRepo.search(filterModel: filterModel);
+       print("fuckkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk bitchccccccccccccccccccccccccccccccccc");
+      if(response.statusCode == 200 ){
+        response.data['data']['boutiques'].forEach((element) {
           boutiques.add(Boutique.fromJson(element));
         });
-        response.response.data['data']['produits'].forEach((element) {
+        response.data['data']['produits'].forEach((element) {
           products.add(Product.fromJson(element));
         });
         if(products.isEmpty){
@@ -61,11 +65,11 @@ class SearchProvider extends ChangeNotifier {
         }
         notifyListeners();
       }else{
-        print(response.response.statusCode);
-        print(response.response.realUri);
-        print(response.response.data);
-        print(response.response.requestOptions);
-        print(response.response.statusMessage);
+        print(response.statusCode);
+        print(response.realUri);
+        print(response.data);
+        print(response.requestOptions);
+        print(response.statusMessage);
         state = SearchProductState.error;
         searchBoutiqueState = SearchBoutiqueState.error;
         notifyListeners();
@@ -78,7 +82,7 @@ class SearchProvider extends ChangeNotifier {
     }
   }
   Future<void> filter({required FilterModel filterModel}) async {
-    filterModel.keyWorld = searchText;
+    filterModel.keyWorld = "";
     products.clear();
     boutiques.clear();
     state = SearchProductState.loading;
@@ -86,12 +90,20 @@ class SearchProvider extends ChangeNotifier {
     notifyListeners();
     try{
        var response = await searchRepo.search(filterModel: filterModel);
-      if(response.error == null ){
-        response.response.data['data']['boutiques'].forEach((element) {
-          boutiques.add(Boutique.fromJson(element));
+      if(response.statusCode == 200){
+        response.data['data']['boutiques'].forEach((element) {
+         try{
+           boutiques.add(Boutique.fromJson(element));
+         }catch(e){
+            print(e);
+         }
         });
-        response.response.data['data']['produits'].forEach((element) {
-          products.add(Product.fromJson(element));
+        response.data['data']['produits'].forEach((element) {
+          try{
+            products.add(Product.fromJson(element));
+          }catch(e){
+            print(e);
+          }
         });
         if(products.isEmpty){
           state = SearchProductState.noProducts;
@@ -105,11 +117,11 @@ class SearchProvider extends ChangeNotifier {
         }
         notifyListeners();
       }else{
-        print(response.response.statusCode);
-        print(response.response.realUri);
-        print(response.response.data);
-        print(response.response.requestOptions);
-        print(response.response.statusMessage);
+        print(response.statusCode);
+        print(response.realUri);
+        print(response.data);
+        print(response.requestOptions);
+        print(response.statusMessage);
         state = SearchProductState.error;
         searchBoutiqueState = SearchBoutiqueState.error;
         notifyListeners();

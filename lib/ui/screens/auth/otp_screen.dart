@@ -20,7 +20,7 @@ class _OtpState extends State<OtpScreen> {
     Provider.of<AuthProvider>(context, listen: false).verifyOpt(widget.email, otp).then((value) {
       if(value){
         Navigator.of(context).popAndPushNamed(AppRoutes.login);
-        AppHelper.showInfoFlushBar(context,  'Votre mot de passe a été réinitialisé  '
+        AppHelper.showInfoFlushBar(context,  'Votre mot de passe a été réinitialisé'
             'et un nouveau mot de passe est envoyé à : ${widget.email}');
       }else{
         AppHelper.showInfoFlushBar(context,  'Votre code n\'est pas valise, veuillez appuiez sur renvoyer un nouveau code',color: Colors.red);
@@ -184,7 +184,7 @@ class _OtpState extends State<OtpScreen> {
                   _receiveMail(widget.email, context);
                 },
                 child: Text(
-                  "Renvoyer Un Neaveau Code",
+                  "Renvoyer un nouveau code",
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,

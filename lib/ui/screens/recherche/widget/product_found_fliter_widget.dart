@@ -54,10 +54,10 @@ class _ProductFoundFilterState extends State<ProductFoundFilter> {
               children:  [
                 TextButton(onPressed: (){
                   Navigator.pop(context);
-                }, child: const Text('Cancel', style:TextStyle(
+                }, child: const Text('Annuler', style:TextStyle(
                     fontSize: 20,color: AppColors.BLACK
                 ))),
-                const Text('Filtres', style:TextStyle(
+                const Text('Filtre', style:TextStyle(
                   fontSize: 20, color: AppColors.BLACK
                 )),
                 TextButton(onPressed: (){
@@ -69,10 +69,11 @@ class _ProductFoundFilterState extends State<ProductFoundFilter> {
                       priceFilter: priceFilter,
                       isNew: isNew,
                       isPopular: isPopular,
-                      isPromo: isPromo
+                      isPromo: isPromo,
+                      keyWorld: '',
                   ));
                   Navigator.pop(context);
-                }, child: const Text('Done', style:TextStyle(
+                }, child: const Text('Rechercher', style:TextStyle(
                   fontSize: 20, color: AppColors.BLACK,
                 )))
                 ,

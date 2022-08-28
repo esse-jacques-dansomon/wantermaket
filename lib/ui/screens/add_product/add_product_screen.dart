@@ -31,8 +31,8 @@ class AddProductScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children:  [
                 const SizedBox(height: 20,),
-                const Text("Ajouter Un Produit", textAlign: TextAlign.start, style:  TextStyle(fontSize: AppDimensions.FONT_SIZE_EXTRA_LARGE+3, color: AppColors.BLACK),),
-                const SizedBox(height: 10,),
+                // const Text("Ajouter Un Produit", textAlign: TextAlign.start, style:  TextStyle(fontSize: AppDimensions.FONT_SIZE_EXTRA_LARGE+3, color: AppColors.BLACK),),
+                // const SizedBox(height: 10,),
                 product?.id != null ? ProductAddForm(product: product,) : const ProductAddForm(),
                 const SizedBox(height: 30,),
 

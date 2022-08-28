@@ -9,6 +9,7 @@ class CustomBottomNavBar extends StatelessWidget {
   final bool home;
   final bool profile;
   final bool search;
+  final ScrollController? scrollController;
 
   const CustomBottomNavBar(
       {Key? key,
@@ -16,7 +17,10 @@ class CustomBottomNavBar extends StatelessWidget {
         this.boutique = false,
         this.home = false,
         this.profile = false,
-        this.search = false})
+        this.search = false,
+        this.scrollController
+
+      })
       : super(key: key);
 
   @override
@@ -41,6 +45,7 @@ class CustomBottomNavBar extends StatelessWidget {
                     title: 'Accueil',
                     route: AppRoutes.home,
                     item: home,
+                    scrollController: scrollController,
                   ),
                   add_product ? const SizedBox(
                     width:  10 ,
@@ -51,6 +56,8 @@ class CustomBottomNavBar extends StatelessWidget {
                     title: 'Boutiques',
                     route: AppRoutes.shop,
                     item: boutique,
+                    scrollController: scrollController,
+
                   ),
                   add_product ? const SizedBox(
                     width:  10 ,
@@ -61,6 +68,8 @@ class CustomBottomNavBar extends StatelessWidget {
                     title: 'Recherche',
                     route: AppRoutes.search,
                     item: search ,
+                    scrollController: scrollController,
+
                   ),
                   add_product ? const SizedBox(
                     width:  10 ,
@@ -71,6 +80,8 @@ class CustomBottomNavBar extends StatelessWidget {
                     title: 'Profile',
                     route: AppRoutes.profile,
                     item: profile,
+                    scrollController: scrollController,
+
                   ),
                 ],
               ),
@@ -90,6 +101,8 @@ class CustomBottomBarItem extends StatelessWidget {
     required this.title,
     required this.image,
     required this.activeImage,
+    this.scrollController,
+
   }) : super(key: key);
 
   final bool item;
@@ -97,13 +110,18 @@ class CustomBottomBarItem extends StatelessWidget {
   final String title;
   final IconData image;
   final IconData activeImage;
+  final ScrollController? scrollController;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ) {
     return GestureDetector(
       onTap: () {
         if (!item) {
           Navigator.pushNamed(context, route);
+        }else{
+          if(scrollController != null ){
+            scrollController?.animateTo(0, duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
+          }
         }
       },
       child: Column(

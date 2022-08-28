@@ -59,31 +59,30 @@ class DioClient {
     try {
       dio.options.headers = {
         'Content-Type': 'application/json; charset=UTF-8',
-        'Accept': 'application/json',
+    'Charset' :'utf-8',
+    'Authorization': 'Bearer ${sharedPreferences.getString(AppConstants.TOKEN) }',
+    // AppConstants.LANG_KEY: countryCode == 'US'? 'en':countryCode.toLowerCase(),
+    };
+    token = sharedPreferences.getString(AppConstants.TOKEN) ?? '';
 
-        'Authorization': 'Bearer ${sharedPreferences.getString(AppConstants.TOKEN) }',
-        // AppConstants.LANG_KEY: countryCode == 'US'? 'en':countryCode.toLowerCase(),
-      };
-      token = sharedPreferences.getString(AppConstants.TOKEN) ?? '';
-
-      var response = await dio.get(
-        uri,
-        queryParameters: queryParameters,
-        options: options,
-        cancelToken: cancelToken,
-        onReceiveProgress: onReceiveProgress,
-      );
-      print('=====get====> $uri');
-      print('=====get====> $queryParameters');
-      print("=====TOKEN==> $token");
-      print("==shared token=> ${sharedPreferences.getString(AppConstants.TOKEN) }");
-      return response;
+    var response = await dio.get(
+    uri,
+    queryParameters: queryParameters,
+    options: options,
+    cancelToken: cancelToken,
+    onReceiveProgress: onReceiveProgress,
+    );
+    print('=====get====> $uri');
+    print('=====get====> $queryParameters');
+    print("=====TOKEN==> $token");
+    print("==shared token=> ${sharedPreferences.getString(AppConstants.TOKEN) }");
+    return response;
     } on SocketException catch (e) {
-      throw SocketException(e.toString());
+    throw SocketException(e.toString());
     } on FormatException catch (_) {
-      throw const FormatException("Unable to process the data");
+    throw const FormatException("Unable to process the data");
     } catch (e) {
-      rethrow;
+    rethrow;
     }
   }
 
