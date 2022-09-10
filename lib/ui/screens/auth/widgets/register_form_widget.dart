@@ -44,18 +44,9 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
     _confirmedpasswordNode = FocusNode();
   }
 
-  Future<void> register() async {
+  Future<void> register(RegisterModel registerModel ) async {
 
       final authProvider = Provider.of<AuthProvider>(context, listen: false);
-      final registerModel = RegisterModel(
-        name: _username,
-        firstName: _firstname,
-        email: _email,
-        phone: _phone,
-        address: _address,
-        boutiqueName: _nomButique,
-        password: _password,
-      );
       await authProvider.register(registerModel, context);
       if (authProvider.isLoggedIn()) {
         authProvider.updateToken();
@@ -109,7 +100,16 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
 
                     if(_formKey.currentState!.validate()){
                       _formKey.currentState?.save();
-                      register();
+                      final registerModel = RegisterModel(
+                        name: _username,
+                        firstName: _firstname,
+                        email: _email,
+                        phone: _phone,
+                        address: _address,
+                        boutiqueName: _nomButique,
+                        password: _password,
+                      );
+                      register(registerModel);
                     }
                   }, child: const Text("Créez votre compte", style: TextStyle(color: Colors.white),)  )
           ),
@@ -130,7 +130,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
           }
           return null;
         },
-        onFieldSubmitted: (value) => _username = value,
+        onSaved: (value) => _username = value,
         onEditingComplete: (){
           // Once user click on Next then it go to password field
           _firstnameNode!.requestFocus();
@@ -166,7 +166,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
           }
           return null;
         },
-        onFieldSubmitted: (value) => _firstname = value,
+        onChanged: (value) => _firstname = value,
         onEditingComplete: (){
           // Once user click on Next then it go to password field
           _nomButiqueNode!.requestFocus();

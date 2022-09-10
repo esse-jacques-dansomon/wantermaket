@@ -39,12 +39,13 @@ class AuthRepo {
   }
 
   Future<ApiResponse> register(RegisterModel registerModel) async {
+    print(registerModel.toJson());
     try {
       final response = await dioClient.post(AppConstants.VENDEUR_URI, data: registerModel.toJson());
       return ApiResponse.withSuccess(response);
     } catch (e) {
       print(e.toString());
-      return ApiResponse.withError(ApiErrorHandler.getMessage(e.toString()));
+      return ApiResponse.withError(e);
     }
   }
 
