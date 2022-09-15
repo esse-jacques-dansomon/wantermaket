@@ -19,10 +19,19 @@ class RegisterFormWidget extends StatefulWidget {
 }
 
 class _RegisterFormWidgetState extends State<RegisterFormWidget> {
+  String _countryCode = '+212';
+  String country = "SN";
   bool _obscureText = true;
   bool _obscureTextConfirmedPassword = true;
-  String?  _username,_firstname , _address, _confirmPassword, _phone, _countryCode, _nomButique, _password, _email,country;
-
+  final _usernameController = TextEditingController();
+  final  _firstnameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _countryController = TextEditingController();
+  final _phoneController = TextEditingController();
+  final _nomBoutiqueController = TextEditingController();
+  final _addressController = TextEditingController();
+  final __passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
   List<AppCountry> countries = [];
   FocusNode? _firstnameNode;
   FocusNode? _nomButiqueNode;
@@ -38,7 +47,6 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
   void initState() {
     super.initState();
     countries  = Provider.of<LocalizationProvider>(context, listen: false).countries;
-    _password=_email=_username=_firstname=_confirmPassword=_phone=country= _nomButique = _address="";
     _countryCode='+221';
     _usernameNode = FocusNode();
     _firstnameNode = FocusNode();
@@ -69,6 +77,16 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
   @override
   void dispose() {
     super.dispose();
+    _usernameController.dispose();
+    _firstnameController.dispose();
+    _emailController.dispose();
+    _countryController.dispose();
+    _phoneController.dispose();
+    _nomBoutiqueController.dispose();
+    _addressController.dispose();
+    __passwordController.dispose();
+
+    _confirmPasswordController.dispose();
     _firstnameNode?.dispose();
     _nomButiqueNode?.dispose();
     _addressNode?.dispose();
@@ -107,17 +125,17 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
                     backgroundColor: MaterialStateProperty.all(AppColors.PRIMARY),),
                   onPressed: () {
 
-                    if(_formRegisterKey.currentState !=null && _formRegisterKey.currentState!.validate() && _username !=null && _firstname !=null && _address !=null && _confirmPassword !=null && _phone !=null && _nomButique !=null && _password !=null && _email !=null){
+                    if(_formRegisterKey.currentState !=null && _formRegisterKey.currentState!.validate()){
                       _formRegisterKey.currentState?.save();
                       final registerModel = RegisterModel(
-                        name: _username??'',
-                        firstName: _firstname??'',
-                        email: _email??'',
-                        phone: _phone??'',
-                        address: _address??'',
-                        country: country??'',
-                        boutiqueName: _nomButique??'',
-                        password: _password??'',
+                        name: _firstnameController.text,
+                        firstName: _firstnameController.text,
+                        email: _emailController.text,
+                        phone: _phoneController.text,
+                        address: _addressController.text,
+                        country: this.country,
+                        boutiqueName: _nomBoutiqueController.text,
+                        password: __passwordController.text,
                       );
                       print(registerModel.toJson());
                       register(registerModel);
@@ -143,7 +161,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
           }
           return null;
         },
-        onChanged: (value) => _username = value,
+        controller: _usernameController,
         // onSaved: (value) => _username = value,
         onEditingComplete: (){
           // Once user click on Next then it go to password field
@@ -180,7 +198,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
           }
           return null;
         },
-        onChanged: (value) => _firstname = value,
+        controller: _firstnameController,
 
         // onChanged: (value) => _firstname = value,
         onEditingComplete: (){
@@ -219,7 +237,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
           }
           return null;
         },
-        onChanged: (value) => _nomButique = value,
+        controller: _nomBoutiqueController,
         onEditingComplete: (){
           // Once user click on Next then it go to password field
           _countryNode!.requestFocus();
@@ -255,7 +273,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
           }
           return null;
         },
-        onChanged: (value) => _address = value,
+        controller: _addressController,
         onEditingComplete: (){
           // Once user click on Next then it go to password field
           _phoneNode!.requestFocus();
@@ -294,6 +312,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
           }
           return null;
         },
+        controller: __passwordController,
         focusNode: _passwordNode,
         obscureText: _obscureText,
         textInputAction: TextInputAction.next,
@@ -326,7 +345,6 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
             vertical: 18,
           ),
         ),
-        onChanged: (value) => _password = value,
         // validator: passwordValidator,
       ),
     );
@@ -340,11 +358,9 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
           if (value!.isEmpty ) {
             return 'Veuillez confirmer votre mot de passe';
           }
-          // if (value.length < 6 || value != _password) {
-          //   return 'Le mot de passe doit contenir au moins 6 caractères';
-          // }
           return null;
         },
+        controller: _confirmPasswordController,
         focusNode: _confirmedpasswordNode,
         obscureText: _obscureTextConfirmedPassword,
         decoration:  InputDecoration(
@@ -373,7 +389,6 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
             ),
           ),
         ),
-        onChanged: (value) => _confirmPassword = value,
         // validator: passwordValidator,
       ),
     );
@@ -394,7 +409,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
           return null;
         },
         focusNode: _emailNode,
-        onChanged: (value) => _email = value,
+        controller: _emailController,
         // validator: emailValidator,
         textInputAction: TextInputAction.next,
         onEditingComplete: () {
@@ -435,7 +450,8 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
         focusNode: _phoneNode,
         initialValue: "77777",
         keyboardType: TextInputType.phone,
-        onChanged: (value) => _phone =  '$_countryCode${value.replaceAll(' ', '')}',
+        controller: _phoneController,
+        // onChanged: (value) => _phone =  '$_countryCode${value.replaceAll(' ', '')}',
         // validator: senegalPhoneNumberValidator,
         textInputAction: TextInputAction.next,
         onEditingComplete: () {
@@ -459,7 +475,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
             child: CountryCodePicker(
               onChanged: (countryCode) => {
                 // Save your country code
-                _countryCode = countryCode.dialCode,
+                _countryCode = countryCode.dialCode!,
               },
 
               textStyle: const TextStyle(color: AppColors.PRIMARY, fontSize: 16.5,),
@@ -478,7 +494,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
       width: MediaQuery.of(context).size.width,
       margin: const EdgeInsets.only(bottom: 25),
       height: 55,
-      child: DropdownButtonFormField2<String>(
+      child: DropdownButtonFormField<String>(
           validator: (value) {
             if (value!.isEmpty) {
               return 'Veuillez choisir un pays';
@@ -486,6 +502,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
             return null;
           },
           focusNode: _countryNode,
+          // controller: _countryController,
           value: country,
           icon: const Icon(Icons.arrow_downward),
           decoration:  InputDecoration(
