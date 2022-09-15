@@ -16,14 +16,11 @@ class SearchRepo {
     try {
       print(filterModel.toJson());
       final response = await dioClient.get(AppConstants.SEARCH_URI ,
-          queryParameters: filterModel.toJson(), options: Options(headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Charset' :'utf-8',
-      }));
+          queryParameters: filterModel.toJson());
       return response;
     } catch (e) {
       print(e);
-      return throw DioError(error: e, requestOptions: RequestOptions(path: AppConstants.SEARCH_URI));
+      return throw DioError(error: e, requestOptions: RequestOptions(path: AppConstants.SEARCH_URI), );
     }
   }
 

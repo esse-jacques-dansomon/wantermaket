@@ -18,7 +18,7 @@ class BoutiqueProvider extends ChangeNotifier{
     final response = await boutiqueRepo.getBoutiquesExclusives();
     if(response.error == null){
       _boutiquesExclusives.clear();
-      response.response.data['data'].forEach((element) {
+      response.response.data.forEach((element) {
         _boutiquesExclusives.add(Boutique.fromJson(element));
       });
       notifyListeners();

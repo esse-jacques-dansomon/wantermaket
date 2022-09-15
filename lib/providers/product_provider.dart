@@ -65,7 +65,7 @@ class ProductProvider extends ChangeNotifier{
       newArrivalsResponse.response.data['data'].forEach((element) {
         _newArrivals.add(Product.fromJson(element));
       });
-      if(newArrivalsResponse.response.data['links']['next'] != null){
+      if(newArrivalsResponse.response.data['meta']['links']['next'] != null){
         page++;
       }
       isPaginationLoading = false;

@@ -20,7 +20,7 @@ class CategoryProvider extends ChangeNotifier{
 
     if(response.error == null){
       _categories.clear();
-      response.response.data['data'].forEach((element) {
+      response.response.data.forEach((element) {
         _categories.add(Category.fromJson(element));
       });
       notifyListeners();

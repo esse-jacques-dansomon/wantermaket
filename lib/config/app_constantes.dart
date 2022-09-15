@@ -1,4 +1,6 @@
 
+import '../data/models/body/app_country.dart';
+
 class AppConstants {
   static const String APP_NAME = 'WANTERMARKET';
   // static const String BASE_URL = 'https://wantermarket.sn';
@@ -11,7 +13,7 @@ class AppConstants {
   static const String SOUS_CATEGORIES_URI = '/souscategories';
   static const String PRODUITS_URI = '/produits';
   static const String BOUTIQUE_URI = '/boutiques';
-  static const String BOUTIQUE_update_URI = '/boutique';
+  static const String BOUTIQUE_update_URI = '/boutiques';
   static const String VENDEUR_URI = '/vendeurs';
   static const String VENDEUR_BOUTIQUES_FAVORIS = '/vendeurs/favories';
   static const String BOUTIQUES_FAVORIS = '/boutiques/favories';
@@ -19,8 +21,9 @@ class AppConstants {
   static const String DEAL_PRODUITS_URI = '/produits/classe/3';
   static const String NOUVEAUX_PRODUITS_URI = '/produits/classe/1';
   static const String TOP_CATEGORIES_URI = '/categorie/top';
-  static const String BOUTIQUES_EXCLUSIVES = '/boutique/exclusive';
+  static const String BOUTIQUES_EXCLUSIVES = '/boutiques/exclusive';
   static const String PLANS_URI = '/plans';
+  static const String URI_COUNTRIES = '/pays';
 
   //AUTH
   static const String SEARCH_URI = '/search';
@@ -31,10 +34,11 @@ class AppConstants {
   static const String LOGOUT = '/logout';
   static const String USER_CONNECTED_INFO = '/verify';
   static const String TOKEN_URI = '/store/usertoken';
+
   //SELLER
   static const String VENDOR_BOUTIQUE_URI = '/vendeur';
-  static const String VENDOR_STATS_URI= '/boutique/stats';
-  static const String VENDOR_PRODUCTS_URI = '/boutique/produits';
+  static const String VENDOR_STATS_URI= '/boutiques/stats';
+  static const String VENDOR_PRODUCTS_URI = '/boutiques/produits';
 
   //PAYMENT LINK
   static const String PAY_BECOME_EXCLUSIVE_URI = '/exclusive';
@@ -49,11 +53,19 @@ class AppConstants {
   static const String USER_CREDENTIALS = 'user_id';
   static const String ADRESSE = 'adresse';
   static const String WISHLIST = 'wishlist';
+  static const String COUNTRY_CODE = 'countryCode';
+
 
 
   static const String ETAT_ABONNEMENT = 'etat_abonnement';
   static const String CAN_ADD_PRODUCT = 'can_add_product';
   static const String TYPE_PLAN = 'type_plan';
   static const String PROFILE_IMAGE = 'profile_image';
+
+  static List<AppCountry> languages = [
+    AppCountry(id: 1, nom: 'sn', code: 'sn', drapeau: 'senegal', indicatif: '+221', latitude: '', longitude: 'longitude'),
+  ];
+
+
 
 }

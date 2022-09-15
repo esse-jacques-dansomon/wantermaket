@@ -45,12 +45,11 @@ class SearchProvider extends ChangeNotifier {
     notifyListeners();
     try{
        Response response = await searchRepo.search(filterModel: filterModel);
-       print("fuckkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk bitchccccccccccccccccccccccccccccccccc");
       if(response.statusCode == 200 ){
-        response.data['data']['boutiques'].forEach((element) {
+        response.data['boutiques'].forEach((element) {
           boutiques.add(Boutique.fromJson(element));
         });
-        response.data['data']['produits'].forEach((element) {
+        response.data['produits'].forEach((element) {
           products.add(Product.fromJson(element));
         });
         if(products.isEmpty){
@@ -65,11 +64,6 @@ class SearchProvider extends ChangeNotifier {
         }
         notifyListeners();
       }else{
-        print(response.statusCode);
-        print(response.realUri);
-        print(response.data);
-        print(response.requestOptions);
-        print(response.statusMessage);
         state = SearchProductState.error;
         searchBoutiqueState = SearchBoutiqueState.error;
         notifyListeners();
@@ -78,7 +72,6 @@ class SearchProvider extends ChangeNotifier {
       state = SearchProductState.error;
       searchBoutiqueState = SearchBoutiqueState.error;
       notifyListeners();
-      print(e);
     }
   }
   Future<void> filter({required FilterModel filterModel}) async {

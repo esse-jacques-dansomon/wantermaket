@@ -51,7 +51,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _loadDataBoutique() async {
     Provider.of<BoutiqueProvider>(context, listen: false).getBoutiquesExclusives();
     Provider.of<ProductProvider>(context, listen: false).getDealOfTheDay();
-    // Provider.of<AuthProvider>(context, listen: false).verifyIsAuthenticated();
     Provider.of<ProductProvider>(context, listen: false).getNewArrivals(reload: true);
 
   }
@@ -73,7 +72,6 @@ class _HomeScreenState extends State<HomeScreen> {
     // _messaging.getToken().then((token) => print(token));
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-      print('AuthorizationStatus.authorized');
       // await Firebase.initializeApp();
       FirebaseMessaging.onMessage.listen((RemoteMessage message) {
         Pushnotification notification = Pushnotification(
@@ -83,8 +81,8 @@ class _HomeScreenState extends State<HomeScreen> {
           dataTitle: message.data['title'],
         );
 
-            setState(() {
-              _notificationInfo = notification;
+        setState(() {
+          _notificationInfo = notification;
         });
 
         if (notification != null) {
@@ -127,7 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       //initialize _notificationInfo
-      _notificationInfo = null; 
+      _notificationInfo = null;
       registerNotification();
       //app terminated
       checkForInitialMessage();
@@ -150,15 +148,15 @@ class _HomeScreenState extends State<HomeScreen> {
           autoDismiss: true,
         );
       });
-      
+
       //app launched
-      if (widget.reload) {
-        _loadData();
-      } else {
-        if (Provider.of<ProductProvider>(context, listen: false).newArrivals.isEmpty){
-          _loadData();
-        }
-      }
+      // if (widget.reload) {
+      //   _loadData();
+      // } else {
+      //   if (Provider.of<ProductProvider>(context, listen: false).newArrivals.isEmpty){
+      //     _loadData();
+      //   }
+      // }
 
     });
     super.initState();
@@ -196,7 +194,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 30),
+                const SizedBox(height: 10),
                 const HomeSliders(),
                 //Boutiques Exlusives
                 const SizedBox(height: 30),
@@ -269,7 +267,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
 
                 // Nouveautes
-                 const NouveautesWidget(),
+                const NouveautesWidget(),
                 //load more
                 const SizedBox(height: 10),
 

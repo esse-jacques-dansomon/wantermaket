@@ -1,8 +1,12 @@
+import 'package:circle_flags/circle_flags.dart';
 import 'package:country_code_picker/country_code_picker.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:wantermarket/providers/location_provider.dart';
 
 import '../../../../config/app_colors.dart';
+import '../../../../data/models/body/app_country.dart';
 import '../../../../data/models/body/register_model.dart';
 import '../../../../providers/auth_provider.dart';
 import '../../../../route/routes.dart';
@@ -17,8 +21,9 @@ class RegisterFormWidget extends StatefulWidget {
 class _RegisterFormWidgetState extends State<RegisterFormWidget> {
   bool _obscureText = true;
   bool _obscureTextConfirmedPassword = true;
-  String?  _username,_firstname , _address, _confirmPassword, _phone, _countryCode, _nomButique, _password, _email;
+  String?  _username,_firstname , _address, _confirmPassword, _phone, _countryCode, _nomButique, _password, _email,country;
 
+  List<AppCountry> countries = [];
   FocusNode? _firstnameNode;
   FocusNode? _nomButiqueNode;
   FocusNode? _addressNode;
@@ -27,11 +32,13 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
   FocusNode? _emailNode;
   FocusNode? _phoneNode;
   FocusNode? _usernameNode;
+  FocusNode? _countryNode;
 
   @override
   void initState() {
     super.initState();
-    _password=_email=_username=_firstname=_confirmPassword=_phone= _nomButique = _address='';
+    countries  = Provider.of<LocalizationProvider>(context, listen: false).countries;
+    _password=_email=_username=_firstname=_confirmPassword=_phone=country= _nomButique = _address="";
     _countryCode='+221';
     _usernameNode = FocusNode();
     _firstnameNode = FocusNode();
@@ -41,20 +48,21 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
     _emailNode = FocusNode();
     _phoneNode = FocusNode();
     _passwordNode = FocusNode();
+    _countryNode = FocusNode();
     _confirmedpasswordNode = FocusNode();
   }
 
   Future<void> register(RegisterModel registerModel ) async {
 
-      final authProvider = Provider.of<AuthProvider>(context, listen: false);
-      await authProvider.register(registerModel, context);
-      if (authProvider.isLoggedIn()) {
-        authProvider.updateToken();
-        if (!mounted) return;
-        Navigator.of(context).pushReplacementNamed(AppRoutes.profile);
-      }else{
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    await authProvider.register(registerModel, context);
+    if (authProvider.isLoggedIn()) {
+      authProvider.updateToken();
+      if (!mounted) return;
+      Navigator.of(context).pushReplacementNamed(AppRoutes.profile);
+    }else{
 
-      }
+    }
 
   }
 
@@ -72,11 +80,11 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
   }
 
 
-  final _formKey = GlobalKey<FormState>();
+  final _formRegisterKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: _formKey,
+      key: _formRegisterKey,
       child: Column(
         children: [
           const SizedBox(
@@ -85,6 +93,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
           _buildUsernameField(),
           _buildFirstnameField(),
           _buildBoutiqueNameField(),
+          _CountryField(),
           _buildAddressField(),
           _buildPhoneField(),
           _buildEmailField(),
@@ -98,18 +107,22 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
                     backgroundColor: MaterialStateProperty.all(AppColors.PRIMARY),),
                   onPressed: () {
 
-                    if(_formKey.currentState!.validate()){
-                      _formKey.currentState?.save();
+                    if(_formRegisterKey.currentState !=null && _formRegisterKey.currentState!.validate() && _username !=null && _firstname !=null && _address !=null && _confirmPassword !=null && _phone !=null && _nomButique !=null && _password !=null && _email !=null){
+                      _formRegisterKey.currentState?.save();
                       final registerModel = RegisterModel(
-                        name: _username,
-                        firstName: _firstname,
-                        email: _email,
-                        phone: _phone,
-                        address: _address,
-                        boutiqueName: _nomButique,
-                        password: _password,
+                        name: _username??'',
+                        firstName: _firstname??'',
+                        email: _email??'',
+                        phone: _phone??'',
+                        address: _address??'',
+                        country: country??'',
+                        boutiqueName: _nomButique??'',
+                        password: _password??'',
                       );
+                      print(registerModel.toJson());
                       register(registerModel);
+                    }else{
+                      print("veuillez remplir tout les champs");
                     }
                   }, child: const Text("Créez votre compte", style: TextStyle(color: Colors.white),)  )
           ),
@@ -130,7 +143,8 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
           }
           return null;
         },
-        onSaved: (value) => _username = value,
+        onChanged: (value) => _username = value,
+        // onSaved: (value) => _username = value,
         onEditingComplete: (){
           // Once user click on Next then it go to password field
           _firstnameNode!.requestFocus();
@@ -167,6 +181,8 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
           return null;
         },
         onChanged: (value) => _firstname = value,
+
+        // onChanged: (value) => _firstname = value,
         onEditingComplete: (){
           // Once user click on Next then it go to password field
           _nomButiqueNode!.requestFocus();
@@ -203,10 +219,10 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
           }
           return null;
         },
-        onFieldSubmitted: (value) => _nomButique = value,
+        onChanged: (value) => _nomButique = value,
         onEditingComplete: (){
           // Once user click on Next then it go to password field
-          _addressNode!.requestFocus();
+          _countryNode!.requestFocus();
         },
 
         // validator: requiredValidator,
@@ -239,7 +255,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
           }
           return null;
         },
-        onFieldSubmitted: (value) => _address = value,
+        onChanged: (value) => _address = value,
         onEditingComplete: (){
           // Once user click on Next then it go to password field
           _phoneNode!.requestFocus();
@@ -268,7 +284,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
   Widget _buildPasswordField(){
     return Container(
       margin: const EdgeInsets.only(bottom: 25),
-        child: TextFormField(
+      child: TextFormField(
         validator: (value) {
           if (value!.isEmpty) {
             return 'Veuillez entrer un mot de passe';
@@ -310,7 +326,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
             vertical: 18,
           ),
         ),
-        onFieldSubmitted: (value) => _password = value,
+        onChanged: (value) => _password = value,
         // validator: passwordValidator,
       ),
     );
@@ -357,7 +373,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
             ),
           ),
         ),
-        onFieldSubmitted: (value) => _confirmPassword = value,
+        onChanged: (value) => _confirmPassword = value,
         // validator: passwordValidator,
       ),
     );
@@ -378,7 +394,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
           return null;
         },
         focusNode: _emailNode,
-        onFieldSubmitted: (value) => _email = value,
+        onChanged: (value) => _email = value,
         // validator: emailValidator,
         textInputAction: TextInputAction.next,
         onEditingComplete: () {
@@ -408,18 +424,18 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
       height: 60,
       child: TextFormField(
         validator: (value) {
-          if (value!.isEmpty || value =='77 777 77 77') {
+          if (value!.isEmpty || value =='777777777') {
             return 'Veuillez entrer un numéro de téléphone';
           }
-          if (value.length < 9 || value =='77 777 77 77') {
+          if (value.length < 9 || value =='777777777') {
             return 'Le numéro de téléphone doit contenir au moins 9 chiffres';
           }
           return null;
         },
         focusNode: _phoneNode,
-        initialValue: "777777778",
+        initialValue: "77777",
         keyboardType: TextInputType.phone,
-        onFieldSubmitted: (value) => _phone =  '$_countryCode${value.replaceAll(' ', '')}',
+        onChanged: (value) => _phone =  '$_countryCode${value.replaceAll(' ', '')}',
         // validator: senegalPhoneNumberValidator,
         textInputAction: TextInputAction.next,
         onEditingComplete: () {
@@ -457,6 +473,70 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
 
       ),
     );  }
+  Widget _CountryField(){
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      margin: const EdgeInsets.only(bottom: 25),
+      height: 55,
+      child: DropdownButtonFormField2<String>(
+          validator: (value) {
+            if (value!.isEmpty) {
+              return 'Veuillez choisir un pays';
+            }
+            return null;
+          },
+          focusNode: _countryNode,
+          value: country,
+          icon: const Icon(Icons.arrow_downward),
+          decoration:  InputDecoration(
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 15,
+              vertical: 18,
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5),
+              borderSide: const BorderSide(
+                color: Colors.black,
+              ),
+            ),
+            hintText: 'Votre Pays',
+            labelText: "Votre Pays",
+            hintStyle: const TextStyle(color: AppColors.PRIMARY),
+          ),
+          style:  TextStyle(color: Colors.deepPurple, decorationStyle: TextDecorationStyle.solid),
+          onChanged: (String? value) {
+            // This is called when the user selects an item.
+            setState(() {
+              country = value!;
+            });
+          },
+          items: countries.map((e) =>  DropdownMenuItem(
+            alignment: Alignment.center,
+            value: e.code.toLowerCase(),
+            child: Container(
+              width: MediaQuery.of(context).size.width - 100,
+              alignment: Alignment.centerLeft,
+              child: Center(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    CircleFlag(e.code.toLowerCase(), size: 32,),
+                    SizedBox(width: 10),
+                    Text(e.nom.toUpperCase(), style: TextStyle(
+                      fontSize: 17,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.PRIMARY,
+                    ),),
+                    SizedBox(width: 10),
+                  ],
+                ),
+              ),
+            ),
+          ),).toList()),
+
+    );
+  }
+
 
   void displayDialog(BuildContext context, String title, String text) =>
       showDialog(

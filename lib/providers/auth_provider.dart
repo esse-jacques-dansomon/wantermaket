@@ -62,7 +62,7 @@ class AuthProvider extends ChangeNotifier {
       }else{
         _isLoadingRegister = false;
         notifyListeners();
-        ScaffoldMessenger.of(context).showSnackBar( SnackBar(content: Text('${response.error.toString()}', style: TextStyle(color: Colors.white)), backgroundColor: Colors.red));
+        ScaffoldMessenger.of(context).showSnackBar( SnackBar(content: Text('Une errue s\'est produite, veuillez reessayez', style: TextStyle(color: Colors.white)), backgroundColor: Colors.red));
 
       }
 

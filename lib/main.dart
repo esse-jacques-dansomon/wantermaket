@@ -8,6 +8,7 @@ import 'package:wantermarket/providers/boutique_provider.dart';
 import 'package:wantermarket/providers/category_detail_provider.dart';
 import 'package:wantermarket/providers/category_provider.dart';
 import 'package:wantermarket/providers/crud_product_provider.dart';
+import 'package:wantermarket/providers/location_provider.dart';
 import 'package:wantermarket/providers/payment_provider.dart';
 import 'package:wantermarket/providers/plan_provider.dart';
 import 'package:wantermarket/providers/product_provider.dart';
@@ -17,6 +18,7 @@ import 'package:wantermarket/providers/vendor_provider.dart';
 import 'package:wantermarket/providers/wishlist_provider.dart';
 import 'package:wantermarket/route/routes.dart';
 import 'package:wantermarket/ui/screens/home/home_screen.dart';
+import 'package:wantermarket/ui/screens/slash/slash_screen.dart';
 import './dependance_injector/dependance_injector.dart' as di;
 import 'config/app_colors.dart';
 
@@ -32,11 +34,12 @@ class MyHttpOverrides extends HttpOverrides{
 
 Future<void> main() async {
 
-  HttpOverrides.global = MyHttpOverrides();
+  // HttpOverrides.global = MyHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
   await di.init();
     runApp(MultiProvider(
     providers: [
+      ChangeNotifierProvider(create: (context) => di.sl<LocalizationProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<AuthProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<SliderProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<BoutiqueProvider>()),
@@ -68,9 +71,7 @@ class MyApp extends StatelessWidget {
           onGenerateRoute: AppRoutes.onGenerateRoute,
           title: 'WANTERMARKET',
           theme: buildThemeData(),
-          home: const Scaffold(
-            body: HomeScreen(),
-          )
+          home: SlashScreen(),
       ),
     );
   }

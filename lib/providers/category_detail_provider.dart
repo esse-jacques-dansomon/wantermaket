@@ -94,7 +94,7 @@ class CategoryProviderDetails extends ChangeNotifier{
     final response = await categoryRepo.getSubCategoriesOfCategory(id);
     if(response.error == null){
       _souscategories.clear();
-      response.response.data['data'].forEach((element) {
+      response.response.data.forEach((element) {
         _souscategories.add(SousCategorie.fromJson(element));
       });
       notifyListeners();
@@ -107,7 +107,7 @@ class CategoryProviderDetails extends ChangeNotifier{
     final response = await categoryRepo.getSubCategoriesOfCategory(id);
     if(response.error == null){
       sousCategories.clear();
-      response.response.data['data'].forEach((element) {
+      response.response.data.forEach((element) {
         sousCategories.add(SousCategorie.fromJson(element));
       });
       return sousCategories;

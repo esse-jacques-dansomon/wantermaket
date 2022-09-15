@@ -9,6 +9,7 @@ import 'package:wantermarket/data/repositories/boutique_favories_repo.dart';
 import 'package:wantermarket/data/repositories/boutique_repo.dart';
 import 'package:wantermarket/data/repositories/categories_repo.dart';
 import 'package:wantermarket/data/repositories/crud_product_repo.dart';
+import 'package:wantermarket/data/repositories/locationRepo.dart';
 import 'package:wantermarket/data/repositories/payment_repo.dart';
 import 'package:wantermarket/data/repositories/plan_repo.dart';
 import 'package:wantermarket/data/repositories/product_repo.dart';
@@ -18,6 +19,7 @@ import 'package:wantermarket/data/repositories/vendor_repo.dart';
 import 'package:wantermarket/providers/auth_provider.dart';
 import 'package:wantermarket/providers/boutique_favories_provider.dart';
 import 'package:wantermarket/providers/crud_product_provider.dart';
+import 'package:wantermarket/providers/location_provider.dart';
 import 'package:wantermarket/providers/payment_provider.dart';
 import 'package:wantermarket/providers/plan_provider.dart';
 import 'package:wantermarket/providers/slider_provider.dart';
@@ -45,6 +47,7 @@ Future<void> init() async {
 
   // Repository
   sl.registerLazySingleton(() => AuthRepo(dioClient: sl(), sharedPreferences: sl()));
+  sl.registerLazySingleton(() => LocationRepo(dioClient: sl(), sharedPreferences: sl()));
   sl.registerLazySingleton(() => BoutiqueRepo(dioClient: sl()));
   sl.registerLazySingleton(() => CategoryRepo(dioClient: sl()));
   sl.registerLazySingleton(() => ProductsRepo(dioClient: sl()));
@@ -59,6 +62,7 @@ Future<void> init() async {
 
   //Provider
   sl.registerLazySingleton(() => AuthProvider(authRepo: sl()));
+  sl.registerLazySingleton(() => LocalizationProvider(locationRepo: sl()));
   sl.registerLazySingleton(() => BoutiqueProvider(boutiqueRepo: sl()));
   sl.registerLazySingleton(() => CategoryProvider(categoryRepo: sl()));
   sl.registerLazySingleton(() => CategoryProviderDetails(categoryRepo: sl()));

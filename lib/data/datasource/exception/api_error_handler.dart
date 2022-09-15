@@ -51,8 +51,9 @@ class ApiErrorHandler {
       } on FormatException catch (e) {
         errorDescription = e.toString();
       }
-    } else {
-      errorDescription = "is not a subtype of exception";
+    } else{
+      errorDescription = error.toString();
+
     }
     return errorDescription;
   }

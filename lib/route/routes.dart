@@ -19,6 +19,7 @@ import 'package:wantermarket/ui/screens/sector/sector_screen.dart';
 import 'package:wantermarket/ui/screens/dashboard/dashboard_screen.dart';
 import 'package:wantermarket/ui/screens/produit/produit_details_screen.dart';
 import 'package:wantermarket/ui/basewidgets/user-actions-account-status/no_internet_screen.dart';
+import 'package:wantermarket/ui/screens/slash/slash_screen.dart';
 import 'package:wantermarket/ui/screens/wishlist/wishlist_screen.dart';
 
 import '../data/models/body/category.dart';
@@ -115,7 +116,7 @@ class AppRoutes {
       case wishList:
         return MaterialPageRoute(builder: (context) => const WishlistScreen());
       case splash:
-        return MaterialPageRoute(builder: (context) => const LoginOrLogupScreen());
+        return MaterialPageRoute(builder: (context) => const SlashScreen());
       case abonnements:
         return MaterialPageRoute(builder: (context) => const AbonnementScreen());
       case editBoutiqueBySecteur:

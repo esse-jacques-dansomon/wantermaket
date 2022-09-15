@@ -1,13 +1,17 @@
+
 import 'package:circle_flags/circle_flags.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wantermarket/data/models/body/filter_model.dart';
+import 'package:wantermarket/providers/location_provider.dart';
 import 'package:wantermarket/providers/search_provider.dart';
 import 'package:wantermarket/route/routes.dart';
-
 import '../../../config/app_colors.dart';
+import '../../../data/models/body/app_country.dart';
 
 AppBar appBar({bool isActiveSearchbar=false, bool isOnSearchPage=false}) {
+  //create key
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   return AppBar(
     automaticallyImplyLeading: false,
     toolbarHeight: 70,
@@ -23,7 +27,6 @@ AppBar appBar({bool isActiveSearchbar=false, bool isOnSearchPage=false}) {
       isActiveSearchbar? Expanded(
         child: Center(
           child: Container(
-
             height:40,
             alignment: Alignment.centerLeft,
             margin: const EdgeInsets.only(left: 10, right: 10),
@@ -59,53 +62,50 @@ AppBar appBar({bool isActiveSearchbar=false, bool isOnSearchPage=false}) {
         ),
       ): Expanded(child: Container()),
       Center(
-        child: DropdownButton(
-          alignment :AlignmentDirectional.bottomEnd,
-          underline: DropdownButtonHideUnderline(child: Container(),) ,
-          hint: const Text('SN'),
-          value: 'SN',
-          elevation: 0,
-          items:   [
-            DropdownMenuItem(
-              alignment: Alignment.center,
-              value: 'SN',
-              child: Container(
-                alignment: Alignment.center,
-                child: Center(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      CircleFlag('sn', size: 25,),
-                      // SizedBox(width: 3),
-                      // Text('SN', style: TextStyle(
-                      //   fontSize: 16,
-                      //   fontWeight: FontWeight.bold,
-                      //   color: AppColors.PRIMARY,
-                      // ),)
-                    ],
+        child: Consumer<LocalizationProvider>(
+          builder: (BuildContext context, localizationProvider, Widget? child) {
+            return localizationProvider.countries.isNotEmpty ?Container(
+              margin: const EdgeInsets.only(right: 10),
+              child: DropdownButton<String>(
+                key: _scaffoldKey,
+                alignment :AlignmentDirectional.bottomEnd,
+                underline: DropdownButtonHideUnderline(child: Container(),) ,
+                selectedItemBuilder: (BuildContext context) {
+                  return localizationProvider.countries.map<Widget>((AppCountry country) {
+                    return Container(
+                      margin: const EdgeInsets.only(right: 10),
+                      child: CircleFlag(country.code,  size: 30),
+                    );
+                  }).toList();
+                },
+                // hint:  Text(localizationProvider.getCountryCode().toLowerCase()),
+                value: localizationProvider.getCountryCode(),
+                elevation: 0,
+                items: localizationProvider.countries.map((e) =>  DropdownMenuItem(
+                  alignment: Alignment.center,
+                  value: e.code.toLowerCase(),
+                  child: Container(
+                    alignment: Alignment.center,
+                    child: Center(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          CircleFlag(e.code.toLowerCase(), size: 25,),
+                          // SizedBox(width: 3),
+                          // Text('SN', style: TextStyle(
+                          //   fontSize: 16,
+                          //   fontWeight: FontWeight.bold,
+                          //   color: AppColors.PRIMARY,
+                          // ),)
+                        ],
+                      ),
+                    ),
                   ),
-                ),
+                ),).toList(),
+                onChanged: localizationProvider.setLocale,
               ),
-            ),
-            DropdownMenuItem(
-              value: 'TG',
-              child: Container(
-                alignment: Alignment.center,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    CircleFlag('tg', size: 25,),
-                    // SizedBox(width: 3),
-                    // Text('TG', style: TextStyle(
-                    //   fontSize: 16,
-                    //   fontWeight: FontWeight.bold,
-                    //   color: AppColors.PRIMARY,
-                    // ),)
-                  ],
-                ),
-              ),
-            ),
-          ], onChanged: (String? value) {  },
+            ) : Container();
+          },
         ),
       ),
 

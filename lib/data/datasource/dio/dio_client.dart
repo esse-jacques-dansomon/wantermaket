@@ -12,12 +12,11 @@ class DioClient {
 
   Dio dio=Dio() ;
   String token='';
-  String countryCode='SN';
+  String countryCode= 'sn';
 
   DioClient(this.baseUrl, Dio dioC, this.sharedPreferences) {
     token = sharedPreferences.getString(AppConstants.TOKEN) ??  '';
-    // countryCode = sharedPreferences.getString(AppConstants.COUNTRY_CODE) ?? AppConstants.languages[0].countryCode;
-    print("NNNN $token");
+    countryCode = sharedPreferences.getString(AppConstants.COUNTRY_CODE) ?? AppConstants.languages[0].code;
     dio = dioC;
     dio
       ..options.baseUrl = baseUrl
@@ -28,24 +27,23 @@ class DioClient {
         'Content-Type': 'application/json; charset=UTF-8',
         'Accept': 'application/json',
         'Authorization': 'Bearer $token',
-        // AppConstants.LANG_KEY : countryCode == 'US'? 'en':countryCode.toLowerCase(),
+        AppConstants.COUNTRY_CODE : countryCode,
 
       };
 
     // dio.interceptors.add(loggingInterceptor);
   }
 
-  void updateHeader(String token, String countryCode) {
+  void updateHeader( String countryCode) {
     token = token ;
-    countryCode = countryCode == null ? this.countryCode == 'US' ? 'en': this.countryCode.toLowerCase(): countryCode == 'US' ? 'en' : countryCode.toLowerCase();
-    this.token = token;
+    countryCode = countryCode ;
     this.countryCode = countryCode;
-    print('===Country code====>$countryCode');
+    print('update countryCode $countryCode');
     dio.options.headers = {
       'Content-Type': 'application/json; charset=UTF-8',
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
-      // AppConstants.LANG_KEY: countryCode == 'US'? 'en':countryCode.toLowerCase(),
+      AppConstants.COUNTRY_CODE: countryCode,
     };
   }
 
@@ -59,30 +57,30 @@ class DioClient {
     try {
       dio.options.headers = {
         'Content-Type': 'application/json; charset=UTF-8',
-    'Charset' :'utf-8',
-    'Authorization': 'Bearer ${sharedPreferences.getString(AppConstants.TOKEN) }',
-    // AppConstants.LANG_KEY: countryCode == 'US'? 'en':countryCode.toLowerCase(),
-    };
-    token = sharedPreferences.getString(AppConstants.TOKEN) ?? '';
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ${sharedPreferences.getString(AppConstants.TOKEN) }',
+        AppConstants.COUNTRY_CODE: countryCode,
+      };
+      token = sharedPreferences.getString(AppConstants.TOKEN) ?? '';
 
-    var response = await dio.get(
-    uri,
-    queryParameters: queryParameters,
-    options: options,
-    cancelToken: cancelToken,
-    onReceiveProgress: onReceiveProgress,
-    );
-    print('=====get====> $uri');
-    print('=====get====> $queryParameters');
-    print("=====TOKEN==> $token");
-    print("==shared token=> ${sharedPreferences.getString(AppConstants.TOKEN) }");
-    return response;
+      var response = await dio.get(
+        uri,
+        queryParameters: queryParameters,
+        options: options,
+        cancelToken: cancelToken,
+        onReceiveProgress: onReceiveProgress,
+      );
+      print('=====get====> $uri');
+      print('=====get====> $queryParameters');
+      print("==shared token=> ${sharedPreferences.getString(AppConstants.TOKEN) }");
+      print("==pays=> ${countryCode}");
+      return response;
     } on SocketException catch (e) {
-    throw SocketException(e.toString());
+      throw SocketException(e.toString());
     } on FormatException catch (_) {
-    throw const FormatException("Unable to process the data");
+      throw const FormatException("Unable to process the data");
     } catch (e) {
-    rethrow;
+      rethrow;
     }
   }
 
@@ -99,12 +97,14 @@ class DioClient {
       'Content-Type': 'application/json; charset=UTF-8',
       'Accept': 'application/json',
       'Authorization': 'Bearer ${sharedPreferences.getString(AppConstants.TOKEN) }',
-      // AppConstants.LANG_KEY: countryCode == 'US'? 'en':countryCode.toLowerCase(),
+      AppConstants.COUNTRY_CODE: countryCode,
     };
     token = sharedPreferences.getString(AppConstants.TOKEN) ?? '';
     print('=====post====> $uri');
     print("=====TOKEN==> $token");
     print("==shared token=> ${sharedPreferences.getString(AppConstants.TOKEN) }");
+    print("==pays=> ${countryCode}");
+
     try {
       var response = await dio.post(
         uri,
@@ -135,14 +135,15 @@ class DioClient {
     dio.options.headers = {
       'Content-Type': 'application/json; charset=UTF-8',
       'Accept': 'application/json',
-
       'Authorization': 'Bearer ${sharedPreferences.getString(AppConstants.TOKEN) }',
-      // AppConstants.LANG_KEY: countryCode == 'US'? 'en':countryCode.toLowerCase(),
+      AppConstants.COUNTRY_CODE: countryCode,
     };
     token = sharedPreferences.getString(AppConstants.TOKEN) ?? '';
     print('=====put====> $uri');
     print("=====TOKEN==> $token");
     print("==shared token=> ${sharedPreferences.getString(AppConstants.TOKEN) }");
+    print("==pays=> ${countryCode}");
+
     try {
       var response = await dio.put(
         uri,
@@ -171,12 +172,13 @@ class DioClient {
       'Content-Type': 'application/json; charset=UTF-8',
       'Accept': 'application/json',
       'Authorization': 'Bearer ${sharedPreferences.getString(AppConstants.TOKEN) }',
-      // AppConstants.LANG_KEY: countryCode == 'US'? 'en':countryCode.toLowerCase(),
+      AppConstants.COUNTRY_CODE: countryCode,
     };
     token = sharedPreferences.getString(AppConstants.TOKEN) ?? '';
     print('=====delete====> $uri');
     print("=====TOKEN==> $token");
     print("==shared token=> ${sharedPreferences.getString(AppConstants.TOKEN) }");
+    print("==pays=> ${countryCode}");
     try {
       var response = await dio.delete(
         uri,
