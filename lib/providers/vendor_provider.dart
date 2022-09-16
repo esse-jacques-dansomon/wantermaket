@@ -40,7 +40,7 @@ class VendorProvider extends ChangeNotifier {
   Future<void> getBoutique() async {
     try {
       final response = await vendorRepo.getUserConnectedBoutique();
-      _boutique = Boutique.fromJson(response.response.data['data']);
+      _boutique = Boutique.fromJson(response.response.data);
       notifyListeners();
     } catch (e) {
       rethrow;
@@ -51,7 +51,7 @@ class VendorProvider extends ChangeNotifier {
     notifyListeners();
     try {
       final response = await vendorRepo.getUserConnectedStat();
-      _vendorStat = VendorStat.fromJson(response.response.data["data"]);
+      _vendorStat = VendorStat.fromJson(response.response.data);
       notifyListeners();
     } catch (e) {
       rethrow;
@@ -66,9 +66,12 @@ class VendorProvider extends ChangeNotifier {
     notifyListeners();
     try {
       final response = await vendorRepo.getUserConnectedProducts();
-      response.response.data['data'].forEach((element) {
-        _products.add(Product.fromJson(element));
-      });
+      if(response.response.data != null){
+        response.response.data.forEach((element) {
+          _products.add(Product.fromJson(element));
+        });
+      }
+
       if(reload){
         isProductsLoad = true;
       }

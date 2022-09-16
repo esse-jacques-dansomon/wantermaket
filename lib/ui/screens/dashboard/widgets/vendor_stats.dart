@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wantermarket/config/app_colors.dart';
+import 'package:wantermarket/config/app_images.dart';
 import 'package:wantermarket/providers/vendor_provider.dart';
 import 'package:wantermarket/route/routes.dart';
 
@@ -44,7 +45,7 @@ class VendorDashboardStats extends StatelessWidget {
                 child: ClipOval(
                     child: Consumer<VendorProvider>(
                       builder: (context, vendorProvider, _)=>CachedNetworkImage(
-                        imageUrl: vendorProvider.boutique.profilImage!,
+                        imageUrl: vendorProvider.boutique.profilImage ?? AppImage.logo,
                         fit: BoxFit.cover,
                         width: 75,
                         height: 75,

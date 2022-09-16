@@ -19,19 +19,20 @@ class RegisterFormWidget extends StatefulWidget {
 }
 
 class _RegisterFormWidgetState extends State<RegisterFormWidget> {
+  String _phone= '';
   String _countryCode = '+212';
-  String country = "SN";
+  String country = "sn";
   bool _obscureText = true;
   bool _obscureTextConfirmedPassword = true;
-  final _usernameController = TextEditingController();
-  final  _firstnameController = TextEditingController();
-  final _emailController = TextEditingController();
-  final _countryController = TextEditingController();
-  final _phoneController = TextEditingController();
-  final _nomBoutiqueController = TextEditingController();
-  final _addressController = TextEditingController();
-  final __passwordController = TextEditingController();
-  final _confirmPasswordController = TextEditingController();
+  final _usernameController = TextEditingController(text: '');
+  final  _firstnameController = TextEditingController(text: '');
+  final _emailController = TextEditingController(text: '');
+  final _countryController = TextEditingController(text: '');
+  final _phoneController = TextEditingController(text: '');
+  final _nomBoutiqueController = TextEditingController(text: '');
+  final _addressController = TextEditingController(text: '');
+  final __passwordController = TextEditingController(text: '');
+  final _confirmPasswordController = TextEditingController(text: '');
   List<AppCountry> countries = [];
   FocusNode? _firstnameNode;
   FocusNode? _nomButiqueNode;
@@ -42,6 +43,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
   FocusNode? _phoneNode;
   FocusNode? _usernameNode;
   FocusNode? _countryNode;
+
 
   @override
   void initState() {
@@ -131,7 +133,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
                         name: _firstnameController.text,
                         firstName: _firstnameController.text,
                         email: _emailController.text,
-                        phone: _phoneController.text,
+                        phone: _phone,
                         address: _addressController.text,
                         country: this.country,
                         boutiqueName: _nomBoutiqueController.text,
@@ -450,8 +452,8 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
         focusNode: _phoneNode,
         initialValue: "77777",
         keyboardType: TextInputType.phone,
-        controller: _phoneController,
-        // onChanged: (value) => _phone =  '$_countryCode${value.replaceAll(' ', '')}',
+        // controller: _phoneController,
+        onChanged: (value) => _phone =  '$_countryCode${value.replaceAll(' ', '')}',
         // validator: senegalPhoneNumberValidator,
         textInputAction: TextInputAction.next,
         onEditingComplete: () {
@@ -494,7 +496,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
       width: MediaQuery.of(context).size.width,
       margin: const EdgeInsets.only(bottom: 25),
       height: 55,
-      child: DropdownButtonFormField<String>(
+      child: DropdownButtonFormField2<String>(
           validator: (value) {
             if (value!.isEmpty) {
               return 'Veuillez choisir un pays';
