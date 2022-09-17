@@ -3,8 +3,6 @@
 //     final image = imageFromJson(jsonString);
 
 import 'dart:convert';
-
-import 'package:wantermarket/config/app_constantes.dart';
 import 'package:wantermarket/config/app_images.dart';
 
 Image imageFromJson(String str) => Image.fromJson(json.decode(str));
@@ -26,7 +24,7 @@ class Image {
       );
 
   factory Image.fromJson(Map<String, dynamic> json) => Image(
-    path: json["path"] != null ? AppConstants.BASE_URL_IMAGE + json["path"] : AppImage.logo,
+    path: json["path"] != null ? json["path"] : AppImage.logo,
   );
 
   Map<String, dynamic> toJson() => {

@@ -8,6 +8,8 @@ import 'package:wantermarket/providers/search_provider.dart';
 import 'package:wantermarket/route/routes.dart';
 import '../../../config/app_colors.dart';
 import '../../../data/models/body/app_country.dart';
+import '../../../providers/boutique_provider.dart';
+import '../../../providers/product_provider.dart';
 
 AppBar appBar({bool isActiveSearchbar=false, bool isOnSearchPage=false}) {
   //create key
@@ -91,25 +93,23 @@ AppBar appBar({bool isActiveSearchbar=false, bool isOnSearchPage=false}) {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           CircleFlag(e.code.toLowerCase(), size: 25,),
-                          // SizedBox(width: 3),
-                          // Text('SN', style: TextStyle(
-                          //   fontSize: 16,
-                          //   fontWeight: FontWeight.bold,
-                          //   color: AppColors.PRIMARY,
-                          // ),)
                         ],
                       ),
                     ),
                   ),
                 ),).toList(),
-                onChanged: localizationProvider.setLocale,
+                onChanged: ( value){
+                  localizationProvider.setLocale(value);
+                  Provider.of<BoutiqueProvider>(context, listen: false).getBoutiquesExclusives();
+                  Provider.of<ProductProvider>(context, listen: false).getTopAnnonces();
+                  Provider.of<ProductProvider>(context, listen: false).getDealOfTheDay();
+                  Provider.of<ProductProvider>(context, listen: false).getNewArrivals(reload: true);
+                },
               ),
             ) : Container();
           },
         ),
       ),
-
-
     ],
   );
 }

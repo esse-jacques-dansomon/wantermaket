@@ -4,26 +4,56 @@ import 'package:wantermarket/data/models/body/product.dart';
 import '../data/models/body/boutique.dart';
 import '../data/repositories/boutique_repo.dart';
 
+enum BoutiqueState { initial, loading, loaded, error }
+enum TopBoutiqueState { initial, loading, loaded, error }
+
 class BoutiqueProvider extends ChangeNotifier{
   final BoutiqueRepo boutiqueRepo;
   BoutiqueProvider({required this.boutiqueRepo});
 
-  final List<Boutique> _boutiquesExclusives = [];
+  final List<Boutique> _topBoutiques = [];
+  final List<Boutique> _exclusivesBoutiques = [];
   final List<Product> _boutiqueProduits = [];
   final List<Product> productsSearch = [];
   List<Product> get boutiqueProduits => _boutiqueProduits;
-  List<Boutique> get boutiquesExclusives => _boutiquesExclusives;
+  List<Boutique> get topBoutiques => _topBoutiques;
+  List<Boutique> get boutiquesExclusives => _exclusivesBoutiques;
 
-  Future<void> getBoutiquesExclusives() async {
-    final response = await boutiqueRepo.getBoutiquesExclusives();
-    if(response.error == null){
-      _boutiquesExclusives.clear();
+  //states
+  BoutiqueState state = BoutiqueState.initial;
+  TopBoutiqueState topBoutiqueState = TopBoutiqueState.initial;
+
+  Future<void> getTopBoutiques() async {
+    this.topBoutiqueState = TopBoutiqueState.loading;
+    notifyListeners();
+    final response = await boutiqueRepo.getTopBoutiques();
+    if( response.response.statusCode == 200){
+      _topBoutiques.clear();
       response.response.data.forEach((element) {
-        _boutiquesExclusives.add(Boutique.fromJson(element));
+        _topBoutiques.add(Boutique.fromJson(element));
       });
+      this.topBoutiqueState = TopBoutiqueState.loaded;
       notifyListeners();
     }else{
-      print('error');
+      this.topBoutiqueState = TopBoutiqueState.error;
+      notifyListeners();
+    }
+  }
+
+  Future<void> getBoutiquesExclusives() async {
+    this.state = BoutiqueState.loading;
+    notifyListeners();
+    final response = await boutiqueRepo.getBoutiquesExclusives();
+    if(response.error == null && response.response.statusCode == 200){
+      _exclusivesBoutiques.clear();
+      response.response.data.forEach((element) {
+        _exclusivesBoutiques.add(Boutique.fromJson(element));
+      });
+      this.state = BoutiqueState.loaded;
+      notifyListeners();
+    }else{
+      this.state = BoutiqueState.error;
+      notifyListeners();
     }
   }
 

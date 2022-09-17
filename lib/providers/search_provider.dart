@@ -29,7 +29,7 @@ class SearchProvider extends ChangeNotifier {
   SearchBoutiqueState searchBoutiqueState = SearchBoutiqueState.initial;
   SearchProvider({required this.searchRepo});
 
-  String searchText = ' ';
+  String? searchText = null;
   final List<Product> _products = [];
   List<Product> get products => _products;
 
@@ -74,30 +74,28 @@ class SearchProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
   Future<void> filter({required FilterModel filterModel}) async {
-    filterModel.keyWorld = "";
+    filterModel.keyWorld = searchText ?? '';
     products.clear();
     boutiques.clear();
     state = SearchProductState.loading;
     searchBoutiqueState = SearchBoutiqueState.loading;
     notifyListeners();
     try{
-       var response = await searchRepo.search(filterModel: filterModel);
-      if(response.statusCode == 200){
-        response.data['data']['boutiques'].forEach((element) {
-         try{
+       var response = await searchRepo.searchPost(filterModel: filterModel);
+       print(response.response.data.toString());
+      if(response.response.statusCode == 200 ){
+       if(response.response.data['boutiques'] != null){
+         response.response.data['boutiques'].forEach((element) {
            boutiques.add(Boutique.fromJson(element));
-         }catch(e){
-            print(e);
-         }
-        });
-        response.data['data']['produits'].forEach((element) {
-          try{
-            products.add(Product.fromJson(element));
-          }catch(e){
-            print(e);
-          }
-        });
+         });
+        }
+       if(response.response.data['produits'] != null){
+         response.response.data['produits'].forEach((element) {
+           products.add(Product.fromJson(element));
+         });
+        }
         if(products.isEmpty){
           state = SearchProductState.noProducts;
         }else{
@@ -110,11 +108,11 @@ class SearchProvider extends ChangeNotifier {
         }
         notifyListeners();
       }else{
-        print(response.statusCode);
-        print(response.realUri);
-        print(response.data);
-        print(response.requestOptions);
-        print(response.statusMessage);
+        // print(response.statusCode);
+        // print(response.realUri);
+        // print(response.data);
+        // print(response.requestOptions);
+        // print(response.statusMessage);
         state = SearchProductState.error;
         searchBoutiqueState = SearchBoutiqueState.error;
         notifyListeners();

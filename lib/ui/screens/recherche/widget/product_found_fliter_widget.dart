@@ -57,7 +57,7 @@ class _ProductFoundFilterState extends State<ProductFoundFilter> {
                 }, child: const Text('Annuler', style:TextStyle(
                     fontSize: 20,color: AppColors.BLACK
                 ))),
-                const Text('Filtre', style:TextStyle(
+                const Text('Filtres', style:TextStyle(
                   fontSize: 20, color: AppColors.BLACK
                 )),
                 TextButton(onPressed: (){

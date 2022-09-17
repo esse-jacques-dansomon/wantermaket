@@ -3,20 +3,30 @@ import 'package:wantermarket/data/repositories/slider_repo.dart';
 
 import '../data/models/body/slider.dart';
 
+enum SliderState { initial, loading, loaded, error }
+
 class SliderProvider extends ChangeNotifier{
   final SliderRepo sliderRepo;
   SliderProvider({required this.sliderRepo});
 
   final List<SliderItem> _sliders = [];
   List<SliderItem> get sliders  => _sliders;
+  SliderState state = SliderState.initial;
+
 
   Future<void> getHomeSliders() async {
+    this.state = SliderState.loading;
+    notifyListeners();
     final sliderResponse = await sliderRepo.getSliders();
-    if(sliderResponse.error == null){
+    if(sliderResponse.response.statusCode==200){
       _sliders.clear();
       sliderResponse.response.data.forEach((element) {
         _sliders.add(SliderItem.fromJson(element));
       });
+      this.state = SliderState.loaded;
+      notifyListeners();
+    }else{
+      this.state = SliderState.error;
       notifyListeners();
     }
   }

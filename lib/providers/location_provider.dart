@@ -15,7 +15,6 @@ class LocalizationProvider extends ChangeNotifier {
 
   _saveLanguage(String locale) async {
     this.locationRepo.sharedPreferences.setString(AppConstants.COUNTRY_CODE, locale.toLowerCase());
-    notifyListeners();
   }
 
   getAllCountries() async {
@@ -37,7 +36,6 @@ class LocalizationProvider extends ChangeNotifier {
     this._saveLanguage(value.toString());
     this.locationRepo.dioClient.updateHeader(value.toString().toLowerCase());
     notifyListeners();
-
   }
 
   String getCountryCode() {

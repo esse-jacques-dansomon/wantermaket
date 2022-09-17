@@ -12,7 +12,7 @@ class DioClient {
 
   Dio dio=Dio() ;
   String token='';
-  String countryCode= 'sn';
+  String countryCode= '';
 
   DioClient(this.baseUrl, Dio dioC, this.sharedPreferences) {
     token = sharedPreferences.getString(AppConstants.TOKEN) ??  '';
@@ -27,7 +27,7 @@ class DioClient {
         'Content-Type': 'application/json; charset=UTF-8',
         'Accept': 'application/json',
         'Authorization': 'Bearer $token',
-        AppConstants.COUNTRY_CODE : countryCode,
+        AppConstants.COUNTRY_CODE : countryCode.toUpperCase(),
 
       };
 
@@ -38,7 +38,6 @@ class DioClient {
     token = token ;
     countryCode = countryCode ;
     this.countryCode = countryCode;
-    print('update countryCode $countryCode');
     dio.options.headers = {
       'Content-Type': 'application/json; charset=UTF-8',
       'Accept': 'application/json',
@@ -59,7 +58,7 @@ class DioClient {
         'Content-Type': 'application/json; charset=UTF-8',
         'Accept': 'application/json',
         'Authorization': 'Bearer ${sharedPreferences.getString(AppConstants.TOKEN) }',
-        AppConstants.COUNTRY_CODE: countryCode,
+        AppConstants.COUNTRY_CODE: countryCode.toUpperCase(),
       };
       token = sharedPreferences.getString(AppConstants.TOKEN) ?? '';
 
@@ -101,9 +100,9 @@ class DioClient {
     };
     token = sharedPreferences.getString(AppConstants.TOKEN) ?? '';
     print('=====post====> $uri');
-    print("=====TOKEN==> $token");
     print("==shared token=> ${sharedPreferences.getString(AppConstants.TOKEN) }");
     print("==pays=> ${countryCode}");
+    print('=====data====> $data');
 
     try {
       var response = await dio.post(

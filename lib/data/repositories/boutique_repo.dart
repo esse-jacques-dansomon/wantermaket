@@ -18,7 +18,7 @@ class BoutiqueRepo {
   }
 
   Future<ApiResponse> getTopBoutiques() async {
-    try {final response = await dioClient.get(AppConstants.BOUTIQUES_EXCLUSIVES);
+    try {final response = await dioClient.get(AppConstants.TOP_BOUTOIQUES_URI);
     return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

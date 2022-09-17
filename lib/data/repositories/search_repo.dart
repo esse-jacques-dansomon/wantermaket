@@ -15,9 +15,26 @@ class SearchRepo {
   search( {required FilterModel filterModel}) async {
     try {
       print(filterModel.toJson());
-      final response = await dioClient.get(AppConstants.SEARCH_URI ,
-          queryParameters: filterModel.toJson());
+      final response =  dioClient.get(AppConstants.SEARCH_URI ,
+          queryParameters: filterModel.toMap());
       return response;
+    } catch (e) {
+      print(e);
+      return throw DioError(error: e, requestOptions: RequestOptions(path: AppConstants.SEARCH_URI), );
+    }
+  }
+
+  Future<ApiResponse> searchPost( {required FilterModel filterModel}) async {
+    try {
+      print(filterModel.toJson());
+      final response = await dioClient.post(AppConstants.SEARCH_URI ,
+          options: Options(
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          ),
+          data: filterModel.toJson());
+      return ApiResponse.withSuccess(response);
     } catch (e) {
       print(e);
       return throw DioError(error: e, requestOptions: RequestOptions(path: AppConstants.SEARCH_URI), );

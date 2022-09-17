@@ -30,11 +30,12 @@ class _SlashScreenState extends State<SlashScreen> {
   @override
   initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<LocalizationProvider>(context, listen: false).getAllCountries();
       Provider.of<AuthProvider>(context, listen: false).verifyIsAuthenticated();
+      Provider.of<LocalizationProvider>(context, listen: false).getAllCountries();
       Provider.of<SliderProvider>(context, listen: false).getHomeSliders();
-      Provider.of<BoutiqueProvider>(context, listen: false).getBoutiquesExclusives();
+      Provider.of<BoutiqueProvider>(context, listen: false).getTopBoutiques();
       Provider.of<CategoryProvider>(context, listen: false).getCategories();
+      Provider.of<ProductProvider>(context, listen: false).getTopAnnonces();
       Provider.of<ProductProvider>(context, listen: false).getTopAnnonces();
       Provider.of<ProductProvider>(context, listen: false).getDealOfTheDay();
       Provider.of<ProductProvider>(context, listen: false).getNewArrivals();
@@ -55,17 +56,12 @@ class _SlashScreenState extends State<SlashScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Center(
-            child: Image.asset('assets/images/logo.png', width: 200, height: 200),
+            child: Image.asset('assets/images/logo.png', width: 150, height: 150),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 5),
           const Text("WanterMarket", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),),
           const SizedBox(height: 20),
           //spinner with animation
-          const CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(AppColors.PRIMARY),
-          ),
-
-
         ],
       ),
     );

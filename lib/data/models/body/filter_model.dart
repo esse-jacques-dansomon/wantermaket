@@ -17,7 +17,7 @@ class FilterModel {
     this.min,
     this.max,
     this.secteurs ,
-    this.priceFilter = 2,
+    this.priceFilter ,
     this.isNew,
     this.isPopular,
     this.isPromo,
@@ -47,7 +47,7 @@ class FilterModel {
     "keyWorld": keyWorld,
     "min": min,
     "max": max,
-    // "secteurs": secteurs == null ? null : List<dynamic>.from(secteurs!.map((x) => x)),
+    "secteurs": secteurs == null ? null : List<dynamic>.from(secteurs!.map((x) => x)),
     "priceFilter": priceFilter,
     "isNew": isNew,
     "isPopular": isPopular,
@@ -55,7 +55,7 @@ class FilterModel {
   };
 
   factory FilterModel.fromMap(Map<String, dynamic> json) => FilterModel(
-    keyWorld: json["keyWorld"],
+    keyWorld: json["keyWorld"] ,
     min: json["min"],
     max: json["max"],
     secteurs: json["secteurs"] == null ? null : List<int>.from(json["secteurs"].map((x) => x)),

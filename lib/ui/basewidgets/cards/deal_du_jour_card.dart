@@ -115,7 +115,6 @@ class DealDuJour extends StatelessWidget {
                   )
                 ],
               ),
-
             ],
           ),
         ),

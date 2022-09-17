@@ -30,13 +30,13 @@ class Boutique {
         this.idVendor});
 
   Boutique.fromJson(Map<String, dynamic> json) {
-    id = json['id'] ;
-    name = json['name']?? '';
-    bio = json['bio']?? '';
-    latitude = json['latitude']?? '';
-    longitude = json['longitude']?? '';
-    profilImage =  (json['profil_image'] != null ? AppConstants.BASE_URL_IMAGE +  json['profil_image']: AppImage.logo );
-    coverImage = (json['cover_image'] != null ? AppConstants.BASE_URL_IMAGE +  json['cover_image']: AppImage.logo);
+    id = json['id'] != null ? json['id'] : 0;
+    name = json['name'] != null ? json['name']  : '';
+    bio = json['bio']!= null ? json['bio'] : '';
+    latitude = json['latitude'] != null ? json['latitude']  :  '';
+    longitude = json['longitude'] != null ? json['longitude']  :  '';
+    profilImage =  (json['profil_image'] != null ? json['profil_image']: AppImage.logo );
+    coverImage = (json['cover_image'] != null ?   json['cover_image']: AppImage.logo);
     idVendor = json['id_vendor'];
     vendor = json['vendeur'] != null ? Vendor.fromJson(json['vendeur']) : null;
     if (json['secteurs'] != null) {
