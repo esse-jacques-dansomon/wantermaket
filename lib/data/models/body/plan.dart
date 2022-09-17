@@ -39,7 +39,7 @@ class Plan {
     banner: json["banner"],
     nbrDeal: json["nbr_deal"],
     nbrProduit: json["nbr_produit"],
-    price: json["price"],
+    price: json["prix"],
     description: json["description"],
   );
 
@@ -51,7 +51,7 @@ class Plan {
     "banner": banner,
     "nbr_deal": nbrDeal,
     "nbr_produit": nbrProduit,
-    "price": nbrDeal,
+    "prix": price,
     "description": nbrProduit,
   };
 }

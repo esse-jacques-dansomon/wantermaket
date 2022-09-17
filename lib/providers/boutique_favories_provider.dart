@@ -18,7 +18,7 @@ class BoutiqueFavoriesProvider extends ChangeNotifier{
     boutiquesFavories.clear();
     final response = await boutiqueFavoriesRepo.getMyFavories();
     if(response.error == null){
-      response.response.data['data'].forEach((element) {
+      response.response.data.forEach((element) {
         boutiquesFavories.add(Boutique.fromJson(element));
       });
       notifyListeners();

@@ -50,7 +50,7 @@ class CategoryProviderDetails extends ChangeNotifier{
   Future<void> getCategoryProducts(int id,{isPagination = false} ) async {
     controlPagination(isPagination);
     final response = await categoryRepo.getCategoryProducts(id, currentPage);
-    if(response.error == null ){
+    if(response.response.statusCode == 200){
       if(response.response.data['data'].length == 0 && currentPage == 1){
         _dataState = DataState.noMoreData;
       }else{

@@ -27,13 +27,13 @@ class AppConstants {
 
   //AUTH
   static const String SEARCH_URI = '/search';
-  static const String LOGIN_URI = '/login';
-  static const String RESET_PASSWORD_URI = '/password/update';
-  static const String PASSWORD_FORGOT_URI = '/password/forget';
-  static const String PASSWORD_OTP_URI = '/password/otp/verif';
-  static const String LOGOUT = '/logout';
-  static const String USER_CONNECTED_INFO = '/verify';
-  static const String TOKEN_URI = '/store/usertoken';
+  static const String LOGIN_URI = '/auth/login';
+  static const String RESET_PASSWORD_URI = '/auth/password/update';
+  static const String PASSWORD_FORGOT_URI = '/auth/password/forget';
+  static const String PASSWORD_OTP_URI = '/auth/password/otp/verif';
+  static const String LOGOUT = 'auth/logout';
+  static const String USER_CONNECTED_INFO = '/auth/verify';
+  static const String TOKEN_URI = '/auth/firetoken';
 
   //SELLER
   static const String VENDOR_BOUTIQUE_URI = '/vendeur';

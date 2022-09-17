@@ -109,12 +109,12 @@ class _AppDrawerState extends State<AppDrawer> {
                 icon: Icons.shop_2_outlined,
               ) ,
 
-              DrawerMenuItem(
-                menuName: 'Notifications',
-                route: AppRoutes.notification,
-                icon: Icons.notifications_on_outlined,
+              // DrawerMenuItem(
+              //   menuName: 'Notifications',
+              //   route: AppRoutes.notification,
+              //   icon: Icons.notifications_on_outlined,
 
-              ),
+              // ),
             ],
           ) : Container(),
 

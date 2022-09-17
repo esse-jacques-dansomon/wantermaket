@@ -14,7 +14,7 @@ class PlanProvider extends ChangeNotifier {
       try{
         final response = await planRepo.getAllPlans();
         if(response.error == null){
-          response.response.data['data'].forEach((element) {
+          response.response.data.forEach((element) {
             plans.add(Plan.fromJson(element));
           });
           notifyListeners();

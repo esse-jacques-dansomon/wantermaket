@@ -67,7 +67,7 @@ class VendorProvider extends ChangeNotifier {
     try {
       final response = await vendorRepo.getUserConnectedProducts();
       if(response.response.data != null){
-        response.response.data.forEach((element) {
+        response.response.data['data'].forEach((element) {
           _products.add(Product.fromJson(element));
         });
       }
