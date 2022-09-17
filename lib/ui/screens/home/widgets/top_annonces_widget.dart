@@ -52,10 +52,13 @@ class TopAnnoncesShimmer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-        itemCount: 15,
-        scrollDirection: Axis.horizontal,
-        separatorBuilder: (BuildContext context, int index) => const SizedBox(width: 10),
-        itemBuilder: (BuildContext context, int index) => ProductShimmer());
+    return Container(
+      height: 315,
+      child: ListView.separated(
+          itemCount: 15,
+          scrollDirection: Axis.horizontal,
+          separatorBuilder: (BuildContext context, int index) => const SizedBox(width: 10),
+          itemBuilder: (BuildContext context, int index) => ProductShimmer()),
+    );
   }
 }

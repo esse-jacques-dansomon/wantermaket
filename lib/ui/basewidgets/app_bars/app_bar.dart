@@ -101,6 +101,7 @@ AppBar appBar({bool isActiveSearchbar=false, bool isOnSearchPage=false}) {
                 onChanged: ( value){
                   localizationProvider.setLocale(value);
                   Provider.of<BoutiqueProvider>(context, listen: false).getBoutiquesExclusives();
+                  Provider.of<BoutiqueProvider>(context, listen: false).getTopBoutiques();
                   Provider.of<ProductProvider>(context, listen: false).getTopAnnonces();
                   Provider.of<ProductProvider>(context, listen: false).getDealOfTheDay();
                   Provider.of<ProductProvider>(context, listen: false).getNewArrivals(reload: true);
