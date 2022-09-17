@@ -40,7 +40,7 @@ class LocalizationProvider extends ChangeNotifier {
 
   String getCountryCode() {
     String code = locationRepo.sharedPreferences.getString(AppConstants.COUNTRY_CODE) ?? AppConstants.languages[0].code;
-    return this._countries.firstWhere((element) => element.code == code).code;
+    return code;
   }
 
 

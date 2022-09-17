@@ -1,10 +1,8 @@
-import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:wantermarket/data/models/body/boutique.dart';
 import 'package:wantermarket/data/models/body/filter_model.dart';
-import 'package:wantermarket/data/models/response/api_response.dart';
 
 import '../data/models/body/product.dart';
 import '../data/repositories/search_repo.dart';
@@ -84,7 +82,7 @@ class SearchProvider extends ChangeNotifier {
     notifyListeners();
     try{
        var response = await searchRepo.searchPost(filterModel: filterModel);
-       print(response.response.data.toString());
+       // print(response.response.data.toString());
       if(response.response.statusCode == 200 ){
        if(response.response.data['boutiques'] != null){
          response.response.data['boutiques'].forEach((element) {

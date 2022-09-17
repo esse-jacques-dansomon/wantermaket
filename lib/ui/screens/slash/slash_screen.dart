@@ -29,9 +29,10 @@ class _SlashScreenState extends State<SlashScreen> {
 
   @override
   initState() {
+    super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<AuthProvider>(context, listen: false).verifyIsAuthenticated();
       Provider.of<LocalizationProvider>(context, listen: false).getAllCountries();
+      Provider.of<AuthProvider>(context, listen: false).verifyIsAuthenticated();
       Provider.of<SliderProvider>(context, listen: false).getHomeSliders();
       Provider.of<BoutiqueProvider>(context, listen: false).getTopBoutiques();
       Provider.of<CategoryProvider>(context, listen: false).getCategories();
@@ -44,7 +45,6 @@ class _SlashScreenState extends State<SlashScreen> {
         Navigator.pushReplacementNamed(context, AppRoutes.home);
       });
     });
-    super.initState();
 
   }
 

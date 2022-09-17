@@ -17,7 +17,6 @@ class LocationRepo {
   Future<ApiResponse> getAllCountries() async {
     try {
       final response = await dioClient.get(AppConstants.URI_COUNTRIES);
-      print(response.data);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
