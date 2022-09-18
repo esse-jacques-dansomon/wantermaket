@@ -30,7 +30,8 @@ class SearchRepo {
       final response = await dioClient.post(AppConstants.SEARCH_URI ,
           options: Options(
             headers: {
-              'Content-Type': 'application/json',
+              'Content-Type': 'application/json; charset=UTF-8',
+              'Accept': 'application/json',
             },
           ),
           data: filterModel.toJson());

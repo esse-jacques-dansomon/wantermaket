@@ -44,6 +44,7 @@ class SearchProvider extends ChangeNotifier {
     try{
        Response response = await searchRepo.search(filterModel: filterModel);
       if(response.statusCode == 200 ){
+        print(response.data);
         response.data['boutiques'].forEach((element) {
           boutiques.add(Boutique.fromJson(element));
         });
@@ -62,6 +63,7 @@ class SearchProvider extends ChangeNotifier {
         }
         notifyListeners();
       }else{
+        print(response.statusCode);
         state = SearchProductState.error;
         searchBoutiqueState = SearchBoutiqueState.error;
         notifyListeners();
@@ -82,7 +84,7 @@ class SearchProvider extends ChangeNotifier {
     notifyListeners();
     try{
        var response = await searchRepo.searchPost(filterModel: filterModel);
-       // print(response.response.data.toString());
+    //  print(response.response.data.toString());
       if(response.response.statusCode == 200 ){
        if(response.response.data['boutiques'] != null){
          response.response.data['boutiques'].forEach((element) {

@@ -69,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
       provisional: false,
     );
     //_messaging.subscribeToTopic('all');
-    // _messaging.getToken().then((token) => print(token));
+    _messaging.getToken().then((token) => print(token));
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
       // await Firebase.initializeApp();

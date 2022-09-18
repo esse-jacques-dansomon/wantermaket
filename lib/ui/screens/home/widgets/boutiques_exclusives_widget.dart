@@ -41,7 +41,7 @@ class BoutiquesExclusives extends StatelessWidget {
               children: [
                 Container(
                   height: 147,
-                  margin: const EdgeInsets.only(left: 15, right: 15),
+                  margin: const EdgeInsets.only(left: 15, right: 15, top: 20),
                   child: ListView.separated(
                     itemCount: boutiqueExclusiveProvider.boutiquesExclusives.length,
                     shrinkWrap: true,
