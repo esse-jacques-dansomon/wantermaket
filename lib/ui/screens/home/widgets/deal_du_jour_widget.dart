@@ -5,6 +5,7 @@ import 'package:wantermarket/providers/product_provider.dart';
 import 'package:wantermarket/ui/screens/home/widgets/title_and_more_widget.dart';
 
 import '../../../../config/app_colors.dart';
+import '../../../../data/models/body/filter_model.dart';
 import '../../../../route/routes.dart';
 import '../../../basewidgets/cards/deal_du_jour_card.dart';
 import '../../../basewidgets/shimmer/custom_shimmer.dart';
@@ -18,7 +19,7 @@ class DealDuJourWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const TitleAndMoreText( title: 'En Promo', moreText: 'Voir Plus', route:  AppRoutes.search),
+        TitleAndMoreText( title: 'En Promo', moreText: 'Voir Plus', route:  AppRoutes.search, filterModel: FilterModel(isPromo: 1),),
         Consumer<ProductProvider>(
           builder: (context, productProvider, child){
            switch (productProvider.dealsOfTheDayStatus) {
@@ -55,7 +56,7 @@ class DealDuJourWidget extends StatelessWidget {
                ): const Center(child: Text('Aucun produit'));
              case ProductDealOfTheDayStatus.error:
                return const Center(child: Text('error'));
-           };
+           }
           },
         ),
       ],

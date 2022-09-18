@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:wantermarket/data/repositories/product_repo.dart';
@@ -91,7 +93,7 @@ class ProductProvider extends ChangeNotifier{
     if(reload){
       _newArrivals.clear();
       _page = 1;
-      isPaginationLoading = true;
+      isPaginationLoading = false;
     }
     newArrivalStatus = ProductNewArrivalStatus.loading;
     notifyListeners();

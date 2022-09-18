@@ -6,6 +6,7 @@ import 'package:wantermarket/ui/basewidgets/cards/produit_by_boutique.dart';
 import 'package:wantermarket/ui/screens/home/widgets/title_and_more_widget.dart';
 
 
+import '../../../../data/models/body/filter_model.dart';
 import '../../../basewidgets/shimmer/shimmer_product.dart';
 
 
@@ -18,7 +19,7 @@ class TopAnnoncesWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const TitleAndMoreText( title: 'Top Annonces', moreText: 'Voir Plus', route:  AppRoutes.search),
+        TitleAndMoreText( title: 'Top Annonces', moreText: 'Voir Plus', route:  AppRoutes.search, filterModel: FilterModel(isPopular: 1)),
         Consumer<ProductProvider>(
             builder: (context, productProvider, child) {
               switch (productProvider.topAnnoncesStatus) {

@@ -37,16 +37,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final ScrollController _controller = ScrollController();
 
-  Future<void> _loadData() async {
-    Provider.of<AuthProvider>(context, listen: false).verifyIsAuthenticated();
-    Provider.of<SliderProvider>(context, listen: false).getHomeSliders();
-    Provider.of<BoutiqueProvider>(context, listen: false).getBoutiquesExclusives();
-    Provider.of<CategoryProvider>(context, listen: false).getCategories();
-    Provider.of<ProductProvider>(context, listen: false).getTopAnnonces();
-    Provider.of<ProductProvider>(context, listen: false).getDealOfTheDay();
-    Provider.of<ProductProvider>(context, listen: false).getNewArrivals();
-
-  }
 
   Future<void> _loadDataBoutique() async {
     Provider.of<BoutiqueProvider>(context, listen: false).getBoutiquesExclusives();
@@ -69,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
       provisional: false,
     );
     //_messaging.subscribeToTopic('all');
-    // _messaging.getToken().then((token) => print(token));
+    _messaging.getToken().then((token) => print(token));
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
       // await Firebase.initializeApp();
@@ -144,19 +134,11 @@ class _HomeScreenState extends State<HomeScreen> {
         showSimpleNotification(
           Text(_notificationInfo?.title ?? 'Notification'),
           leading: const Icon(Icons.notifications),
-          background: Colors.red,
+          background: AppColors.PRIMARY,
           autoDismiss: true,
         );
       });
 
-      //app launched
-      // if (widget.reload) {
-      //   _loadData();
-      // } else {
-      //   if (Provider.of<ProductProvider>(context, listen: false).newArrivals.isEmpty){
-      //     _loadData();
-      //   }
-      // }
 
     });
     super.initState();
@@ -173,7 +155,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return true? Scaffold(
+    return  Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.pushNamed(context, AppRoutes.addProduct, );
@@ -197,6 +179,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(height: 10),
                 const HomeSliders(),
                 //Boutiques Exlusives
+                const SizedBox(height: 20),
                 const BoutiquesExclusives(),
 
                 //Categories
@@ -243,12 +226,18 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: const EdgeInsets.only(top: 30.0, bottom: 10 ),
                   child: Container(
                     height: 170,
+                    foregroundDecoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(0),
+                      color: Colors.grey,
+                      backgroundBlendMode: BlendMode.darken,
+                    ),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(0),
                       color: AppColors.BLACK,
                       backgroundBlendMode: BlendMode.darken,
+
                       image: DecorationImage(
-                          image:  Image.network('https://picsum.photos/250?image=41',).image,  fit: BoxFit.cover),
+                          image:  Image.network('https://www.pme-web.com/wp-content/uploads/bfi_thumb/Ecommerce-meilleurs-outils-CMS-n7020d26rjvityw3xhy5c1g9m0jjy2jx8ivumb6uxk.png',).image,  fit: BoxFit.cover),
                     ),
                     child:  Center(
                       child: Column(
@@ -256,9 +245,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: const [
                           Text("Placer vos Annonces Ici",
-                            style: TextStyle(color: Colors.white, fontSize: 20),textAlign: TextAlign.center, ),
+                            style: TextStyle(color: Colors.black, fontSize: 20),textAlign: TextAlign.center,  ),
                           Text("+221 77 888 888",
-                            style: TextStyle(color: Colors.white, fontSize: 20),textAlign: TextAlign.center, ),
+                            style: TextStyle(color: Colors.black, fontSize: 20),textAlign: TextAlign.center, ),
                         ],
                       ),
                     ),
@@ -277,7 +266,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-    ) : LoaderWidget();
+    ) ;
   }
 }
 

@@ -31,7 +31,7 @@ class AppConstants {
   static const String RESET_PASSWORD_URI = '/auth/password/update';
   static const String PASSWORD_FORGOT_URI = '/auth/password/forget';
   static const String PASSWORD_OTP_URI = '/auth/password/otp/verif';
-  static const String LOGOUT = 'auth/logout';
+  static const String LOGOUT = '/auth/logout';
   static const String USER_CONNECTED_INFO = '/auth/verify';
   static const String TOKEN_URI = '/auth/firetoken';
 

@@ -26,17 +26,14 @@ class _ProductFoundFilterState extends State<ProductFoundFilter> {
   int isPromo = 0;
   int isPopular  = 0;
   int isNew = 0;
+  String keyWord = "";
+
   @override
   Widget build(BuildContext context) {
 
     const List<String> selectionsPrice = <String>[
       'Prix le plus bas',
       'Prix le plus élévé',
-    ];
-
-    const List<Map<String, int>> selectionsPriceValue = [
-      {'Prix le plus élévé': 1},
-      {'Prix le plus bas': 0},
     ];
 
     var categories = Provider.of<CategoryProvider>(context, listen: false).categories;
@@ -55,10 +52,10 @@ class _ProductFoundFilterState extends State<ProductFoundFilter> {
                 TextButton(onPressed: (){
                   Navigator.pop(context);
                 }, child: const Text('Annuler', style:TextStyle(
-                    fontSize: 20,color: AppColors.BLACK
+                    fontSize: 19,color: AppColors.BLACK
                 ))),
                 const Text('Filtres', style:TextStyle(
-                  fontSize: 20, color: AppColors.BLACK
+                  fontSize: 20, color: AppColors.BLACK, fontWeight: FontWeight.bold
                 )),
                 TextButton(onPressed: (){
 
@@ -70,11 +67,11 @@ class _ProductFoundFilterState extends State<ProductFoundFilter> {
                       isNew: isNew,
                       isPopular: isPopular,
                       isPromo: isPromo,
-                      keyWorld: '',
+                      keyWorld: keyWord,
                   ));
                   Navigator.pop(context);
                 }, child: const Text('Rechercher', style:TextStyle(
-                  fontSize: 20, color: AppColors.BLACK,
+                  fontSize: 19, color: AppColors.BLACK,
                 )))
                 ,
 
@@ -89,6 +86,40 @@ class _ProductFoundFilterState extends State<ProductFoundFilter> {
               padding: const EdgeInsets.only(top: 0.0, ),
               child: Column(
                 children: [
+                  //filter name
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                          width: MediaQuery.of(context).size.width,
+                          padding: const EdgeInsets.all(15),color: Colors.grey[200], child: const Text('Mot clé', textAlign: TextAlign.start, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),)),
+
+                      Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                        child: SizedBox(
+                          child: TextFormField(
+                            onChanged: (value) {
+                              keyWord = value;
+                            },
+                            initialValue: keyWord,
+                            decoration: InputDecoration(
+                              hintText: 'Recherche par mot clé',
+                              contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                              hintStyle: const TextStyle(fontSize: 16),
+
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(0),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+
+                    ],
+                  ),
+
+
                   //filter by price
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -109,6 +140,7 @@ class _ProductFoundFilterState extends State<ProductFoundFilter> {
                                onChanged: (value) {
                                  min = int.parse(value);
                                },
+                               initialValue: min.toString(),
                                decoration: InputDecoration(
                                  hintText: 'min',
                                  contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -126,6 +158,7 @@ class _ProductFoundFilterState extends State<ProductFoundFilter> {
                                onChanged: (value) {
                                  max = int.parse(value);
                                },
+                               initialValue: max.toString(),
                                decoration: InputDecoration(
                                  hintText: 'max',
                                  contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
@@ -142,6 +175,8 @@ class _ProductFoundFilterState extends State<ProductFoundFilter> {
 
                     ],
                   ),
+
+
                  //by attribute
                   const Divider(
                     color: Colors.grey,
@@ -165,6 +200,7 @@ class _ProductFoundFilterState extends State<ProductFoundFilter> {
                               CheckboxListTile(
                                 title: const Text("En Promotion"),
                                 value: isPromo == 1,
+                                selected: isPromo == 1,
                                 onChanged: (newValue) {
                                   setState(() {
                                     isPromo = newValue! ? 1 : 0;
@@ -175,6 +211,7 @@ class _ProductFoundFilterState extends State<ProductFoundFilter> {
                               CheckboxListTile(
                                 title: const Text("Populaire"),
                                 value: isPopular  == 1,
+                                selected: isPopular  == 1,
                                 onChanged: (newValue) {
                                   setState(() {
                                     isPopular  = newValue! ? 1 : 0;
@@ -201,6 +238,8 @@ class _ProductFoundFilterState extends State<ProductFoundFilter> {
 
                     ],
                   ),
+
+
                   //par prix au plus ou au moins
                   const Divider(
                     color: Colors.grey,
@@ -241,6 +280,7 @@ class _ProductFoundFilterState extends State<ProductFoundFilter> {
                     ],
                   ),
 
+                  //par secteurs
                   Container(
                       width: MediaQuery.of(context).size.width,
                       padding: EdgeInsets.all(15),color: Colors.grey[200], child: Text('Secteurs', textAlign: TextAlign.start, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),)
@@ -266,8 +306,6 @@ class _ProductFoundFilterState extends State<ProductFoundFilter> {
                     ),
                   ),
                   const SizedBox(height: 10,),
-                  //LOCALISATION
-
 
                 ],
               ),

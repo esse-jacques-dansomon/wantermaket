@@ -74,7 +74,6 @@ class SearchProvider extends ChangeNotifier {
   }
 
   Future<void> filter({required FilterModel filterModel}) async {
-    filterModel.keyWorld = searchText ?? '';
     products.clear();
     boutiques.clear();
     state = SearchProductState.loading;

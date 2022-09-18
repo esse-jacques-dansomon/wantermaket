@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wantermarket/providers/boutique_provider.dart';
 import 'package:wantermarket/ui/screens/home/widgets/boutiques_exclusives_widget.dart';
-import 'package:wantermarket/ui/screens/home/widgets/title_and_more_widget.dart';
 
-import '../../../../route/routes.dart';
 import '../../../basewidgets/cards/boutique_card.dart';
 
 class TopBoutiquesWidget extends StatelessWidget {
@@ -17,8 +15,9 @@ class TopBoutiquesWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const TitleAndMoreText( title: 'Top Boutiques', moreText: 'Voir toutes', route:  AppRoutes.search),
-        Padding(
+        const Padding(padding: EdgeInsets.only(left: 15.0, top: 25,right: 10, bottom: 20),
+          child:Text('Top Boutiques', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, ), textAlign: TextAlign.start,),
+        ),        Padding(
           padding: const EdgeInsets.only(left: 15.0, right: 15.0),
           child: Consumer<BoutiqueProvider>(
               builder: (context, boutiqueProvider, child){

@@ -1,12 +1,9 @@
 import 'dart:async';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wantermarket/providers/location_provider.dart';
 
-import '../../../config/app_colors.dart';
-import '../../../config/app_images.dart';
 import '../../../providers/auth_provider.dart';
 import '../../../providers/boutique_provider.dart';
 import '../../../providers/category_provider.dart';

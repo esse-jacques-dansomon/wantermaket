@@ -20,7 +20,7 @@ class RegisterFormWidget extends StatefulWidget {
 
 class _RegisterFormWidgetState extends State<RegisterFormWidget> {
   String _phone= '';
-  String _countryCode = '+212';
+  String _countryCode = '+221';
   String country = "sn";
   bool _obscureText = true;
   bool _obscureTextConfirmedPassword = true;
@@ -159,7 +159,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
       child: TextFormField(
         validator: (value) {
           if (value!.isEmpty) {
-            return 'Veuillez entre votre nom';
+            return 'Veuillez entrer votre nom';
           }
           return null;
         },
@@ -196,7 +196,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
       child: TextFormField(
         validator: (value) {
           if (value!.isEmpty) {
-            return 'Veuillez entre votre prenom';
+            return 'Veuillez entrer votre prénom';
           }
           return null;
         },
@@ -221,7 +221,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
               color: Colors.black,
             ),
           ),
-          hintText: 'Prenon',
+          hintText: 'Prénom',
           hintStyle: const TextStyle(color: AppColors.PRIMARY),
         ),
         focusNode: _firstnameNode,
@@ -235,7 +235,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
       child: TextFormField(
         validator: (value) {
           if (value!.isEmpty) {
-            return 'Veuillez entre le nom de votre boutique';
+            return 'Veuillez entrer le nom de votre boutique';
           }
           return null;
         },
@@ -271,7 +271,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
       child: TextFormField(
         validator: (value) {
           if (value!.isEmpty) {
-            return 'Veuillez entre votre adresse';
+            return 'Veuillez entrer votre adresse';
           }
           return null;
         },

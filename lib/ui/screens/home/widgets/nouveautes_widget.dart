@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:wantermarket/data/models/body/product.dart';
 import 'package:wantermarket/providers/product_provider.dart';
 import 'package:wantermarket/shared/app_helper.dart';
 import 'package:wantermarket/ui/basewidgets/shimmer/shimmer_product.dart';
-import 'package:wantermarket/ui/screens/home/widgets/title_and_more_widget.dart';
 
 import '../../../basewidgets/cards/produit_by_boutique.dart';
-import '../../sector/sector_screen.dart';
 
 class NouveautesWidget extends StatelessWidget {
   const NouveautesWidget({
@@ -26,8 +23,6 @@ class NouveautesWidget extends StatelessWidget {
         Consumer<ProductProvider>(builder:(context, productProvider, child){
          switch(productProvider.newArrivalStatus){
            case ProductNewArrivalStatus.initial:
-             return const Center(child: CircularProgressIndicator(),);
-           case ProductNewArrivalStatus.loading:
              return GridView.builder(
                  itemCount: 6,
                  padding: const EdgeInsets.only(left: 10.0, right: 10.0),
@@ -43,6 +38,7 @@ class NouveautesWidget extends StatelessWidget {
                  itemBuilder: (context, index){
                    return ProductShimmer();
                  });
+           case ProductNewArrivalStatus.loading:
            case ProductNewArrivalStatus.loaded:
              return productProvider.newArrivals.length > 0 ? GridView.builder(
                  itemCount: productProvider.newArrivals.length,
