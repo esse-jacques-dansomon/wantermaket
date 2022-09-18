@@ -47,7 +47,7 @@ class _AppDrawerState extends State<AppDrawer> {
                   children: [
                     ClipOval(
                       child: CachedNetworkImage(
-                        imageUrl:Provider.of<AuthProvider>(context, listen: false).getUserConnectedInfo()?.profilImage ==null ? AppImage.logo : AppConstants.BASE_URL_IMAGE + Provider.of<AuthProvider>(context, listen: false).getUserConnectedInfo()!.profilImage! ,
+                        imageUrl:Provider.of<AuthProvider>(context, listen: false).getUserConnectedInfo()?.profilImage ==null ? AppImage.logo :  Provider.of<AuthProvider>(context, listen: false).getUserConnectedInfo()!.profilImage! ,
                         fit: BoxFit.cover,
                         height: 80,
                         width: 80,

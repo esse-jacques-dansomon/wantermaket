@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'dart:math';
 
 import 'package:cached_network_image/cached_network_image.dart';

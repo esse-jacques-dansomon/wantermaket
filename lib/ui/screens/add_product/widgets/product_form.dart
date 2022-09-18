@@ -176,39 +176,33 @@ class _ProductAddFormState extends State<ProductAddForm> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            //image
-            const SizedBox(height: 15,),
-            const Text('Image Principale', style: TextStyle(fontSize: AppDimensions.FONT_SIZE_EXTRA_LARGE),),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 10),
-              height: MediaQuery.of(context).size.width*0.7,
-              width: MediaQuery.of(context).size.width*0.6,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(0),
-                color: Colors.grey[200],
-                image: image != null ? DecorationImage(image: FileImage(image!), fit: BoxFit.cover) :
-                (  (widget.product != null && widget.product!.images!.isNotEmpty) ?
-                DecorationImage(image: NetworkImage(widget.product!.images![0].path), fit: BoxFit.cover) : null),
-                ),
-              child: IconButton(
-                icon:  Icon(Icons.add_a_photo, color: image == null ?  Colors.black : Colors.grey[300],size: 70,),
-                onPressed: (){
-                    pickCoverImage(context, pickImage);
-                  },
-              ),
-            ),
-            //list images
-            const SizedBox(height: 15,),
-             const Text('Images Secondaires', style: TextStyle(fontSize: AppDimensions.FONT_SIZE_EXTRA_LARGE),),
-              SizedBox(
-              height: 210,
+             const Text('Images du produit', style: TextStyle(fontSize: 20),),
+            const SizedBox(height: 10,),
+
+            SizedBox(
+              height: MediaQuery.of(context).size.width*0.3,
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: [
                   Container(
-                    margin: const EdgeInsets.symmetric(vertical: 10),
-                    height: MediaQuery.of(context).size.width*0.7,
-                    width: MediaQuery.of(context).size.width*0.6,
+                    width: MediaQuery.of(context).size.width*0.3,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(0),
+                      color: Colors.grey[200],
+                      image: image != null ? DecorationImage(image: FileImage(image!), fit: BoxFit.cover) :
+                      (  (widget.product != null && widget.product!.images!.isNotEmpty) ?
+                      DecorationImage(image: NetworkImage(widget.product!.images![0].path), fit: BoxFit.cover) : null),
+                    ),
+                    child: IconButton(
+                      icon:  Icon(Icons.add, color: image == null ?  AppColors.PRIMARY: Colors.grey[300],size: 35,),
+                      onPressed: (){
+                        pickCoverImage(context, pickImage);
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 10,),
+                  Container(
+                    width: MediaQuery.of(context).size.width*0.3,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(0),
                       color: Colors.grey[200],
@@ -217,7 +211,7 @@ class _ProductAddFormState extends State<ProductAddForm> {
                       DecorationImage(image: NetworkImage(widget.product!.images![1].path), fit: BoxFit.cover) : null),
                     ),
                     child: IconButton(
-                      icon: const Icon(Icons.add_a_photo, color: Colors.black,size: 100,),
+                      icon:  Icon(Icons.add, color: image_level_2 == null ?  AppColors.PRIMARY: Colors.grey[300],size: 35,),
                       onPressed: (){
                         pickCoverImage(context,pickImageLevel2 );
                       },
@@ -225,9 +219,8 @@ class _ProductAddFormState extends State<ProductAddForm> {
                   ),
                   const SizedBox(width: 10,),
                   Container(
-                    margin: const EdgeInsets.symmetric(vertical: 10),
-                    height: MediaQuery.of(context).size.width*0.7,
-                    width: MediaQuery.of(context).size.width*0.6,
+                    // margin: const EdgeInsets.symmetric(vertical: 10),
+                    width: MediaQuery.of(context).size.width*0.3,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(0),
                       color: Colors.grey[200],
@@ -236,13 +229,12 @@ class _ProductAddFormState extends State<ProductAddForm> {
                       DecorationImage(image: NetworkImage(widget.product!.images![2].path), fit: BoxFit.cover) : null),
                     ),
                     child: IconButton(
-                      icon: const Icon(Icons.add_a_photo, color: Colors.black,size: 100,),
+                      icon:  Icon(Icons.add, color: image_level_3 == null ?  AppColors.PRIMARY: Colors.grey[300],size: 35,),
                       onPressed: (){
                         pickCoverImage(context,pickImageLevel3);
                       },
                     ),
                   ),
-
 
                 ],
               ) ),

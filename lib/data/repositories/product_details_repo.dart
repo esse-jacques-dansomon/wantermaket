@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'package:wantermarket/config/app_constantes.dart';
 
 import '../datasource/dio/dio_client.dart';

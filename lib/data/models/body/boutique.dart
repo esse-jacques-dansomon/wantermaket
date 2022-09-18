@@ -1,7 +1,6 @@
 import 'package:wantermarket/config/app_images.dart';
 import 'package:wantermarket/data/models/body/vendor.dart';
 
-import '../../../config/app_constantes.dart';
 import 'category.dart';
 
 class Boutique {

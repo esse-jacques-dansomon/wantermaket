@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:wantermarket/data/models/body/subCategory.dart';
-import 'package:wantermarket/data/models/body/vendor.dart';
 
 import 'boutique.dart';
 import 'category.dart';

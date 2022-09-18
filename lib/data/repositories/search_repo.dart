@@ -1,3 +1,5 @@
+// ignore_for_file: unused_element, unused_import
+
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
@@ -15,8 +17,8 @@ class SearchRepo {
   search( {required FilterModel filterModel}) async {
     try {
       print(filterModel.toJson());
-      final response =  dioClient.get(AppConstants.SEARCH_URI ,
-          queryParameters: filterModel.toMap());
+      final response =  dioClient.post(AppConstants.SEARCH_URI ,
+          data: filterModel.toMap());
       return response;
     } catch (e) {
       print(e);
@@ -30,8 +32,13 @@ class SearchRepo {
       final response = await dioClient.post(AppConstants.SEARCH_URI ,
           options: Options(
             headers: {
+<<<<<<< HEAD
               'Content-Type': 'application/json; charset=UTF-8',
               'Accept': 'application/json',
+=======
+              'Content-Type': 'application/json ; charset=UTF-8',
+              'chartset': 'utf-8',
+>>>>>>> 4b01334959a947601462b985e3b7cbf4d41a7220
             },
           ),
           data: filterModel.toJson());

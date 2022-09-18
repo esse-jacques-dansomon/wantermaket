@@ -98,13 +98,12 @@ class _BoutiqueFormState extends State<BoutiqueForm> {
           children: [
             //image
             const SizedBox(height: 15,),
-            const Text('photo de couverture', style: TextStyle(fontSize: AppDimensions.FONT_SIZE_EXTRA_LARGE, fontWeight: FontWeight.bold),),
+            const Text('Photo de couverture', style: TextStyle(fontSize: AppDimensions.FONT_SIZE_EXTRA_LARGE, fontWeight: FontWeight.bold),),
             Container(
               margin: const EdgeInsets.symmetric(vertical: 10),
               height: 200,
               width: double.infinity,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
                 color: Colors.grey[200],
                 image: photoCouverture != null ? DecorationImage(image: FileImage(photoCouverture!), fit: BoxFit.cover) :
                 (widget.boutique.coverImage != null ? DecorationImage(image: NetworkImage(widget.boutique.coverImage!), fit: BoxFit.cover) : null),
@@ -152,7 +151,7 @@ class _BoutiqueFormState extends State<BoutiqueForm> {
             ),
             //list images
             const SizedBox(height: 15,),
-            const Text('photo de profil', style: TextStyle(fontSize: AppDimensions.FONT_SIZE_EXTRA_LARGE, fontWeight: FontWeight.bold),),
+            const Text('Photo de profile', style: TextStyle(fontSize: AppDimensions.FONT_SIZE_EXTRA_LARGE, fontWeight: FontWeight.bold),),
 
             SizedBox(
               height: 150,
@@ -161,13 +160,12 @@ class _BoutiqueFormState extends State<BoutiqueForm> {
                 height: 100,
                 width: 200,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
                   color: Colors.grey[200],
                   image: photoProfile != null ? DecorationImage(image: FileImage(photoProfile!), fit: BoxFit.cover) :
                   (widget.boutique.profilImage != null ? DecorationImage(image: NetworkImage(widget.boutique.profilImage!), fit: BoxFit.cover) : null),
                 ),
                 child: IconButton(
-                  icon: const Icon(Icons.add_a_photo, color: Colors.black, size: 60,),
+                  icon: const Icon(Icons.add_a_photo, color: Colors.black, size: 40,),
                   onPressed: (){
                     showDialog(
                       context: context,
@@ -222,6 +220,7 @@ class _BoutiqueFormState extends State<BoutiqueForm> {
                 color: Colors.grey[200],
               ),
 
+              initialValue: widget.boutique.secteurs?.map((e) => e.id).toList() ?? [],
               items: categories.map((e) => MultiSelectItem(e.id, e.name!)).toList(),
               listType: MultiSelectListType.CHIP,
               buttonText: Text('Secteur d\'activité'),
@@ -385,7 +384,7 @@ class _BoutiqueFormState extends State<BoutiqueForm> {
       final imageTemp = File(photoProfile.path);
       setState(() => this.photoProfile = imageTemp);
     } on PlatformException catch(e) {
-
+      print('Failed to pick image: $e');
     }
   }
 

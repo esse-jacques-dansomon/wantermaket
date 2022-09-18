@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:wantermarket/data/models/body/filter_model.dart';
+import 'package:wantermarket/providers/search_provider.dart';
 
 import '../../../../config/app_colors.dart';
 
@@ -7,8 +10,9 @@ class TitleAndMoreText extends StatelessWidget {
   final String title;
   final String route;
   final bool  isLoadMore =true;
+  final FilterModel? filterModel;
   const TitleAndMoreText({
-    Key? key, required this.route, required this.moreText, required this.title, bool? isLoadMore = true
+    Key? key, this.filterModel, required this.route, required this.moreText, required this.title, bool? isLoadMore = true
   }) : super(key: key);
 
   @override
@@ -21,7 +25,11 @@ class TitleAndMoreText extends StatelessWidget {
           Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20, ), textAlign: TextAlign.start,),
           isLoadMore ?
           TextButton(onPressed: (){
+            if(filterModel != null) {
+              Provider.of<SearchProvider>(context, listen: false).filter( filterModel: filterModel!);
+            }
             Navigator.pushNamed(context, route);
+
           }, child: Row(
             children: const [
               Text('Voir Plus', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColors.FACEBOOK  ), textAlign: TextAlign.start,),
