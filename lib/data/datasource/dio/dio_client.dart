@@ -98,6 +98,9 @@ class DioClient {
       'Authorization': 'Bearer ${sharedPreferences.getString(AppConstants.TOKEN) }',
       AppConstants.COUNTRY_CODE: countryCode,
     };
+    // 60sec
+    dio.options.connectTimeout = 60000;
+    dio.options.receiveTimeout = 60000;
     token = sharedPreferences.getString(AppConstants.TOKEN) ?? '';
     print('=====post====> $uri');
     print("==shared token=> ${sharedPreferences.getString(AppConstants.TOKEN) }");
