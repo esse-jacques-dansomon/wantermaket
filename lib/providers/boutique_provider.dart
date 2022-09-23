@@ -6,6 +6,7 @@ import '../data/repositories/boutique_repo.dart';
 
 enum BoutiqueState { initial, loading, loaded, error }
 enum TopBoutiqueState { initial, loading, loaded, error }
+enum BoutiqueProduitsState { initial, loading, loaded, error }
 
 class BoutiqueProvider extends ChangeNotifier{
   final BoutiqueRepo boutiqueRepo;
@@ -22,6 +23,7 @@ class BoutiqueProvider extends ChangeNotifier{
   //states
   BoutiqueState state = BoutiqueState.initial;
   TopBoutiqueState topBoutiqueState = TopBoutiqueState.initial;
+  BoutiqueProduitsState boutiqueProduitsState = BoutiqueProduitsState.initial;
 
   Future<void> getTopBoutiques() async {
     this.topBoutiqueState = TopBoutiqueState.loading;
@@ -60,16 +62,20 @@ class BoutiqueProvider extends ChangeNotifier{
   Future<void> getBoutiqueProduits(int boutiqueId) async {
     boutiqueProduits.clear();
     productsSearch.clear();
+    this.boutiqueProduitsState = BoutiqueProduitsState.loading;
     notifyListeners();
     final response = await boutiqueRepo.getProductsByBoutique(boutiqueId);
-    notifyListeners();
-    if(response.error == null){
+    //notifyListeners();
+    if(response.response.statusCode == 200){
       response.response.data['data'].forEach((element) {
         boutiqueProduits.add(Product.fromJson(element));
       });
       productsSearch.addAll(boutiqueProduits) ;
+      this.boutiqueProduitsState = BoutiqueProduitsState.loaded;
       notifyListeners();
     }else{
+      this.boutiqueProduitsState = BoutiqueProduitsState.error;
+      notifyListeners();
       print('error');
     }
   }

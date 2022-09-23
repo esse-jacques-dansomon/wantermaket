@@ -29,14 +29,16 @@ class _SlashScreenState extends State<SlashScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<LocalizationProvider>(context, listen: false).getAllCountries();
-      Provider.of<AuthProvider>(context, listen: false).verifyIsAuthenticated();
+      
       Provider.of<SliderProvider>(context, listen: false).getHomeSliders();
+      Provider.of<BoutiqueProvider>(context, listen: false).getBoutiquesExclusives();
       Provider.of<BoutiqueProvider>(context, listen: false).getTopBoutiques();
       Provider.of<CategoryProvider>(context, listen: false).getCategories();
       Provider.of<ProductProvider>(context, listen: false).getTopAnnonces();
-      Provider.of<ProductProvider>(context, listen: false).getTopAnnonces();
+      //Provider.of<ProductProvider>(context, listen: false).getTopAnnonces();
       Provider.of<ProductProvider>(context, listen: false).getDealOfTheDay();
       Provider.of<ProductProvider>(context, listen: false).getNewArrivals();
+      Provider.of<AuthProvider>(context, listen: false).verifyIsAuthenticated();
       timer = Timer(const Duration(milliseconds: 4000), () {
         //navigate to the next screen
         Navigator.pushReplacementNamed(context, AppRoutes.home);

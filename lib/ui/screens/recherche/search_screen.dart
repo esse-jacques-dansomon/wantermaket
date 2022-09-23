@@ -33,13 +33,14 @@ class SearchScreen extends StatelessWidget {
           body: SafeArea(
 
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15.0),
+              padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Column(
                 children: [
                   Row(
                     children: [
                        Expanded(
                         child: TabBar(
+                          //padding: const EdgeInsets.symmetric(horizontal: 15),
                           labelColor: Colors.white,
                             unselectedLabelColor: AppColors.BLACK,
                         unselectedLabelStyle : const TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
