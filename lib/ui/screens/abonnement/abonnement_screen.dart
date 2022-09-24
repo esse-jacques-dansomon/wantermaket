@@ -14,7 +14,7 @@ class AbonnementScreen extends StatefulWidget {
 
 class _AbonnementScreenState extends State<AbonnementScreen> {
   Future<void> _loadData() async {
-    Provider.of<PlanProvider>(context, listen: false).getAllPlans();
+    Provider.of<PlanProvider>(context, listen: false).getAllPlans(context);
   }
 
   @override

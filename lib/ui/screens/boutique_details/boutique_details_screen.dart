@@ -20,10 +20,10 @@ class BoutiqueDetailsScreen extends StatefulWidget {
 class _BoutiqueDetailsScreenState extends State<BoutiqueDetailsScreen> {
 
    _loadData() {
-    Provider.of<BoutiqueProvider>(context, listen: false).getBoutiqueProduits(widget.boutique.id!);
+    Provider.of<BoutiqueProvider>(context, listen: false).getBoutiqueProduits(context, widget.boutique.id!);
     //not the connected user views
     if(widget.boutique.id != Provider.of<AuthProvider>(context, listen: false).user.boutiqueId){
-      Provider.of<BoutiqueProvider>(context, listen: false).upgradeViewBoutique(widget.boutique.id!);
+      Provider.of<BoutiqueProvider>(context, listen: false).upgradeViewBoutique(context,widget.boutique.id!);
     }
 
   }

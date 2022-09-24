@@ -126,7 +126,7 @@ class PlanItem extends StatelessWidget {
 
                           onPressed: () async {
                             Provider.of<AuthProvider>(context, listen: false).isLoggedIn()?
-                            await  Provider.of<PaymentProvider>(context, listen: false).getAbonnementLink(plan).then((url) async {
+                            await  Provider.of<PaymentProvider>(context, listen: false).getAbonnementLink(context, plan).then((url) async {
                               await (Navigator.push(context, MaterialPageRoute(builder: (context) =>  PayTechApiPaymentScreen( initialUrl : url)),) );
                             }) : {
                               (Navigator.popAndPushNamed(context, AppRoutes.login)),

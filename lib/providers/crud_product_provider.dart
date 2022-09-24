@@ -7,6 +7,7 @@ import 'package:wantermarket/data/repositories/crud_product_repo.dart';
 
 import '../data/datasource/exception/api_error_handler.dart';
 import '../data/models/body/product.dart';
+import '../shared/api_checker.dart';
 
 class CrudProductProvider extends ChangeNotifier {
   CrudProductRepo crudProductRepo;
@@ -16,7 +17,7 @@ class CrudProductProvider extends ChangeNotifier {
   bool isError = false;
   String errorMessage = "";
 
-  Future<bool> addProduct(ProductCrudModel productCrudModel, File imageLevel1, File? imageLevel2, File? imageLevel3) async {
+  Future<bool> addProduct(BuildContext context,ProductCrudModel productCrudModel, File imageLevel1, File? imageLevel2, File? imageLevel3) async {
     isLoading = true;
     isError = false;
     notifyListeners();
@@ -42,11 +43,12 @@ class CrudProductProvider extends ChangeNotifier {
       isError = true;
       errorMessage = ApiErrorHandler.getMessage(response.error);
       notifyListeners();
+      ApiChecker.checkApi(context, response);
       return false;
     }
   }
 
-  Future<bool> updateProduct(int idProduct,  ProductCrudModel productCrudModel, File? imageLevel1, File? imageLevel2, File? imageLevel3) async {
+  Future<bool> updateProduct(BuildContext context, int idProduct,  ProductCrudModel productCrudModel, File? imageLevel1, File? imageLevel2, File? imageLevel3) async {
     isLoading = true;
     isError = false;
     notifyListeners();
@@ -73,21 +75,23 @@ class CrudProductProvider extends ChangeNotifier {
       isError = true;
       errorMessage = ApiErrorHandler.getMessage(response.error);
       notifyListeners();
+      ApiChecker.checkApi(context, response);
       return false;
     }
   }
 
-  Future<bool> deleteProduct(int idProduct) async {
+  Future<bool> deleteProduct(BuildContext context, int idProduct) async {
     final response = await crudProductRepo.deleteProduct(idProduct);
     if(response.response.statusCode == 200 || response.response.statusCode == 201) {
       return true;
     }else{
       notifyListeners();
+      ApiChecker.checkApi(context, response);
       return false;
     }
   }
 
-  Future<bool> updateDisponibility(Product product) async {
+  Future<bool> updateDisponibility(BuildContext context, Product product) async {
     product.disponibility == 'oui' ? product.disponibility = 'non' : product.disponibility = 'oui';
     errorMessage = "";
     ProductCrudModel productCrudModel = ProductCrudModel(
@@ -111,11 +115,10 @@ class CrudProductProvider extends ChangeNotifier {
       isError = true;
       errorMessage = ApiErrorHandler.getMessage(response.error);
       notifyListeners();
+      ApiChecker.checkApi(context, response);
       return false;
     }
 
   }
-
-
 
 }

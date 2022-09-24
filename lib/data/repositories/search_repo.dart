@@ -13,34 +13,22 @@ import '../models/response/api_response.dart';
 class SearchRepo {
   final DioClient dioClient;
   SearchRepo({required this.dioClient});
-  Future<Response>
-  search( {required FilterModel filterModel}) async {
+
+  Future<ApiResponse> search( {required FilterModel filterModel}) async {
     try {
-      print(filterModel.toJson());
-      final response =  dioClient.post(AppConstants.SEARCH_URI ,
-          data: filterModel.toMap());
-      return response;
+      final response =  await dioClient.post(AppConstants.SEARCH_URI , data: filterModel.toMap());
+      return ApiResponse.withSuccess(response);
     } catch (e) {
-      print(e);
-      return throw DioError(error: e, requestOptions: RequestOptions(path: AppConstants.SEARCH_URI), );
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
     }
   }
 
   Future<ApiResponse> searchPost( {required FilterModel filterModel}) async {
     try {
-      print(filterModel.toJson());
-      final response = await dioClient.post(AppConstants.SEARCH_URI ,
-          options: Options(
-            headers: {
-              'Content-Type': 'application/json ; charset=UTF-8',
-              'chartset': 'utf-8',
-            },
-          ),
-          data: filterModel.toJson());
+      final response = await dioClient.post(AppConstants.SEARCH_URI , data: filterModel.toJson());
       return ApiResponse.withSuccess(response);
     } catch (e) {
-      print(e);
-      return throw DioError(error: e, requestOptions: RequestOptions(path: AppConstants.SEARCH_URI), );
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
     }
   }
 

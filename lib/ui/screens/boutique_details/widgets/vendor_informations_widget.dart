@@ -121,8 +121,8 @@ class VendorInformationWidget extends StatelessWidget {
                     onPressed: () {
                       if(Provider.of<AuthProvider>(context, listen: false).isLoggedIn()){
                         boutiqueFovoriesProvider.isFavory(boutique.id!) ?
-                        boutiqueFovoriesProvider.removeFavory(boutique.id!) :
-                        boutiqueFovoriesProvider.addFavory(boutique.id!);
+                        boutiqueFovoriesProvider.removeFavory(boutique.id!, context) :
+                        boutiqueFovoriesProvider.addFavory(boutique.id!, context);
                       }else{
                         Navigator.of(context).pushNamed(AppRoutes.login);
                         AppHelper.showInfoFlushBar(context, 'Vous devez être connecté pour effectuer cette action');

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../data/models/body/plan.dart';
 import '../data/repositories/payment_repo.dart';
+import '../shared/api_checker.dart';
 
 
 enum PaymentLinkStatus {
@@ -27,7 +28,7 @@ class PaymentProvider extends ChangeNotifier {
   var paymentLinkStatus = PaymentLinkStatus.initial;
   PaymentProvider({ required this.paymentRepo });
 
-  Future<String> getBecameExclusiveLink() async {
+  Future<String> getBecameExclusiveLink(BuildContext context) async {
     paymentLinkStatus = PaymentLinkStatus.loading;
     notifyListeners();
     final response = await paymentRepo.getBecameExclusiveLink();
@@ -39,12 +40,12 @@ class PaymentProvider extends ChangeNotifier {
     } else {
       paymentLinkStatus = PaymentLinkStatus.error;
       notifyListeners();
+      ApiChecker.checkApi(context, response);
       return '';
     }
   }
 
-
-  Future<String> getAbonnementLink(Plan plan) async {
+  Future<String> getAbonnementLink(BuildContext context, Plan plan) async {
     if(plan.name == 'Gold') {
       paymentPlanType = PaymentPlanType.loadingGold;
     }else if(plan.name == 'Premium') {
@@ -57,7 +58,6 @@ class PaymentProvider extends ChangeNotifier {
     notifyListeners();
     final response = await paymentRepo.getAbonnementLink(plan.id!);
     if (response.error == null) {
-
 
       if(paymentPlanType==PaymentPlanType.loadingEcommerce){
         paymentPlanType = PaymentPlanType.loaded;
@@ -72,21 +72,19 @@ class PaymentProvider extends ChangeNotifier {
     } else {
       paymentPlanType = PaymentPlanType.error;
       notifyListeners();
+      ApiChecker.checkApi(context, response);
       return '';
     }
   }
 
-  Future<bool> getStatusPayment() async{
+  Future<bool> getStatusPayment(BuildContext context) async{
     final response = await paymentRepo.getStatusPayment();
     if (response.error == null) {
       return response.response.data['isPaid'];
     } else {
+      ApiChecker.checkApi(context, response);
       return false;
     }
   }
-
-
-
-
 
 }

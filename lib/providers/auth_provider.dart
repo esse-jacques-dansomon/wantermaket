@@ -39,10 +39,9 @@ class AuthProvider extends ChangeNotifier {
       //save user info
       user = LoginReponse.fromJson(response.response.data);
       return true;
-
     }else{
-
       return false;
+      ApiChecker.checkApi( context, response);
     }
   }
 
@@ -54,24 +53,31 @@ class AuthProvider extends ChangeNotifier {
       _isLoadingRegister = false;
       notifyListeners();
 
-      if(response.error == null){
+      if(response.response.statusCode == 201 || response.response.statusCode == 200){
         await authRepo.saveToken(response.response.data['access_token']);
         //save token
         authRepo.saveInfoInShared(AppConstants.USER_CREDENTIALS, json.encode(response.response.data));
         //save user info
         user = LoginReponse.fromJson(response.response.data);
         notifyListeners();
-      }else{
+      }
+      //validation error
+      else if(response.response.statusCode == 400){
+        _isLoadingRegister = false;
+        notifyListeners();
+        print("Fuck u bi");
+        ScaffoldMessenger.of(context).showSnackBar( SnackBar(content: Text('Ce mail existe déja', style: TextStyle(color: Colors.white)), backgroundColor: Colors.red));
+      }
+      else{
+        print("Fuck u bi");
         _isLoadingRegister = false;
         notifyListeners();
         ScaffoldMessenger.of(context).showSnackBar( SnackBar(content: Text('Une errue s\'est produite, veuillez reessayez', style: TextStyle(color: Colors.white)), backgroundColor: Colors.red));
-
       }
 
     }catch(e){
       _isLoadingRegister = false;
       notifyListeners();
-      print(e);
     }
 
   }
@@ -80,15 +86,15 @@ class AuthProvider extends ChangeNotifier {
     _isLoadingRegister = true;
     notifyListeners();
     final response = await authRepo.editProfile(editProfileModel);
-     if(response.error == null){
-       _isLoadingRegister = false;
-       notifyListeners();
+    if(response.error == null){
+      _isLoadingRegister = false;
+      notifyListeners();
       return true;
-     }else {
-       _isLoadingRegister = false;
-       notifyListeners();
+    }else {
+      _isLoadingRegister = false;
+      notifyListeners();
       return false;
-     }
+    }
   }
 
   Future<bool> resetPassword(ResetPasswordModel passwordModel) async {
@@ -131,38 +137,37 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> logout() async {
+  Future<void> logout({bool sendRequest : true}) async {
 
     loginn = false;
     user = LoginReponse();
     boutiqueId = 0;
+    if(sendRequest){
+      final response = await authRepo.logout();
+      if(response.error == null){
+        loginn = false;
+        user = LoginReponse();
+        boutiqueId = 0;
+      }
+    }
     await authRepo.clearSharedPreferences();
     notifyListeners();
-    final response = await authRepo.logout();
-    if(response.error == null){
-      loginn = false;
-      user = LoginReponse();
-      boutiqueId = 0;
-      await authRepo.clearSharedPreferences();
-      notifyListeners();
-    }else{
-      await authRepo.clearSharedPreferences();
-      print(response.error);
-    }
+
   }
 
   Future<void> updateToken() async {
     ApiResponse apiResponse = await authRepo.updateToken();
     if (apiResponse.response.statusCode == 200) {
-       return ;
+      return ;
     } else {
     }
     // ApiChecker.checkApi(context, apiResponse);
 
   }
 
-  Future<void> verifyIsAuthenticated() async {
-    try{
+  Future<void> verifyIsAuthenticated(BuildContext context) async {
+
+    if(this.isLoggedIn()){
       final response0 = await authRepo.getUserConnectedInfo();
       final response = response0.response;
       if(response.statusCode == 200){
@@ -171,11 +176,10 @@ class AuthProvider extends ChangeNotifier {
         authRepo.saveInfoInShared(AppConstants.USER_CREDENTIALS, json.encode(response.data));
       }else{
         clearall();
+        ApiChecker.checkApi( context, response0);
       }
-    }catch(e){
-      clearall();
-
     }
+
 
   }
 

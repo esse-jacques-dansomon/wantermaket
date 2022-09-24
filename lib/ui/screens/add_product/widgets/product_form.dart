@@ -65,7 +65,7 @@ class _ProductAddFormState extends State<ProductAddForm> {
     _descriptionProductController.text = widget.product?.descriptionBrief ?? '';
     _priceProductController.text = widget.product?.price?.toString() ?? '';
     _priceBeforeProductController.text = widget.product?.priceBefore?.toString() ?? '' ;
-    Provider.of<CategoryProviderDetails>(context, listen: false).getSubCategoriesOfCategory(_selectedCategory!.id!).then((value){
+    Provider.of<CategoryProviderDetails>(context, listen: false).getSubCategoriesOfCategory(context,_selectedCategory!.id!).then((value){
       setState(() {
         _subCategories = Provider.of<CategoryProviderDetails>(context, listen: false).souscategories;
         if(widget.product?.categorie != null){
@@ -143,9 +143,9 @@ class _ProductAddFormState extends State<ProductAddForm> {
   }
 
    addProduct(ProductCrudModel productCrudModel, File image, File? imageLevel2, File? imageLevel3)   {
-     Provider.of<CrudProductProvider>(context, listen: false).addProduct(productCrudModel, image, imageLevel2, imageLevel2).then((value) => {
-       Provider.of<VendorProvider>(context, listen: false).getVendorProducts(),
-       Provider.of<AuthProvider>(context, listen: false).verifyIsAuthenticated(),
+     Provider.of<CrudProductProvider>(context, listen: false).addProduct(context,productCrudModel, image, imageLevel2, imageLevel2).then((value) => {
+       Provider.of<VendorProvider>(context, listen: false).getVendorProducts(context),
+       Provider.of<AuthProvider>(context, listen: false).verifyIsAuthenticated(context),
        AppHelper.showInfoFlushBar(context, 'Produit ajouté avec succès'),
        clearForm()
      }).catchError((error){
@@ -153,9 +153,9 @@ class _ProductAddFormState extends State<ProductAddForm> {
      });
   }
    upDateProduct(int id, ProductCrudModel productCrudModel, File? image, File? imageLevel2, File? imageLevel3)   {
-    Provider.of<CrudProductProvider>(context, listen: false).updateProduct( id, productCrudModel, image, imageLevel2, imageLevel2).then((value) => {
-      Provider.of<VendorProvider>(context, listen: false).getVendorProducts(),
-      Provider.of<AuthProvider>(context, listen: false).verifyIsAuthenticated(),
+    Provider.of<CrudProductProvider>(context, listen: false).updateProduct(context, id, productCrudModel, image, imageLevel2, imageLevel2).then((value) => {
+      Provider.of<VendorProvider>(context, listen: false).getVendorProducts(context),
+      Provider.of<AuthProvider>(context, listen: false).verifyIsAuthenticated(context),
       AppHelper.showInfoFlushBar(context, 'Produit modifié avec succès'),
       clearForm()
 
@@ -485,7 +485,7 @@ class _ProductAddFormState extends State<ProductAddForm> {
           onChanged: (value) {
             setState(() {
               _selectedCategory = value as Category;
-              Provider.of<CategoryProviderDetails>(context, listen: false).getSubCategoriesOfCategoryDp(value.id!, _subCategories).then((value) => setState(() {
+              Provider.of<CategoryProviderDetails>(context, listen: false).getSubCategoriesOfCategoryDp(context,value.id!, _subCategories).then((value) => setState(() {
                  if(value.isEmpty){
                   _subCategories.add(SousCategorie(id: 0, name: "Pas de Sous categorie",imagePath: ""));
                   _categories.add(Category(id: 0, name: "Pas de categorie",imagePath: ""));

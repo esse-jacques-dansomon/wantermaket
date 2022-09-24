@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:wantermarket/data/models/body/boutique.dart';
 import 'package:wantermarket/data/models/body/category.dart';
+import 'package:wantermarket/shared/api_checker.dart';
 
 import '../data/repositories/categories_repo.dart';
 
@@ -25,7 +26,7 @@ class CategoryProvider extends ChangeNotifier{
     categoryState = value;
   }
 
-  Future<void> getCategories() async {
+  Future<void> getCategories(BuildContext context) async {
     categoryStatus = CategoryState.loading;
     notifyListeners();
     final response = await categoryRepo.getCategories();
@@ -40,10 +41,12 @@ class CategoryProvider extends ChangeNotifier{
     }else{
       categoryStatus = CategoryState.error;
       notifyListeners();
+      ApiChecker.checkApi(context, response);
+
     }
   }
 
-  Future<void> getBoutiquesBySector(int id) async {
+  Future<void> getBoutiquesBySector(BuildContext context, int id) async {
     boutiquesBySectorState = BoutiquesBySectorState.loading;
     boutiques.clear();
     notifyListeners();
@@ -55,9 +58,9 @@ class CategoryProvider extends ChangeNotifier{
       boutiquesBySectorState = BoutiquesBySectorState.loaded;
       notifyListeners();
     }else{
-      print('error ${response.error}');
       boutiquesBySectorState = BoutiquesBySectorState.error;
       notifyListeners();
+      ApiChecker.checkApi(context, response);
     }
   }
 

@@ -1,8 +1,9 @@
 
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:wantermarket/data/models/body/boutique.dart';
 import 'package:wantermarket/data/models/body/filter_model.dart';
+import 'package:wantermarket/data/models/response/api_response.dart';
+import 'package:wantermarket/shared/api_checker.dart';
 
 import '../data/models/body/product.dart';
 import '../data/repositories/search_repo.dart';
@@ -34,98 +35,78 @@ class SearchProvider extends ChangeNotifier {
   final List<Boutique> _boutiques = [];
   List<Boutique> get boutiques => _boutiques;
 
-  Future<void> search({required FilterModel filterModel}) async {
+  Future<void> search(BuildContext context, {required FilterModel filterModel}) async {
     searchText = filterModel.keyWorld;
     products.clear();
     boutiques.clear();
     state = SearchProductState.loading;
     searchBoutiqueState = SearchBoutiqueState.loading;
     notifyListeners();
-    try{
-       Response response = await searchRepo.search(filterModel: filterModel);
-      if(response.statusCode == 200 ){
-        print(response.data);
-        response.data['boutiques'].forEach((element) {
-          boutiques.add(Boutique.fromJson(element));
-        });
-        response.data['produits'].forEach((element) {
-          products.add(Product.fromJson(element));
-        });
-        if(products.isEmpty){
-          state = SearchProductState.noProducts;
-        }else{
-          state = SearchProductState.loaded;
-        }
-        if(boutiques.isEmpty){
-          searchBoutiqueState = SearchBoutiqueState.noProducts;
-        }else{
-          searchBoutiqueState = SearchBoutiqueState.loaded;
-        }
-        notifyListeners();
+    ApiResponse responseB =  await searchRepo.search(filterModel: filterModel);
+    final response = responseB.response;
+    if(response.statusCode == 200 ){
+      print(response.data);
+      response.data['boutiques'].forEach((element) {
+        boutiques.add(Boutique.fromJson(element));
+      });
+      response.data['produits'].forEach((element) {
+        products.add(Product.fromJson(element));
+      });
+      if(products.isEmpty){
+        state = SearchProductState.noProducts;
       }else{
-        print(response.statusCode);
-        state = SearchProductState.error;
-        searchBoutiqueState = SearchBoutiqueState.error;
-        notifyListeners();
+        state = SearchProductState.loaded;
       }
-    }catch(e){
+      if(boutiques.isEmpty){
+        searchBoutiqueState = SearchBoutiqueState.noProducts;
+      }else{
+        searchBoutiqueState = SearchBoutiqueState.loaded;
+      }
+      notifyListeners();
+    }else{
       state = SearchProductState.error;
       searchBoutiqueState = SearchBoutiqueState.error;
       notifyListeners();
+      ApiChecker.checkApi(context, responseB);
     }
+
   }
 
-  Future<void> filter({required FilterModel filterModel}) async {
+  Future<void> filter(BuildContext context, {required FilterModel filterModel}) async {
     products.clear();
     boutiques.clear();
     state = SearchProductState.loading;
     searchBoutiqueState = SearchBoutiqueState.loading;
     notifyListeners();
-    try{
-       var response = await searchRepo.searchPost(filterModel: filterModel);
-    //  print(response.response.data.toString());
-      if(response.response.statusCode == 200 ){
-       if(response.response.data['boutiques'] != null){
-         response.response.data['boutiques'].forEach((element) {
-           boutiques.add(Boutique.fromJson(element));
-         });
-        }
-       if(response.response.data['produits'] != null){
-         response.response.data['produits'].forEach((element) {
-           products.add(Product.fromJson(element));
-         });
-        }
-        if(products.isEmpty){
-          state = SearchProductState.noProducts;
-        }else{
-          state = SearchProductState.loaded;
-        }
-        if(boutiques.isEmpty){
-          searchBoutiqueState = SearchBoutiqueState.noProducts;
-        }else{
-          searchBoutiqueState = SearchBoutiqueState.loaded;
-        }
-        notifyListeners();
-      }else{
-        // print(response.statusCode);
-        // print(response.realUri);
-        // print(response.data);
-        // print(response.requestOptions);
-        // print(response.statusMessage);
-        state = SearchProductState.error;
-        searchBoutiqueState = SearchBoutiqueState.error;
-        notifyListeners();
+    final response = await searchRepo.searchPost(filterModel: filterModel);
+    if(response.response.statusCode == 200 ){
+      if(response.response.data['boutiques'] != null){
+        response.response.data['boutiques'].forEach((element) {
+          boutiques.add(Boutique.fromJson(element));
+        });
       }
-    }catch(e){
+      if(response.response.data['produits'] != null){
+        response.response.data['produits'].forEach((element) {
+          products.add(Product.fromJson(element));
+        });
+      }
+      if(products.isEmpty){
+        state = SearchProductState.noProducts;
+      }else{
+        state = SearchProductState.loaded;
+      }
+      if(boutiques.isEmpty){
+        searchBoutiqueState = SearchBoutiqueState.noProducts;
+      }else{
+        searchBoutiqueState = SearchBoutiqueState.loaded;
+      }
+      notifyListeners();
+    }else{
       state = SearchProductState.error;
       searchBoutiqueState = SearchBoutiqueState.error;
       notifyListeners();
-      print(e);
+      ApiChecker.checkApi(context, response);
     }
   }
-
-  // Future<void> filter(FilterModel filterModel) async {
-  //
-  // }
 
 }

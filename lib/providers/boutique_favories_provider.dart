@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wantermarket/data/repositories/boutique_favories_repo.dart';
 import 'package:wantermarket/providers/vendor_provider.dart';
+import 'package:wantermarket/shared/api_checker.dart';
 
 import '../data/models/body/boutique.dart';
 import 'auth_provider.dart';
@@ -16,41 +17,38 @@ class BoutiqueFavoriesProvider extends ChangeNotifier{
   final List<Boutique> _boutiquesFavories = [];
   List<Boutique> get boutiquesFavories => _boutiquesFavories;
 
-  void getAllMyFavories() async {
+  void getAllMyFavories(BuildContext context) async {
     boutiquesFavories.clear();
     final response = await boutiqueFavoriesRepo.getMyFavories();
-    if(response.error == null){
+    if(response.response.statusCode == 200){
       response.response.data.forEach((element) {
         boutiquesFavories.add(Boutique.fromJson(element));
       });
-      notifyListeners();
     }else{
-      print('error');
+      ApiChecker.checkApi( context,  response);
     }
     notifyListeners();
   }
 
-  void addFavory(int boutiqueId) async {
+  void addFavory(int boutiqueId, BuildContext context) async {
     final response = await boutiqueFavoriesRepo.addFavories(boutiqueId);
-    if(response.error == null){
-      updateFavories();
+    if(response.response.statusCode == 200){
+      updateFavories(context);
       notifyListeners();
     }else{
-      print('error');
+      ApiChecker.checkApi( context,  response);
     }
-    notifyListeners();
   }
 
 
-  void removeFavory(int boutiqueId) async {
+  void removeFavory(int boutiqueId, BuildContext context) async {
     final response = await boutiqueFavoriesRepo.removeFavories(boutiqueId);
     if(response.error == null){
-      updateFavories();
+      updateFavories(context);
       notifyListeners();
     }else{
-      print('error');
+      ApiChecker.checkApi( context,  response);
     }
-    notifyListeners();
   }
 
 
@@ -60,8 +58,8 @@ class BoutiqueFavoriesProvider extends ChangeNotifier{
 
 
 
-  updateFavories() async {
-    getAllMyFavories();
+  updateFavories(BuildContext context) async {
+    getAllMyFavories(context);
   }
 
 

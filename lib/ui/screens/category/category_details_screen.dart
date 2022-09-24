@@ -20,9 +20,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
   Future<void> _loadData() async {
     Provider.of<CategoryProviderDetails>(context, listen: false)
-        .getCategoryProducts(widget.category.id!);
+        .getCategoryProducts(context, widget.category.id!);
     Provider.of<CategoryProviderDetails>(context, listen: false)
-        .getSubCategoriesOfCategory(widget.category.id!);
+        .getSubCategoriesOfCategory(context, widget.category.id!);
   }
 
   @override
@@ -41,10 +41,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
               .selectedSubCategory ==
           0) {
         Provider.of<CategoryProviderDetails>(context, listen: false)
-            .getCategoryProducts(widget.category.id!, isPagination: true);
+            .getCategoryProducts(context, widget.category.id!, isPagination: true);
       } else {
         Provider.of<CategoryProviderDetails>(context, listen: false)
-            .getSubCategoryProducts(
+            .getSubCategoryProducts(context,
                 Provider.of<CategoryProviderDetails>(context, listen: false)
                     .selectedSubCategory,
                 isPagination: true);
@@ -98,7 +98,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         onTap: () async {
                           await Provider.of<CategoryProviderDetails>(context,
                                   listen: false)
-                              .getSubCategoryProducts(
+                              .getSubCategoryProducts( context,
                                   cp.souscategories[index].id!);
                         },
                         child: Container(

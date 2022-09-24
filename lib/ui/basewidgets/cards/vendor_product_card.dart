@@ -60,7 +60,7 @@ class VendorProductCard extends StatelessWidget {
                             TextButton(
                               child: const Text("Supprimer"),
                               onPressed: () {
-                                Provider.of<CrudProductProvider>(context, listen: false).deleteProduct(product.id!).then((value) => {
+                                Provider.of<CrudProductProvider>(context, listen: false).deleteProduct(context, product.id!).then((value) => {
                                   if(value){
                                     AppHelper.showInfoFlushBar(context, 'Produit supprimé avec succès', color: AppColors.PRIMARY),
                                     Provider.of<VendorProvider>(context, listen: false).deleteProduct(product.id!),
@@ -131,7 +131,7 @@ class VendorProductCard extends StatelessWidget {
                           Switch(
                             value: product.disponibility == 'oui'? true : false,
                             onChanged: (value){
-                              Provider.of<CrudProductProvider>(context, listen: false).updateDisponibility(product).then((value){
+                              Provider.of<CrudProductProvider>(context, listen: false).updateDisponibility(context, product).then((value){
                                 if(value){
                                   Provider.of<VendorProvider>(context, listen: false).changeDisponibilityProduct(product.id!, context);
                                   AppHelper.showInfoFlushBar(context, 'Produit modifié');

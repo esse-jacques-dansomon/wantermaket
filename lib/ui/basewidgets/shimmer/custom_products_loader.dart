@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:wantermarket/ui/basewidgets/shimmer/shimmer_product.dart';
 
 import '../../../shared/app_helper.dart';

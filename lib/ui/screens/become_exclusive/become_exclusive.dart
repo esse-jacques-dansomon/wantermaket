@@ -33,7 +33,7 @@ class _BecomeExclusiveScreenState extends State<BecomeExclusiveScreen> {
 
   void _launchPayTechPaymentUrl() async {
     final paymentProvider = Provider.of<PaymentProvider>(context, listen: false);
-    await paymentProvider.getBecameExclusiveLink().then((url) async {
+    await paymentProvider.getBecameExclusiveLink(context).then((url) async {
       if(url != "" )
         {
           await (Navigator.push(context, MaterialPageRoute(builder: (context) =>  PayTechApiPaymentScreen( initialUrl : url)),) );

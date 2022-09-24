@@ -59,7 +59,7 @@ class _ProductFoundFilterState extends State<ProductFoundFilter> {
                 )),
                 TextButton(onPressed: (){
 
-                  Provider.of<SearchProvider>(context, listen: false).filter(filterModel: FilterModel(
+                  Provider.of<SearchProvider>(context, listen: false).filter(context, filterModel: FilterModel(
                       min: min,
                       max: max,
                       secteurs: _selectedItems ,

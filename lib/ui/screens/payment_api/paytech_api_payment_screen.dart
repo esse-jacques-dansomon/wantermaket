@@ -28,7 +28,7 @@ class _PayTechApiPaymentScreen extends State<PayTechApiPaymentScreen> {
     // TODO: implement initState
     super.initState();
     if(widget.initialUrl == 'ecom'){
-      Provider.of<AuthProvider>(context, listen: false).verifyIsAuthenticated();
+      Provider.of<AuthProvider>(context, listen: false).verifyIsAuthenticated(context);
     }else if (Platform.isAndroid) {
       WebView.platform = AndroidWebView();
     }
@@ -38,7 +38,7 @@ class _PayTechApiPaymentScreen extends State<PayTechApiPaymentScreen> {
   bool getStatusPayment()  {
     var status = false;
     var paymentProvider = Provider.of<PaymentProvider>(context, listen: false);
-    paymentProvider.getStatusPayment().then((value) => status = value);
+    paymentProvider.getStatusPayment(context).then((value) => status = value);
     return status;
   }
 
@@ -58,7 +58,7 @@ class _PayTechApiPaymentScreen extends State<PayTechApiPaymentScreen> {
             if(url.toString() == "https://wantermarket.sn/success"){
                Navigator.pop(context); //quiter le site paytech
                if(getStatusPayment()){
-                 Provider.of<AuthProvider>(context, listen: false).verifyIsAuthenticated();
+                 Provider.of<AuthProvider>(context, listen: false).verifyIsAuthenticated(context);
                  showDialog(context: context, barrierDismissible: false, builder: (context){
                    return  const PaymentSuccess();
                  });

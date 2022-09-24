@@ -34,9 +34,9 @@ class PaymentPending extends StatelessWidget {
                     const Text('veuillez actualiser pour suivre l\'etat de votre payement ', style: TextStyle(fontSize: 18,), textAlign: TextAlign.center,),
                     const SizedBox(height: 25,),
                     SizedBox( height: 45, width: double.infinity, child: ElevatedButton(onPressed: (){
-                      Provider.of<PaymentProvider>(context, listen: false).getStatusPayment().then((value){
+                      Provider.of<PaymentProvider>(context, listen: false).getStatusPayment(context).then((value){
                         if(value){
-                          Provider.of<AuthProvider>(context, listen: false).verifyIsAuthenticated();
+                          Provider.of<AuthProvider>(context, listen: false).verifyIsAuthenticated(context);
 
                           showDialog(context: context, barrierDismissible: false, builder: (context){
                             return  const PaymentSuccess();

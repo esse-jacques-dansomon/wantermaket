@@ -39,9 +39,9 @@ class _BoutiqueFormState extends State<BoutiqueForm> {
 
 
   updateBoutique(BoutiqueUpdateModel boutiqueUpdateModel, List<File> files) async {
-    Provider.of<VendorProvider>(context, listen: false).updateBoutique(boutiqueUpdateModel, files).then((value) => {
+    Provider.of<VendorProvider>(context, listen: false).updateBoutique(context, boutiqueUpdateModel, files).then((value) => {
       if(value){
-        Provider.of<AuthProvider>(context, listen: false).verifyIsAuthenticated(),
+        Provider.of<AuthProvider>(context, listen: false).verifyIsAuthenticated(context),
         Provider.of<AuthProvider>(context, listen: false).getUserConnectedInfo(),
         Navigator.pushNamed(context, AppRoutes.profile),
         AppHelper.showInfoFlushBar(context, 'Vous avez bien modifié vos informations'),
@@ -58,7 +58,7 @@ class _BoutiqueFormState extends State<BoutiqueForm> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Provider.of<AuthProvider>(context, listen: false).verifyIsAuthenticated();
+    Provider.of<AuthProvider>(context, listen: false).verifyIsAuthenticated(context);
     _nomBoutiqueNode = FocusNode();
     _latitudeNode = FocusNode();
     _longitudeNode = FocusNode();

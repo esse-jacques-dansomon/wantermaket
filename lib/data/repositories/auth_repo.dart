@@ -39,7 +39,6 @@ class AuthRepo {
   }
 
   Future<ApiResponse> register(RegisterModel registerModel) async {
-    print(registerModel.toJson());
     try {
       final response = await dioClient.post(AppConstants.VENDEUR_URI, data: registerModel.toJson());
       return ApiResponse.withSuccess(response);
@@ -157,7 +156,7 @@ class AuthRepo {
       final response = await dioClient.get(AppConstants.USER_CONNECTED_INFO);
       return ApiResponse.withSuccess(response);
     } catch (e) {
-      rethrow;
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
     }
   }
 

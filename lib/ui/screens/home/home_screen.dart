@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:provider/provider.dart';
 import 'package:wantermarket/config/app_colors.dart';
-import 'package:wantermarket/providers/auth_provider.dart';
 import 'package:wantermarket/providers/boutique_provider.dart';
-import 'package:wantermarket/providers/category_provider.dart';
 import 'package:wantermarket/providers/product_provider.dart';
 import 'package:wantermarket/ui/basewidgets/drawer/drawer.dart';
 import 'package:wantermarket/ui/screens/home/widgets/home_categories_widget.dart';
@@ -18,7 +16,6 @@ import 'package:wantermarket/ui/screens/home/widgets/top_annonces_widget.dart';
 import 'package:wantermarket/ui/screens/home/widgets/top_boutiques_widget.dart';
 
 import '../../../data/models/body/pushnotification_model.dart';
-import '../../../providers/slider_provider.dart';
 import '../../../route/routes.dart';
 import '../../../shared/network_info.dart';
 import '../../basewidgets/app_bars/app_bar.dart';
@@ -39,9 +36,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
   Future<void> _loadDataBoutique() async {
-    Provider.of<BoutiqueProvider>(context, listen: false).getBoutiquesExclusives();
-    Provider.of<ProductProvider>(context, listen: false).getDealOfTheDay();
-    Provider.of<ProductProvider>(context, listen: false).getNewArrivals(reload: true);
+    Provider.of<BoutiqueProvider>(context, listen: false).getBoutiquesExclusives(context);
+    Provider.of<ProductProvider>(context, listen: false).getDealOfTheDay(context);
+    Provider.of<ProductProvider>(context, listen: false).getNewArrivals(context, reload: true);
 
   }
 
@@ -75,14 +72,12 @@ class _HomeScreenState extends State<HomeScreen> {
           _notificationInfo = notification;
         });
 
-        if (notification != null) {
-          showSimpleNotification(
-            Text(_notificationInfo?.title ?? 'Notification'),
-            leading: const Icon(Icons.notifications),
-            background: Colors.red,
-            autoDismiss: true,
-          );
-        }
+        showSimpleNotification(
+          Text(_notificationInfo?.title ?? 'Notification'),
+          leading: const Icon(Icons.notifications),
+          background: Colors.red,
+          autoDismiss: true,
+        );
       });
     }
   }
@@ -149,7 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _scrollListener() {
     if (_controller.position.pixels == _controller.position.maxScrollExtent ) {
-      Provider.of<ProductProvider>(context, listen: false).getNewArrivals();
+      Provider.of<ProductProvider>(context, listen: false).getNewArrivals(context);
     }
   }
 

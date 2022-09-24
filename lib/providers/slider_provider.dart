@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:wantermarket/data/repositories/slider_repo.dart';
+import 'package:wantermarket/shared/api_checker.dart';
 
 import '../data/models/body/slider.dart';
 
@@ -14,7 +15,7 @@ class SliderProvider extends ChangeNotifier{
   SliderState state = SliderState.initial;
 
 
-  Future<void> getHomeSliders() async {
+  Future<void> getHomeSliders(BuildContext context) async {
     this.state = SliderState.loading;
     notifyListeners();
     final sliderResponse = await sliderRepo.getSliders();
@@ -28,6 +29,7 @@ class SliderProvider extends ChangeNotifier{
     }else{
       this.state = SliderState.error;
       notifyListeners();
+      ApiChecker.checkApi( context, sliderResponse);
     }
   }
 }

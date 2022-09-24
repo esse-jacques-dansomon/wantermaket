@@ -26,14 +26,20 @@ class ApiErrorHandler {
             case DioErrorType.response:
               switch (error.response?.statusCode) {
                 case 404:
+                  //french
+                  errorDescription = "La ressource demandée n'existe pas";
+                  break;
                 case 500:
+                  //french
+                  errorDescription = "Erreur interne du serveur";
+                  break;
                 case 503:
-                  errorDescription = error.response?.statusMessage;
+                  //french
+                  errorDescription = "Service indisponible";
                   break;
                 default:
-                  ErrorResponse errorResponse =
-                  ErrorResponse.fromJson(error.response?.data);
-                  if (errorResponse.errors.isNotEmpty) {
+                  ErrorResponse errorResponse = ErrorResponse.fromJson(error.response?.data);
+                  if (errorResponse.success == false) {
                     errorDescription = errorResponse;
                   } else {
                     errorDescription =

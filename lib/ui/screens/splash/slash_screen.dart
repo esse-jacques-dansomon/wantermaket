@@ -28,20 +28,20 @@ class _SlashScreenState extends State<SlashScreen> {
   initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<LocalizationProvider>(context, listen: false).getAllCountries();
+      Provider.of<LocalizationProvider>(context, listen: false).getAllCountries(context);
       
-      Provider.of<SliderProvider>(context, listen: false).getHomeSliders();
-      Provider.of<BoutiqueProvider>(context, listen: false).getBoutiquesExclusives();
-      Provider.of<BoutiqueProvider>(context, listen: false).getTopBoutiques();
-      Provider.of<CategoryProvider>(context, listen: false).getCategories();
-      Provider.of<ProductProvider>(context, listen: false).getTopAnnonces();
-      //Provider.of<ProductProvider>(context, listen: false).getTopAnnonces();
-      Provider.of<ProductProvider>(context, listen: false).getDealOfTheDay();
-      Provider.of<ProductProvider>(context, listen: false).getNewArrivals();
-      Provider.of<AuthProvider>(context, listen: false).verifyIsAuthenticated();
+      Provider.of<SliderProvider>(context, listen: false).getHomeSliders(context);
+      Provider.of<BoutiqueProvider>(context, listen: false).getBoutiquesExclusives(context);
+      Provider.of<BoutiqueProvider>(context, listen: false).getTopBoutiques(context);
+      Provider.of<CategoryProvider>(context, listen: false).getCategories(context);
+      Provider.of<ProductProvider>(context, listen: false).getTopAnnonces(context);
+      Provider.of<ProductProvider>(context, listen: false).getDealOfTheDay(context);
+      Provider.of<ProductProvider>(context, listen: false).getNewArrivals(context);
       timer = Timer(const Duration(milliseconds: 4000), () {
         //navigate to the next screen
         Navigator.pushReplacementNamed(context, AppRoutes.home);
+        Provider.of<AuthProvider>(context, listen: false).verifyIsAuthenticated(context);
+
       });
     });
 

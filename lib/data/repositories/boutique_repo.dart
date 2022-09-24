@@ -10,7 +10,8 @@ class BoutiqueRepo {
 
 
   Future<ApiResponse> getBoutiquesExclusives() async {
-    try {final response = await dioClient.get(AppConstants.BOUTIQUES_EXCLUSIVES);
+    try {
+      final response = await dioClient.get(AppConstants.BOUTIQUES_EXCLUSIVES);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

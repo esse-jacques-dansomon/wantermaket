@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wantermarket/data/models/body/product.dart';
+import 'package:wantermarket/shared/api_checker.dart';
 
 import '../data/models/body/boutique.dart';
 import '../data/repositories/boutique_repo.dart';
@@ -25,7 +26,7 @@ class BoutiqueProvider extends ChangeNotifier{
   TopBoutiqueState topBoutiqueState = TopBoutiqueState.initial;
   BoutiqueProduitsState boutiqueProduitsState = BoutiqueProduitsState.initial;
 
-  Future<void> getTopBoutiques() async {
+  Future<void> getTopBoutiques(BuildContext context) async {
     this.topBoutiqueState = TopBoutiqueState.loading;
     notifyListeners();
     final response = await boutiqueRepo.getTopBoutiques();
@@ -39,10 +40,12 @@ class BoutiqueProvider extends ChangeNotifier{
     }else{
       this.topBoutiqueState = TopBoutiqueState.error;
       notifyListeners();
+      ApiChecker.checkApi( context, response);
+
     }
   }
 
-  Future<void> getBoutiquesExclusives() async {
+  Future<void> getBoutiquesExclusives(BuildContext context) async {
     this.state = BoutiqueState.loading;
     notifyListeners();
     final response = await boutiqueRepo.getBoutiquesExclusives();
@@ -56,10 +59,11 @@ class BoutiqueProvider extends ChangeNotifier{
     }else{
       this.state = BoutiqueState.error;
       notifyListeners();
+      ApiChecker.checkApi( context, response);
     }
   }
 
-  Future<void> getBoutiqueProduits(int boutiqueId) async {
+  Future<void> getBoutiqueProduits(BuildContext context, int boutiqueId) async {
     boutiqueProduits.clear();
     productsSearch.clear();
     this.boutiqueProduitsState = BoutiqueProduitsState.loading;
@@ -76,16 +80,16 @@ class BoutiqueProvider extends ChangeNotifier{
     }else{
       this.boutiqueProduitsState = BoutiqueProduitsState.error;
       notifyListeners();
-      print('error');
+      ApiChecker.checkApi( context, response);
     }
   }
 
-  Future<void> upgradeViewBoutique(int boutiqueId) async {
+  Future<void> upgradeViewBoutique(BuildContext context, int boutiqueId) async {
     //is note the connected user shop
     final response = await boutiqueRepo.updateBoutiqueViews(boutiqueId);
     if(response.error == null){
     }else{
-      print('error');
+      ApiChecker.checkApi( context, response);
     }
   }
 

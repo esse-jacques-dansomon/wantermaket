@@ -49,7 +49,7 @@ AppBar appBar({bool isActiveSearchbar=false, bool isOnSearchPage=false}) {
                       textAlignVertical : TextAlignVertical.center,
                     onSubmitted: (value) {
                       Provider.of<SearchProvider>(context, listen: false)
-                          .search(filterModel: FilterModel(keyWorld: value, max: null, min: null, priceFilter: null, isNew: null, isPopular: null, isPromo: null));
+                          .search(context, filterModel: FilterModel(keyWorld: value, max: null, min: null, priceFilter: null, isNew: null, isPopular: null, isPromo: null));
                       if (!isOnSearchPage) {
                         Navigator.of(context).pushNamed(AppRoutes.search);
                       }
@@ -100,11 +100,11 @@ AppBar appBar({bool isActiveSearchbar=false, bool isOnSearchPage=false}) {
                 ),).toList(),
                 onChanged: ( value){
                   localizationProvider.setLocale(value);
-                  Provider.of<BoutiqueProvider>(context, listen: false).getBoutiquesExclusives();
-                  Provider.of<BoutiqueProvider>(context, listen: false).getTopBoutiques();
-                  Provider.of<ProductProvider>(context, listen: false).getTopAnnonces();
-                  Provider.of<ProductProvider>(context, listen: false).getDealOfTheDay();
-                  Provider.of<ProductProvider>(context, listen: false).getNewArrivals(reload: true);
+                  Provider.of<BoutiqueProvider>(context, listen: false).getBoutiquesExclusives(context);
+                  Provider.of<BoutiqueProvider>(context, listen: false).getTopBoutiques(context);
+                  Provider.of<ProductProvider>(context, listen: false).getTopAnnonces(context);
+                  Provider.of<ProductProvider>(context, listen: false).getDealOfTheDay(context);
+                  Provider.of<ProductProvider>(context, listen: false).getNewArrivals(context, reload: true);
                 },
               ),
             ) : Container();

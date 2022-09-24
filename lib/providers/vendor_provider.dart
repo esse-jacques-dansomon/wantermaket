@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wantermarket/data/models/body/boutique_update_model.dart';
 import 'package:wantermarket/data/models/body/vendor.dart';
 import 'package:wantermarket/data/models/body/vendor_stat.dart';
+import 'package:wantermarket/shared/api_checker.dart';
 
 import '../data/models/body/boutique.dart';
 import '../data/models/body/product.dart';
@@ -47,18 +48,18 @@ class VendorProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> getVendorStat() async {
+  Future<void> getVendorStat(BuildContext context) async {
     notifyListeners();
-    try {
-      final response = await vendorRepo.getUserConnectedStat();
+    final response =  await vendorRepo.getUserConnectedStat();
+    if(response.response.statusCode == 200){
       _vendorStat = VendorStat.fromJson(response.response.data);
       notifyListeners();
-    } catch (e) {
-      rethrow;
+    }else{
+      ApiChecker.checkApi(context, response);
     }
   }
 
-  Future<void> getVendorProducts({reload = true}) async {
+  Future<void> getVendorProducts(BuildContext context, {reload = true}) async {
     if(reload){
       isProductsLoad = false;
     }
@@ -70,8 +71,9 @@ class VendorProvider extends ChangeNotifier {
         response.response.data['data'].forEach((element) {
           _products.add(Product.fromJson(element));
         });
+      }else{
+        ApiChecker.checkApi(context, response);
       }
-
       if(reload){
         isProductsLoad = true;
       }
@@ -85,7 +87,7 @@ class VendorProvider extends ChangeNotifier {
     }
   }
 
-  Future<bool> updateBoutique(BoutiqueUpdateModel boutiqueUpdateModel, List<File> files) async {
+  Future<bool> updateBoutique(BuildContext context, BoutiqueUpdateModel boutiqueUpdateModel, List<File> files) async {
     this.isUpdateBoutiqueLoading = true;
     notifyListeners();
     FormData data = FormData.fromMap(boutiqueUpdateModel.toJson(), ListFormat.multiCompatible);
@@ -105,12 +107,15 @@ class VendorProvider extends ChangeNotifier {
       }else{
         this.isUpdateBoutiqueLoading = false;
         notifyListeners();
-        throw Exception("Erreur lors de la mise à jour de la boutique");
+        ApiChecker.checkApi(context, reponse);
+        return false;
+
       }
     }catch(e){
       this.isUpdateBoutiqueLoading = false;
       notifyListeners();
-      throw Exception("Erreur lors de la mise à jour de la boutique");
+      return false;
+
     }
 
   }

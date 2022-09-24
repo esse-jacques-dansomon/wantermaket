@@ -16,7 +16,7 @@ class _BoutiquesFavoriesScreenState extends State<BoutiquesFavoriesScreen> {
 
   _loadBoutiquesFavories() async {
     final boutiqueFavoriesProvider = Provider.of<BoutiqueFavoriesProvider>(context, listen: false);
-    boutiqueFavoriesProvider.getAllMyFavories();
+    boutiqueFavoriesProvider.getAllMyFavories(context);
   }
 
 

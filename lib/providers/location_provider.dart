@@ -3,6 +3,7 @@ import 'package:wantermarket/data/models/body/app_country.dart';
 
 import '../config/app_constantes.dart';
 import '../data/repositories/locationRepo.dart';
+import '../shared/api_checker.dart';
 
 class LocalizationProvider extends ChangeNotifier {
   final LocationRepo  locationRepo;
@@ -17,7 +18,7 @@ class LocalizationProvider extends ChangeNotifier {
     this.locationRepo.sharedPreferences.setString(AppConstants.COUNTRY_CODE, locale.toLowerCase());
   }
 
-  getAllCountries() async {
+  getAllCountries(BuildContext context) async {
     final response = await locationRepo.getAllCountries();
     if(response.error == null){
       response.response.data.forEach((element) {
@@ -28,7 +29,7 @@ class LocalizationProvider extends ChangeNotifier {
       }
       notifyListeners();
     }else{
-      //show error
+      ApiChecker.checkApi(context, response);
     }
   }
 

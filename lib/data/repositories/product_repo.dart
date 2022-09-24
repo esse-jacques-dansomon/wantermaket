@@ -27,7 +27,6 @@ class ProductsRepo {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
     }
 
-
   }
 
   //new products
@@ -42,7 +41,6 @@ class ProductsRepo {
   }
 
 
-
   //related products
   Future<ApiResponse> getRelatedProducts(int categoryId) async {
     try {
@@ -52,10 +50,6 @@ class ProductsRepo {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
     }
   }
-
-  //related products
-
-
 
 
 }

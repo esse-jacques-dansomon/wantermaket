@@ -10,14 +10,10 @@ class PaymentRepo {
   PaymentRepo({required this.dioClient});
 
   Future<ApiResponse> getBecameExclusiveLink() async {
-
     try {
       final response = await dioClient.post(AppConstants.PAY_BECOME_EXCLUSIVE_URI, data: {});
       return ApiResponse.withSuccess(response);
     } catch (e) {
-      print(e);
-      // print(response.statusMessage);
-      // print(response.statusCode);
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
     }
   }

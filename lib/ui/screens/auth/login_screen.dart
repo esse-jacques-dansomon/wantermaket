@@ -27,7 +27,7 @@ class LoginScreen extends StatelessWidget {
                   children: [
                     InkWell(child: const Icon(Icons.arrow_back_ios, color: Colors.white,),
                       onTap: (){
-                        Navigator.of(context).pop();
+                        Navigator.pushNamed(context, AppRoutes.home);
                       },
                     ),
                     const SizedBox(

@@ -1,10 +1,7 @@
-// ignore_for_file: unused_import
 
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 import 'package:wantermarket/data/repositories/product_repo.dart';
-import 'package:wantermarket/shared/app_helper.dart';
-
+import 'package:wantermarket/shared/api_checker.dart';
 import '../data/models/body/product.dart';
 
 enum ProductTopAnnoncesStatus { initial, loading, loaded, error }
@@ -51,7 +48,7 @@ class ProductProvider extends ChangeNotifier{
     dealsOfTheDayStatus = value;
   }
 
-  Future<void> getTopAnnonces() async {
+  Future<void> getTopAnnonces(BuildContext context) async {
     setTopAnnoncesState = ProductTopAnnoncesStatus.loading;
     notifyListeners();
     final topAnnoncesResponse = await productsRepo.getTopAnnonces();
@@ -67,11 +64,11 @@ class ProductProvider extends ChangeNotifier{
     }else{
       setTopAnnoncesState = ProductTopAnnoncesStatus.error;
       notifyListeners();
-
+      ApiChecker.checkApi(context, topAnnoncesResponse);
     }
   }
 
-  Future<void> getDealOfTheDay() async {
+  Future<void> getDealOfTheDay(BuildContext context) async {
     setDealsOfTheDayState = ProductDealOfTheDayStatus.loading;
     notifyListeners();
     final dealsOfTheDayResponse = await productsRepo.getDealsOfTheDay();
@@ -86,10 +83,11 @@ class ProductProvider extends ChangeNotifier{
     }else{
       setDealsOfTheDayState = ProductDealOfTheDayStatus.error;
       notifyListeners();
+      ApiChecker.checkApi(context, dealsOfTheDayResponse);
     }
   }
 
-  Future<void> getNewArrivals({reload = false}) async {
+  Future<void> getNewArrivals(BuildContext context, {reload = false}) async {
     if(reload){
       _newArrivals.clear();
       _page = 1;
@@ -114,11 +112,12 @@ class ProductProvider extends ChangeNotifier{
       isPaginationLoading = false;
       newArrivalStatus = ProductNewArrivalStatus.error;
       notifyListeners();
+      ApiChecker.checkApi(context, newArrivalsResponse);
     }
   }
 
 
-  Future<void> getRelatedProducts(int categoryId, int productId) async {
+  Future<void> getRelatedProducts(BuildContext context, int categoryId, int productId) async {
     final newArrivalsResponse = await productsRepo.getRelatedProducts(categoryId);
     if(newArrivalsResponse.error == null ){
       relatedProducts.clear();
@@ -128,6 +127,8 @@ class ProductProvider extends ChangeNotifier{
         }
       });
       notifyListeners();
+    }else{
+      ApiChecker.checkApi(context, newArrivalsResponse);
     }
   }
 

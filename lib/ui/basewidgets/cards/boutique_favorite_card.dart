@@ -74,7 +74,7 @@ class BoutiqueFavorite extends StatelessWidget {
                   //   backgroundColor: MaterialStateProperty.all(Colors.red),
                   // ),
                   onPressed: (){
-                    Provider.of<BoutiqueFavoriesProvider>(context, listen: false).removeFavory(boutique.id!);
+                    Provider.of<BoutiqueFavoriesProvider>(context, listen: false).removeFavory(boutique.id!, context);
                   },
                   child: const Text('Enlever', style: TextStyle(fontSize: AppDimensions.FONT_SIZE_DEFAULT, color: Colors.white),),
                 ),
