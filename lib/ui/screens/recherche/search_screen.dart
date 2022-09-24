@@ -17,7 +17,7 @@ class SearchScreen extends StatelessWidget {
     return DefaultTabController(
         length: 2,
         child: Scaffold(
-            backgroundColor : AppColors.WHITE,
+          backgroundColor : AppColors.WHITE,
           floatingActionButton: FloatingActionButton(
             onPressed: () {
               Navigator.pushNamed(context, AppRoutes.addProduct);
@@ -38,28 +38,29 @@ class SearchScreen extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                       Expanded(
+                      Expanded(
                         child: TabBar(
                           //padding: const EdgeInsets.symmetric(horizontal: 15),
-                          labelColor: Colors.white,
+                            labelColor: Colors.white,
                             unselectedLabelColor: AppColors.BLACK,
-                        unselectedLabelStyle : const TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
+                            unselectedLabelStyle : const TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
                             labelStyle :const TextStyle(fontSize: 18.5, fontWeight: FontWeight.w500),
-                          indicator: BoxDecoration(
-                            borderRadius: BorderRadius.circular(0),
-                            color: AppColors.PRIMARY,
-                          ),
-                          indicatorColor: AppColors.PRIMARY,
+
+                            indicator: BoxDecoration(
+                              borderRadius: BorderRadius.circular(0),
+                              color: AppColors.PRIMARY,
+                            ),
+                            indicatorColor: AppColors.PRIMARY,
 
                             tabs:
                             const [
-                             Tab(
-                               text: 'Produits',
-                             ),
-                             Tab(
-                               text: 'Boutiques',
-                             ),
-                           ]
+                              Tab(
+                                text: 'Produits',
+                              ),
+                              Tab(
+                                text: 'Boutiques',
+                              ),
+                            ]
                         ),
                       ),
                       InkWell(
@@ -87,7 +88,7 @@ class SearchScreen extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 10,),
-                   const Expanded(child: TabBarView(
+                  const Expanded(child: TabBarView(
                       children: [
                         ProductsFound(),
                         BoutiquesFounded(),

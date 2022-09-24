@@ -6,6 +6,7 @@ import 'package:wantermarket/data/models/body/category.dart';
 import '../data/repositories/categories_repo.dart';
 
 enum CategoryState { initial, loading, loaded, error }
+enum BoutiquesBySectorState { initial, loading, loaded, error }
 class CategoryProvider extends ChangeNotifier{
   final CategoryRepo categoryRepo;
   CategoryProvider({required this.categoryRepo});
@@ -18,6 +19,7 @@ class CategoryProvider extends ChangeNotifier{
 
   //states
   CategoryState categoryState = CategoryState.initial;
+  BoutiquesBySectorState boutiquesBySectorState = BoutiquesBySectorState.initial;
 
   set categoryStatus(CategoryState value) {
     categoryState = value;
@@ -42,15 +44,20 @@ class CategoryProvider extends ChangeNotifier{
   }
 
   Future<void> getBoutiquesBySector(int id) async {
+    boutiquesBySectorState = BoutiquesBySectorState.loading;
     boutiques.clear();
+    notifyListeners();
     final response = await categoryRepo.getCategoryBoutiques(id);
     if(response.response.statusCode == 200 ){
       response.response.data['data'].forEach((element) {
         boutiques.add(Boutique.fromJson(element));
       });
+      boutiquesBySectorState = BoutiquesBySectorState.loaded;
       notifyListeners();
     }else{
       print('error ${response.error}');
+      boutiquesBySectorState = BoutiquesBySectorState.error;
+      notifyListeners();
     }
   }
 

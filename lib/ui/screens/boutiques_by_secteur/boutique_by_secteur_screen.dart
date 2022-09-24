@@ -8,6 +8,7 @@ import 'package:wantermarket/data/models/body/category.dart';
 import 'package:wantermarket/route/routes.dart';
 import '../../basewidgets/app_bars/app_bar_with_return.dart';
 import '../../basewidgets/bottom_bar/bottom_nav_bar.dart';
+import '../../basewidgets/shimmer/custom_shop_loader.dart';
 
 class BoutiqueBySecteurScreen extends StatefulWidget {
   final Category category;
@@ -22,14 +23,12 @@ class _BoutiqueBySecteurScreenState extends State<BoutiqueBySecteurScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Provider.of<CategoryProvider>(context, listen: false).getBoutiquesBySector(widget.category.id!);
   }
 
   @override
   Widget build(BuildContext context) {
-    //final cardSize = MediaQuery.of(context).size.width / 2 - 32;
     return Scaffold(
       appBar: appBarWithReturn(title:widget.category.name! , context: context),
       bottomNavigationBar: const CustomBottomNavBar(boutique: true,),
@@ -53,28 +52,16 @@ class _BoutiqueBySecteurScreenState extends State<BoutiqueBySecteurScreen> {
               padding: EdgeInsets.only(bottom: 10),
               color: AppColors.PRIMARY,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
 
-                    children: const [
-                      SizedBox(
-                        width: 15,
-                      ),
-                      Icon(Icons.filter_list, color: AppColors.WHITE, size: 25,),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      Text('Filtres', style: TextStyle(color: AppColors.WHITE, fontSize: 18),)
-                    ],),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       const SizedBox(
                         width: 15,
                       ),
-                      InkWell(child:  Icon(Icons.grid_view_sharp, color: !two_items ? AppColors.WHITE : AppColors.PLACEHOLDERBg,), onTap: (){
+                      InkWell(child:  Icon(Icons.grid_view_sharp, color: two_items ? AppColors.WHITE : AppColors.PLACEHOLDERBg,), onTap: (){
                         if (!two_items) {
                           setState(() {
                             two_items = true;
@@ -84,7 +71,7 @@ class _BoutiqueBySecteurScreenState extends State<BoutiqueBySecteurScreen> {
                       const SizedBox(
                         width: 12,
                       ),
-                      InkWell(child:  Icon(Icons.view_stream_sharp, color: two_items ? AppColors.WHITE : AppColors.PLACEHOLDERBg, size: 30,), onTap: (){
+                      InkWell(child:  Icon(Icons.view_stream_sharp, color: !two_items ? AppColors.WHITE : AppColors.PLACEHOLDERBg, size: 30,), onTap: (){
 
                         if (two_items) {
                           setState(() {
@@ -105,24 +92,34 @@ class _BoutiqueBySecteurScreenState extends State<BoutiqueBySecteurScreen> {
             const SizedBox(
               height: 8,
             ),
+
             Expanded(
                 child: Padding(
                   padding: const EdgeInsets.only(left: 10, right: 10),
                   child: Consumer<CategoryProvider>(
                     builder: (ctx, categoryProvider, child){
-                      return GridView.builder(
-                        itemCount: categoryProvider.boutiques.length,
-                        gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: two_items ? 2 : 1,
-                            crossAxisSpacing: 12,
-                            mainAxisSpacing: 8,
-                            childAspectRatio: 1.30,
-                            mainAxisExtent: two_items? 190 : 120
-                        ),
-                        itemBuilder: (context, index) {
-                          return two_items?  BoutiqueCardBySecteur(boutique: categoryProvider.boutiques[index],) :  BoutiqueCardBySecteurOnePerRow(boutique: categoryProvider.boutiques[index]);
-                        },
-                      );
+                      switch(categoryProvider.boutiquesBySectorState){
+                        case BoutiquesBySectorState.initial:
+                        case BoutiquesBySectorState.loading:
+                          return CustomShopLoader(count: 15, isGrid: true,);
+                        case BoutiquesBySectorState.loaded:
+                          return GridView.builder(
+                            itemCount: categoryProvider.boutiques.length,
+                            gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: two_items ? 2 : 1,
+                                crossAxisSpacing: 12,
+                                mainAxisSpacing: 8,
+                                childAspectRatio: 1.30,
+                                mainAxisExtent: two_items? 190 : 120
+                            ),
+                            itemBuilder: (context, index) {
+                              return two_items?  BoutiqueCardBySecteur(boutique: categoryProvider.boutiques[index],) :  BoutiqueCardBySecteurOnePerRow(boutique: categoryProvider.boutiques[index]);
+                            },
+                          );
+                        case BoutiquesBySectorState.error:
+                          return const Center(child: Text('Error'),);
+
+                      }
                     },
                   ),
                 )

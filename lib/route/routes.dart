@@ -21,7 +21,7 @@ import 'package:wantermarket/ui/screens/sector/sector_screen.dart';
 import 'package:wantermarket/ui/screens/dashboard/dashboard_screen.dart';
 import 'package:wantermarket/ui/screens/produit/produit_details_screen.dart';
 import 'package:wantermarket/ui/basewidgets/user-actions-account-status/no_internet_screen.dart';
-import 'package:wantermarket/ui/screens/slash/slash_screen.dart';
+import 'package:wantermarket/ui/screens/splash/slash_screen.dart';
 import 'package:wantermarket/ui/screens/wishlist/wishlist_screen.dart';
 
 import '../data/models/body/category.dart';

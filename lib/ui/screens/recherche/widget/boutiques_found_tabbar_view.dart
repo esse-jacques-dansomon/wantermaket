@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:wantermarket/ui/basewidgets/shimmer/custom_shop_loader.dart';
 
 import '../../../../config/app_colors.dart';
 import '../../../../providers/search_provider.dart';
@@ -13,60 +14,12 @@ class BoutiquesFounded extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // Container(
-        //   padding: const EdgeInsets.only(top: 0),
-        //   child: Row(
-        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //     children: [
-        //       Row(
-        //         children: [
-        //           Text('Trier par'.toUpperCase()),
-        //           const SizedBox(
-        //             width: 10,
-        //           ),
-        //           DropdownButton(
-        //             hint: const Text('Prix'),
-        //             value: 'Prix',
-        //             items: const [
-        //               DropdownMenuItem(
-        //                 child: Text('Prix'),
-        //                 value: 'Prix',
-        //               ),
-        //               DropdownMenuItem(
-        //                 child: Text('Nom'),
-        //                 value: 'Nom',
-        //               ),
-        //               DropdownMenuItem(
-        //                 child: Text('Popularité'),
-        //                 value: 'Popularité',
-        //               ),
-        //             ], onChanged: (String? value) {  },
-        //           ),
-        //         ],
-        //       ),
-        //
-        //       InkWell(
-        //         onTap: (){},
-        //         child: Container(
-        //           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-        //           child: Row(
-        //             children: const [
-        //               Text('Filter'),
-        //               SizedBox(width: 10,),
-        //               Icon(Icons.filter_alt_rounded, color: AppColors.PRIMARY,size: 28,)
-        //             ],
-        //           ),
-        //         ),
-        //       ),
-        //     ],
-        //   ),
-        // ),
 
         Expanded(child: Consumer<SearchProvider>(
           builder: (context, searchProvider, child){
             switch(searchProvider.searchBoutiqueState){
               case SearchBoutiqueState.loading:
-                return const Center(child: CircularProgressIndicator());
+                return CustomShopLoader(count: 15, isGrid: true);
               case SearchBoutiqueState.loaded:
                 return  GridView.builder(
                   physics: const BouncingScrollPhysics(),

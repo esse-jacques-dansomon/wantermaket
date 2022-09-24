@@ -2,12 +2,12 @@ import 'package:dio/dio.dart';
 
 class ApiResponse {
    Response response;
-  final dynamic error;
+   dynamic error;
 
-  ApiResponse(  this.response,  this.error);
+  ApiResponse( this.response,  this.error);
 
   ApiResponse.withError(dynamic errorValue)
-      : response = Response(statusCode: 500, requestOptions: RequestOptions(path: '')),
+      : response = Response(requestOptions: new RequestOptions(path: ""), statusCode: 400),
         error = errorValue;
 
   ApiResponse.withSuccess(Response responseValue)
