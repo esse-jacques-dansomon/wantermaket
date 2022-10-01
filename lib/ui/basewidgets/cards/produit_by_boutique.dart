@@ -128,7 +128,7 @@ class ProductByBoutique extends StatelessWidget {
                                         children: const [
                                           Icon(Icons.phone, color: AppColors.SECONDARY, size: 15,),
                                           SizedBox(width: 5,),
-                                          Text('Contactez le vendeur', overflow: TextOverflow.ellipsis, style: TextStyle( color: AppColors.SECONDARY ,fontSize: AppDimensions.FONT_SIZE_EXTRA_SMALL-0.5), textAlign: TextAlign.left, ),
+                                          Text('Contactez le vendeur', overflow: TextOverflow.ellipsis, style: TextStyle( color: AppColors.SECONDARY ,fontSize: AppDimensions.FONT_SIZE_EXTRA_SMALL-1), textAlign: TextAlign.left, ),
                                         ],
                                       )),
                                     ),

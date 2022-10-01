@@ -18,9 +18,9 @@ class VendorDashboardProducts extends StatelessWidget {
           margin : const EdgeInsets.only(bottom: 20, top: 10),
           child: Row(
               children:  [
-                 Expanded(child:  Divider(color: Colors.grey,),),
+                Expanded(child:  Divider(color: Colors.grey,),),
                 Container( padding: const EdgeInsets.symmetric(horizontal: 10), child: const Text('Mes Produits', textAlign: TextAlign.center, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),)),
-                 Expanded(child: Divider(color: Colors.grey,),),
+                Expanded(child: Divider(color: Colors.grey,),),
               ]
           ),
         ),

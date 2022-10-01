@@ -12,6 +12,7 @@ import '../data/models/body/boutique.dart';
 import '../data/models/body/product.dart';
 import '../data/repositories/vendor_repo.dart';
 
+enum ProfilePaginationState { loading, loaded, error, noMoreData }
 class VendorProvider extends ChangeNotifier {
   final VendorRepo vendorRepo;
   final SharedPreferences sharedPreferences;
@@ -34,8 +35,9 @@ class VendorProvider extends ChangeNotifier {
   bool isProductsLoad = false;
   List<Product> get products => _products;
 
-
-
+  String nextProductsUrl = "";
+  ProfilePaginationState _profileProductsPaginateState = ProfilePaginationState.loading;
+    ProfilePaginationState get profileProductsPaginateState => _profileProductsPaginateState;
 
 
   Future<void> getBoutique() async {
@@ -64,27 +66,53 @@ class VendorProvider extends ChangeNotifier {
       isProductsLoad = false;
     }
     _products.clear();
+    this._profileProductsPaginateState = ProfilePaginationState.loaded;
     notifyListeners();
-    try {
-      final response = await vendorRepo.getUserConnectedProducts();
-      if(response.response.data != null){
-        response.response.data['data'].forEach((element) {
+    final response = await vendorRepo.getUserConnectedProducts();
+    if(response.response.statusCode == 200){
+      response.response.data['data'].forEach((element) {
+        _products.add(Product.fromJson(element));
+      });
+      if(response.response.data['meta']['links']['next'] != null){
+        nextProductsUrl = response.response.data['meta']['links']['next'];
+        _profileProductsPaginateState = ProfilePaginationState.loaded;
+      }else{
+        _profileProductsPaginateState = ProfilePaginationState.noMoreData;
+      }
+    }else{
+      ApiChecker.checkApi(context, response);
+    }
+    if(reload){
+      isProductsLoad = true;
+    }
+    notifyListeners();
+  }
+
+  Future<void> getVendorPaginateProducts() async {
+    if(_profileProductsPaginateState == ProfilePaginationState.loading || _profileProductsPaginateState == ProfilePaginationState.noMoreData){
+      return Future.value();
+    }
+    _profileProductsPaginateState = ProfilePaginationState.loading;
+    notifyListeners();
+    return vendorRepo.getUserConnectedPaginatedProducts(nextProductsUrl).then((value) {
+      if(value.response.data != null){
+        value.response.data['data'].forEach((element) {
           _products.add(Product.fromJson(element));
         });
+        if(value.response.data['meta']['links']['next'] != null){
+          nextProductsUrl = value.response.data['meta']['links']['next'];
+          _profileProductsPaginateState = ProfilePaginationState.loaded;
+        }else{
+          _profileProductsPaginateState = ProfilePaginationState.noMoreData;
+        }
       }else{
-        ApiChecker.checkApi(context, response);
-      }
-      if(reload){
-        isProductsLoad = true;
+        _profileProductsPaginateState = ProfilePaginationState.error;
       }
       notifyListeners();
-    } catch (e) {
-      if(reload){
-        isProductsLoad = true;
-      }
+    }).catchError((e){
+      _profileProductsPaginateState = ProfilePaginationState.error;
       notifyListeners();
-      rethrow;
-    }
+    });
   }
 
   Future<bool> updateBoutique(BuildContext context, BoutiqueUpdateModel boutiqueUpdateModel, {File? filePhotoProfile, File? filePhotoCover}) async {
@@ -141,8 +169,6 @@ class VendorProvider extends ChangeNotifier {
     products.removeWhere((element) => element.id == i);
     notifyListeners();
   }
-
-
 
 
 }

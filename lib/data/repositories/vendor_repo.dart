@@ -18,6 +18,14 @@ class VendorRepo {
     }
   }
 
+  Future<ApiResponse> getUserConnectedPaginatedProducts(String url) async {
+    try {final response = await dioClient.get(url);
+    return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+
   Future<ApiResponse> getUserConnectedBoutique() async {
     try {final response = await dioClient.get(AppConstants.VENDOR_BOUTIQUE_URI);
     return ApiResponse.withSuccess(response);
@@ -47,11 +55,8 @@ class VendorRepo {
   Future<ApiResponse> updateBoutique(FormData data) async {
     final response = await dioClient.post(AppConstants.BOUTIQUE_update_URI, data: data);
     try {
-      print(response.statusCode);
       return ApiResponse.withSuccess(response);
     } catch (e) {
-      print('failure') ;
-      print(response.statusMessage);
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
     }
   }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wantermarket/config/app_colors.dart';
 import 'package:wantermarket/shared/contact_vendor.dart';
 
+import '../../../config/app_dimenssions.dart';
 import '../../../data/models/body/boutique.dart';
 
 class FicheVendeur extends StatelessWidget {
@@ -56,22 +57,25 @@ class FicheVendeur extends StatelessWidget {
                 const SizedBox(height: 10,),
                 const Text('Coordonnees', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
                 const SizedBox(height: 10,),
-                ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.green),
-                    padding: MaterialStateProperty.all(EdgeInsets.symmetric(horizontal: 20, vertical: 10)),
-                  ),
-                  onPressed: (){
+
+                InkWell(
+                  onTap: (){
                     ContactVendor.openPhone(number :boutique.vendor!.phone!, context: context);
 
                   },
-                  child: Row(
-                    children:  [
-                      const Icon(Icons.phone, size: 18,),
-                      const SizedBox(width: 5,),
-                      Text("Téléphone", style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),),
+                  child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: AppColors.SECONDARY, width: 1),
+                      ),
+                       child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: const [
+                      Icon(Icons.phone, color: AppColors.SECONDARY, size: 18,),
+                      SizedBox(width: 5,),
+                      Text('Téléphone', overflow: TextOverflow.ellipsis, style: TextStyle( color: AppColors.SECONDARY ,fontSize: 16, fontWeight: FontWeight.w400), textAlign: TextAlign.left, ),
                     ],
-                  ),
+                  )),
                 ),
                 const SizedBox(height: 10,),
                 //WHATSAPP BUTTON
@@ -87,7 +91,7 @@ class FicheVendeur extends StatelessWidget {
                     children:  [
                       const Icon(Icons.whatsapp, size: 18,),
                       const SizedBox(width: 5,),
-                      Text("Whatsapp", style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),),
+                      Text("WhatsApp", style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),),
                     ],
                   ),
                 ),
@@ -123,6 +127,8 @@ class FicheVendeur extends StatelessWidget {
               ContactVendor.launchMaps(boutique);
             }, child:Row(
               children: [
+                const Icon(Icons.add_location_rounded, size: 18,),
+                const SizedBox(width: 5,),
                 const Text('Localisation'),
               ],
             ) )

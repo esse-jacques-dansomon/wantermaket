@@ -23,14 +23,20 @@ class DashBoardScreen extends StatefulWidget {
 }
 
 class _DashBoardScreenState extends State<DashBoardScreen> {
+  final ScrollController _controller = ScrollController();
 
   _loadData()  {
     Provider.of<VendorProvider>(context, listen: false).getBoutique();
     Provider.of<VendorProvider>(context, listen: false).getVendorProducts(context);
+    _controller.addListener(_scrollListener);
 
   }
 
-
+  void _scrollListener() {
+    if (_controller.position.pixels == _controller.position.maxScrollExtent ) {
+      Provider.of<VendorProvider>(context, listen: false).getVendorPaginateProducts();
+    }
+  }
 
   @override
   initState()  {
@@ -53,7 +59,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      bottomNavigationBar: const CustomBottomNavBar(profile: true,),
+      bottomNavigationBar:  CustomBottomNavBar(profile: true, scrollController: _controller,),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.pushNamed(context, AppRoutes.addProduct);
@@ -67,16 +73,30 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
       backgroundColor: AppColors.WHITE,
       body:  Provider.of<VendorProvider>(context, listen: true).isProductsLoad? SafeArea(
         child: SingleChildScrollView(
+          controller: _controller,
           physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.symmetric(horizontal: 10) ,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
-            children: const [
+            children:  [
 
               VendorDashboardStats(),
 
               VendorDashboardProducts(),
+
+              Consumer<VendorProvider>(builder:(context, paginate, child){
+                switch(paginate.profileProductsPaginateState){
+                  case ProfilePaginationState.loaded:
+                    return Container();
+                  case ProfilePaginationState.loading:
+                    return const Center(child: CircularProgressIndicator());
+                  case ProfilePaginationState.error:
+                    return const Center(child: Text('Erreur de chargement'),);
+                    case ProfilePaginationState.noMoreData:
+                    return const Center(child: Text('Aucun produit à afficher'),);
+                }
+              } ),
 
               SizedBox(height: 50,),
             ],
