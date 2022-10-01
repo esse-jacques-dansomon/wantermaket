@@ -52,14 +52,26 @@ class _SlashScreenState extends State<SlashScreen> {
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Center(
-            child: Image.asset('assets/images/logo.png', width: 150, height: 150),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(
+                  child: Image.asset('assets/images/logo.png', width: 150, height: 150),
+                ),
+                const SizedBox(height: 5),
+                const Text("WanterMarket", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),),
+                const SizedBox(height: 20),
+              ],
+            ),
           ),
-          const SizedBox(height: 5),
-          const Text("WanterMarket", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),),
+
+          const Text("By Agence Cauris", style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),),
           const SizedBox(height: 20),
+
           //spinner with animation
         ],
       ),
