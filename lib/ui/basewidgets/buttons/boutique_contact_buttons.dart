@@ -39,7 +39,7 @@ class BoutiqueContactButtons extends StatelessWidget {
                     width: double.infinity,
                     child: ElevatedButton(
                         style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(Colors.black54),
+                            backgroundColor: MaterialStateProperty.all(Colors.blue),
                             shape: MaterialStateProperty.all(RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(50),
                             ),)

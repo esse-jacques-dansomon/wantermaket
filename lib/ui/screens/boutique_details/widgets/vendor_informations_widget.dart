@@ -94,7 +94,7 @@ class VendorInformationWidget extends StatelessWidget {
                         const Icon(Icons.shop_two_rounded, size: 18,color: AppColors.SECONDARY,),
                         const SizedBox(width: 5,),
                         Consumer<BoutiqueProvider>(builder: (ctx, boutiqueProvider, child){
-                          return Text('${boutiqueProvider.boutiqueProduits.length} produits', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),);
+                          return Text('${boutiqueProvider.totalBoutiqueProducts} produits', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),);
                         }, ),
                       ],
                     ),

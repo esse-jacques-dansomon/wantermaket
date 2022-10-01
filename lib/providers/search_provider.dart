@@ -22,85 +22,83 @@ enum SearchBoutiqueState {
   noProducts,
   error,
 }
+enum searchPaginationState {
+  loading,
+  loaded,
+  error,
+}
 class SearchProvider extends ChangeNotifier {
   final SearchRepo searchRepo;
   SearchProductState state = SearchProductState.initial;
+  searchPaginationState paginationState = searchPaginationState.loaded;
   SearchBoutiqueState searchBoutiqueState = SearchBoutiqueState.initial;
   SearchProvider({required this.searchRepo});
 
   String? searchText = null;
+  int page = 1;
+
   final List<Product> _products = [];
   List<Product> get products => _products;
 
   final List<Boutique> _boutiques = [];
   List<Boutique> get boutiques => _boutiques;
 
-  Future<void> search(BuildContext context, {required FilterModel filterModel}) async {
-    searchText = filterModel.keyWorld;
-    products.clear();
-    boutiques.clear();
-    state = SearchProductState.loading;
-    searchBoutiqueState = SearchBoutiqueState.loading;
-    notifyListeners();
-    ApiResponse responseB =  await searchRepo.search(filterModel: filterModel);
-    final response = responseB.response;
-    if(response.statusCode == 200 ){
-      print(response.data);
-      response.data['boutiques'].forEach((element) {
-        boutiques.add(Boutique.fromJson(element));
-      });
-      response.data['produits'].forEach((element) {
-        products.add(Product.fromJson(element));
-      });
-      if(products.isEmpty){
-        state = SearchProductState.noProducts;
-      }else{
-        state = SearchProductState.loaded;
-      }
-      if(boutiques.isEmpty){
-        searchBoutiqueState = SearchBoutiqueState.noProducts;
-      }else{
-        searchBoutiqueState = SearchBoutiqueState.loaded;
-      }
+
+  Future<void> filter(BuildContext context,{required FilterModel filterModel, bool isNewSearch = true}) async {
+    if(isNewSearch){
+      products.clear();
+      boutiques.clear();
+      page = 1;
+      state = SearchProductState.loading;
+      searchBoutiqueState = SearchBoutiqueState.loading;
       notifyListeners();
     }else{
-      state = SearchProductState.error;
-      searchBoutiqueState = SearchBoutiqueState.error;
+      paginationState = searchPaginationState.loading;
       notifyListeners();
-      ApiChecker.checkApi(context, responseB);
     }
 
-  }
 
-  Future<void> filter(BuildContext context, {required FilterModel filterModel}) async {
-    products.clear();
-    boutiques.clear();
-    state = SearchProductState.loading;
-    searchBoutiqueState = SearchBoutiqueState.loading;
-    notifyListeners();
-    final response = await searchRepo.searchPost(filterModel: filterModel);
+    final response = await searchRepo.search(filterModel: filterModel, page: page);
     if(response.response.statusCode == 200 ){
-      if(response.response.data['boutiques'] != null){
-        response.response.data['boutiques'].forEach((element) {
+      if(response.response.data['produits'] != null && response.response.data['produits'] != []){
+        response.response.data['produits']['data'].forEach((element) {
+          products.add(Product.fromJson(element));
+        });
+
+        //CAN BE PAGINATED
+        if(response.response.data['produits']['meta']['links']['next'] != null) {
+          page++;
+        }else{
+          page++;
+          paginationState = searchPaginationState.loaded;
+          notifyListeners();
+        }
+
+      }
+      if(response.response.data['boutiques'] != null && response.response.data['boutiques'] != []){
+        response.response.data['boutiques']['data'].forEach((element) {
           boutiques.add(Boutique.fromJson(element));
         });
       }
-      if(response.response.data['produits'] != null){
-        response.response.data['produits'].forEach((element) {
-          products.add(Product.fromJson(element));
-        });
-      }
-      if(products.isEmpty){
-        state = SearchProductState.noProducts;
+
+      //CHECK IF THERE IS NO PRODUCTS OR BOUTIQUES FOUND IN NEW SEARCH ONLY : NO NEED FOR PAGINATION
+      if(isNewSearch){
+        if(products.isEmpty){
+          state = SearchProductState.noProducts;
+        }else{
+          state = SearchProductState.loaded;
+        }
+        if(boutiques.isEmpty){
+          searchBoutiqueState = SearchBoutiqueState.noProducts;
+        }else{
+          searchBoutiqueState = SearchBoutiqueState.loaded;
+        }
       }else{
-        state = SearchProductState.loaded;
-      }
-      if(boutiques.isEmpty){
-        searchBoutiqueState = SearchBoutiqueState.noProducts;
-      }else{
-        searchBoutiqueState = SearchBoutiqueState.loaded;
+        this.paginationState = searchPaginationState.loaded;
       }
       notifyListeners();
+
+
     }else{
       state = SearchProductState.error;
       searchBoutiqueState = SearchBoutiqueState.error;

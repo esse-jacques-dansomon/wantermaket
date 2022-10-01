@@ -26,8 +26,8 @@ class BoutiqueRepo {
     }
   }
 
-  Future<ApiResponse> getProductsByBoutique(int boutiqueId) async {
-    try {final response = await dioClient.get('${AppConstants.BOUTIQUE_URI}/$boutiqueId/produits');
+  Future<ApiResponse> getProductsByBoutique(int boutiqueId, {required int page}) async {
+    try {final response = await dioClient.get('${AppConstants.BOUTIQUE_URI}/$boutiqueId/produits', queryParameters: {'page': page});
     return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

@@ -37,6 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _loadDataBoutique() async {
     Provider.of<BoutiqueProvider>(context, listen: false).getBoutiquesExclusives(context);
+    Provider.of<ProductProvider>(context, listen: false).getTopAnnonces(context);
     Provider.of<ProductProvider>(context, listen: false).getDealOfTheDay(context);
     Provider.of<ProductProvider>(context, listen: false).getNewArrivals(context, reload: true);
 

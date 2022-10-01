@@ -67,7 +67,7 @@ class SearchScreen extends StatelessWidget {
                         onTap: (){
                           showModalBottomSheet(
                             context: context,
-                            isDismissible: false,
+                            isDismissible: true,
                             isScrollControlled: true,
                             builder: (BuildContext context) {
 

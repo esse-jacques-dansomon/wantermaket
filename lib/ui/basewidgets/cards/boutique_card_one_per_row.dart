@@ -70,7 +70,7 @@ class BoutiqueCardBySecteurOnePerRow extends StatelessWidget {
                       children: [
                         //call button
                         IconButton(
-                          icon: Icon(Icons.call, color: Colors.green,),
+                          icon: Icon(Icons.call, color: Colors.blueAccent,),
                           onPressed: (){
                             ContactVendor.openPhone(context: context, number: boutique.vendor!.phone!);
                           },

@@ -104,6 +104,7 @@ class ProductProvider extends ChangeNotifier{
         page++;
         isPaginationLoading = true;
       }else{
+        page++;
         isPaginationLoading = false;
       }
       newArrivalStatus = ProductNewArrivalStatus.loaded;

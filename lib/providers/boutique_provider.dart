@@ -8,6 +8,7 @@ import '../data/repositories/boutique_repo.dart';
 enum BoutiqueState { initial, loading, loaded, error }
 enum TopBoutiqueState { initial, loading, loaded, error }
 enum BoutiqueProduitsState { initial, loading, loaded, error }
+enum PaginationState { loading, loaded, noMoreData }
 
 class BoutiqueProvider extends ChangeNotifier{
   final BoutiqueRepo boutiqueRepo;
@@ -20,11 +21,14 @@ class BoutiqueProvider extends ChangeNotifier{
   List<Product> get boutiqueProduits => _boutiqueProduits;
   List<Boutique> get topBoutiques => _topBoutiques;
   List<Boutique> get boutiquesExclusives => _exclusivesBoutiques;
+  int page  = 1;
+  int totalBoutiqueProducts = 0;
 
   //states
   BoutiqueState state = BoutiqueState.initial;
   TopBoutiqueState topBoutiqueState = TopBoutiqueState.initial;
   BoutiqueProduitsState boutiqueProduitsState = BoutiqueProduitsState.initial;
+  PaginationState paginationState = PaginationState.loaded;
 
   Future<void> getTopBoutiques(BuildContext context) async {
     this.topBoutiqueState = TopBoutiqueState.loading;
@@ -63,19 +67,40 @@ class BoutiqueProvider extends ChangeNotifier{
     }
   }
 
-  Future<void> getBoutiqueProduits(BuildContext context, int boutiqueId) async {
-    boutiqueProduits.clear();
-    productsSearch.clear();
-    this.boutiqueProduitsState = BoutiqueProduitsState.loading;
+  Future<void> getBoutiqueProduits(BuildContext context, int boutiqueId, {bool reload = true}) async {
+    if(reload){
+      boutiqueProduits.clear();
+      productsSearch.clear();
+      this.boutiqueProduitsState = BoutiqueProduitsState.loading;
+      page = 1;
+    }else{
+      paginationState = PaginationState.loading;
+    }
     notifyListeners();
-    final response = await boutiqueRepo.getProductsByBoutique(boutiqueId);
-    //notifyListeners();
+
+    final response = await boutiqueRepo.getProductsByBoutique(boutiqueId, page: page);
+
     if(response.response.statusCode == 200){
+      print(response.response.data['meta']);
       response.response.data['data'].forEach((element) {
         boutiqueProduits.add(Product.fromJson(element));
+        productsSearch.add(Product.fromJson(element));
       });
-      productsSearch.addAll(boutiqueProduits) ;
-      this.boutiqueProduitsState = BoutiqueProduitsState.loaded;
+
+      //VERIFIER SI LA PAGE EST LA DERNIERE
+      if(response.response.data['meta']['links']['next'] != null) {
+        page++;
+      }else{
+        page++;
+        paginationState = PaginationState.loaded;
+        notifyListeners();
+      }
+      if(reload){
+        this.totalBoutiqueProducts = response.response.data['meta']['total'];
+        this.boutiqueProduitsState = BoutiqueProduitsState.loaded;
+      }else{
+        paginationState = PaginationState.loaded;
+      }
       notifyListeners();
     }else{
       this.boutiqueProduitsState = BoutiqueProduitsState.error;

@@ -14,23 +14,16 @@ class SearchRepo {
   final DioClient dioClient;
   SearchRepo({required this.dioClient});
 
-  Future<ApiResponse> search( {required FilterModel filterModel}) async {
+  Future<ApiResponse> search( {required FilterModel filterModel, required int page }  ) async {
     try {
-      final response =  await dioClient.post(AppConstants.SEARCH_URI , data: filterModel.toMap());
+      final response =  await dioClient.post(AppConstants.SEARCH_URI , data: filterModel.toMap(), queryParameters: {'page': page});
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
     }
   }
 
-  Future<ApiResponse> searchPost( {required FilterModel filterModel}) async {
-    try {
-      final response = await dioClient.post(AppConstants.SEARCH_URI , data: filterModel.toJson());
-      return ApiResponse.withSuccess(response);
-    } catch (e) {
-      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
-    }
-  }
+
 
   _getUri({required FilterModel filterModel}){
     return "${AppConstants.SEARCH_URI}"

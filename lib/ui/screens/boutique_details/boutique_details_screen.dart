@@ -18,8 +18,15 @@ class BoutiqueDetailsScreen extends StatefulWidget {
 }
 
 class _BoutiqueDetailsScreenState extends State<BoutiqueDetailsScreen> {
+  final ScrollController _controller = ScrollController();
 
-   _loadData() {
+  void _scrollListener() {
+    if (_controller.position.pixels == _controller.position.maxScrollExtent ) {
+      Provider.of<BoutiqueProvider>(context, listen: false).getBoutiqueProduits(context, widget.boutique.id!, reload: false);
+    }
+  }
+
+  _loadData() {
     Provider.of<BoutiqueProvider>(context, listen: false).getBoutiqueProduits(context, widget.boutique.id!);
     //not the connected user views
     if(widget.boutique.id != Provider.of<AuthProvider>(context, listen: false).user.boutiqueId){
@@ -30,8 +37,8 @@ class _BoutiqueDetailsScreenState extends State<BoutiqueDetailsScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    _controller.addListener(_scrollListener);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _loadData();
     });
@@ -44,6 +51,7 @@ class _BoutiqueDetailsScreenState extends State<BoutiqueDetailsScreen> {
       appBar:appBarWithReturn(title: widget.boutique.name!, context: context),
       body: SafeArea(
         child: SingleChildScrollView(
+          controller: _controller,
           physics: const BouncingScrollPhysics(),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
@@ -54,6 +62,8 @@ class _BoutiqueDetailsScreenState extends State<BoutiqueDetailsScreen> {
                 VendorInformationWidget(boutique: widget.boutique,),
                 //seller products
                 const VendorProductsWidget()
+                //loader for paginate
+
               ],
             ),
           ),

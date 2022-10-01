@@ -65,11 +65,9 @@ class AuthProvider extends ChangeNotifier {
       else if(response.response.statusCode == 400){
         _isLoadingRegister = false;
         notifyListeners();
-        print("Fuck u bi");
         ScaffoldMessenger.of(context).showSnackBar( SnackBar(content: Text('Ce mail existe déja', style: TextStyle(color: Colors.white)), backgroundColor: Colors.red));
       }
       else{
-        print("Fuck u bi");
         _isLoadingRegister = false;
         notifyListeners();
         ScaffoldMessenger.of(context).showSnackBar( SnackBar(content: Text('Une errue s\'est produite, veuillez reessayez', style: TextStyle(color: Colors.white)), backgroundColor: Colors.red));

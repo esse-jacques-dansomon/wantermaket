@@ -24,7 +24,9 @@ class _BoutiqueBySecteurScreenState extends State<BoutiqueBySecteurScreen> {
   @override
   void initState() {
     super.initState();
-    Provider.of<CategoryProvider>(context, listen: false).getBoutiquesBySector(context, widget.category.id!);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<CategoryProvider>(context, listen: false).getBoutiquesBySector(context, widget.category.id!);
+    });
   }
 
   @override

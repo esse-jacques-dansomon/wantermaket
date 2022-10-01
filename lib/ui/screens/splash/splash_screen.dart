@@ -36,7 +36,7 @@ class _SlashScreenState extends State<SlashScreen> {
       Provider.of<CategoryProvider>(context, listen: false).getCategories(context);
       Provider.of<ProductProvider>(context, listen: false).getTopAnnonces(context);
       Provider.of<ProductProvider>(context, listen: false).getDealOfTheDay(context);
-      Provider.of<ProductProvider>(context, listen: false).getNewArrivals(context);
+      Provider.of<ProductProvider>(context, listen: false).getNewArrivals(context, reload: true);
       timer = Timer(const Duration(milliseconds: 4000), () {
         //navigate to the next screen
         Navigator.pushReplacementNamed(context, AppRoutes.home);

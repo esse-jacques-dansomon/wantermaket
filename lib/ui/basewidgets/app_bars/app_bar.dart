@@ -49,7 +49,7 @@ AppBar appBar({bool isActiveSearchbar=false, bool isOnSearchPage=false}) {
                       textAlignVertical : TextAlignVertical.center,
                     onSubmitted: (value) {
                       Provider.of<SearchProvider>(context, listen: false)
-                          .search(context, filterModel: FilterModel(keyWorld: value, max: null, min: null, priceFilter: null, isNew: null, isPopular: null, isPromo: null));
+                          .filter(context, filterModel: FilterModel(keyWorld: value, max: null, min: null, priceFilter: null, isNew: null, isPopular: null, isPromo: null));
                       if (!isOnSearchPage) {
                         Navigator.of(context).pushNamed(AppRoutes.search);
                       }

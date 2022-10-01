@@ -69,25 +69,34 @@ class VendorProductsWidget extends StatelessWidget {
             case BoutiqueProduitsState.loading:
               return const CustomProductsLoader(count: 10, isGrid: true);
             case BoutiqueProduitsState.loaded:
-              return boutiqueProvider.boutiqueProduits.length > 0
-                  ? GridView.builder(
-                      itemCount: boutiqueProvider.productsSearch.length,
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount:
-                              AppHelper.getCrossAxisCount(context, width: 230),
-                          mainAxisSpacing: 10,
-                          crossAxisSpacing: 5,
-                          mainAxisExtent: 320,
-                          childAspectRatio: 1.5),
-                      itemBuilder: (context, index) {
-                        return SizedBox(
-                            width: 230,
-                            child: ProductByBoutique(
-                              product: boutiqueProvider.productsSearch[index],
-                            ));
-                      })
+              return boutiqueProvider.productsSearch.length > 0
+                  ? Column(
+                    children: [
+                      GridView.builder(
+                          itemCount: boutiqueProvider.productsSearch.length,
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount:
+                                  AppHelper.getCrossAxisCount(context, width: 230),
+                              mainAxisSpacing: 10,
+                              crossAxisSpacing: 5,
+                              mainAxisExtent: 320,
+                              childAspectRatio: 1.5),
+                          itemBuilder: (context, index) {
+                            return SizedBox(
+                                width: 230,
+                                child: ProductByBoutique(
+                                  product: boutiqueProvider.productsSearch[index],
+                                ));
+                          }),
+                      //LOADER FOR PAGINATE
+                      boutiqueProvider.paginationState ==
+                              PaginationState.loading
+                          ? const CustomProductsLoader(count: 10, isGrid: true)
+                          : const SizedBox(),
+                    ],
+                  )
                   : const Center(
                       child: Text('Aucun produit trouvé'),
                     );

@@ -17,7 +17,7 @@ import 'package:wantermarket/providers/slider_provider.dart';
 import 'package:wantermarket/providers/vendor_provider.dart';
 import 'package:wantermarket/providers/wishlist_provider.dart';
 import 'package:wantermarket/route/routes.dart';
-import 'package:wantermarket/ui/screens/splash/slash_screen.dart';
+import 'package:wantermarket/ui/screens/splash/splash_screen.dart';
 import './dependance_injector/dependance_injector.dart' as di;
 import 'config/app_colors.dart';
 
@@ -33,7 +33,7 @@ class MyHttpOverrides extends HttpOverrides{
 
 Future<void> main() async {
 
-  HttpOverrides.global = MyHttpOverrides();
+  // HttpOverrides.global = MyHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
   await di.init();
     runApp(MultiProvider(

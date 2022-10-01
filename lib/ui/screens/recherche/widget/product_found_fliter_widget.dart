@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
 import 'package:multi_select_flutter/util/multi_select_list_type.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wantermarket/providers/auth_provider.dart';
 
 import '../../../../config/app_colors.dart';
 import '../../../../data/models/body/filter_model.dart';
@@ -18,15 +22,47 @@ class ProductFoundFilter extends StatefulWidget {
 
 class _ProductFoundFilterState extends State<ProductFoundFilter> {
 
+  SharedPreferences? prefs ;
+
+
   List<dynamic> _selectedItems = [];
   int? groupValue;
   int? priceFilter;
-  int min = 0;
-  int max = 0;
+  int? min;
+  int? max;
   int isPromo = 0;
   int isPopular  = 0;
   int isNew = 0;
   String keyWord = "";
+
+
+  _saveFilter(FilterModel filterModel)  {
+    prefs!.setString("wanter_filter", json.encode(filterModel.toMap()));
+  }
+  FilterModel? _getSharedPref()   {
+    String? filter = prefs!.getString("wanter_filter");
+    if (filter != null) {
+      FilterModel filterModel = FilterModel.fromMap(json.decode(filter));
+      this.keyWord = filterModel.keyWorld;
+      this.min = filterModel.min;
+      this.max = filterModel.max;
+      this.priceFilter = filterModel.priceFilter;
+      this.isNew = filterModel.isNew!;
+      this.isPopular = filterModel.isPopular!;
+      this.isPromo = filterModel.isPromo!;
+      this._selectedItems = filterModel.secteurs!;
+      return filterModel;
+    }
+    return null;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    this.prefs = Provider.of<AuthProvider>(context, listen: false).authRepo.sharedPreferences;
+    this._getSharedPref();
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +73,7 @@ class _ProductFoundFilterState extends State<ProductFoundFilter> {
     ];
 
     var categories = Provider.of<CategoryProvider>(context, listen: false).categories;
+
 
     return Scaffold(
       appBar: AppBar(
@@ -58,17 +95,18 @@ class _ProductFoundFilterState extends State<ProductFoundFilter> {
                   fontSize: 20, color: AppColors.BLACK, fontWeight: FontWeight.bold
                 )),
                 TextButton(onPressed: (){
-
-                  Provider.of<SearchProvider>(context, listen: false).filter(context, filterModel: FilterModel(
-                      min: min,
-                      max: max,
-                      secteurs: _selectedItems ,
-                      priceFilter: priceFilter,
-                      isNew: isNew,
-                      isPopular: isPopular,
-                      isPromo: isPromo,
-                      keyWorld: keyWord,
-                  ));
+                   FilterModel filterModel = FilterModel(
+                     min: min,
+                     max: max,
+                     secteurs: _selectedItems ,
+                     priceFilter: priceFilter,
+                     isNew: isNew,
+                     isPopular: isPopular,
+                     isPromo: isPromo,
+                     keyWorld: keyWord,
+                   );
+                    _saveFilter(filterModel);
+                  Provider.of<SearchProvider>(context, listen: false).filter(context, filterModel: filterModel);
                   Navigator.pop(context);
                 }, child: const Text('Rechercher', style:TextStyle(
                   fontSize: 19, color: AppColors.BLACK,
@@ -104,7 +142,7 @@ class _ProductFoundFilterState extends State<ProductFoundFilter> {
                             },
                             initialValue: keyWord,
                             decoration: InputDecoration(
-                              hintText: 'Recherche par mot clé',
+                              hintText: keyWord,
                               contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                               hintStyle: const TextStyle(fontSize: 16),
 
@@ -138,9 +176,10 @@ class _ProductFoundFilterState extends State<ProductFoundFilter> {
                              width: 150,
                              child: TextFormField(
                                onChanged: (value) {
-                                 min = int.parse(value);
+                                 min = value != "" ?int.parse(value) : null;
                                },
-                               initialValue: min.toString(),
+                               initialValue: min == null|| min ==0 ? '' : min.toString(),
+                               keyboardType: TextInputType.number,
                                decoration: InputDecoration(
                                  hintText: 'min',
                                  contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -156,9 +195,11 @@ class _ProductFoundFilterState extends State<ProductFoundFilter> {
                              width: 150,
                              child: TextFormField(
                                onChanged: (value) {
-                                 max = int.parse(value);
+                                 max = value != "" ? int.parse(value) : null;
                                },
-                               initialValue: max.toString(),
+                                 initialValue: max == null|| max ==0 ? '' : max.toString(),
+                               //number only
+                                keyboardType: TextInputType.number,
                                decoration: InputDecoration(
                                  hintText: 'max',
                                  contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
@@ -180,7 +221,7 @@ class _ProductFoundFilterState extends State<ProductFoundFilter> {
                  //by attribute
                   const Divider(
                     color: Colors.grey,
-                    height: 1,
+                    height: 1
                   ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -290,6 +331,7 @@ class _ProductFoundFilterState extends State<ProductFoundFilter> {
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: MultiSelectDialogField(
 
+                      initialValue: _selectedItems,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(0),
                         // color: Colors.grey[200],
