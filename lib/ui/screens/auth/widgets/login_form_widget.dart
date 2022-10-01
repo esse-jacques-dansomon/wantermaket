@@ -23,9 +23,9 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
   void _signIn()   {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
     final loginModel = LoginModel(email: _email!, password: _password!);
-    authProvider.login(loginModel, context).then((value) async => {
+    authProvider.login(loginModel, context).then((value) => {
       if (authProvider.isLoggedIn()) {
-        Navigator.of(context).pushReplacementNamed(AppRoutes.profile),
+        (!mounted)?null : Navigator.of(context).pushReplacementNamed(AppRoutes.profile),
       }else{
         if(!authProvider.isLoggedIn()) {
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(

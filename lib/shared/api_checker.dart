@@ -5,7 +5,6 @@ import 'package:wantermarket/providers/auth_provider.dart';
 
 import '../data/models/response/api_response.dart';
 import '../route/routes.dart';
-import 'app_helper.dart';
 
 class ApiChecker {
   static void checkApi(BuildContext context, ApiResponse apiResponse) {

@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:wantermarket/data/models/body/boutique.dart';
 import 'package:wantermarket/data/models/body/filter_model.dart';
-import 'package:wantermarket/data/models/response/api_response.dart';
 import 'package:wantermarket/shared/api_checker.dart';
 
 import '../data/models/body/product.dart';

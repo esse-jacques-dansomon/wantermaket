@@ -138,7 +138,7 @@ class VendorDashboardStats extends StatelessWidget {
                               margin: const EdgeInsets.symmetric(horizontal: 0),
                               color: AppColors.PRIMARY,
                             ),
-                            Expanded(flex: 2, child:  StatItem(name: 'Visites',value: vendorProvider.vendorStat.nombreVisites!,)),
+                            Expanded(flex: 2, child:  StatItem(name: 'Visites',value: vendorProvider.vendorStat.nombreVisites?? 0,)),
                           ],
                         ),
                       ),
@@ -162,14 +162,14 @@ class VendorDashboardStats extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Expanded(child:  StatItem(name: 'Produits',value: vendorProvider.vendorStat.produitsTotal!,)),
+                            Expanded(child:  StatItem(name: 'Produits',value: vendorProvider.vendorStat.produitsTotal??0,)),
                             Container(
                               width: 2,
                               height: 45,
                               margin: const EdgeInsets.symmetric(horizontal: 0),
                               color: AppColors.PRIMARY,
                             ),
-                            Expanded(child:  StatItem(name: 'Produits Restants',value: vendorProvider.vendorStat.produitsRestant!,)),
+                            Expanded(child:  StatItem(name: 'Produits Restants',value: vendorProvider.vendorStat.produitsRestant??0,)),
                           ],
                         ),
                       ),

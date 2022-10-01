@@ -87,33 +87,26 @@ class VendorProvider extends ChangeNotifier {
     }
   }
 
-  Future<bool> updateBoutique(BuildContext context, BoutiqueUpdateModel boutiqueUpdateModel, List<File> files) async {
+  Future<bool> updateBoutique(BuildContext context, BoutiqueUpdateModel boutiqueUpdateModel, {File? filePhotoProfile, File? filePhotoCover}) async {
     this.isUpdateBoutiqueLoading = true;
     notifyListeners();
     FormData data = FormData.fromMap(boutiqueUpdateModel.toJson(), ListFormat.multiCompatible);
-    try{
-      if(files.isNotEmpty){
-        data.files.add(MapEntry('profil_image', await MultipartFile.fromFile(files[0].path, filename: files[0].path.split('/').last)));
-        if(files.length> 1){
-          data.files.add(MapEntry('cover_image', await MultipartFile.fromFile(files[1].path, filename: files[1].path.split('/').last)));
-        }
+    if(filePhotoProfile != null){
+      data.files.add(MapEntry('profil_image', await MultipartFile.fromFile(filePhotoProfile.path, filename: filePhotoProfile.path.split('/').last)));
+      if(filePhotoCover != null){
+        data.files.add(MapEntry('cover_image', await MultipartFile.fromFile(filePhotoCover.path, filename: filePhotoCover.path.split('/').last)));
       }
-      var reponse = await vendorRepo.updateBoutique(data);
-      if(reponse.error == null){
-        getBoutique();
-        this.isUpdateBoutiqueLoading = false;
-        notifyListeners();
-        return true;
-      }else{
-        this.isUpdateBoutiqueLoading = false;
-        notifyListeners();
-        ApiChecker.checkApi(context, reponse);
-        return false;
-
-      }
-    }catch(e){
+    }
+    var reponse = await vendorRepo.updateBoutique(data);
+    if(reponse.response.statusCode == 200){
+      getBoutique();
       this.isUpdateBoutiqueLoading = false;
       notifyListeners();
+      return true;
+    }else{
+      this.isUpdateBoutiqueLoading = false;
+      notifyListeners();
+      ApiChecker.checkApi(context, reponse);
       return false;
 
     }

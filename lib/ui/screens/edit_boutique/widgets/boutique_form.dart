@@ -38,8 +38,8 @@ class _BoutiqueFormState extends State<BoutiqueForm> {
   File? photoCouverture, photoProfile ;
 
 
-  updateBoutique(BoutiqueUpdateModel boutiqueUpdateModel, List<File> files) async {
-    Provider.of<VendorProvider>(context, listen: false).updateBoutique(context, boutiqueUpdateModel, files).then((value) => {
+  updateBoutiqueForm(BoutiqueUpdateModel boutiqueUpdateModel, File? filePhotoProfile, File? filePhotoCover) async {
+    Provider.of<VendorProvider>(context, listen: false).updateBoutique(context, boutiqueUpdateModel,filePhotoProfile: filePhotoProfile, filePhotoCover: filePhotoCover ).then((value) => {
       if(value){
         Provider.of<AuthProvider>(context, listen: false).verifyIsAuthenticated(context),
         Provider.of<AuthProvider>(context, listen: false).getUserConnectedInfo(),
@@ -70,7 +70,6 @@ class _BoutiqueFormState extends State<BoutiqueForm> {
     _longitudeController.text = widget.boutique.longitude?.trim() ?? '';
     _descriptionController.text = widget.boutique.bio?.trim() ?? "";
 
-
   }
 
   @override
@@ -81,6 +80,7 @@ class _BoutiqueFormState extends State<BoutiqueForm> {
     _latitudeNode?.dispose();
     _longitudeNode?.dispose();
     _descriptionNode?.dispose();
+    _selectedItems = widget.boutique.secteurs?.map((e) => e.id).toList() ?? [];
 
 
   }
@@ -227,6 +227,8 @@ class _BoutiqueFormState extends State<BoutiqueForm> {
               validator: (value) {
                 if (value == null) {
                   return 'Veuillez choisir un secteur';
+                }if(value.isEmpty){
+                  return 'Veuillez choisir un secteur';
                 }
                 return null;
               },
@@ -347,14 +349,20 @@ class _BoutiqueFormState extends State<BoutiqueForm> {
               child:  SizedBox(width: double.infinity, child:
               Center(child: Text(widget.boutique.id != null ? "Valider Les Modifications" :'Enregistrer', style: TextStyle(fontSize: AppDimensions.FONT_SIZE_EXTRA_LARGE, fontWeight: FontWeight.bold),),),),
               onPressed: () {
+
                 if (key.currentState!.validate()) {
                   key.currentState?.save();
                   List<File> files = [];
+                  File filePhotoProfile = File('');
+                  File filePhotoCover = File('');
+
                   if(photoProfile != null){
                     files.add(photoProfile!);
+                    filePhotoProfile = photoProfile!;
                   }
                   if(photoCouverture != null){
                     files.add(photoCouverture!);
+                    filePhotoCover = photoCouverture!;
                   }
                   BoutiqueUpdateModel boutiqueUpdateModel = BoutiqueUpdateModel(
                     name: _nomBoutiqueController.text,
@@ -364,7 +372,7 @@ class _BoutiqueFormState extends State<BoutiqueForm> {
                     secteursId: _selectedItems.cast(),
                   );
                   //TODO: update boutique
-                  updateBoutique(boutiqueUpdateModel , files);
+                  updateBoutiqueForm(boutiqueUpdateModel , photoProfile, photoCouverture);
                 }
               },
             ),

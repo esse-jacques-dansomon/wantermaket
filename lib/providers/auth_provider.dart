@@ -41,7 +41,6 @@ class AuthProvider extends ChangeNotifier {
       return true;
     }else{
       return false;
-      ApiChecker.checkApi( context, response);
     }
   }
 
