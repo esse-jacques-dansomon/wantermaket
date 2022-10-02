@@ -40,18 +40,16 @@ class VendorProvider extends ChangeNotifier {
     ProfilePaginationState get profileProductsPaginateState => _profileProductsPaginateState;
 
 
-  Future<void> getBoutique() async {
-    try {
-      final response = await vendorRepo.getUserConnectedBoutique();
+  Future<void> getBoutique(BuildContext context) async {
+    final response = await vendorRepo.getUserConnectedBoutique();
+    if(response.response.statusCode == 200){
       _boutique = Boutique.fromJson(response.response.data);
-      notifyListeners();
-    } catch (e) {
-      rethrow;
+    }else{
+      ApiChecker.checkApi(context, response);
     }
   }
 
   Future<void> getVendorStat(BuildContext context) async {
-    notifyListeners();
     final response =  await vendorRepo.getUserConnectedStat();
     if(response.response.statusCode == 200){
       _vendorStat = VendorStat.fromJson(response.response.data);
@@ -127,7 +125,7 @@ class VendorProvider extends ChangeNotifier {
     }
     var reponse = await vendorRepo.updateBoutique(data);
     if(reponse.response.statusCode == 200){
-      getBoutique();
+      getBoutique(context);
       this.isUpdateBoutiqueLoading = false;
       notifyListeners();
       return true;

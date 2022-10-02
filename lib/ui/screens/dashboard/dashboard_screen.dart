@@ -26,7 +26,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   final ScrollController _controller = ScrollController();
 
   _loadData()  {
-    Provider.of<VendorProvider>(context, listen: false).getBoutique();
+    Provider.of<VendorProvider>(context, listen: false).getBoutique(context);
     Provider.of<VendorProvider>(context, listen: false).getVendorProducts(context);
     _controller.addListener(_scrollListener);
 

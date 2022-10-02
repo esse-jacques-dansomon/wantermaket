@@ -11,6 +11,7 @@ import '../../../providers/category_provider.dart';
 import '../../../providers/product_provider.dart';
 import '../../../providers/slider_provider.dart';
 import '../../../route/routes.dart';
+import '../../../shared/network_info.dart';
 
 class SlashScreen extends StatefulWidget {
   const SlashScreen({Key? key}) : super(key: key);
@@ -28,9 +29,9 @@ class _SlashScreenState extends State<SlashScreen> {
   @override
   initState() {
     super.initState();
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<LocalizationProvider>(context, listen: false).getAllCountries(context);
-
       Provider.of<SliderProvider>(context, listen: false).getHomeSliders(context);
       Provider.of<BoutiqueProvider>(context, listen: false).getBoutiquesExclusives(context);
       Provider.of<BoutiqueProvider>(context, listen: false).getTopBoutiques(context);
@@ -42,9 +43,9 @@ class _SlashScreenState extends State<SlashScreen> {
         //navigate to the next screen
         Navigator.pushReplacementNamed(context, AppRoutes.home);
         Provider.of<AuthProvider>(context, listen: false).verifyIsAuthenticated(context);
-
       });
     });
+
 
   }
 

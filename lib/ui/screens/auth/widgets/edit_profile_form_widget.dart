@@ -9,6 +9,7 @@ import '../../../../config/app_colors.dart';
 import '../../../../data/models/body/profil_model.dart';
 import '../../../../data/models/body/vendor.dart';
 import '../../../../providers/auth_provider.dart';
+import '../../../../providers/location_provider.dart';
 
 class EditProfileFormWidget extends StatefulWidget {
   const EditProfileFormWidget({Key? key}) : super(key: key);
@@ -54,10 +55,9 @@ class _EditProfileFormWidgetState extends State<EditProfileFormWidget> {
     authProvider.editProfile(editProfileModel).then((value){
       if(value){
         authProvider.getUserConnectedInfo();
-        Provider.of<VendorProvider>(context, listen: false).getBoutique();
+        Provider.of<VendorProvider>(context, listen: false).getBoutique(context);
         Navigator.pushNamed(context, AppRoutes.profile);
         AppHelper.showInfoFlushBar(context, 'Profil mis à jour avec succès');
-
       }else{
         AppHelper.showErrorFlushBar(context, 'Error lors de la modification du profil');
       }
@@ -74,7 +74,6 @@ class _EditProfileFormWidgetState extends State<EditProfileFormWidget> {
     _phoneNode?.dispose();
     _usernameNode?.dispose();
   }
-
 
   final _formKey = GlobalKey<FormState>();
   @override
@@ -121,8 +120,6 @@ class _EditProfileFormWidgetState extends State<EditProfileFormWidget> {
 
     );
   }
-
-
   Widget _buildUsernameField(){
     return Container(
       margin: const EdgeInsets.only(bottom: 25),
@@ -312,7 +309,7 @@ class _EditProfileFormWidgetState extends State<EditProfileFormWidget> {
                 // Save your country code
                 _countryCode = countryCode.dialCode!,
               },
-
+              countryFilter: Provider.of<LocalizationProvider>(context, listen: false).countries.map((element) => element.code.toUpperCase()).toList(),
               textStyle: const TextStyle(color: AppColors.PRIMARY, fontSize: 16.5,),
               initialSelection: "sn",
               showCountryOnly: false,
@@ -324,10 +321,5 @@ class _EditProfileFormWidgetState extends State<EditProfileFormWidget> {
 
       ),
     );  }
-
-
-
-
-
 
 }

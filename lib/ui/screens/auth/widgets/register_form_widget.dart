@@ -479,7 +479,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
                 // Save your country code
                 _countryCode = countryCode.dialCode!,
               },
-
+              countryFilter: Provider.of<LocalizationProvider>(context, listen: false).countries.map((element) => element.code.toUpperCase()).toList(),
               textStyle: const TextStyle(color: AppColors.PRIMARY, fontSize: 16.5,),
               initialSelection: "sn",
               showCountryOnly: false,
