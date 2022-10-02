@@ -43,97 +43,97 @@ class _HomeScreenState extends State<HomeScreen> {
 
   }
 
-  late final FirebaseMessaging _messaging;
-  late Pushnotification? _notificationInfo;
-
-  void registerNotification() async {
-    await Firebase.initializeApp();
-    _messaging = FirebaseMessaging.instance;
-
-    NotificationSettings settings = await _messaging.requestPermission(
-      alert: true,
-      sound: true,
-      badge: true,
-      provisional: false,
-    );
-    //_messaging.subscribeToTopic('all');
-    _messaging.getToken().then((token) => print(token));
-
-    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-      // await Firebase.initializeApp();
-      FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-        Pushnotification notification = Pushnotification(
-          title: message.notification?.title,
-          body: message.notification?.body,
-          dataBody: message.data['body'],
-          dataTitle: message.data['title'],
-        );
-
-        setState(() {
-          _notificationInfo = notification;
-        });
-
-        showSimpleNotification(
-          Text(_notificationInfo?.title ?? 'Notification'),
-          leading: const Icon(Icons.notifications),
-          background: Colors.red,
-          autoDismiss: true,
-        );
-      });
-    }
-  }
-
-  checkForInitialMessage() async {
-    await Firebase.initializeApp();
-    RemoteMessage? initialMessage = await FirebaseMessaging.instance.getInitialMessage();
-    if (initialMessage != null) {
-      Pushnotification notification = Pushnotification(
-        title: initialMessage.notification?.title,
-        body: initialMessage.notification?.body,
-        dataBody: initialMessage.data['body'],
-        dataTitle: initialMessage.data['title'],
-      );
-      setState(() {
-        _notificationInfo = notification;
-      });
-
-      showSimpleNotification(
-        Text(_notificationInfo?.title ?? 'Notification'),
-        leading: const Icon(Icons.notifications),
-        background: Colors.red,
-        autoDismiss: true,
-      );
-    }
-  }
+  // late final FirebaseMessaging _messaging;
+  // late Pushnotification? _notificationInfo;
+  //
+  // void registerNotification() async {
+  //   await Firebase.initializeApp();
+  //   _messaging = FirebaseMessaging.instance;
+  //
+  //   NotificationSettings settings = await _messaging.requestPermission(
+  //     alert: true,
+  //     sound: true,
+  //     badge: true,
+  //     provisional: false,
+  //   );
+  //   //_messaging.subscribeToTopic('all');
+  //   _messaging.getToken().then((token) => print(token));
+  //
+  //   if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+  //     // await Firebase.initializeApp();
+  //     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+  //       Pushnotification notification = Pushnotification(
+  //         title: message.notification?.title,
+  //         body: message.notification?.body,
+  //         dataBody: message.data['body'],
+  //         dataTitle: message.data['title'],
+  //       );
+  //
+  //       setState(() {
+  //         _notificationInfo = notification;
+  //       });
+  //
+  //       showSimpleNotification(
+  //         Text(_notificationInfo?.title ?? 'Notification'),
+  //         leading: const Icon(Icons.notifications),
+  //         background: Colors.red,
+  //         autoDismiss: true,
+  //       );
+  //     });
+  //   }
+  // }
+  //
+  // checkForInitialMessage() async {
+  //   await Firebase.initializeApp();
+  //   RemoteMessage? initialMessage = await FirebaseMessaging.instance.getInitialMessage();
+  //   if (initialMessage != null) {
+  //     Pushnotification notification = Pushnotification(
+  //       title: initialMessage.notification?.title,
+  //       body: initialMessage.notification?.body,
+  //       dataBody: initialMessage.data['body'],
+  //       dataTitle: initialMessage.data['title'],
+  //     );
+  //     setState(() {
+  //       _notificationInfo = notification;
+  //     });
+  //
+  //     showSimpleNotification(
+  //       Text(_notificationInfo?.title ?? 'Notification'),
+  //       leading: const Icon(Icons.notifications),
+  //       background: Colors.red,
+  //       autoDismiss: true,
+  //     );
+  //   }
+  // }
 
 
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       //initialize _notificationInfo
-      _notificationInfo = null;
-      registerNotification();
-      //app terminated
-      checkForInitialMessage();
+      // _notificationInfo = null;
+      // registerNotification();
+      // //app terminated
+      // checkForInitialMessage();
       //en dehors de l'application
-      FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-        Pushnotification notification = Pushnotification(
-          title: message.notification?.title,
-          body: message.notification?.body,
-          dataBody: message.data['body'],
-          dataTitle: message.data['title'],
-        );
-        setState(() {
-          _notificationInfo = notification;
-        });
+      // FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      //   Pushnotification notification = Pushnotification(
+      //     title: message.notification?.title,
+      //     body: message.notification?.body,
+      //     dataBody: message.data['body'],
+      //     dataTitle: message.data['title'],
+      //   );
+      //   setState(() {
+      //     // _notificationInfo = notification;
+      //   });
 
-        showSimpleNotification(
-          Text(_notificationInfo?.title ?? 'Notification'),
-          leading: const Icon(Icons.notifications),
-          background: AppColors.PRIMARY,
-          autoDismiss: true,
-        );
-      });
+        // showSimpleNotification(
+        //   Text(_notificationInfo?.title ?? 'Notification'),
+        //   leading: const Icon(Icons.notifications),
+        //   background: AppColors.PRIMARY,
+        //   autoDismiss: true,
+        // );
+      // });
 
 
     });
