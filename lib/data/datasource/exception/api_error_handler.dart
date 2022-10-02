@@ -38,6 +38,8 @@ class ApiErrorHandler {
                   errorDescription = "Service indisponible";
                   break;
                 default:
+                  print(error.response?.data);
+                  final errorValidation = error.response?.data;
                   ErrorResponse errorResponse = ErrorResponse.fromJson(error.response?.data);
                   if (errorResponse.success == false) {
                     errorDescription = errorResponse;

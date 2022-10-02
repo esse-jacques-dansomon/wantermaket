@@ -73,7 +73,7 @@ class ContactVendor {
       await FlutterShare.share(
           title: 'Boutique ${boutique.name}',
           text: 'Je vous invite à visiter la boutique "${boutique.name}" sur Wanter Market en cliquant sur ce lien :',
-          linkUrl: '''https://wantermarket.sn/boutiques/${boutique.name?.replaceAll(' ', '_')}_${boutique.vendor?.id!}''',
+          linkUrl: '''https://wantermarket.sn/boutiques/${boutique.name?.replaceAll(' ', '_').toLowerCase()}''',
       );
 
   }

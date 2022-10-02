@@ -40,18 +40,19 @@ class AuthProvider extends ChangeNotifier {
       user = LoginReponse.fromJson(response.response.data);
       return true;
     }else{
+      ApiChecker.checkApi(context, response);
       return false;
     }
   }
 
   Future<void> register(RegisterModel registerModel,BuildContext context) async {
-    try{
+
       _isLoadingRegister = true;
       notifyListeners();
       final response = await authRepo.register(registerModel);
       _isLoadingRegister = false;
       notifyListeners();
-
+      print(response.response);
       if(response.response.statusCode == 201 || response.response.statusCode == 200){
         await authRepo.saveToken(response.response.data['access_token']);
         //save token
@@ -61,22 +62,12 @@ class AuthProvider extends ChangeNotifier {
         notifyListeners();
       }
       //validation error
-      else if(response.response.statusCode == 400){
-        _isLoadingRegister = false;
-        notifyListeners();
-        ScaffoldMessenger.of(context).showSnackBar( SnackBar(content: Text('Ce mail existe déja', style: TextStyle(color: Colors.white)), backgroundColor: Colors.red));
-      }
       else{
         _isLoadingRegister = false;
         notifyListeners();
-        ScaffoldMessenger.of(context).showSnackBar( SnackBar(content: Text('Une errue s\'est produite, veuillez reessayez', style: TextStyle(color: Colors.white)), backgroundColor: Colors.red));
+        ApiChecker.checkApi(context, response);
+        // ScaffoldMessenger.of(context).showSnackBar( SnackBar(content: Text('Ce mail existe déja', style: TextStyle(color: Colors.white)), backgroundColor: Colors.red));
       }
-
-    }catch(e){
-      _isLoadingRegister = false;
-      notifyListeners();
-    }
-
   }
 
   Future<bool> editProfile(EditProfileModel editProfileModel) async {

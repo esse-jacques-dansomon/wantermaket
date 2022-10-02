@@ -34,7 +34,7 @@ class AuthRepo {
       final response = await dioClient.post(AppConstants.RESET_PASSWORD_URI, data: passwordModel.toJson());
       return ApiResponse.withSuccess(response);
     } catch (e) {
-      return ApiResponse.withError(ApiErrorHandler.getMessage(e.toString()));
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
     }
   }
 

@@ -1,6 +1,7 @@
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:wantermarket/data/models/response/api_errors.dart';
 import 'package:wantermarket/providers/auth_provider.dart';
 
 import '../data/models/response/api_response.dart';
@@ -18,8 +19,11 @@ class ApiChecker {
       String errorMessage;
       if (apiResponse.error is String) {
         errorMessage = apiResponse.error.toString();
-      } else {
-        errorMessage = apiResponse.error.errors[0].message;
+      } else if (apiResponse.error is ErrorResponse){
+        ErrorResponse er = apiResponse.error as ErrorResponse;
+        errorMessage = er.message;
+      }else{
+        errorMessage = "Une erreur s'est produite";
       }
       AnimatedSnackBar.material(
         errorMessage,
