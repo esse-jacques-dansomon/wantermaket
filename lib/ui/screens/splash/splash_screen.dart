@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:wantermarket/config/app_colors.dart';
 import 'package:wantermarket/providers/location_provider.dart';
 
 import '../../../providers/auth_provider.dart';
@@ -29,7 +30,7 @@ class _SlashScreenState extends State<SlashScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<LocalizationProvider>(context, listen: false).getAllCountries(context);
-      
+
       Provider.of<SliderProvider>(context, listen: false).getHomeSliders(context);
       Provider.of<BoutiqueProvider>(context, listen: false).getBoutiquesExclusives(context);
       Provider.of<BoutiqueProvider>(context, listen: false).getTopBoutiques(context);
@@ -59,19 +60,19 @@ class _SlashScreenState extends State<SlashScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Center(
-                  child: Image.asset('assets/images/logo.png', width: 150, height: 150),
+                Container(
+                  child: Center(
+                    child: Image.asset('assets/images/logo.png', width: 150, height: 150),
+                  ),
                 ),
                 const SizedBox(height: 5),
-                const Text("WanterMarket", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),),
+                const Text("Wanter Market", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),),
                 const SizedBox(height: 20),
               ],
             ),
           ),
 
-          const Text("By Agence Cauris", style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),),
-          const SizedBox(height: 20),
-
+          Container( padding : EdgeInsets.only(bottom: 25),  child: Text("By Agence Cauris", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),)),
           //spinner with animation
         ],
       ),

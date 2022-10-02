@@ -8,6 +8,7 @@ import '../../../../shared/app_helper.dart';
 import '../../../basewidgets/cards/boutique_by_sector_card.dart';
 
 class BoutiquesFounded extends StatelessWidget {
+
   const BoutiquesFounded({Key? key}) : super(key: key);
 
   @override

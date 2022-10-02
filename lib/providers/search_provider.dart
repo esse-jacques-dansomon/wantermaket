@@ -65,8 +65,9 @@ class SearchProvider extends ChangeNotifier {
         });
 
         //CAN BE PAGINATED
-        if(response.response.data['produits']['meta']['links']['next'] != null) {
-          page++;
+        if(  (response.response.data['produits']['meta']).isNotEmpty &&
+            response.response.data['produits']['meta']['links']['next'] !=null){
+            page++;
         }else{
           page++;
           paginationState = searchPaginationState.loaded;

@@ -65,7 +65,7 @@ class VendorProductCard extends StatelessWidget {
                                     AppHelper.showInfoFlushBar(context, 'Produit supprimé avec succès', color: AppColors.PRIMARY),
                                     Provider.of<VendorProvider>(context, listen: false).deleteProduct(product.id!),
                                   }else{
-                                    AppHelper.showInfoFlushBar(context, 'Produit supprimé avec succès', color: Colors.redAccent),
+                                    AppHelper.showInfoFlushBar(context, 'Une erreur s\'est produite', color: Colors.redAccent),
                                   }
                                 });
                                 Navigator.of(context).pop();

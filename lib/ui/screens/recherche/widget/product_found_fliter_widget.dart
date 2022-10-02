@@ -33,7 +33,7 @@ class _ProductFoundFilterState extends State<ProductFoundFilter> {
   int isPromo = 0;
   int isPopular  = 0;
   int isNew = 0;
-  String keyWord = "";
+  String? keyWord;
 
 
   _saveFilter(FilterModel filterModel)  {
@@ -43,7 +43,7 @@ class _ProductFoundFilterState extends State<ProductFoundFilter> {
     String? filter = prefs!.getString("wanter_filter");
     if (filter != null) {
       FilterModel filterModel = FilterModel.fromMap(json.decode(filter));
-      this.keyWord = filterModel.keyWorld;
+      this.keyWord = filterModel.keyWorld?? null;
       this.min = filterModel.min;
       this.max = filterModel.max;
       this.priceFilter = filterModel.priceFilter;
@@ -142,7 +142,7 @@ class _ProductFoundFilterState extends State<ProductFoundFilter> {
                             },
                             initialValue: keyWord,
                             decoration: InputDecoration(
-                              hintText: keyWord,
+                              hintText: 'Rechercher un produit',
                               contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                               hintStyle: const TextStyle(fontSize: 16),
 

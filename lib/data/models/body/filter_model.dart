@@ -13,7 +13,7 @@ FilterModel filterModelFromMap(String str) => FilterModel.fromMap(json.decode(st
 String filterModelToMap(FilterModel data) => json.encode(data.toMap());
 class FilterModel {
   FilterModel({
-    this.keyWorld=' ',
+    this.keyWorld,
     this.min,
     this.max,
     this.secteurs ,
@@ -23,7 +23,7 @@ class FilterModel {
     this.isPromo,
   });
 
-  String keyWorld;
+  String? keyWorld;
   int? min;
   int? max;
   List<dynamic>? secteurs;

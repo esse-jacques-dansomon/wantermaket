@@ -13,6 +13,7 @@ import '../../../../shared/app_helper.dart';
 import '../../../basewidgets/cards/produit_by_boutique.dart';
 
 class ProductsFound extends StatefulWidget {
+
   const ProductsFound({Key? key}) : super(key: key);
 
   @override
@@ -21,6 +22,7 @@ class ProductsFound extends StatefulWidget {
 
 class _ProductsFoundState extends State<ProductsFound> {
   final ScrollController _controller = ScrollController();
+
 
   @override
   void initState() {

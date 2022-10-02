@@ -230,10 +230,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(0),
                       color: AppColors.BLACK,
-                      backgroundBlendMode: BlendMode.darken,
+                      // backgroundBlendMode: BlendMode.darken,
 
                       image: DecorationImage(
-                          image:  Image.network('https://www.pme-web.com/wp-content/uploads/bfi_thumb/Ecommerce-meilleurs-outils-CMS-n7020d26rjvityw3xhy5c1g9m0jjy2jx8ivumb6uxk.png',).image,  fit: BoxFit.cover),
+                          image:  Image.network('https://img.freepik.com/vecteurs-premium/megaphone-haut-parleur-discours-bulle-comme-dessin-anime-plat-vecteur-message-annonce_101884-687.jpg?w=2000',).image,  fit: BoxFit.cover),
                     ),
                     child:  Center(
                       child: Column(

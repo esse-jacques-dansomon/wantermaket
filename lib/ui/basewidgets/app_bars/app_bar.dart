@@ -75,7 +75,6 @@ AppBar appBar({bool isActiveSearchbar=false, bool isOnSearchPage=false}) {
                 selectedItemBuilder: (BuildContext context) {
                   return localizationProvider.countries.map<Widget>((AppCountry country) {
                     return Container(
-                      margin: const EdgeInsets.only(right: 10),
                       child: CircleFlag(country.code,  size: 30),
                     );
                   }).toList();

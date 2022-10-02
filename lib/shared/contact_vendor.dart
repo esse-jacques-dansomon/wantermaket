@@ -24,7 +24,17 @@ class ContactVendor {
           const SnackBar(content: Text("Impossible de lancer l'application WhatsApp")));
     }
 
+  }
 
+  static void signalBug() async {
+    var text = """Bonjour, je veux signaler un bug sur l'application Wanter Market. Voici le lien : https://wantermarket.sn""";
+    var link = "whatsapp://send?phone=+221771100202" +
+        "&text=${Uri.encodeComponent(text)}";
+    try{
+      await launchUrl(Uri.parse(link.toString()));
+    }catch(e){
+
+    }
   }
 
   static void openWhatsappVendor({required BuildContext context, required Vendor vendor}) async {
@@ -63,7 +73,7 @@ class ContactVendor {
       await FlutterShare.share(
           title: 'Boutique ${boutique.name}',
           text: 'Je vous invite à visiter la boutique "${boutique.name}" sur Wanter Market en cliquant sur ce lien :',
-          linkUrl: 'https://wantermarket.sn/boutiques/${boutique.name}_${boutique.id}',
+          linkUrl: '''https://wantermarket.sn/boutiques/${boutique.name?.replaceAll(' ', '_')}_${boutique.vendor?.id!}''',
       );
 
   }

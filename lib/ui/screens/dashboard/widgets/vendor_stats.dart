@@ -5,6 +5,8 @@ import 'package:wantermarket/config/app_colors.dart';
 import 'package:wantermarket/config/app_images.dart';
 import 'package:wantermarket/providers/vendor_provider.dart';
 import 'package:wantermarket/route/routes.dart';
+import '../../../../shared/contact_vendor.dart';
+
 
 import 'stats_item.dart';
 
@@ -69,7 +71,7 @@ class VendorDashboardStats extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 5),
-                         Text( "${vendorProvider.boutique.vendor?.city?? ''} " + " ${vendorProvider.boutique.vendor?.country?? ''}",
+                        Text( "${vendorProvider.boutique.vendor?.city?? ''} " + " ${vendorProvider.boutique.vendor?.country?? ''}",
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w300,
@@ -104,6 +106,12 @@ class VendorDashboardStats extends StatelessWidget {
                   Expanded(child: ElevatedButton(onPressed: (){
                     Navigator.pushNamed(context, AppRoutes.editBoutiqueBySecteur);
                   }, child: const Text('Editer Boutique'))),
+                  const SizedBox(width: 10,),
+                  ElevatedButton(onPressed: (){
+                    ContactVendor.shareShop(
+                        Provider.of<VendorProvider>(context, listen: false).boutique,
+                    );
+                  }, child: Icon(Icons.share)),
                 ],
               ),
               // STATISTIQUES

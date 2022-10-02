@@ -81,14 +81,14 @@ class BoutiqueProvider extends ChangeNotifier{
     final response = await boutiqueRepo.getProductsByBoutique(boutiqueId, page: page);
 
     if(response.response.statusCode == 200){
-      print(response.response.data['meta']);
       response.response.data['data'].forEach((element) {
         boutiqueProduits.add(Product.fromJson(element));
         productsSearch.add(Product.fromJson(element));
       });
 
       //VERIFIER SI LA PAGE EST LA DERNIERE
-      if(response.response.data['meta']['links']['next'] != null) {
+      if((response.response.data['meta']).isNotEmpty &&
+          response.response.data['meta']['links']['next'] !=null) {
         page++;
       }else{
         page++;
