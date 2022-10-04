@@ -19,7 +19,7 @@ class TopAnnoncesWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        TitleAndMoreText( title: 'Top Annonces', moreText: 'Voir Plus', route:  AppRoutes.search, filterModel: FilterModel(keyWorld: null,isPopular: 1)),
+        TitleAndMoreText( pageTitle: "Annonces pro",title: 'Annonces Pro', moreText: 'Voir Plus', route:  AppRoutes.seeMore, filterModel: FilterModel(keyWorld: null,isPopular: 1)),
         Consumer<ProductProvider>(
             builder: (context, productProvider, child) {
               switch (productProvider.topAnnoncesStatus) {

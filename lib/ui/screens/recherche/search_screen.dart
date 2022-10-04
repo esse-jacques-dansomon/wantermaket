@@ -28,7 +28,6 @@ class SearchScreen extends StatelessWidget {
           floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
           appBar: appBar(isActiveSearchbar: true, isOnSearchPage: true),
           drawer: const AppDrawer(),
-
           bottomNavigationBar:  CustomBottomNavBar(search: true),
           body: SafeArea(
 
@@ -93,7 +92,6 @@ class SearchScreen extends StatelessWidget {
                         ProductsFound(),
                         BoutiquesFounded(),
                       ]
-
                   ))
                 ],
               ),

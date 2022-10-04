@@ -8,11 +8,17 @@ import '../../../../config/app_colors.dart';
 class TitleAndMoreText extends StatelessWidget {
   final String moreText;
   final String title;
+  final String pageTitle;
   final String route;
   final bool  isLoadMore =true;
   final FilterModel? filterModel;
   const TitleAndMoreText({
-    Key? key, this.filterModel, required this.route, required this.moreText, required this.title, bool? isLoadMore = true
+    this.pageTitle = "",
+    Key? key, this.filterModel,
+    required this.route,
+    required this.moreText,
+    required this.title,
+    bool? isLoadMore = true
   }) : super(key: key);
 
   @override
@@ -28,7 +34,7 @@ class TitleAndMoreText extends StatelessWidget {
             if(filterModel != null) {
               Provider.of<SearchProvider>(context, listen: false).filter(context, filterModel: filterModel!);
             }
-            Navigator.pushNamed(context, route);
+            Navigator.pushNamed(context, route, arguments: this.pageTitle);
 
           }, child: Row(
             children: const [
