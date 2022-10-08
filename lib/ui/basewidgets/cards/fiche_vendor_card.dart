@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:wantermarket/config/app_colors.dart';
 import 'package:wantermarket/shared/contact_vendor.dart';
 
-import '../../../config/app_dimenssions.dart';
 import '../../../data/models/body/boutique.dart';
 
 class FicheVendeur extends StatelessWidget {

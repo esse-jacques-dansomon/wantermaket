@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wantermarket/data/models/body/filter_model.dart';
 
 import '../../config/app_constantes.dart';
@@ -12,7 +13,8 @@ import '../models/response/api_response.dart';
 
 class SearchRepo {
   final DioClient dioClient;
-  SearchRepo({required this.dioClient});
+  final SharedPreferences sharedPreferences;
+  SearchRepo({required this.dioClient, required this.sharedPreferences});
 
   Future<ApiResponse> search( {required FilterModel filterModel, required int page }  ) async {
     try {

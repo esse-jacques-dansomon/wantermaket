@@ -52,7 +52,6 @@ class AuthProvider extends ChangeNotifier {
       final response = await authRepo.register(registerModel);
       _isLoadingRegister = false;
       notifyListeners();
-      print(response.response);
       if(response.response.statusCode == 201 || response.response.statusCode == 200){
         await authRepo.saveToken(response.response.data['access_token']);
         //save token

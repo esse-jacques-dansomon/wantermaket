@@ -52,7 +52,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => CategoryRepo(dioClient: sl()));
   sl.registerLazySingleton(() => ProductsRepo(dioClient: sl()));
   sl.registerLazySingleton(() => SliderRepo(dioClient: sl()));
-  sl.registerLazySingleton(() => SearchRepo(dioClient: sl()));
+  sl.registerLazySingleton(() => SearchRepo(dioClient: sl(), sharedPreferences: sl()));
   sl.registerLazySingleton(() => VendorRepo(dioClient: sl()));
   sl.registerLazySingleton(() => PlanRepo(dioClient: sl()));
   sl.registerLazySingleton(() => BoutiqueFavoriesRepo(dioClient: sl()));

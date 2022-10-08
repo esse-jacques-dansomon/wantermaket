@@ -14,7 +14,7 @@ class ContactVendor {
 
 
   static void openWhatsapp({required BuildContext context, required Product product}) async {
-    var text = """Salut j'espère que vous allez bien. J'ai vu ce produit à ${product.priceBefore ?? product.price} F CFA sur votre boutique Wanter Market. J'aimerais savoir s'il est toujours disponible. Voici le lien : https://wantermarket.sn/produit/${product.code}""";
+    var text = """Salut j'espère que vous allez bien. J'ai vu ce produit à ${(product.priceBefore != null && product.priceBefore != 0)  ? product.priceBefore! : product.price} F CFA sur votre boutique Wanter Market. J'aimerais savoir s'il est toujours disponible. Voici le lien : https://wantermarket.sn/produit/${product.code}""";
     var link = "whatsapp://send?phone=${product.boutique?.vendor?.phone}" +
         "&text=${Uri.encodeComponent(text)}";
     try{
@@ -73,9 +73,18 @@ class ContactVendor {
       await FlutterShare.share(
           title: 'Boutique ${boutique.name}',
           text: 'Je vous invite à visiter la boutique "${boutique.name}" sur Wanter Market en cliquant sur ce lien :',
-          linkUrl: '''https://wantermarket.sn/boutiques/${boutique.name?.replaceAll(' ', '_').toLowerCase()}''',
+          linkUrl: '''https://wantermarket.sn/boutiques/${boutique.slug}''',
       );
+  }
 
+
+
+  static void shareProduct(Product product) async{
+      await FlutterShare.share(
+          title: '${product.name}',
+          text: '${product.name} à ${(product.priceBefore != null && product.priceBefore != 0)  ? product.priceBefore! : product.price} F CFA chez ${product.boutique!.name!} sur Wanter Market. Visitez en cliquant sur ce lien : ',
+          linkUrl: '''https://wantermarket.sn/produits/${product.slug}''',
+      );
   }
 
   static void showCanAddProductDialog(BuildContext context){

@@ -6,6 +6,7 @@ import 'category.dart';
 class Boutique {
   int? id;
   String? name;
+  String? slug;
   String? bio;
   String? latitude;
   String? longitude;
@@ -19,6 +20,7 @@ class Boutique {
   Boutique(
       {this.id,
         this.name,
+        this.slug,
         this.bio,
         this.latitude,
         this.longitude,
@@ -31,6 +33,7 @@ class Boutique {
   Boutique.fromJson(Map<String, dynamic> json) {
     id = json['id'] != null ? json['id'] : 0;
     name = json['name'] != null ? json['name']  : '';
+    slug = json['slug'] != null ? json['slug']  : '';
     bio = json['bio']!= null ? json['bio'] : '';
     latitude = json['latitude'] != null ? json['latitude']  :  '';
     longitude = json['longitude'] != null ? json['longitude']  :  '';

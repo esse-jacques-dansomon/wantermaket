@@ -32,6 +32,7 @@ class TitleAndMoreText extends StatelessWidget {
           isLoadMore ?
           TextButton(onPressed: (){
             if(filterModel != null) {
+              Provider.of<SearchProvider>(context, listen: false).setFilterModel(filterModel!);
               Provider.of<SearchProvider>(context, listen: false).filter(context, filterModel: filterModel!);
             }
             Navigator.pushNamed(context, route, arguments: this.pageTitle);
