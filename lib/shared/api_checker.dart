@@ -25,7 +25,6 @@ class ApiChecker {
       }else{
         errorMessage = "Une erreur s'est produite";
       }
-      print(errorMessage);
       AnimatedSnackBar.material(
         errorMessage,
         type: AnimatedSnackBarType.error,
