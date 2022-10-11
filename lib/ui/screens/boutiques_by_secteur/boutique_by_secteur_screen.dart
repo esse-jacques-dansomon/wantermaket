@@ -20,10 +20,18 @@ class BoutiqueBySecteurScreen extends StatefulWidget {
 
 class _BoutiqueBySecteurScreenState extends State<BoutiqueBySecteurScreen> {
   bool two_items = true;
+  final ScrollController _controller = ScrollController();
+
+  void _scrollListener() {
+    if (_controller.position.pixels == _controller.position.maxScrollExtent ) {
+      Provider.of<CategoryProvider>(context, listen: false).getBoutiquesBySectorPaginate();
+    }
+  }
 
   @override
   void initState() {
     super.initState();
+    _controller.addListener(_scrollListener);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<CategoryProvider>(context, listen: false).getBoutiquesBySector(context, widget.category.id!);
     });
@@ -48,7 +56,6 @@ class _BoutiqueBySecteurScreenState extends State<BoutiqueBySecteurScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
 
           children:  [
-
             //button change item style
             Container(
               padding: EdgeInsets.only(bottom: 10),
@@ -105,18 +112,28 @@ class _BoutiqueBySecteurScreenState extends State<BoutiqueBySecteurScreen> {
                         case BoutiquesBySectorState.loading:
                           return CustomShopLoader(count: 15, isGrid: true,);
                         case BoutiquesBySectorState.loaded:
-                          return GridView.builder(
-                            itemCount: categoryProvider.boutiques.length,
-                            gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: two_items ? 2 : 1,
-                                crossAxisSpacing: 12,
-                                mainAxisSpacing: 8,
-                                childAspectRatio: 1.30,
-                                mainAxisExtent: two_items? 190 : 120
+                          return Container(
+                            child: Column(
+                              children: [
+                                Expanded(
+                                  child: GridView.builder(
+                                    itemCount: categoryProvider.boutiques.length,
+                                    controller: _controller,
+                                    physics: const BouncingScrollPhysics(),
+                                    gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: two_items ? 2 : 1,
+                                        crossAxisSpacing: 12,
+                                        mainAxisSpacing: 8,
+                                        childAspectRatio: 1.30,
+                                        mainAxisExtent: two_items? 190 : 120
+                                    ),
+                                    itemBuilder: (context, index) {
+                                      return two_items?  BoutiqueCardBySecteur(boutique: categoryProvider.boutiques[index],) :  BoutiqueCardBySecteurOnePerRow(boutique: categoryProvider.boutiques[index]);
+                                    },
+                                  ),
+                                ),
+                              ],
                             ),
-                            itemBuilder: (context, index) {
-                              return two_items?  BoutiqueCardBySecteur(boutique: categoryProvider.boutiques[index],) :  BoutiqueCardBySecteurOnePerRow(boutique: categoryProvider.boutiques[index]);
-                            },
                           );
                         case BoutiquesBySectorState.error:
                           return const Center(child: Text('Error'),);
@@ -127,7 +144,12 @@ class _BoutiqueBySecteurScreenState extends State<BoutiqueBySecteurScreen> {
                 )
             ),
             const SizedBox(height: 20,),
-
+            if ( Provider.of<CategoryProvider>(context, listen: true).boutiquesBySectorStatePaginate == BoutiquesBySectorStatePaginate.loading)
+              Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                    child: const CustomShopLoader(count: 15, isGrid: true, isScrollable: true,),
+                  ))
           ],
         ),
       ),

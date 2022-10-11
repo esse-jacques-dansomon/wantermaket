@@ -25,10 +25,11 @@ class ApiChecker {
       }else{
         errorMessage = "Une erreur s'est produite";
       }
+      print(errorMessage);
       AnimatedSnackBar.material(
         errorMessage,
         type: AnimatedSnackBarType.error,
-        desktopSnackBarPosition: DesktopSnackBarPosition.topCenter,
+        mobileSnackBarPosition: MobileSnackBarPosition.top,
       ).show(context);
 
     }
