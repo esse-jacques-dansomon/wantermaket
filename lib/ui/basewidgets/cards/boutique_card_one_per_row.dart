@@ -70,7 +70,7 @@ class BoutiqueCardBySecteurOnePerRow extends StatelessWidget {
                       children: [
                         //call button
                         IconButton(
-                          icon: Icon(Icons.call, color: Colors.blueAccent,),
+                          icon: Icon(Icons.call, color: Colors.blue[900],),
                           onPressed: (){
                             ContactVendor.openPhone(context: context, number: boutique.vendor!.phone!);
                           },
@@ -87,7 +87,7 @@ class BoutiqueCardBySecteurOnePerRow extends StatelessWidget {
                         //gps button
                         //message button
                         IconButton(
-                          icon: Icon(Icons.gps_fixed, color: Colors.grey,),
+                          icon: Icon(Icons.location_on_outlined, color: Colors.grey,),
                           onPressed: (){
                             ContactVendor.launchMaps(boutique);
                           },

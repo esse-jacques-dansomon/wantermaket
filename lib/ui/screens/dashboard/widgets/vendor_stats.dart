@@ -100,8 +100,7 @@ class VendorDashboardStats extends StatelessWidget {
                 children: [
                   Expanded(child: ElevatedButton(onPressed: (){
                     Navigator.pushNamed(context, AppRoutes.editProfile);
-
-                  }, child: const Text('Editer Profile'))),
+                  }, child: const Text('Editer Profil'))),
                   const SizedBox(width: 10,),
                   Expanded(child: ElevatedButton(onPressed: (){
                     Navigator.pushNamed(context, AppRoutes.editBoutiqueBySecteur);

@@ -60,7 +60,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
         backgroundColor: Colors.transparent,
         title: Text(
           widget.category.name!,
-          style: const TextStyle(color: Colors.black),
+          style:  TextStyle(color: Colors.blue[900] ),
         ),
         centerTitle: true,
         leading: IconButton(
