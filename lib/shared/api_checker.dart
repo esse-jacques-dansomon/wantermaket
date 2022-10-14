@@ -28,7 +28,7 @@ class ApiChecker {
       AnimatedSnackBar.material(
         errorMessage,
         type: AnimatedSnackBarType.error,
-        desktopSnackBarPosition: DesktopSnackBarPosition.topCenter,
+        mobileSnackBarPosition: MobileSnackBarPosition.top,
       ).show(context);
 
     }

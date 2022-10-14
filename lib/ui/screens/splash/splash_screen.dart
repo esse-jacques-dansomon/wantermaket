@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:wantermarket/config/app_colors.dart';
 import 'package:wantermarket/providers/location_provider.dart';
 
 import '../../../providers/auth_provider.dart';
@@ -11,7 +10,6 @@ import '../../../providers/category_provider.dart';
 import '../../../providers/product_provider.dart';
 import '../../../providers/slider_provider.dart';
 import '../../../route/routes.dart';
-import '../../../shared/network_info.dart';
 
 class SlashScreen extends StatefulWidget {
   const SlashScreen({Key? key}) : super(key: key);

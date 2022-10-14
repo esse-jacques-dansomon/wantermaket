@@ -8,12 +8,16 @@ import '../data/repositories/categories_repo.dart';
 
 enum CategoryState { initial, loading, loaded, error }
 enum BoutiquesBySectorState { initial, loading, loaded, error }
+enum BoutiquesBySectorStatePaginate { loading, loaded, error, noMoreData }
+
 class CategoryProvider extends ChangeNotifier{
   final CategoryRepo categoryRepo;
   CategoryProvider({required this.categoryRepo});
 
   final List<Category> _categories = [];
   final List<Boutique> _boutiques = [];
+  String nextProductsUrl = "";
+
 
   List<Category> get categories => _categories;
   List<Boutique> get boutiques => _boutiques;
@@ -21,6 +25,7 @@ class CategoryProvider extends ChangeNotifier{
   //states
   CategoryState categoryState = CategoryState.initial;
   BoutiquesBySectorState boutiquesBySectorState = BoutiquesBySectorState.initial;
+  BoutiquesBySectorStatePaginate boutiquesBySectorStatePaginate = BoutiquesBySectorStatePaginate.loaded;
 
   set categoryStatus(CategoryState value) {
     categoryState = value;
@@ -56,6 +61,12 @@ class CategoryProvider extends ChangeNotifier{
         boutiques.add(Boutique.fromJson(element));
       });
       boutiquesBySectorState = BoutiquesBySectorState.loaded;
+      if(response.response.data['meta']['links']['next'] != null){
+        nextProductsUrl = response.response.data['meta']['links']['next'];
+        boutiquesBySectorStatePaginate = BoutiquesBySectorStatePaginate.loaded;
+      }else{
+        boutiquesBySectorStatePaginate = BoutiquesBySectorStatePaginate.noMoreData;
+      }
       notifyListeners();
     }else{
       boutiquesBySectorState = BoutiquesBySectorState.error;
@@ -64,5 +75,31 @@ class CategoryProvider extends ChangeNotifier{
     }
   }
 
+  Future<void> getBoutiquesBySectorPaginate() async {
+    if(boutiquesBySectorStatePaginate == BoutiquesBySectorStatePaginate.loading || boutiquesBySectorStatePaginate == BoutiquesBySectorStatePaginate.noMoreData){
+      return Future.value();
+    }
+    boutiquesBySectorStatePaginate = BoutiquesBySectorStatePaginate.loading;
+    notifyListeners();
+    return categoryRepo.getCategoryBoutiquesPaginate(nextProductsUrl).then((value) {
+      if(value.response.data != null){
+        value.response.data['data'].forEach((element) {
+          _boutiques.add(Boutique.fromJson(element));
+        });
+        if(value.response.data['meta']['links']['next'] != null){
+          nextProductsUrl = value.response.data['meta']['links']['next'];
+          boutiquesBySectorStatePaginate = BoutiquesBySectorStatePaginate.loaded;
+        }else{
+          boutiquesBySectorStatePaginate = BoutiquesBySectorStatePaginate.noMoreData;
+        }
+      }else{
+        boutiquesBySectorStatePaginate = BoutiquesBySectorStatePaginate.error;
+      }
+      notifyListeners();
+    }).catchError((e){
+      boutiquesBySectorStatePaginate = BoutiquesBySectorStatePaginate.error;
+      notifyListeners();
+    });
+  }
 
 }

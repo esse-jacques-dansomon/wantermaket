@@ -19,7 +19,7 @@ class DealDuJourWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        TitleAndMoreText( title: 'En Promo', moreText: 'Voir Plus', route:  AppRoutes.search, filterModel: FilterModel(isPromo: 1),),
+        TitleAndMoreText( pageTitle : "Produits en promo", title: 'En Promo', moreText: 'Voir Plus', route:  AppRoutes.seeMore, filterModel: FilterModel(isPromo: 1),),
         Consumer<ProductProvider>(
           builder: (context, productProvider, child){
            switch (productProvider.dealsOfTheDayStatus) {

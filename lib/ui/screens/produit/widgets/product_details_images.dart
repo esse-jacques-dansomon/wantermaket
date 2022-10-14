@@ -7,6 +7,7 @@ import 'package:wantermarket/config/app_colors.dart';
 import 'package:wantermarket/config/app_images.dart';
 import 'package:wantermarket/data/models/body/product.dart';
 import 'package:wantermarket/providers/wishlist_provider.dart';
+import 'package:wantermarket/shared/contact_vendor.dart';
 
 class ProductDetailsImagesView extends StatelessWidget {
   const ProductDetailsImagesView({
@@ -71,7 +72,7 @@ class ProductDetailsImagesView extends StatelessWidget {
                   //button share
                   InkWell(
                     onTap: () async {
-                      Share.share('${product.name} à ${product.priceBefore ?? product.price} F CFA chez ${product.boutique!.name!} sur Wanter Market. Visitez en cliquant sur ce lien : https://wantermarket.sn/produit${Uri.encodeFull('&prid=${product.id}')}');
+                      ContactVendor.shareProduct(product);
                     },
                     child: ClipOval(
                       child: Container(

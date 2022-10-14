@@ -1,4 +1,6 @@
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:wantermarket/data/models/body/boutique.dart';
 import 'package:wantermarket/data/models/body/filter_model.dart';
@@ -105,6 +107,10 @@ class SearchProvider extends ChangeNotifier {
       notifyListeners();
       ApiChecker.checkApi(context, response);
     }
+  }
+
+  void setFilterModel(FilterModel filterModel) {
+    this.searchRepo.sharedPreferences.setString("wanter_filter", json.encode(filterModel.toMap()));
   }
 
 }

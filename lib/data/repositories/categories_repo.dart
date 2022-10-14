@@ -44,6 +44,14 @@ class CategoryRepo {
     }
   }
 
+  Future<ApiResponse> getCategoryBoutiquesPaginate(String url) async {
+    try {final response = await dioClient.get(url);
+    return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+
   Future<ApiResponse> getSubCategoriesOfCategory(int id) async {
     try {
       final response = await dioClient.get('${AppConstants.CATEGORIES_URI}/$id/souscategories');

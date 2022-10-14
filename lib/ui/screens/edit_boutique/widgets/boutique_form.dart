@@ -353,16 +353,12 @@ class _BoutiqueFormState extends State<BoutiqueForm> {
                 if (key.currentState!.validate()) {
                   key.currentState?.save();
                   List<File> files = [];
-                  File filePhotoProfile = File('');
-                  File filePhotoCover = File('');
 
                   if(photoProfile != null){
                     files.add(photoProfile!);
-                    filePhotoProfile = photoProfile!;
                   }
                   if(photoCouverture != null){
                     files.add(photoCouverture!);
-                    filePhotoCover = photoCouverture!;
                   }
                   BoutiqueUpdateModel boutiqueUpdateModel = BoutiqueUpdateModel(
                     name: _nomBoutiqueController.text,

@@ -32,6 +32,7 @@ import '../ui/screens/boutiques_by_secteur/boutique_by_secteur_screen.dart';
 import '../ui/screens/category/category_details_screen.dart';
 import '../ui/screens/home/home_screen.dart';
 import '../ui/screens/recherche/search_screen.dart';
+import '../ui/screens/see_more_screen/see_more_screen.dart';
 
 class AppRoutes {
   static const String home = '/home';
@@ -46,6 +47,7 @@ class AppRoutes {
   static const String profile = '/profile';
   static const String editProfile = '/edit_profile';
   static const String search = '/search';
+  static const String seeMore = '/see-more';
   static const String product = '/product';
   static const String addProduct = '/add_product';
   static const String category = '/category';
@@ -87,6 +89,9 @@ class AppRoutes {
         }
       case search:
         return MaterialPageRoute(builder: (context) => const SearchScreen());
+      case seeMore:
+        String title = settings.arguments as String;
+        return MaterialPageRoute(builder: (context) =>  SeeMoreScreen(title: title));
       case profile:
         return MaterialPageRoute(builder: (context) => isLoggedIn( const DashBoardScreen()));
       case editProfile:

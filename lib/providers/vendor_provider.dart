@@ -63,25 +63,25 @@ class VendorProvider extends ChangeNotifier {
     if(reload){
       isProductsLoad = false;
     }
-    _products.clear();
-    this._profileProductsPaginateState = ProfilePaginationState.loaded;
     notifyListeners();
     final response = await vendorRepo.getUserConnectedProducts();
     if(response.response.statusCode == 200){
+      _products.clear();
       response.response.data['data'].forEach((element) {
         _products.add(Product.fromJson(element));
       });
+      isProductsLoad = true;
+      notifyListeners();
       if(response.response.data['meta']['links']['next'] != null){
         nextProductsUrl = response.response.data['meta']['links']['next'];
         _profileProductsPaginateState = ProfilePaginationState.loaded;
+        notifyListeners();
       }else{
         _profileProductsPaginateState = ProfilePaginationState.noMoreData;
+        notifyListeners();
       }
     }else{
       ApiChecker.checkApi(context, response);
-    }
-    if(reload){
-      isProductsLoad = true;
     }
     notifyListeners();
   }

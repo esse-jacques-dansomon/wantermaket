@@ -28,7 +28,6 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   _loadData()  {
     Provider.of<VendorProvider>(context, listen: false).getBoutique(context);
     Provider.of<VendorProvider>(context, listen: false).getVendorProducts(context);
-    _controller.addListener(_scrollListener);
 
   }
 
@@ -43,6 +42,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<VendorProvider>(context, listen: false).getVendorStat(context);
+      _controller.addListener(_scrollListener);
       if( Provider.of<VendorProvider>(context, listen: false).boutique.vendor?.firstName == null) {
         _loadData();
         Provider.of<AuthProvider>(context, listen: false).updateToken().whenComplete(() => {

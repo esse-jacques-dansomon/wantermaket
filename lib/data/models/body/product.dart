@@ -17,6 +17,7 @@ class Product {
   int? idBoutique;
   int? idCategorie;
   String? name;
+  String? slug;
   String? descriptionBrief;
   int? price;
   int? priceBefore;
@@ -36,6 +37,7 @@ class Product {
         this.idBoutique,
         this.idCategorie,
         this.name,
+        this.slug,
         this.descriptionBrief,
         this.price,
         this.priceBefore,
@@ -54,6 +56,7 @@ class Product {
     idBoutique = json['id_boutique'];
     idCategorie = json['id_category'];
     name = json['name'];
+    slug = json['slug'];
     descriptionBrief = json['description_brief'];
     price = json['price'];
     priceBefore = json['price_before'];
@@ -78,6 +81,7 @@ class Product {
     data['id_boutique'] = idBoutique;
     data['id_categorie'] = idCategorie;
     data['name'] = name;
+    data['slug'] = slug;
     data['description_brief'] = descriptionBrief;
     data['price'] = price;
     data['price_before'] = priceBefore;
