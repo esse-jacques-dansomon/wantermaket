@@ -80,7 +80,7 @@ class BoutiqueCardBySecteurOnePerRow extends StatelessWidget {
                         IconButton(
                           icon: Icon(Icons.whatsapp, color: Colors.green,),
                           onPressed: (){
-                            ContactVendor.openWhatsappVendor(context: context, vendor: boutique.vendor!);
+                            ContactVendor.openWhatsappVendor(context: context, boutique: boutique);
                           },
                         ),
 

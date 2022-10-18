@@ -25,9 +25,9 @@ class PaymentFail extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children:[
-                    const Text('Payement echoué', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold), textAlign: TextAlign.center,),
+                    const Text('Payement Annulé', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold), textAlign: TextAlign.center,),
                     const SizedBox(height: 15,),
-                    const Text('Vous êtes sur le point de vous abonner au plan ', style: TextStyle(fontSize: 18,), textAlign: TextAlign.center,),
+                    const Text('', style: TextStyle(fontSize: 18,), textAlign: TextAlign.center,),
                     const SizedBox(height: 25,),
                     SizedBox( height: 45, width: double.infinity, child: ElevatedButton(onPressed: (){
                       // Navigator.pop(context);

@@ -10,6 +10,8 @@ import 'package:wantermarket/ui/basewidgets/user-actions-account-status/payement
 import 'package:wantermarket/ui/basewidgets/user-actions-account-status/payment-fail.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import '../../../config/app_constantes.dart';
+
 
 class PayTechApiPaymentScreen extends StatefulWidget {
   final String initialUrl;
@@ -46,7 +48,9 @@ class _PayTechApiPaymentScreen extends State<PayTechApiPaymentScreen> {
   Widget build(BuildContext context) {
     return  Scaffold(
       body: SafeArea(
-        child: widget.initialUrl == 'ecom' ?  Container( margin: const EdgeInsets.all(25),child: const Center(child:  PaymentSuccessBox())) :  WebView(
+        child: widget.initialUrl == 'ecom' ?
+        Container( margin: const EdgeInsets.all(25),child: const Center(child:  PaymentSuccessBox())) :
+        WebView(
           javascriptMode: JavascriptMode.unrestricted,
           onWebViewCreated:
               (  WebViewController webViewController) {
@@ -55,7 +59,7 @@ class _PayTechApiPaymentScreen extends State<PayTechApiPaymentScreen> {
           },
 
           onPageStarted: (String url) {
-            if(url.toString() == "https://wantermarket.sn/success"){
+            if(url.toString() == AppConstants. REDIRECT_SUCCESS_PAY_URI){
                Navigator.pop(context); //quiter le site paytech
                if(getStatusPayment()){
                  Provider.of<AuthProvider>(context, listen: false).verifyIsAuthenticated(context);
@@ -63,20 +67,12 @@ class _PayTechApiPaymentScreen extends State<PayTechApiPaymentScreen> {
                    return  const PaymentSuccess();
                  });
                }else{
-                 showDialog(context: context, barrierDismissible: false, builder: (context){
+                 showDialog(context: context, barrierDismissible: true, builder: (context){
                    return  const PaymentPending();
                  });
                }
-
-            }else if(url.toString() == "https://wantermarket.sn/cancel"){
-
-              //avant =>
-              //apres
-              // setState(() {
-              //   pay = 1;
-              // });
+            }else if(url.toString() ==  AppConstants.REDIRECT_CANCEL_PAY_URI){
               Navigator.pop(context);
-
               showDialog(context: context, barrierDismissible: false, builder: (context){
                 return const PaymentFail();
               });

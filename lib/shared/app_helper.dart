@@ -1,3 +1,4 @@
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -34,14 +35,16 @@ class AppHelper {
   static void showInfoFlushBar(BuildContext context, String s, {Color color = AppColors.PRIMARY}) {
     Flushbar(
       message: s,
-      duration: const Duration(seconds: 3),
+      duration: const Duration(seconds: 6),
       backgroundColor: color,
-      flushbarPosition: FlushbarPosition.BOTTOM,
+      flushbarPosition: FlushbarPosition.TOP,
       icon: const Icon(
         Icons.info,
         color: Colors.white,
       ),
     ).show(context);
+
+
   }
 
   static showErrorFlushBar(BuildContext context, String string) {}

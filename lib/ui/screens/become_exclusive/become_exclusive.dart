@@ -41,10 +41,7 @@ class _BecomeExclusiveScreenState extends State<BecomeExclusiveScreen> {
         }else{
           print("url is empty");
         }
-
     });
-
-
   }
 
   @override

@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:wantermarket/data/models/body/product.dart';
+
 import '../../config/app_constantes.dart';
 import '../datasource/dio/dio_client.dart';
 import '../datasource/exception/api_error_handler.dart';
@@ -27,6 +29,16 @@ class PaymentRepo {
     }
   }
 
+  Future<ApiResponse> getBoosterProductLink(Product product) async {
+    try {
+      final response = await dioClient.post(AppConstants.PAY_BOOSTER_PRODUCT_URI,
+          data: jsonEncode({'produit_id': product.id}));
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+
   Future<ApiResponse> getStatusPayment() async {
     try {
       final response = await dioClient.get(AppConstants.PAY_ETAT_URI);
@@ -35,4 +47,5 @@ class PaymentRepo {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
     }
   }
+
 }

@@ -33,18 +33,30 @@ class PaymentPending extends StatelessWidget {
                     const SizedBox(height: 15,),
                     const Text('veuillez actualiser pour suivre l\'etat de votre payement ', style: TextStyle(fontSize: 18,), textAlign: TextAlign.center,),
                     const SizedBox(height: 25,),
-                    SizedBox( height: 45, width: double.infinity, child: ElevatedButton(onPressed: (){
-                      Provider.of<PaymentProvider>(context, listen: false).getStatusPayment(context).then((value){
-                        if(value){
-                          Provider.of<AuthProvider>(context, listen: false).verifyIsAuthenticated(context);
-
-                          showDialog(context: context, barrierDismissible: false, builder: (context){
-                            return  const PaymentSuccess();
-                          });
-                        }
-                      });
-                      // Navigator.pop(context);
-                    }, style: ButtonStyle(backgroundColor: MaterialStateProperty.all(AppColors.PRIMARY)), child: const Text('En Cliquant Ici'),),)
+                    SizedBox( height: 45, width: double.infinity,
+                      child: Consumer<PaymentProvider>(
+                        builder: (context, provider, child) {
+                          switch (provider.paymentStatus) {
+                            case PaymentStatus.error:
+                              return const Center(child: Text("Une erreur est survenue"),);
+                            case PaymentStatus.loading:
+                              return const Center(child: CircularProgressIndicator(),);
+                            case PaymentStatus.pending:
+                            case PaymentStatus.initial:
+                              return ElevatedButton(onPressed: (){
+                                Provider.of<PaymentProvider>(context, listen: false).getStatusPayment(context).then((value){
+                                  if(value){
+                                    Provider.of<AuthProvider>(context, listen: false).verifyIsAuthenticated(context);
+                                    showDialog(context: context, barrierDismissible: false, builder: (context){
+                                      return  const PaymentSuccess();
+                                    });
+                                  }
+                                });
+                              }, style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.orange)),
+                                  child: const Text('Actualiser'),);
+                          }
+                        },
+                      ),)
 
                   ],
                 ),
@@ -54,7 +66,7 @@ class PaymentPending extends StatelessWidget {
             Positioned(
               top: -70,
               child: ClipOval(
-                child: Container(height: 90 ,width: 90, color: AppColors.PRIMARY, child: const Icon(Icons.check, color: AppColors.WHITE, size: 50,)),
+                child: Container(height: 90 ,width: 90, color:Colors.orange, child: const Icon(Icons.pending, color: AppColors.WHITE, size: 50,)),
               ),
             )
           ],
