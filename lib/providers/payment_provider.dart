@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wantermarket/data/models/body/product.dart';
 
 import '../data/models/body/plan.dart';
 import '../data/repositories/payment_repo.dart';
@@ -12,7 +13,20 @@ enum PaymentLinkStatus {
   error
 
 }
+enum PaymentStatus {
+  initial,
+  loading,
+  pending,
+  error
 
+}
+enum BoosterPaymentLinkStatus {
+  initial,
+  loading,
+  loaded,
+  error
+
+}
 enum PaymentPlanType{
   loadingBasic,
   loadingPremium,
@@ -21,10 +35,13 @@ enum PaymentPlanType{
   loaded,
   error,
 }
+
 class PaymentProvider extends ChangeNotifier {
 
   final PaymentRepo paymentRepo;
   PaymentPlanType paymentPlanType = PaymentPlanType.loaded;
+  PaymentStatus paymentStatus = PaymentStatus.initial;
+  BoosterPaymentLinkStatus boosterPaymentLinkStatus = BoosterPaymentLinkStatus.loaded;
   var paymentLinkStatus = PaymentLinkStatus.initial;
   PaymentProvider({ required this.paymentRepo });
 
@@ -34,7 +51,6 @@ class PaymentProvider extends ChangeNotifier {
     final response = await paymentRepo.getBecameExclusiveLink();
     if (response.error == null) {
       paymentLinkStatus = PaymentLinkStatus.loaded;
-      print(response.response.data);
       notifyListeners();
       return response.response.data['url'];
     } else {
@@ -66,8 +82,6 @@ class PaymentProvider extends ChangeNotifier {
       }
       paymentPlanType = PaymentPlanType.loaded;
       notifyListeners();
-      paymentPlanType = PaymentPlanType.loaded;
-      notifyListeners();
       return response.response.data['url'];
     } else {
       paymentPlanType = PaymentPlanType.error;
@@ -77,11 +91,32 @@ class PaymentProvider extends ChangeNotifier {
     }
   }
 
+  Future<String> getBoosterProductLink(BuildContext context, Product product) async {
+    boosterPaymentLinkStatus = BoosterPaymentLinkStatus.loading;
+    notifyListeners();
+    final response = await paymentRepo.getBoosterProductLink(product);
+    if (response.error == null) {
+      boosterPaymentLinkStatus = BoosterPaymentLinkStatus.loaded;
+      notifyListeners();
+      return response.response.data['url'];
+    } else {
+      boosterPaymentLinkStatus = BoosterPaymentLinkStatus.error;
+      notifyListeners();
+      ApiChecker.checkApi(context, response);
+      return '';
+    }
+  }
+
   Future<bool> getStatusPayment(BuildContext context) async{
+    paymentStatus = PaymentStatus.loading;
+    notifyListeners();
     final response = await paymentRepo.getStatusPayment();
     if (response.error == null) {
+      paymentStatus = PaymentStatus.pending;
+      notifyListeners();
       return response.response.data['isPaid'];
     } else {
+      paymentStatus = PaymentStatus.error;
       ApiChecker.checkApi(context, response);
       return false;
     }

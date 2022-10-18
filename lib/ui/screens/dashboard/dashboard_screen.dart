@@ -58,52 +58,58 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   @override
   Widget build(BuildContext context) {
 
-    return Scaffold(
-      bottomNavigationBar:  CustomBottomNavBar(profile: true, scrollController: _controller,),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushNamed(context, AppRoutes.addProduct);
-        },
-        backgroundColor: AppColors.PRIMARY,
-        child: const Icon(Icons.add, color: AppColors.WHITE, size: 50,),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      appBar: appBar(isActiveSearchbar: true),
-      drawer: const AppDrawer(),
-      backgroundColor: AppColors.WHITE,
-      body:  Provider.of<VendorProvider>(context, listen: true).isProductsLoad? SafeArea(
-        child: SingleChildScrollView(
-          controller: _controller,
-          physics: const BouncingScrollPhysics(),
-          padding: const EdgeInsets.symmetric(horizontal: 10) ,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children:  [
-
-              VendorDashboardStats(),
-
-              VendorDashboardProducts(),
-
-              Consumer<VendorProvider>(builder:(context, paginate, child){
-                switch(paginate.profileProductsPaginateState){
-                  case ProfilePaginationState.loaded:
-                    return Container();
-                  case ProfilePaginationState.loading:
-                    return const Center(child: CircularProgressIndicator());
-                  case ProfilePaginationState.error:
-                    return const Center(child: Text('Erreur de chargement'),);
-                    case ProfilePaginationState.noMoreData:
-                    return const Center(child: Text('Aucun produit à afficher'),);
-                }
-              } ),
-
-              SizedBox(height: 50,),
-            ],
-          ),
-
+    return RefreshIndicator(
+      onRefresh: () async {
+        _loadData();
+        Provider.of<VendorProvider>(context, listen: false).getVendorStat(context);
+      },
+      child: Scaffold(
+        bottomNavigationBar:  CustomBottomNavBar(profile: true, scrollController: _controller,),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.pushNamed(context, AppRoutes.addProduct);
+          },
+          backgroundColor: AppColors.PRIMARY,
+          child: const Icon(Icons.add, color: AppColors.WHITE, size: 50,),
         ),
-      ) : const LoaderWidget(),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        appBar: appBar(isActiveSearchbar: true),
+        drawer: const AppDrawer(),
+        backgroundColor: AppColors.WHITE,
+        body:  Provider.of<VendorProvider>(context, listen: true).isProductsLoad? SafeArea(
+          child: SingleChildScrollView(
+            controller: _controller,
+            physics: const BouncingScrollPhysics(),
+            padding: const EdgeInsets.symmetric(horizontal: 10) ,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children:  [
+
+                VendorDashboardStats(),
+
+                VendorDashboardProducts(),
+
+                Consumer<VendorProvider>(builder:(context, paginate, child){
+                  switch(paginate.profileProductsPaginateState){
+                    case ProfilePaginationState.loaded:
+                      return Container();
+                    case ProfilePaginationState.loading:
+                      return const Center(child: CircularProgressIndicator());
+                    case ProfilePaginationState.error:
+                      return const Center(child: Text('Erreur de chargement'),);
+                      case ProfilePaginationState.noMoreData:
+                      return const Center(child: Text('Aucun produit à afficher'),);
+                  }
+                } ),
+
+                SizedBox(height: 50,),
+              ],
+            ),
+
+          ),
+        ) : const LoaderWidget(),
+      ),
     );
   }
 }

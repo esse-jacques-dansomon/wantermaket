@@ -37,9 +37,9 @@ class ContactVendor {
     }
   }
 
-  static void openWhatsappVendor({required BuildContext context, required Vendor vendor}) async {
-    var link = "whatsapp://send?phone=${vendor.phone}" +
-        "&text=${Uri.encodeComponent('Bonjour')}";
+  static void openWhatsappVendor({required BuildContext context, required Boutique boutique}) async {
+    var link = "whatsapp://send?phone=${boutique.vendor!.phone}" +
+        "&text=${Uri.encodeComponent('Bonjour, j''ai vu votre boutique ${boutique.name} sur Wanter Market. je suis intéressé par vos produits. ')}";
     try{
       await launchUrl(Uri.parse(link.toString()));
 

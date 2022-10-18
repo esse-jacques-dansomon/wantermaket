@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -10,6 +9,7 @@ import '../../../providers/crud_product_provider.dart';
 import '../../../providers/vendor_provider.dart';
 import '../../../route/routes.dart';
 import '../../../shared/app_helper.dart';
+import '../../screens/dashboard/widgets/product_buttons.dart';
 
 class VendorProductCard extends StatelessWidget {
   final Product product;
@@ -37,55 +37,6 @@ class VendorProductCard extends StatelessWidget {
                     fit: BoxFit.cover,
                   ),
                 ),
-                Positioned(top: 5, right: 0,child: Container(
-                    decoration:  BoxDecoration(
-                      borderRadius: const BorderRadius.all(Radius.circular(2)),
-                      color: Colors.grey[100],
-                    ),
-                    padding: const EdgeInsets.all(2),
-                    child:  InkWell(
-
-                      onTap: (){
-                        // set up the AlertDialog
-                        AlertDialog alert = AlertDialog(
-                          title: const Text("Supprimer"),
-                          content: const Text("Voulez vous vraiment supprimer ce produit ?"),
-                          actions: [
-                            TextButton(
-                              child: const Text("Annuler"),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                            TextButton(
-                              child: const Text("Supprimer"),
-                              onPressed: () {
-                                Provider.of<CrudProductProvider>(context, listen: false).deleteProduct(context, product.id!).then((value) => {
-                                  if(value){
-                                    AppHelper.showInfoFlushBar(context, 'Produit supprimé avec succès', color: AppColors.PRIMARY),
-                                    Provider.of<VendorProvider>(context, listen: false).deleteProduct(product.id!),
-                                  }else{
-                                    AppHelper.showInfoFlushBar(context, 'Une erreur s\'est produite', color: Colors.redAccent),
-                                  }
-                                });
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ],
-                        );
-                        // show the dialog
-                        showCupertinoDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return alert;
-                          },
-                        );
-                      },
-                      child:  const Icon(Icons.restore_from_trash, color: Colors.red, size: 29,),
-
-                    ),),)
-
-
               ],
             ),
             const SizedBox(height: 5,),
@@ -111,21 +62,27 @@ class VendorProductCard extends StatelessWidget {
                               const Text('Vues')
                             ],
                           ),
-
                         ],
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          SizedBox(
-                            height:25,
-                            child: ElevatedButton(
-                                style: const ButtonStyle(
+                          Expanded(
+                            child: SizedBox(
+                              height:25,
+                              child: ElevatedButton(
+                                  style: const ButtonStyle(
+                                  ),
+                                  onPressed: (){
+                                      // Navigator.pushNamed(context, AppRoutes.editProduct, arguments: product);
+                                      showModalBottomSheet(
+                                          constraints:  BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.5),
+                                          isScrollControlled: true,
+                                          context: context, builder: (context) =>  ProductButtons(product: product));
 
-                                ),
-                                onPressed: (){
-                                  Navigator.pushNamed(context, AppRoutes.addProduct, arguments: product);
-                                }, child: const Text('Modifier')),
+                                    // Navigator.pushNamed(context, AppRoutes.addProduct, arguments: product);
+                                  }, child: const Text('Options')),
+                            ),
                           ),
                           //on off button
                           Switch(
@@ -151,4 +108,6 @@ class VendorProductCard extends StatelessWidget {
       ),
     );
   }
+
+
 }

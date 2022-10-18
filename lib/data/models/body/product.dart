@@ -23,6 +23,7 @@ class Product {
   int? priceBefore;
   String? disponibility;
   int? nombre_vues;
+  bool? isBoosted;
   List<Image>? images;
 
   Boutique? boutique;
@@ -34,6 +35,7 @@ class Product {
   Product(
       {this.id,
         this.code,
+        this.isBoosted,
         this.idBoutique,
         this.idCategorie,
         this.name,
@@ -56,6 +58,7 @@ class Product {
     idBoutique = json['id_boutique'];
     idCategorie = json['id_category'];
     name = json['name'];
+    isBoosted = json['isBoosted'];
     slug = json['slug'];
     descriptionBrief = json['description_brief'];
     price = json['price'];

@@ -84,7 +84,7 @@ class FicheVendeur extends StatelessWidget {
                     padding: MaterialStateProperty.all(EdgeInsets.symmetric(horizontal: 20, vertical: 10)),
                   ),
                   onPressed: (){
-                    ContactVendor.openWhatsappVendor(vendor :boutique.vendor!, context: context);
+                    ContactVendor.openWhatsappVendor(boutique :boutique, context: context);
                   },
                   child: Row(
                     children:  [

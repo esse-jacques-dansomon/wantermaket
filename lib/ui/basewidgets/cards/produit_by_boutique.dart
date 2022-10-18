@@ -8,6 +8,7 @@ import 'package:wantermarket/shared/app_helper.dart';
 
 import '../../../config/app_dimenssions.dart';
 import '../../../config/app_images.dart';
+import '../../../data/models/body/boutique.dart';
 import '../../../data/models/body/vendor.dart';
 import '../../../route/routes.dart';
 import '../../../shared/contact_vendor.dart';
@@ -116,7 +117,7 @@ class ProductByBoutique extends StatelessWidget {
                                       onTap: (){
                                         showDialog(
                                           context: context,
-                                          builder: (context) =>  ContactsDialog(vendor: product.boutique!.vendor!),
+                                          builder: (context) =>  ContactsDialog(boutique: product.boutique!),
                                         );
                                       },
                                       child: Container(
@@ -161,9 +162,9 @@ class ProductByBoutique extends StatelessWidget {
 }
 
 class ContactsDialog extends StatelessWidget {
-  final Vendor vendor;
+  final Boutique boutique;
   const ContactsDialog({
-    Key? key, required this.vendor
+    Key? key, required this.boutique
   }) : super(key: key);
 
   @override
@@ -183,7 +184,7 @@ class ContactsDialog extends StatelessWidget {
                     ),)
                 ),
                 onPressed: (){
-                  ContactVendor.openPhone(context: context, number: vendor.phone!);
+                  ContactVendor.openPhone(context: context, number: boutique.vendor!.phone!);
                 }, child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: const [
@@ -201,7 +202,7 @@ class ContactsDialog extends StatelessWidget {
                     ),)
                 ),
                 onPressed: (){
-                  ContactVendor.openMessage(context: context, number: vendor.phone!);
+                  ContactVendor.openMessage(context: context, number: boutique.vendor!.phone!);
 
                 }, child: Row(
               children: const [
@@ -219,7 +220,7 @@ class ContactsDialog extends StatelessWidget {
                     ),)
                 ),
                 onPressed: (){
-                  ContactVendor.openWhatsappVendor(context: context, vendor: vendor);
+                  ContactVendor.openWhatsappVendor(context: context, boutique:boutique );
 
                 }, child: Row(
               children: const [

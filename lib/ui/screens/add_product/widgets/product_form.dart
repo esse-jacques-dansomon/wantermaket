@@ -18,6 +18,7 @@ import '../../../../data/models/body/category.dart';
 import '../../../../data/models/body/product.dart';
 import '../../../../data/models/body/product_crud_model.dart';
 import '../../../../providers/category_provider.dart';
+import '../../../../route/routes.dart';
 
 class ProductAddForm extends StatefulWidget {
   final Product? product;
@@ -103,7 +104,7 @@ class _ProductAddFormState extends State<ProductAddForm> {
       final imageTemp = File(image.path);
       setState(() => this.image = imageTemp);
     } on PlatformException catch(e) {
-      print('Failed to pick image: $e');
+      AppHelper.showInfoFlushBar(context, "Erreur de l'upload", color: Colors.red);
     }
   }
 
@@ -114,7 +115,7 @@ class _ProductAddFormState extends State<ProductAddForm> {
       final imageTemp = File(image.path);
       setState(() => image_level_2 = imageTemp);
     } on PlatformException catch(e) {
-      print('Failed to pick image: $e');
+      AppHelper.showInfoFlushBar(context, "Erreur de l'upload", color: Colors.red);
     }
   }
 
@@ -125,7 +126,8 @@ class _ProductAddFormState extends State<ProductAddForm> {
       final imageTemp = File(image.path);
       setState(() => image_level_3 = imageTemp);
     } on PlatformException catch(e) {
-      print('Failed to pick image: $e');
+      AppHelper.showInfoFlushBar(context, "Erreur de l'upload", color: Colors.red);
+      // print('Failed to pick image: $e');
     }
   }
 
@@ -142,22 +144,24 @@ class _ProductAddFormState extends State<ProductAddForm> {
     });
   }
 
-   addProduct(ProductCrudModel productCrudModel, File image, File? imageLevel2, File? imageLevel3)   {
-     Provider.of<CrudProductProvider>(context, listen: false).addProduct(context,productCrudModel, image, imageLevel2, imageLevel2).then((value) => {
-       Provider.of<VendorProvider>(context, listen: false).getVendorProducts(context),
-       Provider.of<AuthProvider>(context, listen: false).verifyIsAuthenticated(context),
-       AppHelper.showInfoFlushBar(context, 'Produit ajouté avec succès'),
-       clearForm()
-     }).catchError((error){
-       AppHelper.showInfoFlushBar(context, error.toString(), color: Colors.red);
-     });
+  addProduct(ProductCrudModel productCrudModel, File image, File? imageLevel2, File? imageLevel3)   {
+    Provider.of<CrudProductProvider>(context, listen: false).addProduct(context,productCrudModel, image, imageLevel2, imageLevel2).then((value) => {
+      Provider.of<VendorProvider>(context, listen: false).getVendorProducts(context),
+      Provider.of<AuthProvider>(context, listen: false).verifyIsAuthenticated(context),
+      clearForm(),
+      Navigator.pushNamed(context, AppRoutes.profile),
+      AppHelper.showInfoFlushBar(context, 'Produit ajouté avec succès'),
+    }).catchError((error){
+      AppHelper.showInfoFlushBar(context, error.toString(), color: Colors.red);
+    });
   }
-   upDateProduct(int id, ProductCrudModel productCrudModel, File? image, File? imageLevel2, File? imageLevel3)   {
+  upDateProduct(int id, ProductCrudModel productCrudModel, File? image, File? imageLevel2, File? imageLevel3)   {
     Provider.of<CrudProductProvider>(context, listen: false).updateProduct(context, id, productCrudModel, image, imageLevel2, imageLevel2).then((value) => {
       Provider.of<VendorProvider>(context, listen: false).getVendorProducts(context),
       Provider.of<AuthProvider>(context, listen: false).verifyIsAuthenticated(context),
+      clearForm(),
+      Navigator.pushNamed(context, AppRoutes.profile),
       AppHelper.showInfoFlushBar(context, 'Produit modifié avec succès'),
-      clearForm()
 
     }).catchError((error){
       AppHelper.showInfoFlushBar(context, error.toString(), color: Colors.red);
@@ -176,77 +180,77 @@ class _ProductAddFormState extends State<ProductAddForm> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-             const Text('Images du produit', style: TextStyle(fontSize: 20),),
+            const Text('Images du produit', style: TextStyle(fontSize: 20),),
             const SizedBox(height: 10,),
 
             SizedBox(
-              height: MediaQuery.of(context).size.width*0.3,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: [
-                  Container(
-                    width: MediaQuery.of(context).size.width*0.3,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(0),
-                      color: Colors.grey[200],
-                      image: image != null ? DecorationImage(image: FileImage(image!), fit: BoxFit.cover) :
-                      (  (widget.product != null && widget.product!.images!.isNotEmpty) ?
-                      DecorationImage(image: NetworkImage(widget.product!.images![0].path), fit: BoxFit.cover) : null),
+                height: MediaQuery.of(context).size.width*0.3,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width*0.3,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(0),
+                        color: Colors.grey[200],
+                        image: image != null ? DecorationImage(image: FileImage(image!), fit: BoxFit.cover) :
+                        (  (widget.product != null && widget.product!.images!.isNotEmpty) ?
+                        DecorationImage(image: NetworkImage(widget.product!.images![0].path), fit: BoxFit.cover) : null),
+                      ),
+                      child: IconButton(
+                        icon:  Icon(Icons.add, color: image == null ?  AppColors.PRIMARY: Colors.grey[300],size: 35,),
+                        onPressed: (){
+                          pickCoverImage(context, pickImage);
+                        },
+                      ),
                     ),
-                    child: IconButton(
-                      icon:  Icon(Icons.add, color: image == null ?  AppColors.PRIMARY: Colors.grey[300],size: 35,),
-                      onPressed: (){
-                        pickCoverImage(context, pickImage);
-                      },
+                    const SizedBox(width: 10,),
+                    Container(
+                      width: MediaQuery.of(context).size.width*0.3,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(0),
+                        color: Colors.grey[200],
+                        image: image_level_2 != null ? DecorationImage(image: FileImage(image_level_2!), fit: BoxFit.cover) :
+                        (  widget.product?.images?.length.compareTo(1)==1 ?
+                        DecorationImage(image: NetworkImage(widget.product!.images![1].path), fit: BoxFit.cover) : null),
+                      ),
+                      child: IconButton(
+                        icon:  Icon(Icons.add, color: image_level_2 == null ?  AppColors.PRIMARY: Colors.grey[300],size: 35,),
+                        onPressed: (){
+                          pickCoverImage(context,pickImageLevel2 );
+                        },
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: 10,),
-                  Container(
-                    width: MediaQuery.of(context).size.width*0.3,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(0),
-                      color: Colors.grey[200],
-                      image: image_level_2 != null ? DecorationImage(image: FileImage(image_level_2!), fit: BoxFit.cover) :
-                      (  widget.product?.images?.length.compareTo(1)==1 ?
-                      DecorationImage(image: NetworkImage(widget.product!.images![1].path), fit: BoxFit.cover) : null),
+                    const SizedBox(width: 10,),
+                    Container(
+                      // margin: const EdgeInsets.symmetric(vertical: 10),
+                      width: MediaQuery.of(context).size.width*0.3,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(0),
+                        color: Colors.grey[200],
+                        image: image_level_3 != null ? DecorationImage(image: FileImage(image_level_3!), fit: BoxFit.cover) :
+                        (  widget.product?.images?.length.compareTo(2)==1 ?
+                        DecorationImage(image: NetworkImage(widget.product!.images![2].path), fit: BoxFit.cover) : null),
+                      ),
+                      child: IconButton(
+                        icon:  Icon(Icons.add, color: image_level_3 == null ?  AppColors.PRIMARY: Colors.grey[300],size: 35,),
+                        onPressed: (){
+                          pickCoverImage(context,pickImageLevel3);
+                        },
+                      ),
                     ),
-                    child: IconButton(
-                      icon:  Icon(Icons.add, color: image_level_2 == null ?  AppColors.PRIMARY: Colors.grey[300],size: 35,),
-                      onPressed: (){
-                        pickCoverImage(context,pickImageLevel2 );
-                      },
-                    ),
-                  ),
-                  const SizedBox(width: 10,),
-                  Container(
-                    // margin: const EdgeInsets.symmetric(vertical: 10),
-                    width: MediaQuery.of(context).size.width*0.3,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(0),
-                      color: Colors.grey[200],
-                      image: image_level_3 != null ? DecorationImage(image: FileImage(image_level_3!), fit: BoxFit.cover) :
-                      (  widget.product?.images?.length.compareTo(2)==1 ?
-                      DecorationImage(image: NetworkImage(widget.product!.images![2].path), fit: BoxFit.cover) : null),
-                    ),
-                    child: IconButton(
-                      icon:  Icon(Icons.add, color: image_level_3 == null ?  AppColors.PRIMARY: Colors.grey[300],size: 35,),
-                      onPressed: (){
-                        pickCoverImage(context,pickImageLevel3);
-                      },
-                    ),
-                  ),
 
-                ],
-              ) ),
+                  ],
+                ) ),
             const SizedBox(height: 15,),
 
-             _ProductNameWidget(),
+            _ProductNameWidget(),
             //price
-             _ProductPriceWidget(),
+            _ProductPriceWidget(),
             //prix promotionnel
-             _ProductPriceBeforeWidget(),
+            _ProductPriceBeforeWidget(),
             //description
-             _ProductDescriptionWidget(),
+            _ProductDescriptionWidget(),
             //
             _CategoryProductWidget(),
             _SubCategoryProductWidget(),
@@ -288,8 +292,8 @@ class _ProductAddFormState extends State<ProductAddForm> {
                   }
 
 
-                  }
-                },
+                }
+              },
               style: ButtonStyle(backgroundColor: MaterialStateProperty.all(AppColors.PRIMARY),),
 
             ),
@@ -300,38 +304,38 @@ class _ProductAddFormState extends State<ProductAddForm> {
 
   Future<dynamic> pickCoverImage(BuildContext context, Function onImagePicked) {
     return showDialog(
-                    context: context,
-                    builder: (context) =>  AlertDialog(
-                      content: SizedBox(
-                        height: 200,
-                        width: double.infinity*0.9,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(height: 15,),
-                            const Text('Veuillez choisir une source', style: TextStyle(fontSize: AppDimensions.FONT_SIZE_EXTRA_LARGE),),
-                            const SizedBox(height: 15,),
-                            TextButton(
-                              onPressed: (){
-                                onImagePicked();
-                                Navigator.of(context).pop();
-                              },
-                              child: const Text('Via Gallery', style: TextStyle(fontSize: AppDimensions.FONT_SIZE_EXTRA_LARGE),),
-                            ),
-                            const SizedBox(height: 15,),
-                            TextButton(
-                              onPressed: (){
-                                onImagePicked(imageSource: ImageSource.camera);
-                                Navigator.of(context).pop();
-                              },
-                              child: const Text('Via Appareil Photo', style: TextStyle(fontSize: AppDimensions.FONT_SIZE_EXTRA_LARGE),),
-                            ),
+      context: context,
+      builder: (context) =>  AlertDialog(
+        content: SizedBox(
+          height: 200,
+          width: double.infinity*0.9,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 15,),
+              const Text('Veuillez choisir une source', style: TextStyle(fontSize: AppDimensions.FONT_SIZE_EXTRA_LARGE),),
+              const SizedBox(height: 15,),
+              TextButton(
+                onPressed: (){
+                  onImagePicked();
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Via Gallery', style: TextStyle(fontSize: AppDimensions.FONT_SIZE_EXTRA_LARGE),),
+              ),
+              const SizedBox(height: 15,),
+              TextButton(
+                onPressed: (){
+                  onImagePicked(imageSource: ImageSource.camera);
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Via Appareil Photo', style: TextStyle(fontSize: AppDimensions.FONT_SIZE_EXTRA_LARGE),),
+              ),
 
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
 
@@ -486,15 +490,15 @@ class _ProductAddFormState extends State<ProductAddForm> {
             setState(() {
               _selectedCategory = value as Category;
               Provider.of<CategoryProviderDetails>(context, listen: false).getSubCategoriesOfCategoryDp(context,value.id!, _subCategories).then((value) => setState(() {
-                 if(value.isEmpty){
+                if(value.isEmpty){
                   _subCategories.add(SousCategorie(id: 0, name: "Pas de Sous categorie",imagePath: ""));
                   _categories.add(Category(id: 0, name: "Pas de categorie",imagePath: ""));
                 }else{
                   _subCategories = value;
-                   _selectedSubCategory = _subCategories.first;
-                 }
+                  _selectedSubCategory = _subCategories.first;
+                }
 
-               }));
+              }));
             });
           },
           icon: const Icon(
