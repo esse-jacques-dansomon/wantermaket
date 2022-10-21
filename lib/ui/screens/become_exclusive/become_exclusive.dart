@@ -5,6 +5,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:wantermarket/providers/auth_provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import 'package:wantermarket/config/app_colors.dart';
@@ -55,12 +56,13 @@ class _BecomeExclusiveScreenState extends State<BecomeExclusiveScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children:  [
-                const Text('Devenez Exclusive', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold,color: AppColors.BLACK),),
+                 Text('Devenez Exclusive', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold,color: AppColors.BLACK),),
                 const SizedBox(height: 20,),
                 const Text('Envoyez votre demande pour passez exclusive. Notre equipe va prendre un certain temps pour traiter votre demande. ', textAlign: TextAlign.center, style: const TextStyle(fontSize: AppDimensions.FONT_SIZE_DEFAULT+3, fontWeight: FontWeight.bold,color: Colors.grey),),
                 const SizedBox(height: 20,),
                 const Text('50.000 F CFA / 30 jours', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: AppColors.BLACK),),
                 const SizedBox(height: 20,),
+                !Provider.of<AuthProvider>(context,listen: false).getUserConnectedInfo()!.isExclusive! ?
                 Consumer<PaymentProvider>(
                   builder: (context, paymentProvider, child){
                     switch(paymentProvider.paymentLinkStatus){
@@ -88,7 +90,7 @@ class _BecomeExclusiveScreenState extends State<BecomeExclusiveScreen> {
                         );
                     }
                   },
-                )
+                ) : const Text('Vous etes deja exclusive', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: AppColors.PRIMARY),),
               ],
             ),
           ),

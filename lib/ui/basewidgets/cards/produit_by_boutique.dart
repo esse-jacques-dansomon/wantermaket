@@ -37,7 +37,7 @@ class ProductByBoutique extends StatelessWidget {
                       CachedNetworkImage(
                         imageUrl: product.images!.isNotEmpty ? product.images![0].path : AppImage.logo,
                         fit: BoxFit.cover,
-                        width: 230,
+                        width: double.infinity,
                       ),
                       Positioned(top: 5, right: 5,child: Container(
                         alignment: Alignment.center,

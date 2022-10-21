@@ -81,7 +81,7 @@ class VendorProductCard extends StatelessWidget {
                                           context: context, builder: (context) =>  ProductButtons(product: product));
 
                                     // Navigator.pushNamed(context, AppRoutes.addProduct, arguments: product);
-                                  }, child: const Text('Options')),
+                                  }, child: const Text('Options', style: TextStyle(fontSize: 14),)),
                             ),
                           ),
                           //on off button

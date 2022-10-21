@@ -99,7 +99,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                     case ProfilePaginationState.error:
                       return const Center(child: Text('Erreur de chargement'),);
                       case ProfilePaginationState.noMoreData:
-                      return const Center(child: Text('Aucun produit à afficher'),);
+                      return Container(height: 100, child: const Center(child: Text('Aucun produit à afficher'),));
                   }
                 } ),
 
