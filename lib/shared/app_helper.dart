@@ -33,16 +33,23 @@ class AppHelper {
   }
 
   static void showInfoFlushBar(BuildContext context, String s, {Color color = AppColors.PRIMARY}) {
-    Flushbar(
-      message: s,
-      duration: const Duration(seconds: 6),
-      backgroundColor: color,
-      flushbarPosition: FlushbarPosition.TOP,
-      icon: const Icon(
-        Icons.info,
-        color: Colors.white,
-      ),
+    AnimatedSnackBar.material(
+      s,
+      type: AnimatedSnackBarType.info,
+      mobileSnackBarPosition: MobileSnackBarPosition.top,
+      snackBarStrategy: StackSnackBarStrategy(),
+
     ).show(context);
+    // Flushbar(
+    //   message: s,
+    //   duration: const Duration(seconds: 6),
+    //   backgroundColor: color,
+    //   flushbarPosition: FlushbarPosition.TOP,
+    //   icon: const Icon(
+    //     Icons.info,
+    //     color: Colors.white,
+    //   ),
+    // ).show(context);
 
 
   }

@@ -40,7 +40,6 @@ class ApiErrorHandler {
                 default:
                   ErrorResponse errorResponse;
                   try{
-                    print("error response ${error.response?.data}");
                     errorResponse = ErrorResponse.fromJson(error.response?.data);
                     if (errorResponse.success == false) {
                       errorDescription = errorResponse;

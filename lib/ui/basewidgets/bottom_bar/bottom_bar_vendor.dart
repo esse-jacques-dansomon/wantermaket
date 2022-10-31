@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../../data/models/body/product.dart';
 import '../../../shared/contact_vendor.dart';
+import 'dart:io' show Platform;
+
 
 class BottomBarVendor extends StatelessWidget {
   const BottomBarVendor({
@@ -14,7 +16,7 @@ class BottomBarVendor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 60,
+      height: Platform.isIOS ? 80 : 65,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [

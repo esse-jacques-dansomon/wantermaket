@@ -38,6 +38,7 @@ class ProductByBoutique extends StatelessWidget {
                         imageUrl: product.images!.isNotEmpty ? product.images![0].path : AppImage.logo,
                         fit: BoxFit.cover,
                         width: double.infinity,
+                        height: double.infinity,
                       ),
                       Positioned(top: 5, right: 5,child: Container(
                         alignment: Alignment.center,

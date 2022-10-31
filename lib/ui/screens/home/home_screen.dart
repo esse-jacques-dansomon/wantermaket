@@ -139,7 +139,7 @@ class _HomeScreenState extends State<HomeScreen> {
     });
     super.initState();
     _controller.addListener(_scrollListener);
-    NetworkInfo.checkConnectivity(context);
+    // NetworkInfo.checkConnectivity(context);
 
   }
 
