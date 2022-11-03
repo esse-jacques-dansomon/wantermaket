@@ -67,7 +67,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         bottomNavigationBar:  CustomBottomNavBar(profile: true, scrollController: _controller,),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Navigator.pushNamed(context, AppRoutes.addProduct);
+            AppRoutes.goTo(context, AppRoutes.addProduct);
           },
           backgroundColor: AppColors.PRIMARY,
           child: const Icon(Icons.add, color: AppColors.WHITE, size: 50,),

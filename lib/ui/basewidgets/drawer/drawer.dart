@@ -222,8 +222,8 @@ class DrawerMenuItem extends StatelessWidget {
       leading: Icon(icon, color: AppColors.BLACK,),
       title: Text(menuName, style: const TextStyle(color: AppColors.BLACK, fontSize: AppDimensions.FONT_SIZE_DEFAULT+2),  ),
       onTap: () {
-        Navigator.popAndPushNamed(context, route);
-      },
+        AppRoutes.goTo(context, route);
+        },
     )  ;
   }
 }

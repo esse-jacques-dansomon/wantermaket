@@ -56,7 +56,7 @@ class _EditProfileFormWidgetState extends State<EditProfileFormWidget> {
       if(value){
         authProvider.getUserConnectedInfo();
         Provider.of<VendorProvider>(context, listen: false).getBoutique(context);
-        Navigator.pushNamed(context, AppRoutes.profile);
+        AppRoutes.goTo(context, AppRoutes.profile);
         AppHelper.showInfoFlushBar(context, 'Profil mis à jour avec succès');
       }else{
         AppHelper.showErrorFlushBar(context, 'Error lors de la modification du profil');

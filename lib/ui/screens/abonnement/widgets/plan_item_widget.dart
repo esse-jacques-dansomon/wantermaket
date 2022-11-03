@@ -54,7 +54,7 @@ class PlanItem extends StatelessWidget {
               Container(
                 alignment: Alignment.topLeft,
                 padding: const EdgeInsets.fromLTRB(25, 10, 15, 25),
-                child: plan.name=="Ecommerce"?
+                child: plan.name?.toLowerCase()=="ecommerce"?
                 Container(
                     padding: const EdgeInsets.only(left: 20, right: 25),
                     child: Text(plan.description ?? "Pas de description",

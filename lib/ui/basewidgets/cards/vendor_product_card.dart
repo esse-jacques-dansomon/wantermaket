@@ -21,7 +21,7 @@ class VendorProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-        Navigator.pushNamed(context, AppRoutes.product, arguments: product);
+        AppRoutes.goTo(context, AppRoutes.product, arguments: product);
       },
       child: Card(
         child: Column(

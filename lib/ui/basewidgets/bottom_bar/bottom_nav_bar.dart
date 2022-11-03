@@ -119,7 +119,7 @@ class CustomBottomBarItem extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         if (!item) {
-          Navigator.pushNamed(context, route);
+          AppRoutes.goTo(context, route);
         }else{
           if(scrollController != null ){
             scrollController?.animateTo(0, duration: Duration(milliseconds: 500), curve: Curves.easeInOut);

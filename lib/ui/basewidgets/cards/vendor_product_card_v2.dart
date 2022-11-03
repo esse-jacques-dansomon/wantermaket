@@ -1,15 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../../../config/app_colors.dart';
 import '../../../config/app_images.dart';
 import '../../../data/models/body/product.dart';
-import '../../../providers/crud_product_provider.dart';
-import '../../../providers/vendor_provider.dart';
 import '../../../route/routes.dart';
-import '../../../shared/app_helper.dart';
 
 class VendorProductCard2 extends StatelessWidget {
   final Product product;
@@ -21,7 +16,7 @@ class VendorProductCard2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-        Navigator.pushNamed(context, AppRoutes.product, arguments: product);
+        AppRoutes.goTo(context, AppRoutes.product, arguments: product);
       },
       child: Card(
         child: Row(

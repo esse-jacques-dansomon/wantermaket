@@ -43,9 +43,8 @@ class _BoutiqueBySecteurScreenState extends State<BoutiqueBySecteurScreen> {
       appBar: appBarWithReturn(title:widget.category.name! , context: context),
       bottomNavigationBar: const CustomBottomNavBar(boutique: true,),
       floatingActionButton: FloatingActionButton(
-
         onPressed: () {
-          Navigator.pushNamed(context, AppRoutes.addProduct);
+          AppRoutes.goTo(context, AppRoutes.addProduct);
         },
         backgroundColor: AppColors.PRIMARY,
         child: const Icon(Icons.add, color: AppColors.WHITE, size: 50,),

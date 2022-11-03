@@ -1,9 +1,6 @@
-// ignore_for_file: unused_import
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:wantermarket/config/app_colors.dart';
-import 'package:wantermarket/config/app_dimenssions.dart';
 import 'package:wantermarket/ui/screens/add_product/widgets/product_form.dart';
 import 'package:wantermarket/ui/basewidgets/user-actions-account-status/expire-subscription.dart';
 
@@ -33,11 +30,8 @@ class AddProductScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children:  [
                 const SizedBox(height: 20,),
-                // const Text("Ajouter Un Produit", textAlign: TextAlign.start, style:  TextStyle(fontSize: AppDimensions.FONT_SIZE_EXTRA_LARGE+3, color: AppColors.BLACK),),
-                // const SizedBox(height: 10,),
                 product?.id != null ? ProductAddForm(product: product,) : const ProductAddForm(),
                 const SizedBox(height: 30,),
-
               ]
             ),
           ),

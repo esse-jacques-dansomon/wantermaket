@@ -48,7 +48,7 @@ class ProductDetailsInformation extends StatelessWidget {
               const SizedBox(height: 6,),
               InkWell(
                 onTap: (){
-                  Navigator.of(context).pushNamed(AppRoutes.vendor, arguments:product.boutique!);
+                  AppRoutes.goTo(context, AppRoutes.vendor, arguments:product.boutique!);
                 },
                 child: Row(
                   children: [

@@ -72,19 +72,6 @@ class PaymentPending extends StatelessWidget {
           ],
         ),
       ),
-      // actions: [
-      //   TextButton(
-      //     child: const Text('Annuler'),
-      //     onPressed: () => Navigator.pop(context),
-      //   ),
-      //   TextButton(
-      //     child: const Text('Confirmer'),
-      //     onPressed: () {
-      //       Navigator.pop(context);
-      //       Navigator.pop(context);
-      //     },
-      //   ),
-      // ],
     );
   }
 }

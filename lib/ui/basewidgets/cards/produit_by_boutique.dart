@@ -9,7 +9,6 @@ import 'package:wantermarket/shared/app_helper.dart';
 import '../../../config/app_dimenssions.dart';
 import '../../../config/app_images.dart';
 import '../../../data/models/body/boutique.dart';
-import '../../../data/models/body/vendor.dart';
 import '../../../route/routes.dart';
 import '../../../shared/contact_vendor.dart';
 
@@ -23,7 +22,7 @@ class ProductByBoutique extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, AppRoutes.product, arguments: product);
+        AppRoutes.goTo(context, AppRoutes.product, arguments: product);
       },
       child: Card(
           child: SizedBox(

@@ -19,8 +19,7 @@ class DealDuJour extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, AppRoutes.product, arguments: product);
-
+        AppRoutes.goTo(context, AppRoutes.product, arguments: product);
       },
       child: SizedBox(
         width: MediaQuery.of(context).size.width*0.9,

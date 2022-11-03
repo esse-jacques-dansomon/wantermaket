@@ -37,7 +37,6 @@ class _AbonnementScreenState extends State<AbonnementScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-             // const  Text('Mon Abonnement', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
               const SizedBox(height: 15,),
               Expanded(child: Consumer<PlanProvider>(
                 builder: (context, planProvider, _){
@@ -53,7 +52,6 @@ class _AbonnementScreenState extends State<AbonnementScreen> {
                   );
                 }
               ))
-
             ],
           ),
         ),

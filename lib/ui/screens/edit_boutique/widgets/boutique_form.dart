@@ -43,7 +43,7 @@ class _BoutiqueFormState extends State<BoutiqueForm> {
       if(value){
         Provider.of<AuthProvider>(context, listen: false).verifyIsAuthenticated(context),
         Provider.of<AuthProvider>(context, listen: false).getUserConnectedInfo(),
-        Navigator.pushNamed(context, AppRoutes.profile),
+        AppRoutes.goTo(context,  AppRoutes.profile),
         AppHelper.showInfoFlushBar(context, 'Vous avez bien modifié vos informations'),
 
       }else{
@@ -196,10 +196,6 @@ class _BoutiqueFormState extends State<BoutiqueForm> {
                                 child: const Text('Via Appareil Photo', style: TextStyle(fontSize: AppDimensions.FONT_SIZE_EXTRA_LARGE),),
                               ),
                               const SizedBox(height: 15,),
-                              // TextButton(
-                              //   onPressed: () => Navigator.pop(context),
-                              //   child: const Text('Annuler', style: TextStyle(fontSize: AppDimensions.FONT_SIZE_EXTRA_LARGE),),
-                              // ),
                             ],
                           ),
                         ),

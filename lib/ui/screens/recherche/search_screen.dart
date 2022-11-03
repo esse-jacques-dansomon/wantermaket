@@ -20,7 +20,7 @@ class SearchScreen extends StatelessWidget {
           backgroundColor : AppColors.WHITE,
           floatingActionButton: FloatingActionButton(
             onPressed: () {
-              Navigator.pushNamed(context, AppRoutes.addProduct);
+              AppRoutes.goTo(context, AppRoutes.addProduct);
             },
             backgroundColor: AppColors.PRIMARY,
             child: const Icon(Icons.add, color: AppColors.WHITE, size: 50,),

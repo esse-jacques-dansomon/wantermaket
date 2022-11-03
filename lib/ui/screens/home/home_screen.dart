@@ -17,7 +17,6 @@ import 'package:wantermarket/ui/screens/home/widgets/top_boutiques_widget.dart';
 
 import '../../../data/models/body/pushnotification_model.dart';
 import '../../../route/routes.dart';
-import '../../../shared/network_info.dart';
 import '../../basewidgets/app_bars/app_bar.dart';
 import '../../basewidgets/bottom_bar/bottom_nav_bar.dart';
 
@@ -154,7 +153,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return  Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, AppRoutes.addProduct, );
+          AppRoutes.goTo(context, AppRoutes.addProduct);
         },
         backgroundColor: AppColors.PRIMARY,
         child: const Icon(Icons.add, color: AppColors.WHITE, size: 50,),
