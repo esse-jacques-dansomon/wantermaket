@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:wantermarket/ui/basewidgets/loaders/custom_app_loader.dart';
 
 import '../../../config/app_colors.dart';
 import '../../../config/app_images.dart';
@@ -29,7 +30,7 @@ class VendorProductCard2 extends StatelessWidget {
               child: CachedNetworkImage(
                 imageUrl:  product.images!.isNotEmpty ? product.images![0].path : AppImage.logo,
                 fit: BoxFit.cover,
-                placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                placeholder: (context, url) => Center(child: CustomAppLoader()),
                 errorWidget: (context, url, error) => Image.network(AppImage.logo),
               ),
             ),

@@ -7,6 +7,7 @@ import 'package:wantermarket/providers/auth_provider.dart';
 import 'package:wantermarket/providers/payment_provider.dart';
 import 'package:wantermarket/route/routes.dart';
 import 'package:wantermarket/shared/app_helper.dart';
+import 'package:wantermarket/ui/basewidgets/loaders/custom_app_loader.dart';
 import 'package:wantermarket/ui/screens/payment_api/paytech_api_payment_screen.dart';
 
 class PlanItem extends StatelessWidget {
@@ -85,7 +86,7 @@ class PlanItem extends StatelessWidget {
                     if(paymentProvider.paymentPlanType == PaymentPlanType.loadingBasic && plan.name == "Basic"){
                       return Column(
                         children:  [
-                          const CircularProgressIndicator(),
+                          const CustomAppLoader(),
                           Container(height: 50,),
                         ],
                       );
@@ -94,21 +95,21 @@ class PlanItem extends StatelessWidget {
                     else if(paymentProvider.paymentPlanType == PaymentPlanType.loadingPremium && plan.name == "Premium"){
                       return Column(
                         children:  [
-                          const CircularProgressIndicator(),
+                          const CustomAppLoader(),
                           Container(height: 50,),
                         ],
                       );
                     }else if(paymentProvider.paymentPlanType == PaymentPlanType.loadingGold && plan.name == "Gold") {
                       return Column(
                         children:  [
-                          const CircularProgressIndicator(),
+                          const CustomAppLoader(),
                           Container(height: 50,),
                         ],
                       );
                     }else if(paymentProvider.paymentPlanType == PaymentPlanType.loadingEcommerce && plan.name == "Ecommerce") {
                       return Column(
                         children:  [
-                          const CircularProgressIndicator(),
+                          const CustomAppLoader(),
                           Container(height: 50,),
                         ],
                       );

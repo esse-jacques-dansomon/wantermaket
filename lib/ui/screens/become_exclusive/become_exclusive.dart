@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wantermarket/providers/auth_provider.dart';
+import 'package:wantermarket/ui/basewidgets/loaders/custom_app_loader.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import 'package:wantermarket/config/app_colors.dart';
@@ -65,7 +66,7 @@ class _BecomeExclusiveScreenState extends State<BecomeExclusiveScreen> {
                   builder: (context, paymentProvider, child){
                     switch(paymentProvider.paymentLinkStatus){
                       case PaymentLinkStatus.loading:
-                        return const CircularProgressIndicator();
+                        return const CustomAppLoader();
                       case PaymentLinkStatus.initial:
                       case PaymentLinkStatus.loaded:
                         return  ElevatedButton(

@@ -7,6 +7,7 @@ import 'package:wantermarket/config/app_colors.dart';
 import 'package:wantermarket/providers/boutique_provider.dart';
 import 'package:wantermarket/providers/product_provider.dart';
 import 'package:wantermarket/ui/basewidgets/drawer/drawer.dart';
+import 'package:wantermarket/ui/basewidgets/loaders/custom_app_loader.dart';
 import 'package:wantermarket/ui/screens/home/widgets/home_categories_widget.dart';
 import 'package:wantermarket/ui/screens/home/widgets/boutiques_exclusives_widget.dart';
 import 'package:wantermarket/ui/screens/home/widgets/deal_du_jour_widget.dart';
@@ -254,7 +255,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 //load more
                 const SizedBox(height: 10),
 
-                Provider.of<ProductProvider>(context, listen: true).isPaginationLoading ? const Center(child: CircularProgressIndicator(),) :  SizedBox(height: 10),
+                Provider.of<ProductProvider>(context, listen: true).isPaginationLoading ? const Center(child: CustomAppLoader(),) :  SizedBox(height: 10),
 
               ],
             ) ,
@@ -285,7 +286,7 @@ class LoaderWidget extends StatelessWidget {
               child: Image.asset('assets/images/logo.png', fit:BoxFit.cover,),
             ),
             const SizedBox(height: 30),
-            const CircularProgressIndicator(),
+            const CustomAppLoader(),
 
           ],
         ),

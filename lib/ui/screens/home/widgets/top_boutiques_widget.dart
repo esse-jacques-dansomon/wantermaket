@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wantermarket/providers/boutique_provider.dart';
+import 'package:wantermarket/ui/basewidgets/loaders/custom_app_loader.dart';
 import 'package:wantermarket/ui/screens/home/widgets/boutiques_exclusives_widget.dart';
 
 import '../../../basewidgets/cards/boutique_card.dart';
@@ -39,7 +40,7 @@ class TopBoutiquesWidget extends StatelessWidget {
                       ),
                     );
                   case TopBoutiqueState.initial:
-                    return const Center(child: CircularProgressIndicator());
+                    return const Center(child: CustomAppLoader());
                   case TopBoutiqueState.loaded:
                     return  boutiqueProvider.topBoutiques.isNotEmpty ? SizedBox(
                       height: 310,

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:wantermarket/providers/vendor_provider.dart';
 import 'package:wantermarket/route/routes.dart';
 import 'package:wantermarket/shared/app_helper.dart';
+import 'package:wantermarket/ui/basewidgets/loaders/custom_app_loader.dart';
 
 import '../../../../config/app_colors.dart';
 import '../../../../data/models/body/profil_model.dart';
@@ -96,7 +97,7 @@ class _EditProfileFormWidgetState extends State<EditProfileFormWidget> {
               width: double.infinity,
               height: 45,
               child: Provider.of<AuthProvider>(context, listen: true).isLoadingRegister ?
-              const Center(child: CircularProgressIndicator()):
+              const Center(child: CustomAppLoader()):
               ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(AppColors.PRIMARY),),

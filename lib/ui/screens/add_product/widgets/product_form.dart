@@ -12,6 +12,7 @@ import 'package:wantermarket/providers/category_detail_provider.dart';
 import 'package:wantermarket/providers/crud_product_provider.dart';
 import 'package:wantermarket/providers/vendor_provider.dart';
 import 'package:wantermarket/shared/app_helper.dart';
+import 'package:wantermarket/ui/basewidgets/loaders/custom_app_loader.dart';
 
 import '../../../../config/app_dimenssions.dart';
 import '../../../../data/models/body/category.dart';
@@ -257,7 +258,7 @@ class _ProductAddFormState extends State<ProductAddForm> {
 
             //submit button
             const SizedBox(height: 15,),
-            Provider.of<CrudProductProvider>(context, listen: true).isLoading ?const Center(child: CircularProgressIndicator()) :
+            Provider.of<CrudProductProvider>(context, listen: true).isLoading ?const Center(child: CustomAppLoader()) :
             ElevatedButton(
               child : SizedBox(height: 45, width: double.infinity, child:
               Center(child: Text(widget.product == null ? 'Ajouter Le produit' : 'Envoyer les modifications',

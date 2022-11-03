@@ -6,6 +6,7 @@ import 'package:wantermarket/ui/basewidgets/shimmer/custom_products_loader.dart'
 
 import '../../../config/app_colors.dart';
 import '../../../data/models/body/category.dart';
+import '../../basewidgets/loaders/custom_app_loader.dart';
 
 class CategoryScreen extends StatefulWidget {
   final Category category;
@@ -132,36 +133,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // InkWell(
-                  //   onTap: (){
-                  //     showModalBottomSheet(
-                  //         isScrollControlled: true,
-                  //         context: context, builder: (context){
-                  //       return const FilterWidget();
-                  //     });
-                  //   },
-                  //   child: Row(
-                  //       children:const [
-                  //         Icon(Icons.filter_alt_rounded, color: AppColors.PRIMARY,),
-                  //         Text('Filtres', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
-                  //       ]
-                  //   ),
-                  // ),
-                  // InkWell(
-                  //   onTap: (){
-                  //     showModalBottomSheet(context: context, builder: (context){
-                  //       return const SortItemsWidget();
-                  //     });
-                  //   },
-                  //   child: Row(
-                  //       children: const [
-                  //         Icon(Icons.arrow_upward_outlined, color: AppColors.PRIMARY,),
-                  //         Icon(Icons.arrow_downward_outlined, color: AppColors.PRIMARY,),
-                  //         Text('Prix', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
-                  //         SizedBox(width: 10,),
-                  //       ]
-                  //   ),
-                  // ),
                 ],
               ),
             ),
@@ -218,7 +189,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                   }))),
                           categoryDetailsProvider.dataState ==
                                   DataState.loadingPagination
-                              ? const Center(child: CircularProgressIndicator())
+                              ? const Center(child: CustomAppLoader())
                               : Container(),
                         ],
                       ),

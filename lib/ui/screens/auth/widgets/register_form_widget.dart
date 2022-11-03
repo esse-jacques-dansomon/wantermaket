@@ -4,6 +4,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wantermarket/providers/location_provider.dart';
+import 'package:wantermarket/ui/basewidgets/loaders/custom_app_loader.dart';
 
 import '../../../../config/app_colors.dart';
 import '../../../../data/models/body/app_country.dart';
@@ -122,7 +123,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
           SizedBox(
               width: double.infinity,
               height: 45,
-              child: Provider.of<AuthProvider>(context, listen: true).isLoadingRegister ? const Center(child: CircularProgressIndicator()): ElevatedButton(
+              child: Provider.of<AuthProvider>(context, listen: true).isLoadingRegister ? const Center(child: CustomAppLoader()): ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(AppColors.PRIMARY),),
                   onPressed: () {

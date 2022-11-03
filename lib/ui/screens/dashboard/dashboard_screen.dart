@@ -6,6 +6,7 @@ import 'package:wantermarket/providers/vendor_provider.dart';
 import 'package:wantermarket/route/routes.dart';
 import 'package:wantermarket/shared/contact_vendor.dart';
 import 'package:wantermarket/ui/basewidgets/drawer/drawer.dart';
+import 'package:wantermarket/ui/basewidgets/loaders/custom_app_loader.dart';
 import 'package:wantermarket/ui/screens/home/home_screen.dart';
 
 
@@ -95,7 +96,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                     case ProfilePaginationState.loaded:
                       return Container();
                     case ProfilePaginationState.loading:
-                      return const Center(child: CircularProgressIndicator());
+                      return const Center(child: CustomAppLoader());
                     case ProfilePaginationState.error:
                       return const Center(child: Text('Erreur de chargement'),);
                       case ProfilePaginationState.noMoreData:
