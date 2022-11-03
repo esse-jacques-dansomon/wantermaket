@@ -181,19 +181,24 @@ class _AppDrawerState extends State<AppDrawer> {
 
 
             //VERSION OF APP DESIGN
-            Column(
-              children: [
-                Divider(),
-                const SizedBox(height: 5,),
-                Text('Version 1.0.0', style: TextStyle(fontSize: 13, color: Colors.grey),),
-                const SizedBox(height: 2,),
-                Text('@2022 -Wanter Market', style: TextStyle(fontSize: 12, color: Colors.grey, fontWeight: FontWeight.bold),),
-                const SizedBox(height: 2,),
-                Text('By AGENCE CAURIS', style: TextStyle(fontSize: 12, color: Colors.grey)),
-                const SizedBox(height: 5,),
-                Divider(),
+            InkWell(
+              onTap: (){
+                ContactVendor.contactUs(context);
+              },
+              child: Column(
+                children: [
+                  Divider(),
+                  const SizedBox(height: 5,),
+                  Text('Version 1.0.0', style: TextStyle(fontSize: 13, color: Colors.grey),),
+                  const SizedBox(height: 2,),
+                  Text('@2022 -Wanter Market', style: TextStyle(fontSize: 12, color: Colors.grey, fontWeight: FontWeight.bold),),
+                  const SizedBox(height: 2,),
+                  Text('By AGENCE CAURIS', style: TextStyle(fontSize: 12, color: Colors.grey, fontWeight: FontWeight.bold),),
+                  const SizedBox(height: 5,),
+                  Divider(),
 
-              ],
+                ],
+              ),
             )
 
           ]
@@ -217,8 +222,8 @@ class DrawerMenuItem extends StatelessWidget {
       leading: Icon(icon, color: AppColors.BLACK,),
       title: Text(menuName, style: const TextStyle(color: AppColors.BLACK, fontSize: AppDimensions.FONT_SIZE_DEFAULT+2),  ),
       onTap: () {
-        Navigator.popAndPushNamed(context, route);
-      },
+        AppRoutes.goTo(context, route);
+        },
     )  ;
   }
 }

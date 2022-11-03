@@ -25,7 +25,7 @@ class NetworkInfo {
     bool _firstTime = true;
     Connectivity().onConnectivityChanged.listen((ConnectivityResult result) async {
       if(!_firstTime) {
-        //bool isNotConnected = result != ConnectivityResult.wifi && result != ConnectivityResult.mobile;
+        // bool isNotConnected = result != ConnectivityResult.wifi && result != ConnectivityResult.mobile;
         bool isNotConnected;
         if(result == ConnectivityResult.none) {
           isNotConnected = true;

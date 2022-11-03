@@ -33,14 +33,9 @@ class NoInternetScreen extends StatelessWidget {
                     const SizedBox(height: 15,),
                     Text('Veuillez vérifier votre connexion internet', style: const TextStyle(fontSize: 18,), textAlign: TextAlign.center,),
                     const SizedBox(height: 25,),
-                    // SizedBox( height: 45, width: double.infinity, child: ElevatedButton(onPressed: (){
-                    //   Navigator.pushNamed(context, AppRoutes.home);
-                    // }, child: Text('Ressayer', style: const TextStyle(fontSize: 18,),), style: ButtonStyle(backgroundColor: MaterialStateProperty.all(AppColors.SECONDARY)),),)
                   ],
                 ),
               )
-
-
             ],
           ),
         ),

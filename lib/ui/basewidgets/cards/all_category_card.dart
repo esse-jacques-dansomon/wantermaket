@@ -16,7 +16,7 @@ class AllCategoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-        Navigator.pushNamed(context, AppRoutes.category, arguments: category);
+        AppRoutes.goTo(context, AppRoutes.category, arguments: category);
       },
       child: Container(
         height: 150,

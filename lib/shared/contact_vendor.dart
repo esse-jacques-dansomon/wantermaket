@@ -3,6 +3,7 @@ import 'package:flutter_share/flutter_share.dart';
 import 'package:maps_launcher/maps_launcher.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:wantermarket/config/app_constantes.dart';
 import 'package:wantermarket/data/models/body/product.dart';
 import 'package:wantermarket/ui/basewidgets/user-actions-account-status/expire-subscription.dart';
 
@@ -97,5 +98,14 @@ class ContactVendor {
 
   static void launchMaps(Boutique boutique){
     MapsLauncher.launchQuery('${boutique.vendor?.address} ${boutique.vendor?.city} ${boutique.vendor?.country}');
+  }
+
+  static Future<void> contactUs(BuildContext context) async {
+    try{
+      await launchUrl(Uri.parse(AppConstants.CAURIS_URL));
+    }catch(e){
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Impossible ")));
+    }
   }
 }

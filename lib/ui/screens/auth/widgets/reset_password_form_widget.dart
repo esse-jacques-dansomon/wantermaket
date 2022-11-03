@@ -1,12 +1,9 @@
-
-// ignore_for_file: unused_import
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wantermarket/providers/auth_provider.dart';
 import 'package:wantermarket/route/routes.dart';
 import 'package:wantermarket/shared/app_helper.dart';
-import 'package:wantermarket/ui/screens/home/home_screen.dart';
+import 'package:wantermarket/ui/basewidgets/loaders/custom_app_loader.dart';
 
 import '../../../../config/app_colors.dart';
 import '../../../../data/models/body/reset_password_model.dart';
@@ -212,7 +209,7 @@ class _ResetPasswordFromWidgetState extends State<ResetPasswordFromWidget> {
           SizedBox(
               width: double.infinity,
               height: 45,
-              child: Provider.of<AuthProvider>(context, listen: true).isLoading ?  const Center(child: CircularProgressIndicator(color: AppColors.PRIMARY,),) :ElevatedButton(
+              child: Provider.of<AuthProvider>(context, listen: true).isLoading ?  const Center(child: CustomAppLoader(),) :ElevatedButton(
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(AppColors.PRIMARY),),
                 onPressed: (){

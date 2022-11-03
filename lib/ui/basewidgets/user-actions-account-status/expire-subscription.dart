@@ -18,7 +18,6 @@ class ExpireSubscription extends StatelessWidget {
           clipBehavior: Clip.none,
           alignment: Alignment.bottomCenter,
           children: [
-
             Positioned(
               child: Container(
                 margin: const EdgeInsets.only(top: 40),
@@ -33,8 +32,7 @@ class ExpireSubscription extends StatelessWidget {
                     const Text('Votre abonnement a expiré, veuillez le renouveller', style: TextStyle(fontSize: 18,), textAlign: TextAlign.center,),
                     const SizedBox(height: 25,),
                     SizedBox( height: 40, width: double.infinity, child: ElevatedButton(onPressed: (){
-                      Navigator.pop(context);
-                      Navigator.popAndPushNamed(context, AppRoutes.abonnements);
+                      AppRoutes.goTo(context, AppRoutes.abonnements);
                     }, style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.amber)), child: const Text('En cliquant ici', style: TextStyle(fontSize: 18),),),)
 
                   ],
@@ -51,19 +49,6 @@ class ExpireSubscription extends StatelessWidget {
           ],
         ),
       ),
-      // actions: [
-      //   TextButton(
-      //     child: const Text('Annuler'),
-      //     onPressed: () => Navigator.pop(context),
-      //   ),
-      //   TextButton(
-      //     child: const Text('Confirmer'),
-      //     onPressed: () {
-      //       Navigator.pop(context);
-      //       Navigator.pop(context);
-      //     },
-      //   ),
-      // ],
     );
   }
 }

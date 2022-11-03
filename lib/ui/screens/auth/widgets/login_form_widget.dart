@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:wantermarket/data/models/body/login_model.dart';
 import 'package:wantermarket/providers/auth_provider.dart';
 import 'package:wantermarket/route/routes.dart';
+import 'package:wantermarket/ui/basewidgets/loaders/custom_app_loader.dart';
 
 import '../../../../config/app_colors.dart';
 
@@ -154,7 +155,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
           SizedBox(
               width: double.infinity,
               height: 45,
-              child: Provider.of<AuthProvider>(context, listen: true).isLoading ? const Center(child: CircularProgressIndicator()): ElevatedButton(
+              child: Provider.of<AuthProvider>(context, listen: true).isLoading ? const Center(child: CustomAppLoader()): ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(AppColors.PRIMARY),),
                   onPressed: () {

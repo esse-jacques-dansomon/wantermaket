@@ -144,5 +144,16 @@ class AppRoutes {
     }
   }
 
+  static void goTo(BuildContext context, String routeName, {Object? arguments}) {
+    //verify if the route is already open
+    if (ModalRoute.of(context)!.settings.name == routeName) {
+      //if the route is already open, pop it
+      Navigator.pop(context);
+    }
+    Navigator.pushNamed(context, routeName, arguments: arguments);
+    // Navigator.of(context).pushNamedAndRemoveUntil(
+    //     routeName, (route) => route.isCurrent &&
+    //     ModalRoute.of(context)?.settings.name ==  routeName ? false :true, arguments: arguments);
+  }
 
 }

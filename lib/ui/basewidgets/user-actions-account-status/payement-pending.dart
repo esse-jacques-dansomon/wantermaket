@@ -5,6 +5,7 @@ import 'package:wantermarket/ui/basewidgets/user-actions-account-status/payement
 import '../../../config/app_colors.dart';
 import '../../../providers/auth_provider.dart';
 import '../../../providers/payment_provider.dart';
+import '../loaders/custom_app_loader.dart';
 
 class PaymentPending extends StatelessWidget {
 
@@ -40,7 +41,7 @@ class PaymentPending extends StatelessWidget {
                             case PaymentStatus.error:
                               return const Center(child: Text("Une erreur est survenue"),);
                             case PaymentStatus.loading:
-                              return const Center(child: CircularProgressIndicator(),);
+                              return const Center(child: CustomAppLoader(),);
                             case PaymentStatus.pending:
                             case PaymentStatus.initial:
                               return ElevatedButton(onPressed: (){
@@ -72,19 +73,6 @@ class PaymentPending extends StatelessWidget {
           ],
         ),
       ),
-      // actions: [
-      //   TextButton(
-      //     child: const Text('Annuler'),
-      //     onPressed: () => Navigator.pop(context),
-      //   ),
-      //   TextButton(
-      //     child: const Text('Confirmer'),
-      //     onPressed: () {
-      //       Navigator.pop(context);
-      //       Navigator.pop(context);
-      //     },
-      //   ),
-      // ],
     );
   }
 }

@@ -21,7 +21,7 @@ class VendorProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-        Navigator.pushNamed(context, AppRoutes.product, arguments: product);
+        AppRoutes.goTo(context, AppRoutes.product, arguments: product);
       },
       child: Card(
         child: Column(
@@ -81,7 +81,7 @@ class VendorProductCard extends StatelessWidget {
                                           context: context, builder: (context) =>  ProductButtons(product: product));
 
                                     // Navigator.pushNamed(context, AppRoutes.addProduct, arguments: product);
-                                  }, child: const Text('Options')),
+                                  }, child: const Text('Options', style: TextStyle(fontSize: 14),)),
                             ),
                           ),
                           //on off button

@@ -9,7 +9,6 @@ import 'package:wantermarket/shared/app_helper.dart';
 import '../../../config/app_dimenssions.dart';
 import '../../../config/app_images.dart';
 import '../../../data/models/body/boutique.dart';
-import '../../../data/models/body/vendor.dart';
 import '../../../route/routes.dart';
 import '../../../shared/contact_vendor.dart';
 
@@ -23,7 +22,7 @@ class ProductByBoutique extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, AppRoutes.product, arguments: product);
+        AppRoutes.goTo(context, AppRoutes.product, arguments: product);
       },
       child: Card(
           child: SizedBox(
@@ -37,7 +36,8 @@ class ProductByBoutique extends StatelessWidget {
                       CachedNetworkImage(
                         imageUrl: product.images!.isNotEmpty ? product.images![0].path : AppImage.logo,
                         fit: BoxFit.cover,
-                        width: 230,
+                        width: double.infinity,
+                        height: double.infinity,
                       ),
                       Positioned(top: 5, right: 5,child: Container(
                         alignment: Alignment.center,

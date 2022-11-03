@@ -47,10 +47,10 @@ class _ProductFoundFilterState extends State<ProductFoundFilter> {
       this.min = filterModel.min;
       this.max = filterModel.max;
       this.priceFilter = filterModel.priceFilter;
-      this.isNew = filterModel.isNew!;
-      this.isPopular = filterModel.isPopular!;
-      this.isPromo = filterModel.isPromo!;
-      this._selectedItems = filterModel.secteurs!;
+      this.isNew = filterModel.isNew?? 0;
+      this.isPopular = filterModel.isPopular?? 0;
+      this.isPromo = filterModel.isPromo?? 0;
+      this._selectedItems = filterModel.secteurs?? [];
       return filterModel;
     }
     return null;

@@ -11,6 +11,7 @@ import '../../../../providers/auth_provider.dart';
 import '../../../../providers/search_provider.dart';
 import '../../../../shared/app_helper.dart';
 import '../../../basewidgets/cards/produit_by_boutique.dart';
+import '../../../basewidgets/loaders/custom_app_loader.dart';
 
 class ProductsFound extends StatefulWidget {
 
@@ -76,7 +77,7 @@ class _ProductsFoundState extends State<ProductsFound> {
 
                     if (searchProvider.paginationState ==
                         searchPaginationState.loading)
-                      Container(height: 100, child: Center(child: const CircularProgressIndicator())),
+                      Container(height: 100, child: Center(child: const CustomAppLoader())),
                   ],
                 ),
               );

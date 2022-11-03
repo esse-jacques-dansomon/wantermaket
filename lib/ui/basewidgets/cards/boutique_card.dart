@@ -15,7 +15,7 @@ class BoutiqueCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-        Navigator.pushNamed(context, AppRoutes.vendor, arguments: boutique);
+        AppRoutes.goTo(context, AppRoutes.vendor, arguments: boutique);
       },
       child: Card(
         child: Padding(

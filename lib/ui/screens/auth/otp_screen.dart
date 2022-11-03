@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wantermarket/config/app_colors.dart';
 import 'package:wantermarket/config/app_images.dart';
+import 'package:wantermarket/ui/basewidgets/loaders/custom_app_loader.dart';
 
 import '../../../providers/auth_provider.dart';
 import '../../../route/routes.dart';
@@ -135,7 +136,7 @@ class _OtpState extends State<OtpScreen> {
                     SizedBox(
                       width: double.infinity,
                       child:  Provider.of<AuthProvider>(context, listen: true).isLoading ?
-                      const Center(child: CircularProgressIndicator(color: AppColors.PRIMARY,),)
+                      const Center(child: CustomAppLoader(),)
                           : ElevatedButton(
                         onPressed: () {
                           _verifyOTP(widget.email, context);

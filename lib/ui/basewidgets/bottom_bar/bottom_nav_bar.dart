@@ -1,3 +1,4 @@
+import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:wantermarket/route/routes.dart';
 
@@ -26,14 +27,15 @@ class CustomBottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 60,
+      //if is ios set height to 80
+      height: Platform.isIOS ? 80 : 65,
       width: MediaQuery.of(context).size.width,
       child: Stack(
         children: [
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              height: 60,
+              height: Platform.isIOS ? 80 : 65,
               padding: const EdgeInsets.symmetric(horizontal: 20),
               color: Colors.white,
               child: Row(
@@ -117,7 +119,7 @@ class CustomBottomBarItem extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         if (!item) {
-          Navigator.pushNamed(context, route);
+          AppRoutes.goTo(context, route);
         }else{
           if(scrollController != null ){
             scrollController?.animateTo(0, duration: Duration(milliseconds: 500), curve: Curves.easeInOut);

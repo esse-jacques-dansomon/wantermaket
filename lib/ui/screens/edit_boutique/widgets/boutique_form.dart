@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:wantermarket/data/models/body/boutique_update_model.dart';
 import 'package:wantermarket/providers/auth_provider.dart';
 import 'package:wantermarket/shared/app_helper.dart';
+import 'package:wantermarket/ui/basewidgets/loaders/custom_app_loader.dart';
 
 import '../../../../config/app_dimenssions.dart';
 import '../../../../data/models/body/boutique.dart';
@@ -43,7 +44,7 @@ class _BoutiqueFormState extends State<BoutiqueForm> {
       if(value){
         Provider.of<AuthProvider>(context, listen: false).verifyIsAuthenticated(context),
         Provider.of<AuthProvider>(context, listen: false).getUserConnectedInfo(),
-        Navigator.pushNamed(context, AppRoutes.profile),
+        AppRoutes.goTo(context,  AppRoutes.profile),
         AppHelper.showInfoFlushBar(context, 'Vous avez bien modifié vos informations'),
 
       }else{
@@ -196,10 +197,6 @@ class _BoutiqueFormState extends State<BoutiqueForm> {
                                 child: const Text('Via Appareil Photo', style: TextStyle(fontSize: AppDimensions.FONT_SIZE_EXTRA_LARGE),),
                               ),
                               const SizedBox(height: 15,),
-                              // TextButton(
-                              //   onPressed: () => Navigator.pop(context),
-                              //   child: const Text('Annuler', style: TextStyle(fontSize: AppDimensions.FONT_SIZE_EXTRA_LARGE),),
-                              // ),
                             ],
                           ),
                         ),
@@ -344,7 +341,7 @@ class _BoutiqueFormState extends State<BoutiqueForm> {
 
             //submit button
             Provider.of<VendorProvider>(context, listen: true ).isUpdateBoutiqueLoading ?
-            const Center(child: CircularProgressIndicator())
+            const Center(child: CustomAppLoader())
                 : ElevatedButton(
               child:  SizedBox(width: double.infinity, child:
               Center(child: Text(widget.boutique.id != null ? "Valider Les Modifications" :'Enregistrer', style: TextStyle(fontSize: AppDimensions.FONT_SIZE_EXTRA_LARGE, fontWeight: FontWeight.bold),),),),

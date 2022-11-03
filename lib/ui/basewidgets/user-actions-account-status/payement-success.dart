@@ -43,8 +43,9 @@ class PaymentSuccessBox extends StatelessWidget {
                   const SizedBox(height: 25,),
                   SizedBox( height: 45, width: double.infinity, child: ElevatedButton(onPressed: (){
                      Navigator.pop(context);
+                     Navigator.pop(context);
                      //for pending screen
-                    Navigator.popAndPushNamed(context, AppRoutes.profile);
+                     AppRoutes.goTo(context, AppRoutes.profile);
                   }, style: ButtonStyle(backgroundColor: MaterialStateProperty.all(AppColors.PRIMARY)), child: const Text('OK'),),)
 
                 ],

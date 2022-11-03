@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wantermarket/route/routes.dart';
+import 'package:wantermarket/ui/basewidgets/loaders/custom_app_loader.dart';
 
 import '../../../../config/app_colors.dart';
 import '../../../../providers/auth_provider.dart';
@@ -92,7 +93,7 @@ class _ForgotPasswordFromWidgetState extends State<ForgotPasswordFromWidget> {
               width: double.infinity,
               height: 45,
               child:  Provider.of<AuthProvider>(context, listen: true).isLoading ?
-              const Center(child: CircularProgressIndicator(color: AppColors.PRIMARY,),) :
+              const Center(child: CustomAppLoader(),) :
               ElevatedButton(
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(AppColors.PRIMARY),),

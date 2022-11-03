@@ -9,7 +9,7 @@ class CategoryCardSquare extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-        Navigator.pushNamed(context, AppRoutes.category);
+        AppRoutes.goTo(context, AppRoutes.category);
       },
       child: SizedBox(
         height: 100,
