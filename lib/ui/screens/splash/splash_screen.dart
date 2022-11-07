@@ -71,7 +71,7 @@ class _SlashScreenState extends State<SlashScreen> {
             ),
           ),
 
-          Container( padding : EdgeInsets.only(bottom: 25),  child: Text("By Agence Cauris", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),)),
+          Container( padding : EdgeInsets.only(bottom: 25),  child: Text("Developped by Agence Cauris", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),)),
           //spinner with animation
         ],
       ),

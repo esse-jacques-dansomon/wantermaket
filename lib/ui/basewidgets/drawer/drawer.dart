@@ -193,7 +193,7 @@ class _AppDrawerState extends State<AppDrawer> {
                   const SizedBox(height: 2,),
                   Text('@2022 -Wanter Market', style: TextStyle(fontSize: 12, color: Colors.grey, fontWeight: FontWeight.bold),),
                   const SizedBox(height: 2,),
-                  Text('By AGENCE CAURIS', style: TextStyle(fontSize: 12, color: Colors.grey, fontWeight: FontWeight.bold),),
+                  Text('Developped by Agence Cauris', style: TextStyle(fontSize: 12, color: Colors.grey, fontWeight: FontWeight.bold),),
                   const SizedBox(height: 5,),
                   Divider(),
 
