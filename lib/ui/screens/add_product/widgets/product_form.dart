@@ -128,7 +128,6 @@ class _ProductAddFormState extends State<ProductAddForm> {
       setState(() => image_level_3 = imageTemp);
     } on PlatformException catch(e) {
       AppHelper.showInfoFlushBar(context, "Erreur de l'upload", color: Colors.red);
-      // print('Failed to pick image: $e');
     }
   }
 
@@ -150,7 +149,7 @@ class _ProductAddFormState extends State<ProductAddForm> {
       Provider.of<VendorProvider>(context, listen: false).getVendorProducts(context),
       Provider.of<AuthProvider>(context, listen: false).verifyIsAuthenticated(context),
       clearForm(),
-      Navigator.pushNamed(context, AppRoutes.profile),
+      AppRoutes.goTo(context, AppRoutes.profile),
       AppHelper.showInfoFlushBar(context, 'Produit ajouté avec succès'),
     }).catchError((error){
       AppHelper.showInfoFlushBar(context, error.toString(), color: Colors.red);
@@ -161,7 +160,7 @@ class _ProductAddFormState extends State<ProductAddForm> {
       Provider.of<VendorProvider>(context, listen: false).getVendorProducts(context),
       Provider.of<AuthProvider>(context, listen: false).verifyIsAuthenticated(context),
       clearForm(),
-      Navigator.pushNamed(context, AppRoutes.profile),
+      AppRoutes.goTo(context, AppRoutes.profile),
       AppHelper.showInfoFlushBar(context, 'Produit modifié avec succès'),
 
     }).catchError((error){

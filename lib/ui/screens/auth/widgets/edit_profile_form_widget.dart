@@ -36,11 +36,11 @@ class _EditProfileFormWidgetState extends State<EditProfileFormWidget> {
   void initState() {
     super.initState();
     final Vendor vendor = Provider.of<VendorProvider>(context, listen:false ).boutique.vendor!;
-    _usernameController.text = vendor.name!;
-    _firstnameController.text = vendor.firstName!;
-    _addressController.text = vendor.address!;
-    _phoneController.text = vendor.phone!.replaceAll("+221", "");
-    _emailController.text = vendor.email!;
+    _usernameController.text = vendor.name ?? '';
+    _firstnameController.text = vendor.firstName ?? '';
+    _addressController.text = vendor.address?? '';
+    _phoneController.text = vendor.phone ?? vendor.phone!.replaceAll("+221", "");
+    _emailController.text = vendor.email ?? '';
 
 
     _usernameNode = FocusNode();

@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final boutiqueUpdateModel = boutiqueUpdateModelFromJson(jsonString);
-
 import 'dart:convert';
 
 BoutiqueUpdateModel boutiqueUpdateModelFromJson(String str) => BoutiqueUpdateModel.fromJson(json.decode(str));
@@ -15,6 +11,11 @@ class BoutiqueUpdateModel {
     required this.longitude,
     required this.bio,
     required this.secteursId,
+    //Social medias
+     this.facebook,
+     this.instagram,
+     this.linkedin,
+      this.website,
   });
 
   String name;
@@ -22,6 +23,11 @@ class BoutiqueUpdateModel {
   String longitude;
   String bio;
   List<int> secteursId;
+  //Social medias
+   String? facebook;
+   String? instagram;
+   String? linkedin;
+   String? website;
 
   factory BoutiqueUpdateModel.fromJson(Map<String, dynamic> json) => BoutiqueUpdateModel(
     name: json["name"],
@@ -29,6 +35,11 @@ class BoutiqueUpdateModel {
     longitude: json["longitude"],
     bio: json["bio"],
     secteursId: List<int>.from(json["secteurs_id"].map((x) => x)),
+    facebook: json["facebook"],
+    instagram: json["instagram"],
+    linkedin: json["linkedin"],
+    website: json["website"],
+
   );
 
   Map<String, dynamic> toJson() => {
@@ -37,5 +48,9 @@ class BoutiqueUpdateModel {
     "longitude": longitude,
     "bio": bio,
     "secteurs_id": List<dynamic>.from(secteursId.map((x) => x)),
+    "facebook": facebook,
+    "instagram": instagram,
+    "linkedin": linkedin,
+    "website": website,
   };
 }

@@ -142,7 +142,7 @@ class VendorInformationWidget extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () {
                   showModalBottomSheet(
-                      constraints:  BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.5),
+                      constraints:  BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.7),
                       isScrollControlled: true,
                       context: context, builder: (context) =>  FicheVendeur(boutique: boutique,));
                 },

@@ -4,6 +4,7 @@ import 'package:wantermarket/data/models/body/filter_model.dart';
 import 'package:wantermarket/providers/search_provider.dart';
 
 import '../../../../config/app_colors.dart';
+import '../../../../route/routes.dart';
 
 class TitleAndMoreText extends StatelessWidget {
   final String moreText;
@@ -35,7 +36,7 @@ class TitleAndMoreText extends StatelessWidget {
               Provider.of<SearchProvider>(context, listen: false).setFilterModel(filterModel!);
               Provider.of<SearchProvider>(context, listen: false).filter(context, filterModel: filterModel!);
             }
-            Navigator.pushNamed(context, route, arguments: this.pageTitle);
+            AppRoutes.goTo(context, route, arguments: this.pageTitle);
 
           }, child: Row(
             children: const [

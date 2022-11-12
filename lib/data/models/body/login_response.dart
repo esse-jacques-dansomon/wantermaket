@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final loginReponse = loginReponseFromJson(jsonString);
-
 import 'dart:convert';
 
 LoginReponse loginReponseFromJson(String str) => LoginReponse.fromJson(json.decode(str));
@@ -21,6 +17,7 @@ class LoginReponse {
     this.accessToken,
     this.tokenType,
     this.isExclusive,
+    this.nbreBoostRestant
   });
 
   final bool? etat;
@@ -34,6 +31,7 @@ class LoginReponse {
   final String? adresse;
   final String? accessToken;
   final String? tokenType;
+  final int? nbreBoostRestant;
 
   // LoginReponse copyWith({
   //   bool etat,
@@ -72,6 +70,7 @@ class LoginReponse {
     adresse: json["adresse"],
     accessToken: json["access_token"],
     tokenType: json["token_type"],
+    nbreBoostRestant: json["nbre_boost_restant"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -86,5 +85,6 @@ class LoginReponse {
     "adresse": adresse,
     "access_token": accessToken,
     "token_type": tokenType,
+    "nbre_boost_restant": nbreBoostRestant,
   };
 }

@@ -106,26 +106,6 @@ class VendorProductsWidget extends StatelessWidget {
               );
           }
         }),
-        // Consumer<BoutiqueProvider>(builder: (context, boutiqueProvider, child) {
-        //   return GridView.builder(
-        //       itemCount: boutiqueProvider.productsSearch.length,
-        //       physics: const NeverScrollableScrollPhysics(),
-        //       shrinkWrap: true,
-        //       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        //           crossAxisCount:
-        //               AppHelper.getCrossAxisCount(context, width: 230),
-        //           mainAxisSpacing: 10,
-        //           crossAxisSpacing: 5,
-        //           mainAxisExtent: 320,
-        //           childAspectRatio: 1.5),
-        //       itemBuilder: (context, index) {
-        //         return SizedBox(
-        //             width: 230,
-        //             child: ProductByBoutique(
-        //               product: boutiqueProvider.productsSearch[index],
-        //             ));
-        //       });
-        // }),
         const SizedBox(
           height: 25,
         ),

@@ -101,18 +101,18 @@ class DealDuJour extends StatelessWidget {
                       foregroundColor: MaterialStateProperty.all(Colors.white),
                     ),
                     onPressed: (){
-                            Navigator.pushNamed(context, AppRoutes.product, arguments: product);
+                      AppRoutes.goTo(context, AppRoutes.product, arguments: product);
                     },
-                      child: SizedBox(
-                        width: MediaQuery.of(context).size.width*0.90,
-                        child: const Center(
-                          child: Text('Profitez-en !', style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500,
-                          ),
-                          ),
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width*0.90,
+                      child: const Center(
+                        child: Text('Profitez-en !', style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                        ),
                         ),
                       ),
+                    ),
                   )
                 ],
               ),

@@ -63,7 +63,6 @@ class _BoutiqueDetailsScreenState extends State<BoutiqueDetailsScreen> {
                 //seller products
                 const VendorProductsWidget()
                 //loader for paginate
-
               ],
             ),
           ),

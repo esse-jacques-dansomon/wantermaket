@@ -129,7 +129,7 @@ class ProductButtons extends StatelessWidget {
                   leading: const Icon(Icons.edit, size: 27, color: Colors.black54,),
                   title: Text("Modifier",style: TextStyle(fontSize: 18),),
                   onTap: () {
-                    Navigator.pushNamed(context, AppRoutes.addProduct, arguments: product);
+                    AppRoutes.goTo(context, AppRoutes.addProduct, arguments: product);
                   },
                 ),
                 ListTile(

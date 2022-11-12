@@ -5,10 +5,10 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:wantermarket/config/app_constantes.dart';
 import 'package:wantermarket/data/models/body/product.dart';
+import 'package:wantermarket/shared/app_helper.dart';
 import 'package:wantermarket/ui/basewidgets/user-actions-account-status/expire-subscription.dart';
 
 import '../data/models/body/boutique.dart';
-import '../data/models/body/vendor.dart';
 import '../providers/auth_provider.dart';
 
 class ContactVendor {
@@ -71,21 +71,21 @@ class ContactVendor {
   }
 
   static void shareShop(Boutique boutique) async{
-      await FlutterShare.share(
-          title: 'Boutique ${boutique.name}',
-          text: 'Je vous invite à visiter la boutique "${boutique.name}" sur Wanter Market en cliquant sur ce lien :',
-          linkUrl: '''https://wantermarket.sn/boutiques/${boutique.slug}''',
-      );
+    await FlutterShare.share(
+      title: 'Boutique ${boutique.name}',
+      text: 'Je vous invite à visiter la boutique "${boutique.name}" sur Wanter Market en cliquant sur ce lien :',
+      linkUrl: '''https://wantermarket.sn/boutiques/${boutique.slug}''',
+    );
   }
 
 
 
   static void shareProduct(Product product) async{
-      await FlutterShare.share(
-          title: '${product.name}',
-          text: '${product.name} à ${(product.priceBefore != null && product.priceBefore != 0)  ? product.priceBefore! : product.price} F CFA chez ${product.boutique!.name!} sur Wanter Market. Visitez en cliquant sur ce lien : ',
-          linkUrl: '''https://wantermarket.sn/produits/${product.slug}''',
-      );
+    await FlutterShare.share(
+      title: '${product.name}',
+      text: '${product.name} à ${(product.priceBefore != null && product.priceBefore != 0)  ? product.priceBefore! : product.price} F CFA chez ${product.boutique!.name!} sur Wanter Market. Visitez en cliquant sur ce lien : ',
+      linkUrl: '''https://wantermarket.sn/produits/${product.slug}''',
+    );
   }
 
   static void showCanAddProductDialog(BuildContext context){
@@ -98,6 +98,14 @@ class ContactVendor {
 
   static void launchMaps(Boutique boutique){
     MapsLauncher.launchQuery('${boutique.vendor?.address} ${boutique.vendor?.city} ${boutique.vendor?.country}');
+  }
+
+  static void openSocialMedia({required String url,  required BuildContext context}) async{
+    try{
+      await launchUrl(Uri.parse(url));
+    }catch(e){
+      AppHelper.showInfoFlushBar(context, "Ce lien n'est pas valide");
+    }
   }
 
   static Future<void> contactUs(BuildContext context) async {

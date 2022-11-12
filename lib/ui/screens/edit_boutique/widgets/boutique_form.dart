@@ -31,8 +31,13 @@ class _BoutiqueFormState extends State<BoutiqueForm> {
   final _latitudeController = TextEditingController();
   final _longitudeController = TextEditingController();
   final _descriptionController = TextEditingController();
+  final _facebookController = TextEditingController();
+  final _instagramController = TextEditingController();
+  final _linkedinController = TextEditingController();
+  final _websiteController = TextEditingController();
 
-  FocusNode? _nomBoutiqueNode, _latitudeNode, _longitudeNode, _descriptionNode;
+
+  FocusNode? _nomBoutiqueNode, _latitudeNode, _longitudeNode, _descriptionNode, _facebookNode, _instagramNode, _linkedinNode, _websiteNode;
 
 
   List<dynamic> _selectedItems = [];
@@ -64,12 +69,20 @@ class _BoutiqueFormState extends State<BoutiqueForm> {
     _latitudeNode = FocusNode();
     _longitudeNode = FocusNode();
     _descriptionNode = FocusNode();
+    _facebookNode = FocusNode();
+    _instagramNode = FocusNode();
+    _linkedinNode = FocusNode();
+    _websiteNode = FocusNode();
 
 
     _nomBoutiqueController.text = (widget.boutique.name?.trim()) ?? '';
     _latitudeController.text = widget.boutique.latitude?.trim() ?? '';
     _longitudeController.text = widget.boutique.longitude?.trim() ?? '';
     _descriptionController.text = widget.boutique.bio?.trim() ?? "";
+    _facebookController.text = widget.boutique.facebook?.trim() ?? '';
+    _instagramController.text = widget.boutique.instagram?.trim() ?? '';
+    _linkedinController.text = widget.boutique.linkedin?.trim() ?? '';
+    _websiteController.text = widget.boutique.website?.trim() ?? '';
 
   }
 
@@ -82,8 +95,10 @@ class _BoutiqueFormState extends State<BoutiqueForm> {
     _longitudeNode?.dispose();
     _descriptionNode?.dispose();
     _selectedItems = widget.boutique.secteurs?.map((e) => e.id).toList() ?? [];
-
-
+    _facebookNode?.dispose();
+    _instagramNode?.dispose();
+    _linkedinNode?.dispose();
+    _websiteNode?.dispose();
   }
   var key = GlobalKey<FormState>();
 
@@ -294,7 +309,7 @@ class _BoutiqueFormState extends State<BoutiqueForm> {
                 controller: _longitudeController,
                 onEditingComplete: (){
                   // Once user click on Next then it go to password field
-                  _descriptionNode!.requestFocus();
+                  _facebookNode!.requestFocus();
                 },
                 focusNode: _longitudeNode,
                 textInputAction: TextInputAction.next,
@@ -312,6 +327,87 @@ class _BoutiqueFormState extends State<BoutiqueForm> {
                   }
                   return null;
                 },
+              ),
+            ),
+
+            //facebook
+            Container(
+              margin: const EdgeInsets.only(bottom: 15),
+              child: TextFormField(
+                controller: _facebookController,
+                onEditingComplete: (){
+                  // Once user click on Next then it go to password field
+                  _instagramNode!.requestFocus();
+                },
+                focusNode: _facebookNode,
+                textInputAction: TextInputAction.next,
+                decoration: const InputDecoration(
+                  labelText: "facebook",
+                  hintText: "facebook",
+                  border: OutlineInputBorder(),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+                ),
+              ),
+            ),
+
+            //instagram
+            Container(
+              margin: const EdgeInsets.only(bottom: 15),
+              child: TextFormField(
+                controller: _instagramController,
+                onEditingComplete: (){
+                  // Once user click on Next then it go to password field
+                  _linkedinNode!.requestFocus();
+                },
+                focusNode: _instagramNode,
+                textInputAction: TextInputAction.next,
+                decoration: const InputDecoration(
+                  labelText: "instagram",
+                  hintText: "instagram",
+                  border: OutlineInputBorder(),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+                ),
+
+              ),
+            ),
+
+            //linkedin
+            Container(
+              margin: const EdgeInsets.only(bottom: 15),
+              child: TextFormField(
+                controller: _linkedinController,
+                onEditingComplete: (){
+                  // Once user click on Next then it go to password field
+                  _websiteNode!.requestFocus();
+                },
+                focusNode: _linkedinNode,
+                textInputAction: TextInputAction.next,
+                decoration: const InputDecoration(
+                  labelText: "linkedin",
+                  hintText: "linkedin",
+                  border: OutlineInputBorder(),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+                ),
+              ),
+            ),
+
+            //website
+            Container(
+              margin: const EdgeInsets.only(bottom: 15),
+              child: TextFormField(
+                controller: _websiteController,
+                onEditingComplete: (){
+                  // Once user click on Next then it go to password field
+                  _descriptionNode!.requestFocus();
+                },
+                focusNode: _websiteNode,
+                textInputAction: TextInputAction.next,
+                decoration: const InputDecoration(
+                  labelText: "site web",
+                  hintText: "site web",
+                  border: OutlineInputBorder(),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+                ),
               ),
             ),
 
@@ -344,7 +440,7 @@ class _BoutiqueFormState extends State<BoutiqueForm> {
             const Center(child: CustomAppLoader())
                 : ElevatedButton(
               child:  SizedBox(width: double.infinity, child:
-              Center(child: Text(widget.boutique.id != null ? "Valider Les Modifications" :'Enregistrer', style: TextStyle(fontSize: AppDimensions.FONT_SIZE_EXTRA_LARGE, fontWeight: FontWeight.bold),),),),
+              Center(child: Text(widget.boutique.id != null ? "Enregistrer" :'Enregistrer', style: TextStyle(fontSize: AppDimensions.FONT_SIZE_LARGE, fontWeight: FontWeight.bold),),),),
               onPressed: () {
 
                 if (key.currentState!.validate()) {
@@ -363,8 +459,11 @@ class _BoutiqueFormState extends State<BoutiqueForm> {
                     longitude: (_longitudeController.text),
                     bio: _descriptionController.text,
                     secteursId: _selectedItems.cast(),
+                    facebook: _facebookController.text ?? "",
+                    instagram: _instagramController.text ?? "",
+                    linkedin: _linkedinController.text ?? "",
+                    website: _websiteController.text ?? "",
                   );
-                  //TODO: update boutique
                   updateBoutiqueForm(boutiqueUpdateModel , photoProfile, photoCouverture);
                 }
               },
@@ -385,7 +484,7 @@ class _BoutiqueFormState extends State<BoutiqueForm> {
       final imageTemp = File(photoProfile.path);
       setState(() => this.photoProfile = imageTemp);
     } on PlatformException catch(e) {
-      print('Failed to pick image: $e');
+      AppHelper.showInfoFlushBar(context, e.message ?? 'Une erreur est survenue');
     }
   }
 
@@ -396,7 +495,7 @@ class _BoutiqueFormState extends State<BoutiqueForm> {
       final imageTemp = File(photoCouverture.path);
       setState(() => this.photoCouverture = imageTemp);
     } on PlatformException catch(e) {
-      print('Failed to pick image: $e');
+      AppHelper.showInfoFlushBar(context, e.message ?? 'Une erreur est survenue');
     }
   }
 

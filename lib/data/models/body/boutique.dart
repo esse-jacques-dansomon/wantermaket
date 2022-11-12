@@ -15,6 +15,10 @@ class Boutique {
   int? idVendor;
   Vendor? vendor;
   List<Category>? secteurs = [];
+  String? website;
+  String? facebook;
+  String? instagram;
+  String? linkedin;
 
 
   Boutique(
@@ -28,7 +32,12 @@ class Boutique {
         this.coverImage,
         this.vendor,
         this.secteurs,
-        this.idVendor});
+        this.idVendor,
+        this.website,
+        this.facebook,
+        this.instagram,
+        this.linkedin
+      });
 
   Boutique.fromJson(Map<String, dynamic> json) {
     id = json['id'] != null ? json['id'] : 0;
@@ -44,8 +53,10 @@ class Boutique {
     if (json['secteurs'] != null) {
       secteurs = List<Category>.from(json['secteurs'].map((x) => Category.fromJson(x)));
     }
-
-
+    website = json['website'] != null ? json['website']  :  '';
+    facebook = json['facebook'] != null ? json['facebook']  :  '';
+    instagram = json['instagram'] != null ? json['instagram']  :  '';
+    linkedin = json['linkedin'] != null ? json['linkedin']  :  '';
   }
 
   Map<String, dynamic> toJson() {
