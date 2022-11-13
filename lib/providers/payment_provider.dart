@@ -28,10 +28,7 @@ enum BoosterPaymentLinkStatus {
 
 }
 enum PaymentPlanType{
-  loadingBasic,
-  loadingPremium,
-  loadingGold,
-  loadingEcommerce,
+  loading,
   loaded,
   error,
 }
@@ -62,24 +59,10 @@ class PaymentProvider extends ChangeNotifier {
   }
 
   Future<String> getAbonnementLink(BuildContext context, Plan plan) async {
-    if(plan.name == 'Gold') {
-      paymentPlanType = PaymentPlanType.loadingGold;
-    }else if(plan.name == 'Premium') {
-      paymentPlanType = PaymentPlanType.loadingPremium;
-    }else if(plan.name == 'Ecommerce') {
-      paymentPlanType = PaymentPlanType.loadingEcommerce;
-    } else {
-      paymentPlanType = PaymentPlanType.loadingBasic;
-    }
+    paymentPlanType = PaymentPlanType.loading;
     notifyListeners();
     final response = await paymentRepo.getAbonnementLink(plan.id!);
     if (response.error == null) {
-
-      if(paymentPlanType==PaymentPlanType.loadingEcommerce){
-        paymentPlanType = PaymentPlanType.loaded;
-        notifyListeners();
-        return 'ecom';
-      }
       paymentPlanType = PaymentPlanType.loaded;
       notifyListeners();
       return response.response.data['url'];
@@ -98,7 +81,7 @@ class PaymentProvider extends ChangeNotifier {
     if (response.error == null) {
       boosterPaymentLinkStatus = BoosterPaymentLinkStatus.loaded;
       notifyListeners();
-      return response.response.data['url'];
+      return response.response.data['url'] ?? '';
     } else {
       boosterPaymentLinkStatus = BoosterPaymentLinkStatus.error;
       notifyListeners();

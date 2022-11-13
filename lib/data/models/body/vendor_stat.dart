@@ -1,15 +1,6 @@
-// To parse this JSON data, do
-//
-//     final vendorStat = vendorStatFromJson(jsonString);
-
-// ignore_for_file: unused_import
-
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 VendorStat vendorStatFromJson(String str) => VendorStat.fromJson(json.decode(str));
-
-String vendorStatToJson(VendorStat data) => json.encode(data.toJson());
 
 class VendorStat {
   VendorStat({
@@ -19,6 +10,7 @@ class VendorStat {
      this.nombreAbonnes,
      this.produitsTotal,
      this.produitsRestant,
+    this.nbreBoostRestant
   });
 
   int ?id;
@@ -27,6 +19,7 @@ class VendorStat {
   int ?nombreAbonnes;
   int ?produitsTotal;
   int ?produitsRestant;
+  int ?nbreBoostRestant;
 
   factory VendorStat.fromJson(Map<String, dynamic> json) => VendorStat(
     id: json["id"],
@@ -35,14 +28,6 @@ class VendorStat {
     nombreAbonnes: json["nombre_abonnes"],
     produitsTotal: json["produits_total"],
     produitsRestant: json["produits_restant"],
+    nbreBoostRestant: json["nbre_boost_restant"] ?? 0,
   );
-
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "id_boutique": idBoutique,
-    "nombre_visites": nombreVisites,
-    "nombre_abonnes": nombreAbonnes,
-    "produits_total": produitsTotal,
-    "produits_restant": produitsRestant,
-  };
 }

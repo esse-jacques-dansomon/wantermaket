@@ -76,73 +76,100 @@ class PlanItem extends StatelessWidget {
               ),
               if ((Provider.of<AuthProvider>(context, listen: false).getUserConnectedInfo() != null
                   && Provider.of<AuthProvider>(context, listen: false).getUserConnectedInfo()?.plan == plan.name!
-              ) == false) Consumer<PaymentProvider>(builder: (context, paymentProvider, child) {
-                switch(paymentProvider.paymentPlanType){
-                  case PaymentPlanType.loadingBasic :
-                  case PaymentPlanType.loadingPremium :
-                  case PaymentPlanType.loadingGold :
-                  case PaymentPlanType.loadingEcommerce :
-                  case PaymentPlanType.loaded:
-                    if(paymentProvider.paymentPlanType == PaymentPlanType.loadingBasic && plan.name == "Basic"){
-                      return Column(
-                        children:  [
-                          const CustomAppLoader(),
-                          Container(height: 50,),
-                        ],
-                      );
-                    }
-
-                    else if(paymentProvider.paymentPlanType == PaymentPlanType.loadingPremium && plan.name == "Premium"){
-                      return Column(
-                        children:  [
-                          const CustomAppLoader(),
-                          Container(height: 50,),
-                        ],
-                      );
-                    }else if(paymentProvider.paymentPlanType == PaymentPlanType.loadingGold && plan.name == "Gold") {
-                      return Column(
-                        children:  [
-                          const CustomAppLoader(),
-                          Container(height: 50,),
-                        ],
-                      );
-                    }else if(paymentProvider.paymentPlanType == PaymentPlanType.loadingEcommerce && plan.name == "Ecommerce") {
-                      return Column(
-                        children:  [
-                          const CustomAppLoader(),
-                          Container(height: 50,),
-                        ],
-                      );
-                    }
-                    return  Container(
-                        height: 40,
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                                width: 1, color: AppColors.SECONDARY
-                            )
+              ) == false) Container(
+                  height: 40,
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                          width: 1, color: AppColors.SECONDARY
+                      )
+                  ),
+                  margin: const EdgeInsets.fromLTRB(25, 0, 25, 25),
+                  child: TextButton(
+                    onPressed: () async {
+                      //open dialogue
+                      showDialog(
+                          context: context, builder: (context) => Container(
+                        height: 200,
+                        child: AlertDialog(
+                          title: const Text('Confirmation de paiement'),
+                          content:  Text('Voulez-vous vraiment souscrire à ce plan ' + plan.name! + '?'),
+                          actions: [
+                            Consumer<PaymentProvider>(builder: (context, paymentProvider, child){
+                              switch(paymentProvider.paymentPlanType) {
+                                case PaymentPlanType.loading:
+                                  return Row(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Container(  child: Center(child: const CustomAppLoader()), height: 70,),
+                                    ],
+                                  );
+                                case PaymentPlanType.loaded:
+                                  return Row(
+                                    children: [
+                                      TextButton(
+                                        onPressed: () async {
+                                          Provider.of<AuthProvider>(context, listen: false).isLoggedIn()?
+                                          await  Provider.of<PaymentProvider>(context, listen: false).getAbonnementLink(context, plan).then((url) async
+                                          {
+                                            await (Navigator.push(context, MaterialPageRoute(builder: (context) =>  PayTechApiPaymentScreen( initialUrl : url)),) );
+                                          }) : {
+                                            (Navigator.popAndPushNamed(context, AppRoutes.login)),
+                                            AppHelper.showInfoFlushBar(context, "Vous devez vous connecter pour continuer")};
+                                        },
+                                        child:  Container(
+                                          padding: EdgeInsets.all(10),
+                                          decoration: BoxDecoration(
+                                              color: AppColors.SECONDARY,
+                                              borderRadius: BorderRadius.all(Radius.circular(5))
+                                          ),
+                                          child: Text('Confirmer', style: TextStyle(color: AppColors.WHITE),),
+                                        ),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Container(
+                                          padding: EdgeInsets.all(10),
+                                          decoration: BoxDecoration(
+                                              color: AppColors.WHITE,
+                                              borderRadius: BorderRadius.all(Radius.circular(5))
+                                          ),
+                                          child: Text('Annuler', style: TextStyle(color: AppColors.SECONDARY),),
+                                        ),
+                                      )
+                                    ],
+                                  );
+                                case PaymentPlanType.error:
+                                  return Row(
+                                    children: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Container(
+                                          padding: EdgeInsets.all(10),
+                                          decoration: BoxDecoration(
+                                              color: AppColors.SECONDARY,
+                                              borderRadius: BorderRadius.all(Radius.circular(5))
+                                          ),
+                                          child: Text("Une erreur s'est produite, Réessayer", style: TextStyle(color: AppColors.WHITE),),
+                                        ),
+                                      )
+                                    ],
+                                  );
+                              }
+                            }),
+                          ],
                         ),
-                        margin: const EdgeInsets.fromLTRB(25, 0, 25, 25),
+                      ));
+                    },
+                    child:  Text('   Choisir le plan ${plan.name!}  ', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+                  )
+              )
 
-                        child: TextButton(
-
-                          onPressed: () async {
-                            Provider.of<AuthProvider>(context, listen: false).isLoggedIn()?
-                            await  Provider.of<PaymentProvider>(context, listen: false).getAbonnementLink(context, plan).then((url) async {
-                              await (Navigator.push(context, MaterialPageRoute(builder: (context) =>  PayTechApiPaymentScreen( initialUrl : url)),) );
-                            }) : {
-                              (Navigator.popAndPushNamed(context, AppRoutes.login)),
-                              AppHelper.showInfoFlushBar(context, "Vous devez vous connecter pour continuer")
-                            };
-
-                          },
-                          child:  Text('   Choisir le plan ${plan.name!}  ', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
-                        )
-                    );
-                  case PaymentPlanType.error:
-                    return const Text('Erreur');
-               }
-              },) else Container(),
-
+              else Container(),
 
             ],
           ),

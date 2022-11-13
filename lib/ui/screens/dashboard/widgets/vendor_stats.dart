@@ -180,6 +180,30 @@ class VendorDashboardStats extends StatelessWidget {
                           ],
                         ),
                       ),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: AppColors.WHITE,
+                          borderRadius: BorderRadius.circular(5),
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.BLACK.withOpacity(0.1),
+                              blurRadius: 10,
+                              offset: const Offset(0, 3),
+                            ),
+                          ],
+                          border: Border.all(
+                            color: AppColors.PRIMARY.withOpacity(0.1),
+                            width: 2,
+                          ),
+                        ),
+                        margin: const EdgeInsets.only(top: 15),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Expanded(child:  StatItem(name: 'Nombre de boosts réstants',value: vendorProvider.vendorStat.nbreBoostRestant??0,)),
+                          ],
+                        ),
+                      ),
                     ],
                   );
                 },

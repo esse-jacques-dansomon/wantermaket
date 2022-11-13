@@ -69,10 +69,6 @@ class DioClient {
         cancelToken: cancelToken,
         onReceiveProgress: onReceiveProgress,
       );
-      print('=====get====> $uri');
-      print('=====get====> $queryParameters');
-      print("==shared token=> ${sharedPreferences.getString(AppConstants.TOKEN) }");
-      print("==pays=> ${countryCode}");
       return response;
     } on SocketException catch (e) {
       throw SocketException(e.toString());
@@ -102,10 +98,6 @@ class DioClient {
     dio.options.connectTimeout = 60000;
     dio.options.receiveTimeout = 60000;
     token = sharedPreferences.getString(AppConstants.TOKEN) ?? '';
-    print('=====post====> $uri');
-    print("==shared token=> ${sharedPreferences.getString(AppConstants.TOKEN) }");
-    print("==pays=> ${countryCode}");
-    print('=====data====> $data');
 
     try {
       var response = await dio.post(
@@ -141,10 +133,6 @@ class DioClient {
       AppConstants.COUNTRY_CODE: countryCode,
     };
     token = sharedPreferences.getString(AppConstants.TOKEN) ?? '';
-    print('=====put====> $uri');
-    print("=====TOKEN==> $token");
-    print("==shared token=> ${sharedPreferences.getString(AppConstants.TOKEN) }");
-    print("==pays=> ${countryCode}");
 
     try {
       var response = await dio.put(
@@ -177,10 +165,6 @@ class DioClient {
       AppConstants.COUNTRY_CODE: countryCode,
     };
     token = sharedPreferences.getString(AppConstants.TOKEN) ?? '';
-    print('=====delete====> $uri');
-    print("=====TOKEN==> $token");
-    print("==shared token=> ${sharedPreferences.getString(AppConstants.TOKEN) }");
-    print("==pays=> ${countryCode}");
     try {
       var response = await dio.delete(
         uri,

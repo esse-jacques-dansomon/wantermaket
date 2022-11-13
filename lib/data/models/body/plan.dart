@@ -1,12 +1,7 @@
-// To parse this JSON data, do
-//
-//     final plan = planFromJson(jsonString);
 
 import 'dart:convert';
 
 Plan planFromJson(String str) => Plan.fromJson(json.decode(str));
-
-String planToJson(Plan data) => json.encode(data.toJson());
 
 class Plan {
   Plan({
@@ -19,6 +14,7 @@ class Plan {
     this.nbrProduit,
     this.price,
     this.description,
+    this.isFree,
   });
 
   int? id;
@@ -30,6 +26,7 @@ class Plan {
   int? nbrProduit;
   int? price;
   String ? description;
+  bool ? isFree;
 
   factory Plan.fromJson(Map<String, dynamic> json) => Plan(
     id: json["id"],
@@ -41,17 +38,7 @@ class Plan {
     nbrProduit: json["nbr_produit"],
     price: json["prix"],
     description: json["description"],
+    isFree: json["is_free"],
   );
 
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "validite": validite,
-    "sidebar": sidebar,
-    "banner": banner,
-    "nbr_deal": nbrDeal,
-    "nbr_produit": nbrProduit,
-    "prix": price,
-    "description": nbrProduit,
-  };
 }

@@ -29,7 +29,7 @@ class _PayTechApiPaymentScreen extends State<PayTechApiPaymentScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    if(widget.initialUrl == 'ecom'){
+    if(widget.initialUrl == 'free'){
       Provider.of<AuthProvider>(context, listen: false).verifyIsAuthenticated(context);
     }else if (Platform.isAndroid) {
       WebView.platform = AndroidWebView();
@@ -48,7 +48,7 @@ class _PayTechApiPaymentScreen extends State<PayTechApiPaymentScreen> {
   Widget build(BuildContext context) {
     return  Scaffold(
       body: SafeArea(
-        child: widget.initialUrl == 'ecom' ?
+        child: widget.initialUrl == 'free' ?
         Container( margin: const EdgeInsets.all(25),child: const Center(child:  PaymentSuccessBox())) :
         WebView(
           javascriptMode: JavascriptMode.unrestricted,

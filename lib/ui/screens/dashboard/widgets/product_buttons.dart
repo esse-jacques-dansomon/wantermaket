@@ -22,11 +22,11 @@ class ProductButtons extends StatelessWidget {
     void _launchPayTechPaymentUrl() async {
       final paymentProvider = Provider.of<PaymentProvider>(context, listen: false);
       await paymentProvider.getBoosterProductLink(context, product).then((url) async {
-        if(url != "" )
+        if( url != ""  )
         {
           await (Navigator.push(context, MaterialPageRoute(builder: (context) =>  PayTechApiPaymentScreen( initialUrl : url)),) );
         }else{
-          AppHelper.showErrorFlushBar(context, "Une erreur s'est produite");
+          AppHelper.showInfoFlushBar(context, "Vous avez bien booster ce produit " + product.name!);
         }
       });
     }

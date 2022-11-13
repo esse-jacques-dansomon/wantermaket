@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:wantermarket/ui/basewidgets/cards/vendor_product_card_v2.dart';
 
 import '../../../../providers/vendor_provider.dart';
 import '../../../../shared/app_helper.dart';
