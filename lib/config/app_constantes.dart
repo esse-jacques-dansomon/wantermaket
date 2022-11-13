@@ -3,7 +3,7 @@ import '../data/models/body/app_country.dart';
 
 class AppConstants {
   static const String APP_NAME = 'WANTERMARKET';
-  // static const String BASE_URL = 'https://wantermarket.sn';
+  static const String WEBSITE_URL = 'https://wantermarket.sn';
   // static const String BASE_URL = 'http://10.0.2.2:8000/api';
   static const String CAURIS_URL = 'https://agencecauris.com';
   static const String BASE_URL = 'https://api.wantermarket.sn/api';
@@ -48,6 +48,13 @@ class AppConstants {
   static const String PAY_ETAT_URI = '/paiement/verif';
   static const String REDIRECT_SUCCESS_PAY_URI = 'https://wantermarket.sn/success';
   static const String REDIRECT_CANCEL_PAY_URI = 'https://wantermarket.sn/cancel';
+  //A PROPOS
+  static const String A_PROPOS_URI = AppConstants.WEBSITE_URL + '/a-propos';
+  static const String CGU_URI =  AppConstants.WEBSITE_URL +  '/conditions_generales_d_utilisation';
+  static const String MENTIONS_URI = AppConstants.WEBSITE_URL + '/politiques_de_confidentialite';
+  static const String FAQ_URI = AppConstants.WEBSITE_URL +  '/faq';
+  static const String CONTACT_URI = AppConstants.WEBSITE_URL + '/contact';
+  static const String SUPPORT_EMAIL = "contact@wantermarket.sn";
 
   // sharePreference
   static const String TOKEN = 'token';

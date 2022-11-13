@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wantermarket/config/app_colors.dart';
+import 'package:wantermarket/config/app_constantes.dart';
 import 'package:wantermarket/config/app_dimenssions.dart';
 import 'package:wantermarket/config/app_images.dart';
 import 'package:wantermarket/providers/vendor_provider.dart';
@@ -64,9 +65,9 @@ class _AppDrawerState extends State<AppDrawer> {
                               children:  [
                                 Text(Provider.of<AuthProvider>(context, listen: false).getUserConnectedInfo()?.boutiqueName ??'Pas de Nom', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color: AppColors.WHITE),),
                                 const SizedBox(height: 5,),
-                                Text('Plan : ${Provider.of<AuthProvider>(context, listen: false).getUserConnectedInfo()?.plan ?? 'Plan de Plan'}', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.WHITE),),
+                                Text('Plan : ${Provider.of<AuthProvider>(context, listen: false).getUserConnectedInfo()?.plan ?? "No Abonnement"}', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.WHITE),),
                                 const SizedBox(height: 5,),
-                                Flexible( child: Text(Provider.of<AuthProvider>(context, listen: false).getUserConnectedInfo()?.adresse ?? 'Plan de id', maxLines: 2,   softWrap: false,style: const TextStyle(fontSize: 15, overflow: TextOverflow.ellipsis, fontWeight: FontWeight.bold,color: AppColors.WHITE),)),
+                                Flexible( child: Text(Provider.of<AuthProvider>(context, listen: false).getUserConnectedInfo()?.adresse ?? "Pas d'adresse", maxLines: 2,   softWrap: false,style: const TextStyle(fontSize: 15, overflow: TextOverflow.ellipsis, fontWeight: FontWeight.bold,color: AppColors.WHITE),)),
                               ],
                             ),
                           ),
@@ -91,6 +92,7 @@ class _AppDrawerState extends State<AppDrawer> {
                 ],
               ),
             ),
+
 
             const DrawerMenuItem(
               menuName: 'Accueil',
@@ -156,15 +158,7 @@ class _AppDrawerState extends State<AppDrawer> {
                   route: AppRoutes.becomeExclusive,
                   icon: Icons.star_half_outlined,
                 ),
-                //SIGNALER UN PROBLEME
-                ListTile(
-                  horizontalTitleGap: 5,
-                  leading: Icon(Icons.bug_report, color: AppColors.BLACK,),
-                  title: Text("Signaler un bug", style: const TextStyle(color: AppColors.BLACK, fontSize: AppDimensions.FONT_SIZE_DEFAULT+2),  ),
-                  onTap: () {
-                    ContactVendor.signalBug();
-                  },
-                ),
+
                 ListTile(
                   onTap: (){
                     Provider.of<AuthProvider>(context, listen: false).logout();
@@ -176,31 +170,104 @@ class _AppDrawerState extends State<AppDrawer> {
                   title: const Text('Se Deconnecter', style: TextStyle(color: AppColors.BLACK, fontSize: AppDimensions.FONT_SIZE_DEFAULT+2),),
 
                 ),
+
+                //SIGNALER UN PROBLEME
+                ListTile(
+                  horizontalTitleGap: 5,
+                  leading: Icon(Icons.apps_sharp, color: AppColors.BLACK,),
+                  title: Text("A Propos & Aides", style: const TextStyle(color: AppColors.BLACK, fontSize: AppDimensions.FONT_SIZE_DEFAULT+2),  ),
+                  onTap: () {
+                    //open bottom sheet
+                    showModalBottomSheet(
+
+                        isScrollControlled: true,
+                        context: context,
+                        builder: (context) {
+                          return Container(
+                            height: MediaQuery.of(context).size.height * 0.8,
+                            padding: const EdgeInsets.all(20),
+                            child: Column
+                              (
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const Text('A Propos & Aides', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+                                    IconButton(
+                                      onPressed: (){
+                                        Navigator.pop(context);
+                                      },
+                                      icon: const Icon(Icons.close),
+                                    )
+                                  ],
+                                ),
+                                //SIGNALER UN PROBLEME
+                                ListTile(
+                                  title: const Text('Signaler un problème'),
+                                  onTap: () {
+                                    ContactVendor.signalBug(context: context);
+                                  },
+                                ),
+                                ListTile(
+                                  title: const Text('Politiques de Confidentialité'),
+                                  onTap: () {
+                                    ContactVendor.openSocialMedia(url: AppConstants.MENTIONS_URI, context: context);
+                                  },
+                                ),
+                                ListTile(
+                                  title: const Text('Conditions Générales'),
+                                  onTap: () {
+                                    ContactVendor.openSocialMedia(url: AppConstants.CGU_URI, context: context);
+                                  },
+                                ),
+                                ListTile(
+                                  title: const Text('Visiter le site'),
+                                  onTap: () {
+                                    ContactVendor.openSocialMedia(url: AppConstants.WEBSITE_URL, context: context);
+                                  },
+                                ),
+                                ListTile(
+                                  title: const Text('Aides'),
+                                  onTap: () {
+                                    ContactVendor.writeOnWhatsapp( number: "221771100202", context: context);
+                                  },
+                                ),
+                                //VERSION OF APP DESIGN
+                                Expanded(child: Container()),
+                                Container(
+                                    child:   Column(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    InkWell(
+                                      onTap: (){
+                                        ContactVendor.contactUs(context);
+                                      },
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          const SizedBox(height: 5,),
+                                          Text('Version 1.0.0', style: TextStyle(fontSize: 13, color: Colors.grey),),
+                                          const SizedBox(height: 2,),
+                                          Text('@2022 - Wanter Market', style: TextStyle(fontSize: 12, color: Colors.grey, fontWeight: FontWeight.bold),),
+                                          const SizedBox(height: 5,),
+                                          Text('Developped by Agence Cauris', style: TextStyle(fontSize: 13, color: Colors.grey, fontWeight: FontWeight.bold),),
+                                          const SizedBox(height: 5,),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ) ),
+                                SizedBox(height: 5,),
+                              ],
+                            ),
+                          );
+                        });
+                  },
+                ),
               ],
             ),
-
-
-            //VERSION OF APP DESIGN
-            InkWell(
-              onTap: (){
-                ContactVendor.contactUs(context);
-              },
-              child: Column(
-                children: [
-                  Divider(),
-                  const SizedBox(height: 5,),
-                  Text('Version 1.0.0', style: TextStyle(fontSize: 13, color: Colors.grey),),
-                  const SizedBox(height: 2,),
-                  Text('@2022 -Wanter Market', style: TextStyle(fontSize: 12, color: Colors.grey, fontWeight: FontWeight.bold),),
-                  const SizedBox(height: 2,),
-                  Text('Developped by Agence Cauris', style: TextStyle(fontSize: 12, color: Colors.grey, fontWeight: FontWeight.bold),),
-                  const SizedBox(height: 5,),
-                  Divider(),
-
-                ],
-              ),
-            )
-
           ]
       ),
     );

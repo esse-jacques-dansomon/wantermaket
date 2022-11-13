@@ -21,20 +21,18 @@ class ContactVendor {
     try{
       await launchUrl(Uri.parse(link.toString()));
     }catch(e){
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Impossible de lancer l'application WhatsApp")));
+      AppHelper.showInfoFlushBar(context, "Impossible de lancer l'application de messagerie");
     }
 
   }
 
-  static void signalBug() async {
-    var text = """Bonjour, je veux signaler un bug sur l'application Wanter Market. Voici le lien : https://wantermarket.sn""";
-    var link = "whatsapp://send?phone=+221771100202" +
-        "&text=${Uri.encodeComponent(text)}";
+  static void signalBug({required BuildContext context}) async {
+    //send email
+    var link = "mailto:${AppConstants.SUPPORT_EMAIL}?subject=Signaler un bug&body=";
     try{
       await launchUrl(Uri.parse(link.toString()));
     }catch(e){
-
+      AppHelper.showInfoFlushBar(context, "Impossible de lancer l'application de messagerie");
     }
   }
 
@@ -43,10 +41,8 @@ class ContactVendor {
         "&text=${Uri.encodeComponent('Bonjour, j''ai vu votre boutique ${boutique.name} sur Wanter Market. je suis intéressé par vos produits. ')}";
     try{
       await launchUrl(Uri.parse(link.toString()));
-
     }catch(e){
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Impossible de lancer l'application de whatsapp")));
+      AppHelper.showInfoFlushBar(context, "Impossible de lancer l'application de messagerie");
     }
   }
 
@@ -55,8 +51,7 @@ class ContactVendor {
     try{
       await launchUrl(Uri.parse("tel:$number"));
     }catch(e){
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Impossible de lancer l'application de message")));
+      AppHelper.showInfoFlushBar(context, "Impossible de lancer l'application");
     }
   }
 
@@ -65,8 +60,7 @@ class ContactVendor {
     try{
       await launchUrl(Uri.parse("sms:$number"));
     }catch(e){
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Impossible de lancer l'application de message")));
+      AppHelper.showInfoFlushBar(context, "Impossible de lancer l'application de messagerie");
     }
   }
 
@@ -112,8 +106,19 @@ class ContactVendor {
     try{
       await launchUrl(Uri.parse(AppConstants.CAURIS_URL));
     }catch(e){
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Impossible ")));
+      AppHelper.showInfoFlushBar(context, "Une erreur s'est produite");
     }
   }
+
+  //write on whatsapp
+  static void writeOnWhatsapp({required BuildContext context, required String number}) async {
+    var link = "whatsapp://send?phone=$number";
+    try{
+      await launchUrl(Uri.parse(link.toString()));
+    }catch(e){
+      AppHelper.showInfoFlushBar(context, "Impossible de lancer l'application de messagerie");
+    }
+  }
+
+
 }
