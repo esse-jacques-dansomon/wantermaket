@@ -1,6 +1,7 @@
 
 import 'package:circle_flags/circle_flags.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:wantermarket/data/models/body/filter_model.dart';
 import 'package:wantermarket/providers/location_provider.dart';
@@ -15,6 +16,13 @@ AppBar appBar({bool isActiveSearchbar=false, bool isOnSearchPage=false}) {
   //create key
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   return AppBar(
+    systemOverlayStyle: SystemUiOverlayStyle(
+      // Status bar color
+      statusBarColor: AppColors.PRIMARY,
+      // Status bar brightness (optional)
+      statusBarIconBrightness: Brightness.light, // For Android (dark icons)
+      statusBarBrightness: Brightness.light, // For iOS (dark icons)
+    ),
     automaticallyImplyLeading: false,
     toolbarHeight: 70,
     elevation: 0,

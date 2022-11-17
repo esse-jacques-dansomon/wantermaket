@@ -3,7 +3,7 @@ import '../data/models/body/app_country.dart';
 
 class AppConstants {
   static const String APP_NAME = 'WANTERMARKET';
-  static const String WEBSITE_URL = 'https://wantermarket.sn';
+  static const String WEBSITE_URL = 'https://wantermarket.com';
   // static const String BASE_URL = 'http://10.0.2.2:8000/api';
   static const String CAURIS_URL = 'https://agencecauris.com';
   static const String BASE_URL = 'https://api.wantermarket.sn/api';
@@ -20,7 +20,7 @@ class AppConstants {
   static const String BOUTIQUES_FAVORIS = '/boutiques/favories';
   static const String TOP_PRODUITS_URI = '/produits/classe/2';
   static const String DEAL_PRODUITS_URI = '/produits/classe/3';
-  static const String NOUVEAUX_PRODUITS_URI = '/produits/classe/1';
+  static const String NEW_PRODUITS_URI = '/produit';
   static const String TOP_BOUTOIQUES_URI = '/boutiques/top';
   static const String BOUTIQUES_EXCLUSIVES = '/boutiques/exclusive';
   static const String PLANS_URI = '/plans';
@@ -54,7 +54,7 @@ class AppConstants {
   static const String MENTIONS_URI = AppConstants.WEBSITE_URL + '/politiques_de_confidentialite';
   static const String FAQ_URI = AppConstants.WEBSITE_URL +  '/faq';
   static const String CONTACT_URI = AppConstants.WEBSITE_URL + '/contact';
-  static const String SUPPORT_EMAIL = "contact@wantermarket.sn";
+  static const String SUPPORT_EMAIL = "contact@wantermarket.com";
 
   // sharePreference
   static const String TOKEN = 'token';
@@ -65,9 +65,6 @@ class AppConstants {
   static const String ADRESSE = 'adresse';
   static const String WISHLIST = 'wishlist';
   static const String COUNTRY_CODE = 'countryCode';
-
-
-
   static const String ETAT_ABONNEMENT = 'etat_abonnement';
   static const String CAN_ADD_PRODUCT = 'can_add_product';
   static const String TYPE_PLAN = 'type_plan';

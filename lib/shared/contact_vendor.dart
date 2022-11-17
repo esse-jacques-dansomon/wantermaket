@@ -104,7 +104,8 @@ class ContactVendor {
 
   static Future<void> contactUs(BuildContext context) async {
     try{
-      await launchUrl(Uri.parse(AppConstants.CAURIS_URL));
+      //open in navigator
+      await launchUrl(Uri.parse(AppConstants.CAURIS_URL), mode: LaunchMode.externalApplication);
     }catch(e){
       AppHelper.showInfoFlushBar(context, "Une erreur s'est produite");
     }

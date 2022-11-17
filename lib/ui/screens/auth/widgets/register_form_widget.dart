@@ -7,10 +7,12 @@ import 'package:wantermarket/providers/location_provider.dart';
 import 'package:wantermarket/ui/basewidgets/loaders/custom_app_loader.dart';
 
 import '../../../../config/app_colors.dart';
+import '../../../../config/app_constantes.dart';
 import '../../../../data/models/body/app_country.dart';
 import '../../../../data/models/body/register_model.dart';
 import '../../../../providers/auth_provider.dart';
 import '../../../../route/routes.dart';
+import '../../../../shared/contact_vendor.dart';
 
 class RegisterFormWidget extends StatefulWidget {
   const RegisterFormWidget({Key? key}) : super(key: key);
@@ -20,6 +22,7 @@ class RegisterFormWidget extends StatefulWidget {
 }
 
 class _RegisterFormWidgetState extends State<RegisterFormWidget> {
+  bool _confirmTermsAndConditions = false;
   String _phone= '';
   String _countryCode = '+221';
   String country = "sn";
@@ -107,6 +110,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
     return Form(
       key: _formRegisterKey,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(
             height: 15,
@@ -120,6 +124,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
           _buildEmailField(),
           _buildPasswordField(),
           _buildConfirmedPasswordField(),
+          _buildConfirmTermsAndConditionsField(),
           SizedBox(
               width: double.infinity,
               height: 45,
@@ -128,7 +133,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
                     backgroundColor: MaterialStateProperty.all(AppColors.PRIMARY),),
                   onPressed: () {
 
-                    if(_formRegisterKey.currentState !=null && _formRegisterKey.currentState!.validate()){
+                    if(_formRegisterKey.currentState !=null && _formRegisterKey.currentState!.validate() && _confirmTermsAndConditions){
                       _formRegisterKey.currentState?.save();
                       final registerModel = RegisterModel(
                         name: _firstnameController.text,
@@ -143,8 +148,10 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
                       print(registerModel.toJson());
                       register(registerModel);
                     }else{
-                      print("veuillez remplir tout les champs");
-                    }
+                      if(!_confirmTermsAndConditions){
+                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Veuillez accepter les conditions d\'utilisation')));
+                      }
+                       }
                   }, child: const Text("Créez votre compte", style: TextStyle(color: Colors.white),)  )
           ),
         ],
@@ -176,7 +183,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
         decoration:  InputDecoration(
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 15,
-            vertical: 18,
+            vertical: 15,
           ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(5),
@@ -214,7 +221,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
         decoration:  InputDecoration(
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 15,
-            vertical: 18,
+            vertical: 15,
           ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(5),
@@ -251,7 +258,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
         decoration:  InputDecoration(
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 15,
-            vertical: 18,
+            vertical: 15,
           ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(5),
@@ -287,7 +294,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
         decoration:  InputDecoration(
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 15,
-            vertical: 18,
+            vertical: 15,
           ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(5),
@@ -345,7 +352,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
           ),
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 15,
-            vertical: 18,
+            vertical: 15,
           ),
         ),
         // validator: passwordValidator,
@@ -354,7 +361,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
   }
   Widget _buildConfirmedPasswordField(){
     return Container(
-      margin: const EdgeInsets.only(bottom: 25),
+      //remove margin
 
       child: TextFormField(
         validator: (value) {
@@ -371,7 +378,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
           hintStyle: const TextStyle(color: AppColors.PRIMARY),
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 15,
-            vertical: 18,
+            vertical: 15,
           ),
           suffixIcon: GestureDetector(
             onTap: () {
@@ -422,7 +429,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
         decoration:  InputDecoration(
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 15,
-            vertical: 18,
+            vertical: 15,
           ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(5),
@@ -511,7 +518,7 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
           decoration:  InputDecoration(
             contentPadding: const EdgeInsets.symmetric(
               horizontal: 15,
-              vertical: 18,
+              vertical: 15,
             ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(5),
@@ -554,6 +561,41 @@ class _RegisterFormWidgetState extends State<RegisterFormWidget> {
             ),
           ),).toList()),
 
+    );
+  }
+
+  Widget _buildConfirmTermsAndConditionsField() {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 7, top: 7),
+      child: Row(
+        children: [
+          Checkbox(
+            value: _confirmTermsAndConditions,
+            onChanged: (value) {
+              setState(() {
+                _confirmTermsAndConditions = value!;
+              });
+            },
+          ),
+          Flexible (
+            child:  InkWell(
+              onTap: () {
+                ContactVendor.openSocialMedia(url: AppConstants.CGU_URI, context: context);
+              },
+              child: Text(
+                'J\'accepte les conditions générales d\'utilisation',
+                softWrap: true,
+                maxLines: 2,
+                style: TextStyle(
+                  color: AppColors.PRIMARY,
+                  fontSize: 14,
+
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 

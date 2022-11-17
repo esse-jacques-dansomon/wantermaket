@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:wantermarket/ui/basewidgets/drawer/drawer.dart';
-
-import '../../../config/app_colors.dart';
-import '../../../route/routes.dart';
 import '../../basewidgets/app_bars/app_bar.dart';
 import '../../basewidgets/bottom_bar/bottom_nav_bar.dart';
 import 'widgets/sector_items.dart';
@@ -16,15 +13,6 @@ class SecteurScreen extends StatelessWidget {
     return Scaffold(
       appBar: appBar(isActiveSearchbar: true),
       drawer: const AppDrawer(),
-      floatingActionButton: FloatingActionButton(
-
-        onPressed: () {
-          AppRoutes.goTo(context, AppRoutes.addProduct);
-        },
-        backgroundColor: AppColors.PRIMARY,
-        child: const Icon(Icons.add, color: AppColors.WHITE, size: 50,),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: const CustomBottomNavBar(boutique: true,),
       body: SafeArea(
         child: Column(
@@ -33,7 +21,6 @@ class SecteurScreen extends StatelessWidget {
           children:  const [
             SectorTitle(),
             SectorItems(),
-            SizedBox(height: 50),
           ],
         ),
       ),

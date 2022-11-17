@@ -5,7 +5,6 @@ import 'package:wantermarket/providers/category_provider.dart';
 import 'package:wantermarket/ui/basewidgets/cards/boutique_by_sector_card.dart';
 import 'package:wantermarket/ui/basewidgets/cards/boutique_card_one_per_row.dart';
 import 'package:wantermarket/data/models/body/category.dart';
-import 'package:wantermarket/route/routes.dart';
 import '../../basewidgets/app_bars/app_bar_with_return.dart';
 import '../../basewidgets/bottom_bar/bottom_nav_bar.dart';
 import '../../basewidgets/shimmer/custom_shop_loader.dart';
@@ -42,15 +41,7 @@ class _BoutiqueBySecteurScreenState extends State<BoutiqueBySecteurScreen> {
     return Scaffold(
       appBar: appBarWithReturn(title:widget.category.name! , context: context),
       bottomNavigationBar: const CustomBottomNavBar(boutique: true,),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          AppRoutes.goTo(context, AppRoutes.addProduct);
-        },
-        backgroundColor: AppColors.PRIMARY,
-        child: const Icon(Icons.add, color: AppColors.WHITE, size: 50,),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      body: SafeArea(
+     body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
 

@@ -6,7 +6,6 @@ import 'package:wantermarket/ui/screens/recherche/widget/product_found_fliter_wi
 import 'package:wantermarket/ui/screens/recherche/widget/products_found_tabbar_view.dart';
 
 import '../../../config/app_colors.dart';
-import '../../../route/routes.dart';
 import '../../basewidgets/bottom_bar/bottom_nav_bar.dart';
 
 class SearchScreen extends StatelessWidget {
@@ -18,14 +17,6 @@ class SearchScreen extends StatelessWidget {
         length: 2,
         child: Scaffold(
           backgroundColor : AppColors.WHITE,
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              AppRoutes.goTo(context, AppRoutes.addProduct);
-            },
-            backgroundColor: AppColors.PRIMARY,
-            child: const Icon(Icons.add, color: AppColors.WHITE, size: 50,),
-          ),
-          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
           appBar: appBar(isActiveSearchbar: true, isOnSearchPage: true),
           drawer: const AppDrawer(),
           bottomNavigationBar:  CustomBottomNavBar(search: true),

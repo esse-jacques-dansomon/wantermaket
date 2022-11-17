@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wantermarket/providers/auth_provider.dart';
+import 'package:wantermarket/shared/app_helper.dart';
 import 'package:wantermarket/ui/basewidgets/loaders/custom_app_loader.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -35,12 +36,11 @@ class _BecomeExclusiveScreenState extends State<BecomeExclusiveScreen> {
     final paymentProvider = Provider.of<PaymentProvider>(context, listen: false);
     await paymentProvider.getBecameExclusiveLink(context).then((url) async {
       if(url != "" )
-        {
-          await (Navigator.push(context, MaterialPageRoute(builder: (context) =>  PayTechApiPaymentScreen( initialUrl : url)),) );
-
-        }else{
-          print("url is empty");
-        }
+      {
+        await (Navigator.push(context, MaterialPageRoute(builder: (context) =>  PayTechApiPaymentScreen( initialUrl : url)),) );
+      }else{
+        AppHelper.showInfoFlushBar(context, "Vous avez déjà une demande en cours");
+      }
     });
   }
 
@@ -55,7 +55,7 @@ class _BecomeExclusiveScreenState extends State<BecomeExclusiveScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children:  [
-                 Text('Devenez Exclusive', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold,color: AppColors.BLACK),),
+                Text('Devenez Exclusive', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold,color: AppColors.BLACK),),
                 const SizedBox(height: 20,),
                 const Text('Envoyez votre demande pour passez exclusive. Notre equipe va prendre un certain temps pour traiter votre demande. ', textAlign: TextAlign.center, style: const TextStyle(fontSize: AppDimensions.FONT_SIZE_DEFAULT+3, fontWeight: FontWeight.bold,color: Colors.grey),),
                 const SizedBox(height: 20,),
@@ -72,7 +72,9 @@ class _BecomeExclusiveScreenState extends State<BecomeExclusiveScreen> {
                         return  ElevatedButton(
                             style: ButtonStyle(backgroundColor: MaterialStateProperty.all(AppColors.PRIMARY)),
                             onPressed: (){
-                              _launchPayTechPaymentUrl();
+                              Provider.of<AuthProvider>(context,listen: false).isLoggedIn() ?
+                              _launchPayTechPaymentUrl() :
+                              AppHelper.showInfoFlushBar(context, "Vous devez vous connecter pour effectuer cette action");
                             },
                             child: const Text('   Envoyer la demande  '));
                       case PaymentLinkStatus.error:

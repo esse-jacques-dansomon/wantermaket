@@ -71,7 +71,6 @@ class AppRoutes {
       },
     );
 
-
     switch(settings.name) {
       case login:
         return MaterialPageRoute(builder: (context) => isLoggedIn( const DashBoardScreen()) );
@@ -145,9 +144,9 @@ class AppRoutes {
   }
 
   static void goTo(BuildContext context, String routeName, {Object? arguments}) {
-    Navigator.of(context).pushNamedAndRemoveUntil(
-        routeName, (route) => route.isCurrent &&
-        ModalRoute.of(context)?.settings.name ==  routeName ? false :true, arguments: arguments);
+    //remove duplicate routes in the stack if any and navigate to the new route
+    Navigator.of(context).popUntil((route) => route.isFirst);
+    Navigator.of(context).pushNamed(routeName, arguments: arguments);
   }
 
 }

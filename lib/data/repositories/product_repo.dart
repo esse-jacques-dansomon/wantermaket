@@ -32,7 +32,7 @@ class ProductsRepo {
   //new products
   Future<ApiResponse> getNewProducts({int page = 1}) async {
     try {
-      final response = await dioClient.get(AppConstants.PRODUITS_URI,
+      final response = await dioClient.get(AppConstants.NEW_PRODUITS_URI,
         queryParameters: {'page': page});
       return ApiResponse.withSuccess(response);
     } catch (e) {

@@ -40,7 +40,7 @@ class TitleAndMoreText extends StatelessWidget {
 
           }, child: Row(
             children: const [
-              Text('Voir Plus', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColors.FACEBOOK  ), textAlign: TextAlign.start,),
+              Text('Voir Plus', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColors.FACEBOOK ), textAlign: TextAlign.start,),
               SizedBox(width: 5,),
               Icon(Icons.arrow_forward_ios, size: 13,  color: AppColors.FACEBOOK,),
             ],

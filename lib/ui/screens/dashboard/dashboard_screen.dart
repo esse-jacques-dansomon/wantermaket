@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:wantermarket/config/app_colors.dart';
 import 'package:wantermarket/providers/auth_provider.dart';
 import 'package:wantermarket/providers/vendor_provider.dart';
-import 'package:wantermarket/route/routes.dart';
 import 'package:wantermarket/shared/contact_vendor.dart';
 import 'package:wantermarket/ui/basewidgets/drawer/drawer.dart';
 import 'package:wantermarket/ui/basewidgets/loaders/custom_app_loader.dart';
@@ -66,14 +65,6 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
       },
       child: Scaffold(
         bottomNavigationBar:  CustomBottomNavBar(profile: true, scrollController: _controller,),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            AppRoutes.goTo(context, AppRoutes.addProduct);
-          },
-          backgroundColor: AppColors.PRIMARY,
-          child: const Icon(Icons.add, color: AppColors.WHITE, size: 50,),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         appBar: appBar(isActiveSearchbar: true),
         drawer: const AppDrawer(),
         backgroundColor: AppColors.WHITE,

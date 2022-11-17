@@ -7,6 +7,7 @@ import 'package:wantermarket/config/app_dimenssions.dart';
 import 'package:wantermarket/config/app_images.dart';
 import 'package:wantermarket/providers/vendor_provider.dart';
 import 'package:wantermarket/route/routes.dart';
+import 'package:wantermarket/shared/app_helper.dart';
 import 'package:wantermarket/shared/contact_vendor.dart';
 
 import '../../../providers/auth_provider.dart';
@@ -16,10 +17,11 @@ class AppDrawer extends StatefulWidget {
 
   @override
   State<AppDrawer> createState() => _AppDrawerState();
-
 }
 
 class _AppDrawerState extends State<AppDrawer> {
+
+  final _raisonController = TextEditingController();
 
   _loadDataBoutique()  {
     Provider.of<AuthProvider>(context, listen: false).getUserConnectedInfo();
@@ -32,6 +34,11 @@ class _AppDrawerState extends State<AppDrawer> {
       _loadDataBoutique();
 
     });
+  }
+  @override
+  dispose() {
+    _raisonController.dispose();
+    super.dispose();
   }
 
   @override
@@ -172,71 +179,124 @@ class _AppDrawerState extends State<AppDrawer> {
                 ),
 
                 //SIGNALER UN PROBLEME
-                ListTile(
-                  horizontalTitleGap: 5,
-                  leading: Icon(Icons.apps_sharp, color: AppColors.BLACK,),
-                  title: Text("A Propos & Aides", style: const TextStyle(color: AppColors.BLACK, fontSize: AppDimensions.FONT_SIZE_DEFAULT+2),  ),
-                  onTap: () {
-                    //open bottom sheet
-                    showModalBottomSheet(
+              ],
+            ),
 
-                        isScrollControlled: true,
-                        context: context,
-                        builder: (context) {
-                          return Container(
-                            height: MediaQuery.of(context).size.height * 0.8,
-                            padding: const EdgeInsets.all(20),
-                            child: Column
-                              (
-                              crossAxisAlignment: CrossAxisAlignment.start,
+            ListTile(
+              horizontalTitleGap: 5,
+              leading: Icon(Icons.apps_sharp, color: AppColors.BLACK,),
+              title: Text("A Propos & Aides", style: const TextStyle(color: AppColors.BLACK, fontSize: AppDimensions.FONT_SIZE_DEFAULT+2),  ),
+              onTap: () {
+                //open bottom sheet
+                showModalBottomSheet(
+                    backgroundColor: Colors.transparent,
+                    isScrollControlled: true,
+                    context: context,
+                    builder: (context) {
+                      return Container(
+                        //border
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(15),
+                            topRight: Radius.circular(15),
+                          ),
+                        ),
+                        height: MediaQuery.of(context).size.height * 0.8,
+                        padding: const EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 10),
+                        child: Column
+                          (
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    const Text('A Propos & Aides', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-                                    IconButton(
-                                      onPressed: (){
-                                        Navigator.pop(context);
-                                      },
-                                      icon: const Icon(Icons.close),
-                                    )
-                                  ],
-                                ),
-                                //SIGNALER UN PROBLEME
-                                ListTile(
-                                  title: const Text('Signaler un problème'),
-                                  onTap: () {
-                                    ContactVendor.signalBug(context: context);
+                                const Text('A Propos & Aides', style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),),
+                                IconButton(
+                                  onPressed: (){
+                                    Navigator.pop(context);
                                   },
-                                ),
-                                ListTile(
-                                  title: const Text('Politiques de Confidentialité'),
-                                  onTap: () {
-                                    ContactVendor.openSocialMedia(url: AppConstants.MENTIONS_URI, context: context);
-                                  },
-                                ),
-                                ListTile(
-                                  title: const Text('Conditions Générales'),
-                                  onTap: () {
-                                    ContactVendor.openSocialMedia(url: AppConstants.CGU_URI, context: context);
-                                  },
-                                ),
-                                ListTile(
-                                  title: const Text('Visiter le site'),
-                                  onTap: () {
-                                    ContactVendor.openSocialMedia(url: AppConstants.WEBSITE_URL, context: context);
-                                  },
-                                ),
-                                ListTile(
-                                  title: const Text('Aides'),
-                                  onTap: () {
-                                    ContactVendor.writeOnWhatsapp( number: "221771100202", context: context);
-                                  },
-                                ),
-                                //VERSION OF APP DESIGN
-                                Expanded(child: Container()),
-                                Container(
-                                    child:   Column(
+                                  icon: const Icon(Icons.close),
+                                )
+                              ],
+                            ),
+                            //SIGNALER UN PROBLEME
+                            ListTile(
+                              title: const Text('Signaler un problème'),
+                              onTap: () {
+                                ContactVendor.signalBug(context: context);
+                              },
+                            ),
+                            ListTile(
+                              title: const Text('Politiques de Confidentialité'),
+                              onTap: () {
+                                ContactVendor.openSocialMedia(url: AppConstants.MENTIONS_URI, context: context);
+                              },
+                            ),
+                            ListTile(
+                              title: const Text('Conditions Générales d’utilisation'),
+                              onTap: () {
+                                ContactVendor.openSocialMedia(url: AppConstants.CGU_URI, context: context);
+                              },
+                            ),
+                            ListTile(
+                              title: const Text('Visiter le site'),
+                              onTap: () {
+                                ContactVendor.openSocialMedia(url: AppConstants.WEBSITE_URL, context: context);
+                              },
+                            ),
+                            ListTile(
+                              title: const Text('Nous contacter'),
+                              onTap: () {
+                                ContactVendor.writeOnWhatsapp( number: "221771100202", context: context);
+                              },
+                            ), ListTile(
+                              title: const Text('Supprimer son compte'),
+                              onTap: () {
+                                Provider.of<AuthProvider>(context, listen: false).isLoggedIn() ? showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: const Text('Supprimer son compte'),
+                                        content: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            const Text('Voulez-vous vraiment supprimer votre compte ?'),
+                                            const SizedBox(height: 10,),
+                                            const Text('Cette action est irréversible !'),
+                                            //input for the raison
+                                            _RaisonForDeleteAccount(),
+                                          ],
+                                        ),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: const Text('Annuler'),
+                                          ),
+                                          TextButton(
+                                            onPressed: () {
+                                              if(_raisonController.text.isEmpty){
+                                                AppHelper.showInfoFlushBar(context, 'Veuillez entrer une raison !');
+                                              }else{
+                                                Provider.of<AuthProvider>(context, listen: false).deleteAccount(raison: _raisonController.text);
+                                                Navigator.pop(context);
+                                              }
+                                            },
+                                            child: const Text('Supprimer'),
+                                          ),
+                                        ],
+                                      );
+                                    }
+                                ) : AppHelper.showInfoFlushBar(context, 'Vous devez être connecté pour supprimer votre compte');
+                              },
+                            ),
+                            //VERSION OF APP DESIGN
+                            Expanded(child: Container()),
+                            Container(
+                                child:   Column(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -259,16 +319,29 @@ class _AppDrawerState extends State<AppDrawer> {
                                     ),
                                   ],
                                 ) ),
-                                SizedBox(height: 5,),
-                              ],
-                            ),
-                          );
-                        });
-                  },
-                ),
-              ],
+                            SizedBox(height: 5,),
+                          ],
+                        ),
+                      );
+                    });
+              },
             ),
           ]
+      ),
+    );
+  }
+
+  Widget _RaisonForDeleteAccount(){
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      child: TextFormField(
+        controller: _raisonController,
+        decoration: const InputDecoration(
+          labelText: "Raison",
+          hintText: "raison",
+          border: OutlineInputBorder(),
+          contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+        ),
       ),
     );
   }
@@ -290,7 +363,7 @@ class DrawerMenuItem extends StatelessWidget {
       title: Text(menuName, style: const TextStyle(color: AppColors.BLACK, fontSize: AppDimensions.FONT_SIZE_DEFAULT+2),  ),
       onTap: () {
         AppRoutes.goTo(context, route);
-        },
+      },
     )  ;
   }
 }

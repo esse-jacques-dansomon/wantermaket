@@ -29,6 +29,7 @@ class CustomBottomNavBar extends StatelessWidget {
     return Container(
       //if is ios set height to 80
       height: Platform.isIOS ? 80 : 65,
+      color: AppColors.PRIMARY,
       width: MediaQuery.of(context).size.width,
       child: Stack(
         children: [
@@ -49,9 +50,6 @@ class CustomBottomNavBar extends StatelessWidget {
                     item: home,
                     scrollController: scrollController,
                   ),
-                  add_product ? const SizedBox(
-                    width:  10 ,
-                  ) : Container() ,
                   CustomBottomBarItem(
                     activeImage:Icons.shop,
                     image:Icons.shop_outlined,
@@ -61,9 +59,7 @@ class CustomBottomNavBar extends StatelessWidget {
                     scrollController: scrollController,
 
                   ),
-                  add_product ? const SizedBox(
-                    width:  10 ,
-                  ) : Container(width: 40) ,
+                  AddProduct(item: add_product,),
                   CustomBottomBarItem(
                     activeImage:Icons.search,
                     image:Icons.search_outlined,
@@ -73,9 +69,6 @@ class CustomBottomNavBar extends StatelessWidget {
                     scrollController: scrollController,
 
                   ),
-                  add_product ? const SizedBox(
-                    width:  10 ,
-                  ) : Container() ,
                   CustomBottomBarItem(
                     activeImage:Icons.person,
                     image:Icons.person_outlined,
@@ -126,16 +119,113 @@ class CustomBottomBarItem extends StatelessWidget {
           }
         }
       },
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          item ? Icon(activeImage, color: AppColors.PRIMARY, size: 28,) : Icon(image),
-          item
-              ? Text(title, style: const TextStyle(color: AppColors.PRIMARY, fontWeight: FontWeight.bold))
-              : Text(title),
-        ],
+      child: Container(
+        padding: EdgeInsets.only(top: 5),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            item ? Icon(activeImage, color: AppColors.PRIMARY, size: 26,) : Icon(image,  size: 25),
+            item ? Text(title, style: const TextStyle(color: AppColors.PRIMARY, fontWeight: FontWeight.bold, fontSize: 13))
+                : Text(title, style : const TextStyle(fontSize: 12)),
+          ],
+        ),
       ),
     );
   }
 }
+
+class AddProduct extends StatelessWidget {
+  const AddProduct({Key? key,  required this.item,}) : super(key: key);
+  final bool item;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        showModalBottomSheet(
+            backgroundColor: Colors.transparent,
+            isScrollControlled: true,
+            context: context,
+            builder: (context) {
+              return Container(
+                height: 280,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(15),
+                    topRight: Radius.circular(15),
+                  ),
+                ),
+                padding: const EdgeInsets.only(top: 10, right: 20, left: 20, bottom: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text('Créer', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+                        IconButton(
+                          onPressed: (){
+                            Navigator.pop(context);
+                          },
+                          icon: const Icon(Icons.close),
+                        )
+                      ],
+                    ),
+                    SizedBox(height: 15,),
+                    AddProductItem(icon: Icons.add_circle, title: "Ajouter un produit", route: AppRoutes.addProduct),
+                    SizedBox(height: 20,),
+                    AddProductItem(icon: Icons.star,title: "Dévenir exclusive", route: AppRoutes.becomeExclusive),
+                    SizedBox(height: 20,),
+                    AddProductItem(icon: Icons.add_box,title: "Faire un abonnement", route: AppRoutes.abonnements)
+                  ],
+                ),
+              );
+            });
+
+      },
+      child: Container(
+        padding: EdgeInsets.only(top: 5),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            item ? Icon(Icons.add_circle,  size: 45,) : Icon(Icons.add_circle, size: 45, color: AppColors.PRIMARY),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class AddProductItem extends StatelessWidget {
+  const AddProductItem({Key? key,
+    required this.icon, required this.route, required this.title }) : super(key: key);
+  final IconData icon;
+  final String route;
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: ()=>AppRoutes.goTo(context, route),
+      child: Container(
+          child:  Row(
+            children: [
+              ClipOval(
+                child: Container(
+                  padding: EdgeInsets.all(10),
+                  color: AppColors.PRIMARY,
+                  child: Icon(icon, size: 28, color: AppColors.WHITE),
+                ),
+              ),
+              SizedBox(width: 15,),
+              Text(title, style: TextStyle(fontSize: 16), )
+            ],
+          )
+      ),
+    );
+  }
+}
+
+
 

@@ -28,7 +28,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _loadData();
     });

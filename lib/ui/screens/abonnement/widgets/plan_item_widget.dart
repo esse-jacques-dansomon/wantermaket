@@ -86,6 +86,7 @@ class PlanItem extends StatelessWidget {
                   margin: const EdgeInsets.fromLTRB(25, 0, 25, 25),
                   child: TextButton(
                     onPressed: () async {
+                      Provider.of<AuthProvider>(context, listen: false).isLoggedIn() ?
                       //open dialogue
                       showDialog(
                           context: context, builder: (context) => Container(
@@ -163,7 +164,8 @@ class PlanItem extends StatelessWidget {
                             }),
                           ],
                         ),
-                      ));
+                      )) :
+                      AppHelper.showInfoFlushBar(context, "Vous devez vous connecter pour continuer");
                     },
                     child:  Text('   Choisir le plan ${plan.name!}  ', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
                   )

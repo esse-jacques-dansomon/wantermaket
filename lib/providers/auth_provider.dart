@@ -195,6 +195,8 @@ class AuthProvider extends ChangeNotifier {
     return authRepo.isLoggedIn();
   }
 
+  void deleteAccount({raison : String}) {}
+
 
 
 }
