@@ -14,6 +14,9 @@ import '../data/models/response/api_response.dart';
 import '../data/repositories/auth_repo.dart';
 import '../shared/api_checker.dart';
 
+enum Status { Uninitialized, Authenticated, Authenticating, Unauthenticated }
+enum StatusDelete { loaded, loading, error }
+
 class AuthProvider extends ChangeNotifier {
   final AuthRepo authRepo;
   AuthProvider({required this.authRepo});
@@ -22,9 +25,11 @@ class AuthProvider extends ChangeNotifier {
   bool _isLoadingRegister = false;
   bool loginn = false;
   int boutiqueId = 0;
+  StatusDelete _statusDelete = StatusDelete.loaded;
   LoginReponse user = LoginReponse();
   bool get isLoading => _isLoading;
   bool get isLoadingRegister => _isLoadingRegister;
+  StatusDelete get statusDelete => _statusDelete;
 
 
   Future<bool> login(LoginModel loginModel, BuildContext context) async {
@@ -45,6 +50,22 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
+  Future<bool>  deleteAccount({raison : String,context : BuildContext }) async {
+    _statusDelete = StatusDelete.loading;
+    notifyListeners();
+    final response = await authRepo.deleteAccount(raison);
+    _statusDelete = StatusDelete.loaded;
+    notifyListeners();
+    if(response.error == null){
+      return true;
+    }else{
+      ApiChecker.checkApi(context, response);
+      _statusDelete = StatusDelete.error;
+      return false;
+    }
+  }
+
+
   Future<void> register(RegisterModel registerModel,BuildContext context) async {
 
       _isLoadingRegister = true;
@@ -60,12 +81,10 @@ class AuthProvider extends ChangeNotifier {
         user = LoginReponse.fromJson(response.response.data);
         notifyListeners();
       }
-      //validation error
       else{
         _isLoadingRegister = false;
         notifyListeners();
         ApiChecker.checkApi(context, response);
-        // ScaffoldMessenger.of(context).showSnackBar( SnackBar(content: Text('Ce mail existe déja', style: TextStyle(color: Colors.white)), backgroundColor: Colors.red));
       }
   }
 
@@ -194,8 +213,6 @@ class AuthProvider extends ChangeNotifier {
   bool isLoggedIn() {
     return authRepo.isLoggedIn();
   }
-
-  void deleteAccount({raison : String}) {}
 
 
 

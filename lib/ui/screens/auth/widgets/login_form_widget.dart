@@ -36,8 +36,6 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
         }
       }
     });
-
-
   }
 
   @override
@@ -85,10 +83,15 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
           labelStyle: const TextStyle(
               color: Colors.black),
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(5),
             borderSide: const BorderSide(
               color: Colors.black,
             ),
+
+          ),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 15,
+            vertical: 15,
           ),
         ),
         onSaved: (value) => _password = value,
@@ -109,10 +112,14 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
         },
         decoration:  InputDecoration(
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(5),
             borderSide: const BorderSide(
               color: Colors.black,
             ),
+          ),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 15,
+            vertical: 15,
           ),
           hintText: 'Email',
           hintStyle: const TextStyle(color: AppColors.BLACK),

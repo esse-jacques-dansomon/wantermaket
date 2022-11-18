@@ -68,7 +68,7 @@ class ContactVendor {
     await FlutterShare.share(
       title: 'Boutique ${boutique.name}',
       text: 'Je vous invite à visiter la boutique "${boutique.name}" sur Wanter Market en cliquant sur ce lien :',
-      linkUrl: '''https://wantermarket.sn/boutiques/${boutique.slug}''',
+      linkUrl: '''https://wantermarket.com/boutiques/${boutique.slug}''',
     );
   }
 
@@ -78,7 +78,7 @@ class ContactVendor {
     await FlutterShare.share(
       title: '${product.name}',
       text: '${product.name} à ${(product.priceBefore != null && product.priceBefore != 0)  ? product.priceBefore! : product.price} F CFA chez ${product.boutique!.name!} sur Wanter Market. Visitez en cliquant sur ce lien : ',
-      linkUrl: '''https://wantermarket.sn/produits/${product.slug}''',
+      linkUrl: '''https://wantermarket.com/produits/${product.slug}''',
     );
   }
 

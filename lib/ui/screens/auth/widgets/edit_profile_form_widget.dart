@@ -143,7 +143,7 @@ class _EditProfileFormWidgetState extends State<EditProfileFormWidget> {
         decoration:  InputDecoration(
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 15,
-            vertical: 18,
+            vertical: 15,
           ),
           label: const Text('Votre Nom'),
           border: OutlineInputBorder(
@@ -181,7 +181,7 @@ class _EditProfileFormWidgetState extends State<EditProfileFormWidget> {
           labelText: 'Votre Prenom',
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 15,
-            vertical: 18,
+            vertical: 15,
           ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(5),
@@ -218,7 +218,7 @@ class _EditProfileFormWidgetState extends State<EditProfileFormWidget> {
           labelText: 'Votre Adresse',
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 15,
-            vertical: 18,
+            vertical: 15,
           ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(5),
@@ -256,7 +256,7 @@ class _EditProfileFormWidgetState extends State<EditProfileFormWidget> {
           labelText: 'Votre Email',
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 15,
-            vertical: 18,
+            vertical: 15,
           ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(5),

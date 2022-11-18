@@ -1,5 +1,4 @@
 import 'package:animated_snack_bar/animated_snack_bar.dart';
-import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:wantermarket/config/app_colors.dart';
@@ -40,18 +39,6 @@ class AppHelper {
       snackBarStrategy: StackSnackBarStrategy(),
 
     ).show(context);
-    // Flushbar(
-    //   message: s,
-    //   duration: const Duration(seconds: 6),
-    //   backgroundColor: color,
-    //   flushbarPosition: FlushbarPosition.TOP,
-    //   icon: const Icon(
-    //     Icons.info,
-    //     color: Colors.white,
-    //   ),
-    // ).show(context);
-
-
   }
 
   static showErrorFlushBar(BuildContext context, String string) {}

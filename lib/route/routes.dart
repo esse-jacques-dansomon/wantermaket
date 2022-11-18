@@ -144,9 +144,12 @@ class AppRoutes {
   }
 
   static void goTo(BuildContext context, String routeName, {Object? arguments}) {
-    //remove duplicate routes in the stack if any and navigate to the new route
-    Navigator.of(context).popUntil((route) => route.isFirst);
-    Navigator.of(context).pushNamed(routeName, arguments: arguments);
+    //only push if the route is not the current route or if the route is not in the history stack
+    if (ModalRoute.of(context)?.settings.name != routeName && !Navigator.canPop(context)) {
+      Navigator.pushNamed(context, routeName, arguments: arguments);
+    }else{
+      Navigator.popAndPushNamed(context, routeName, arguments: arguments);
+    }
   }
 
 }

@@ -29,6 +29,16 @@ class AuthRepo {
     }
   }
 
+  Future<ApiResponse>  deleteAccount(raison) async {
+    try{
+      final response = await dioClient.post(AppConstants.LOGIN_URI, data: raison.toJson());
+      return ApiResponse.withSuccess(response);
+    }catch(e){
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+
+
   Future<ApiResponse> resetPassword(ResetPasswordModel passwordModel) async {
     try {
       final response = await dioClient.post(AppConstants.RESET_PASSWORD_URI, data: passwordModel.toJson());
@@ -55,7 +65,7 @@ class AuthRepo {
       });
       return ApiResponse.withSuccess(response);
     } catch (e) {
-      return ApiResponse.withError(ApiErrorHandler.getMessage(e.toString()));
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
     }
   }  Future<ApiResponse>  verifyOtp(String email,String otp) async {
     try {
@@ -110,10 +120,6 @@ class AuthRepo {
       deviceToken = await FirebaseMessaging.instance.getAPNSToken() ;
     }else {
       deviceToken = await FirebaseMessaging.instance.getToken() ;
-    }
-
-    if (deviceToken != null) {
-      print('--------Device Token---------- $deviceToken');
     }
     return deviceToken ?? "";
   }

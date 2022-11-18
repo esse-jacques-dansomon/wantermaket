@@ -20,7 +20,7 @@ class AppConstants {
   static const String BOUTIQUES_FAVORIS = '/boutiques/favories';
   static const String TOP_PRODUITS_URI = '/produits/classe/2';
   static const String DEAL_PRODUITS_URI = '/produits/classe/3';
-  static const String NEW_PRODUITS_URI = '/produit';
+  static const String NEW_PRODUITS_URI = '/produits';
   static const String TOP_BOUTOIQUES_URI = '/boutiques/top';
   static const String BOUTIQUES_EXCLUSIVES = '/boutiques/exclusive';
   static const String PLANS_URI = '/plans';

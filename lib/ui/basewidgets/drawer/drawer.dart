@@ -11,6 +11,7 @@ import 'package:wantermarket/shared/app_helper.dart';
 import 'package:wantermarket/shared/contact_vendor.dart';
 
 import '../../../providers/auth_provider.dart';
+import '../loaders/custom_app_loader.dart';
 
 class AppDrawer extends StatefulWidget {
   const AppDrawer({Key? key}) : super(key: key);
@@ -270,23 +271,67 @@ class _AppDrawerState extends State<AppDrawer> {
                                           ],
                                         ),
                                         actions: [
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                            },
-                                            child: const Text('Annuler'),
-                                          ),
-                                          TextButton(
-                                            onPressed: () {
-                                              if(_raisonController.text.isEmpty){
-                                                AppHelper.showInfoFlushBar(context, 'Veuillez entrer une raison !');
-                                              }else{
-                                                Provider.of<AuthProvider>(context, listen: false).deleteAccount(raison: _raisonController.text);
-                                                Navigator.pop(context);
+
+                                          Consumer<AuthProvider>(
+                                            builder: (context, provider, child) {
+                                              switch(provider.statusDelete) {
+                                                case StatusDelete.loaded:
+                                                  return Row(
+                                                    children: [
+                                                      TextButton(
+                                                        onPressed: () {
+                                                          Navigator.pop(context);
+                                                        },
+                                                        child: const Text('Annuler'),
+                                                      ),
+                                                      TextButton(
+                                                        onPressed: () {
+                                                          if(_raisonController.text.isEmpty){
+                                                            AppHelper.showInfoFlushBar(context, 'Veuillez entrer une raison !');
+                                                          }else{
+                                                            Provider.of<AuthProvider>(context, listen: false).deleteAccount(raison: _raisonController.text, context: context).then((value) {
+                                                              if(value){
+                                                                Navigator.pop(context);
+                                                                Navigator.pop(context);
+                                                                Navigator.popAndPushNamed(context, AppRoutes.home);
+                                                              }
+                                                            });
+                                                          }
+                                                        },
+                                                        child: const Text('Supprimer'),
+                                                      ),
+                                                    ],
+                                                  );
+                                                case StatusDelete.loading:
+                                                 return Row(
+                                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: [
+                                                      Container(  child: Center(child: const CustomAppLoader()), height: 70,),
+                                                    ],
+                                                  );
+                                                case StatusDelete.error:
+                                                  return Row(
+                                                    children: [
+                                                      TextButton(
+                                                        onPressed: () {
+                                                          Navigator.pop(context);
+                                                        },
+                                                        child: Container(
+                                                          padding: EdgeInsets.all(10),
+                                                          decoration: BoxDecoration(
+                                                              color: AppColors.SECONDARY,
+                                                              borderRadius: BorderRadius.all(Radius.circular(5))
+                                                          ),
+                                                          child: Text("Une erreur s'est produite, Réessayer", style: TextStyle(color: AppColors.WHITE),),
+                                                        ),
+                                                      )
+                                                    ],
+                                                  );
                                               }
                                             },
-                                            child: const Text('Supprimer'),
-                                          ),
+                                          )
+
                                         ],
                                       );
                                     }
