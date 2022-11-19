@@ -30,8 +30,9 @@ class AuthRepo {
   }
 
   Future<ApiResponse>  deleteAccount(raison) async {
+    print(raison);
     try{
-      final response = await dioClient.post(AppConstants.LOGIN_URI, data: raison.toJson());
+      final response = await dioClient.post(AppConstants.DELETE_URI, data: {"raison":raison});
       return ApiResponse.withSuccess(response);
     }catch(e){
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

@@ -1,7 +1,4 @@
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:overlay_support/overlay_support.dart';
 import 'package:provider/provider.dart';
 import 'package:wantermarket/config/app_colors.dart';
 import 'package:wantermarket/providers/boutique_provider.dart';
@@ -15,8 +12,6 @@ import 'package:wantermarket/ui/screens/home/widgets/home_sliders_widget.dart';
 import 'package:wantermarket/ui/screens/home/widgets/nouveautes_widget.dart';
 import 'package:wantermarket/ui/screens/home/widgets/top_annonces_widget.dart';
 import 'package:wantermarket/ui/screens/home/widgets/top_boutiques_widget.dart';
-
-import '../../../data/models/body/pushnotification_model.dart';
 import '../../basewidgets/app_bars/app_bar.dart';
 import '../../basewidgets/bottom_bar/bottom_nav_bar.dart';
 
@@ -42,10 +37,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   }
 
-  late final FirebaseMessaging _messaging;
-  late Pushnotification? _notificationInfo;
-
-  void registerNotification() async {
+  //late final FirebaseMessaging _messaging;
+ // late Pushnotification? _notificationInfo;
+/*
+ void registerNotification() async {
     await Firebase.initializeApp();
     _messaging = FirebaseMessaging.instance;
 
@@ -55,11 +50,10 @@ class _HomeScreenState extends State<HomeScreen> {
       badge: true,
       provisional: false,
     );
-    //_messaging.subscribeToTopic('all');
     _messaging.getToken().then((token) => print(token));
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-      // await Firebase.initializeApp();
+      print('User granted permission');
       FirebaseMessaging.onMessage.listen((RemoteMessage message) {
         Pushnotification notification = Pushnotification(
           title: message.notification?.title,
@@ -81,7 +75,8 @@ class _HomeScreenState extends State<HomeScreen> {
       });
     }
   }
-
+*/
+/*
   checkForInitialMessage() async {
     await Firebase.initializeApp();
     RemoteMessage? initialMessage = await FirebaseMessaging.instance.getInitialMessage();
@@ -100,21 +95,20 @@ class _HomeScreenState extends State<HomeScreen> {
         Text(_notificationInfo?.title ?? 'Notification'),
         leading: const Icon(Icons.notifications),
         background: Colors.red,
+        duration: const Duration(seconds: 5),
         autoDismiss: true,
       );
     }
   }
 
-
+*/
   @override
   void initState() {
+    /*
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      //initialize _notificationInfo
       _notificationInfo = null;
       registerNotification();
-      //app terminated
       checkForInitialMessage();
-      //en dehors de l'application
       FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
         Pushnotification notification = Pushnotification(
           title: message.notification?.title,
@@ -135,11 +129,10 @@ class _HomeScreenState extends State<HomeScreen> {
       });
 
 
-    });
+    });*/
     super.initState();
     _controller.addListener(_scrollListener);
     // NetworkInfo.checkConnectivity(context);
-
   }
 
   void _scrollListener() {

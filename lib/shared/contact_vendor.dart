@@ -15,7 +15,7 @@ class ContactVendor {
 
 
   static void openWhatsapp({required BuildContext context, required Product product}) async {
-    var text = """Salut j'espère que vous allez bien. J'ai vu ce produit à ${(product.priceBefore != null && product.priceBefore != 0)  ? product.priceBefore! : product.price} F CFA sur votre boutique Wanter Market. J'aimerais savoir s'il est toujours disponible. Voici le lien : https://wantermarket.sn/produit/${product.code}""";
+    var text = """Salut j'espère que vous allez bien. J'ai vu ce produit à ${(product.priceBefore != null && product.priceBefore != 0)  ? product.priceBefore! : product.price} F CFA sur votre boutique Wanter Market. J'aimerais savoir s'il est toujours disponible. Voici le lien : https://wantermarket.com/produit/${product.slug}""";
     var link = "whatsapp://send?phone=${product.boutique?.vendor?.phone}" +
         "&text=${Uri.encodeComponent(text)}";
     try{
