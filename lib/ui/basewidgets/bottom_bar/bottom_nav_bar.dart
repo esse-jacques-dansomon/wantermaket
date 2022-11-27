@@ -1,8 +1,11 @@
 import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:wantermarket/route/routes.dart';
+import 'package:wantermarket/shared/app_helper.dart';
 
 import '../../../config/app_colors.dart';
+import '../../../providers/auth_provider.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
   final bool add_product;
@@ -199,15 +202,22 @@ class AddProduct extends StatelessWidget {
 
 class AddProductItem extends StatelessWidget {
   const AddProductItem({Key? key,
-    required this.icon, required this.route, required this.title }) : super(key: key);
+    required this.icon, required this.route, required this.title, this.isAuth = true }) : super(key: key);
   final IconData icon;
   final String route;
   final String title;
+  final bool isAuth ;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: ()=>AppRoutes.goTo(context, route),
+      onTap: (){
+        if(isAuth){
+          Provider.of<AuthProvider>(context, listen: false).isLoggedIn() ? AppRoutes.goTo(context, route) : AppHelper.showInfoFlushBar(context, 'Vous devez vous connecter pour accéder à cette fonctionnalité');
+        }else{
+          AppRoutes.goTo(context, route);
+        }
+      },
       child: Container(
           child:  Row(
             children: [

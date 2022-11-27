@@ -12,6 +12,7 @@ class SliderProvider extends ChangeNotifier{
 
   final List<SliderItem> _sliders = [];
   List<SliderItem> get sliders  => _sliders;
+
   SliderState state = SliderState.initial;
 
 
@@ -32,4 +33,6 @@ class SliderProvider extends ChangeNotifier{
       ApiChecker.checkApi( context, sliderResponse);
     }
   }
+
+
 }

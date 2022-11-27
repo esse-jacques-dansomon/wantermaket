@@ -1,10 +1,5 @@
-// To parse this JSON data, do
-//
-//     final userBaseInfo = userBaseInfoFromJson(jsonString);
 
 import 'dart:convert';
-
-import 'package:wantermarket/config/app_constantes.dart';
 
 List<UserBaseInfo> userBaseInfoFromJson(String str) => List<UserBaseInfo>.from(json.decode(str).map((x) => UserBaseInfo.fromJson(x)));
 
@@ -48,7 +43,7 @@ class UserBaseInfo {
     etat: json["etat"],
     canAddProduct: json["canAddProduct"],
     plan: json["plan"],
-    profilImage: AppConstants.BASE_URL_IMAGE + json["profil_image"],
+    profilImage:  json["profil_image"],
     boutiqueName: json["boutique_name"],
     adresse: json["adresse"],
   );

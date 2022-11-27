@@ -41,11 +41,11 @@ class HomeSliders extends StatelessWidget {
             );
           case SliderState.loaded:
             return SizedBox(
-              height: 200,
+              height: 210,
               child: Swiper(
                 itemBuilder: (BuildContext context, int index) {
                   return  CachedNetworkImage(
-                    imageUrl: sliderProvider.sliders[index].backgroudPath,
+                    imageUrl: sliderProvider.sliders[index].backgroundPathMobile!,
                     placeholder: (context, url) =>  Shimmer.fromColors(baseColor: Colors.grey.shade100, highlightColor: Colors.grey.shade100, child: const SizedBox(height: 300,)),
                     errorWidget: (context, url, error) => const Icon(Icons.error),
                     imageBuilder: (context, imageProvider) => Container(
@@ -54,6 +54,46 @@ class HomeSliders extends StatelessWidget {
                         borderRadius: BorderRadius.circular(0),
                         image: DecorationImage(
                             image: imageProvider,  fit: BoxFit.cover),
+                      ),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(0),
+                          gradient: LinearGradient(
+                            begin: Alignment.bottomCenter,
+                            end: Alignment.topCenter,
+                            colors: [
+                              Colors.black.withOpacity(0.8),
+                              Colors.black.withOpacity(0.0),
+                            ],
+                          ),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
+                              child: Text(
+                                sliderProvider.sliders[index].title ?? "",
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                              child: Text(
+                                sliderProvider.sliders[index].subTitle ?? "",
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            //button
+                          ],
+                        ),
                       ),
 
                     ),

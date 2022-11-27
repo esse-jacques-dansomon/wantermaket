@@ -23,6 +23,7 @@ class AppConstants {
   static const String NEW_PRODUITS_URI = '/produits';
   static const String TOP_BOUTOIQUES_URI = '/boutiques/top';
   static const String BOUTIQUES_EXCLUSIVES = '/boutiques/exclusive';
+  static const String URI_BANNER = '/promos';
   static const String PLANS_URI = '/plans';
   static const String URI_COUNTRIES = '/pays';
 

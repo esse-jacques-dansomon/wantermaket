@@ -36,7 +36,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
+      backgroundColor: Colors.white,
       bottomNavigationBar: BottomBarVendor(product: widget.product),
       body: SafeArea(
         child: SingleChildScrollView(

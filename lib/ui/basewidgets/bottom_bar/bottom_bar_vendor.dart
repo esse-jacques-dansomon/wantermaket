@@ -15,10 +15,22 @@ class BottomBarVendor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 1,
+            blurRadius: 7,
+            offset: const Offset(0, 3), // changes position of shadow
+          ),
+        ],
+      ),
       height: Platform.isIOS ? 80 : 65,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
           //whatSapp
           SizedBox(
@@ -35,13 +47,14 @@ class BottomBarVendor extends StatelessWidget {
                 }, child: Row(
               children: const [
                 Icon(Icons.whatsapp, size: 22),
-                SizedBox(width: 5,),
-                Text('WhatsApp', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),),
+                // SizedBox(width: 5,),
+                // Text('WhatsApp', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),),
               ],
             )),
           ),
 
           //phone call
+          SizedBox(width: 5,),
           SizedBox(
             height: 35,
             child: ElevatedButton(
@@ -57,13 +70,14 @@ class BottomBarVendor extends StatelessWidget {
                 }, child: Row(
               children: const [
                 Icon(Icons.call_outlined, size: 22),
-                SizedBox(width: 5,),
-                Text('Appel', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),),
+                // SizedBox(width: 5,),
+                // Text('Appel', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),),
               ],
             )),
           ),
 
           //message
+          SizedBox(width: 5,),
           SizedBox(
             height: 35,
             child: ElevatedButton(
@@ -79,8 +93,31 @@ class BottomBarVendor extends StatelessWidget {
                 }, child: Row(
               children: const [
                 Icon(Icons.sms_outlined, size: 22),
+                // SizedBox(width: 5,),
+                // Text('SMS', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),),
+              ],
+            )),
+          ),
+
+          //report product
+          SizedBox(width: 5,),
+          SizedBox(
+            height: 35,
+            child: ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.red),
+                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50),
+                    ),)
+                ),
+                onPressed: (){
+                  // ContactVendor.openReport(context: context, product: product);
+
+                }, child: Row(
+              children: const [
+                Icon(Icons.report_outlined, size: 22),
                 SizedBox(width: 5,),
-                Text('SMS', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),),
+                Text('Signaler', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),),
               ],
             )),
           ),

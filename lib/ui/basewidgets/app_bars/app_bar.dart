@@ -11,6 +11,7 @@ import '../../../config/app_colors.dart';
 import '../../../data/models/body/app_country.dart';
 import '../../../providers/boutique_provider.dart';
 import '../../../providers/product_provider.dart';
+import '../../../providers/slider_provider.dart';
 
 AppBar appBar({bool isActiveSearchbar=false, bool isOnSearchPage=false}) {
   //create key
@@ -22,6 +23,7 @@ AppBar appBar({bool isActiveSearchbar=false, bool isOnSearchPage=false}) {
       // Status bar brightness (optional)
       statusBarIconBrightness: Brightness.light, // For Android (dark icons)
       statusBarBrightness: Brightness.light, // For iOS (dark icons)
+
     ),
     automaticallyImplyLeading: false,
     toolbarHeight: 70,
@@ -107,6 +109,7 @@ AppBar appBar({bool isActiveSearchbar=false, bool isOnSearchPage=false}) {
                 ),).toList(),
                 onChanged: ( value){
                   localizationProvider.setLocale(value);
+                  Provider.of<SliderProvider>(context, listen: false).getHomeSliders(context);
                   Provider.of<BoutiqueProvider>(context, listen: false).getBoutiquesExclusives(context);
                   Provider.of<BoutiqueProvider>(context, listen: false).getTopBoutiques(context);
                   Provider.of<ProductProvider>(context, listen: false).getTopAnnonces(context);

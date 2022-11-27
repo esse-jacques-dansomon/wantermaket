@@ -6,8 +6,10 @@ import 'package:provider/provider.dart';
 import 'package:wantermarket/config/app_colors.dart';
 import 'package:wantermarket/providers/boutique_provider.dart';
 import 'package:wantermarket/providers/product_provider.dart';
+import 'package:wantermarket/providers/slider_provider.dart';
 import 'package:wantermarket/ui/basewidgets/drawer/drawer.dart';
 import 'package:wantermarket/ui/basewidgets/loaders/custom_app_loader.dart';
+import 'package:wantermarket/ui/screens/home/widgets/banner_widget.dart';
 import 'package:wantermarket/ui/screens/home/widgets/home_categories_widget.dart';
 import 'package:wantermarket/ui/screens/home/widgets/boutiques_exclusives_widget.dart';
 import 'package:wantermarket/ui/screens/home/widgets/deal_du_jour_widget.dart';
@@ -35,11 +37,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
   Future<void> _loadDataBoutique() async {
+    Provider.of<SliderProvider>(context, listen: false).getHomeSliders(context);
     Provider.of<BoutiqueProvider>(context, listen: false).getBoutiquesExclusives(context);
+    Provider.of<BoutiqueProvider>(context, listen: false).getTopBoutiques(context);
     Provider.of<ProductProvider>(context, listen: false).getTopAnnonces(context);
     Provider.of<ProductProvider>(context, listen: false).getDealOfTheDay(context);
     Provider.of<ProductProvider>(context, listen: false).getNewArrivals(context, reload: true);
-
   }
 
   late final FirebaseMessaging _messaging;
@@ -176,31 +179,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 const TopAnnoncesWidget(),
 
                 //banner image
-                Padding(
-                  padding: const EdgeInsets.only(top: 30.0),
-                  child: Container(
-                    height: 170,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(0),
-                      color: AppColors.BLACK,
-                      backgroundBlendMode: BlendMode.darken,
-                      image: DecorationImage(
-                          image:  Image.network('https://picsum.photos/250?image=41',).image,  fit: BoxFit.cover),
-                    ),
-                    child:  Center(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Text("Placer vos Annonces Ici",
-                            style: TextStyle(color: Colors.white, fontSize: 20),textAlign: TextAlign.center, ),
-                          Text("+221 77 888 888",
-                            style: TextStyle(color: Colors.white, fontSize: 20),textAlign: TextAlign.center, ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                const BannerWidget(),
 
                 //Deal du jour
                 const DealDuJourWidget(),
@@ -209,37 +188,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 const TopBoutiquesWidget(),
 
                 //banner image
-                Padding(
-                  padding: const EdgeInsets.only(top: 30.0, bottom: 10 ),
-                  child: Container(
-                    height: 170,
-                    foregroundDecoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(0),
-                      color: Colors.grey,
-                      backgroundBlendMode: BlendMode.darken,
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(0),
-                      color: AppColors.BLACK,
-                      // backgroundBlendMode: BlendMode.darken,
-
-                      image: DecorationImage(
-                          image:  Image.network('https://img.freepik.com/vecteurs-premium/megaphone-haut-parleur-discours-bulle-comme-dessin-anime-plat-vecteur-message-annonce_101884-687.jpg?w=2000',).image,  fit: BoxFit.cover),
-                    ),
-                    child:  Center(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Text("Placer vos Annonces Ici",
-                            style: TextStyle(color: Colors.black, fontSize: 20),textAlign: TextAlign.center,  ),
-                          Text("+221 77 888 888",
-                            style: TextStyle(color: Colors.black, fontSize: 20),textAlign: TextAlign.center, ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                const BannerWidget(),
 
                 // Nouveautes
                 const NouveautesWidget(),
