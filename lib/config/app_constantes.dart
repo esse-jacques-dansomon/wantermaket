@@ -46,8 +46,8 @@ class AppConstants {
   static const String PAY_ABONNEMENT_URI = '/abonnement';
   static const String PAY_BOOSTER_PRODUCT_URI = '/paiement/booster';
   static const String PAY_ETAT_URI = '/paiement/verif';
-  static const String REDIRECT_SUCCESS_PAY_URI = 'https://wantermarket.sn/success';
-  static const String REDIRECT_CANCEL_PAY_URI = 'https://wantermarket.sn/cancel';
+  static const String REDIRECT_SUCCESS_PAY_URI = 'https://wantermarket.com/success';
+  static const String REDIRECT_CANCEL_PAY_URI = 'https://wantermarket.com/cancel';
   //A PROPOS
   static const String A_PROPOS_URI = AppConstants.WEBSITE_URL + '/a-propos';
   static const String CGU_URI =  AppConstants.WEBSITE_URL +  '/conditions_generales_d_utilisation';
