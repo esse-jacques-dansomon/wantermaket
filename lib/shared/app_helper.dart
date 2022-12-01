@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -28,7 +30,8 @@ class AppHelper {
   static int getCrossAxisCount(BuildContext context, {double width = 0.0}) {
     final double large  = width==0 ? AppDimensions.MEDIA_SCREEN_LARGE : width*4;
     final double medium  = width==0 ? AppDimensions.MEDIA_SCREEN_MEDIUM : width*3;
-    return MediaQuery.of(context).size.width > large ? 4 : (MediaQuery.of(context).size.width > medium? 3 : 2);
+    return MediaQuery.of(context).size.width > large ? 4 :
+    (MediaQuery.of(context).size.width > medium? 3 : 2);
   }
 
   static void showInfoFlushBar(BuildContext context, String s, {Color color = AppColors.PRIMARY}) {
@@ -41,5 +44,43 @@ class AppHelper {
     ).show(context);
   }
 
+  static getViewportFraction(BuildContext context){
+    // The equivalent of the "smallestWidth" qualifier on Android.
+    var shortestSide = MediaQuery.of(context).size.width;
+
+   // Determine if we should use mobile layout or not, 600 here is
+   // a common breakpoint for a typical 7-inch tablet.
+    if(shortestSide > 600){
+      return  400/shortestSide;
+    }
+    return 1;
+  }
+
+  static isTablet(BuildContext context){
+    var size = MediaQuery.of(context).size;
+    var diagonal = sqrt(
+        (size.width * size.width) +
+            (size.height * size.height)
+    );
+
+    /*
+    print(
+      'size: ${size.width}x${size.height}\n'
+      'pixelRatio: ${query.devicePixelRatio}\n'
+      'pixels: ${size.width * query.devicePixelRatio}x${size.height * query.devicePixelRatio}\n'
+      'diagonal: $diagonal'
+    );
+    */
+
+    var isTablet = diagonal > 1100.0;
+    return isTablet;
+    // The equivalent of the "smallestWidth" qualifier on Android.
+    var shortestSide = MediaQuery.of(context).size.width;
+
+    // Determine if we should use mobile layout or not, 600 here is
+    // a common breakpoint for a typical 7-inch tablet.
+    return shortestSide > 600;
+
+  }
   static showErrorFlushBar(BuildContext context, String string) {}
 }
