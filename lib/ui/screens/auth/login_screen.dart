@@ -60,7 +60,7 @@ class LoginScreen extends StatelessWidget {
                     const SizedBox(
                       height: 7,
                     ),
-                    const Text('Veuillez vous authentificer pour continuer', style: TextStyle(color: Colors.grey, fontSize: 16),),
+                    const Text('Veuillez vous authentifier pour continuer', style: TextStyle(color: Colors.grey, fontSize: 16),),
 
                     //form
                     const LoginFormWidget(),

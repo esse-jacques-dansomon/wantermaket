@@ -60,7 +60,7 @@ class DealDuJourWidget extends StatelessWidget {
                              indicatorLayout: PageIndicatorLayout.COLOR,
                              autoplay: true,
                              duration: 1000,
-                             viewportFraction: AppHelper.getViewportFraction(context) ,
+                             viewportFraction: AppHelper.isTablet(context) ? AppHelper.getViewportFraction(context)  : 1,
                            ),
                          ),
                  ): const Center(child: Text('Aucun produit'));
