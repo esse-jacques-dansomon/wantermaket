@@ -14,7 +14,7 @@ class SignalerVendorBottomSheetModal extends StatefulWidget {
 }
 
 class _SignalerVendorBottomSheetModal extends State<SignalerVendorBottomSheetModal> {
-  int raison = 24;
+  int raison = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -118,7 +118,7 @@ class _SignalerVendorBottomSheetModal extends State<SignalerVendorBottomSheetMod
                         onPressed: () {
                           provider.signaler(context, id: widget.vendorId.toString(), type: "vendeur", raison: raison.toString());
                         },
-                        child: const Text('error, reéssayer', style: TextStyle(
+                        child: const Text('error, réessayer', style: TextStyle(
                             fontSize: 15, fontWeight: FontWeight.w300),)),
                   );
               }

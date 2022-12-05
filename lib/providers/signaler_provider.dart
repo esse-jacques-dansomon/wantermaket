@@ -4,6 +4,7 @@ import 'package:wantermarket/shared/api_checker.dart';
 
 import '../data/models/body/signaler_model.dart';
 import '../data/repositories/signal_repo.dart';
+import '../shared/app_helper.dart';
 
 enum SignalerStatus { initial, loading, loaded, error }
 class SignalerProvider extends ChangeNotifier {
@@ -21,6 +22,8 @@ class SignalerProvider extends ChangeNotifier {
   Future<void> getRaisons(BuildContext context, String type) async {
     final response = await signalRepo.raison(type: type);
     List<SignalerModel> _raisons = [];
+    _raisons.add(SignalerModel(id: 0, texte: 'Sélectionner une raison'));
+
     if (response.response.statusCode == 200 ) {
       response.response.data.forEach((element) {
         _raisons.add(SignalerModel.fromJson(element));
@@ -42,8 +45,8 @@ class SignalerProvider extends ChangeNotifier {
     notifyListeners();
     final signalResponse = await signalRepo.signaler(id: id, type: type, raison: raison);
     if (signalResponse.response.statusCode == 200 ) {
-      print("signaler => " + signalResponse.response.data.toString());
       this._status = SignalerStatus.loaded;
+      AppHelper.showInfoFlushBar(context, "Signalement effectué avec succès");
       notifyListeners();
       return true;
     } else {

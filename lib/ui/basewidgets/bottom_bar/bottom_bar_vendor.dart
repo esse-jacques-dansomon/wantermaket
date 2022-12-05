@@ -4,6 +4,7 @@ import 'package:wantermarket/ui/basewidgets/loaders/custom_app_loader.dart';
 
 import '../../../data/models/body/product.dart';
 import '../../../providers/signaler_provider.dart';
+import '../../../shared/app_helper.dart';
 import '../../../shared/contact_vendor.dart';
 import 'dart:io' show Platform;
 
@@ -158,7 +159,7 @@ class SignalerBottomSheetModal extends StatefulWidget {
 }
 
 class _SignalerBottomSheetModalState extends State<SignalerBottomSheetModal> {
-  int raison = 1;
+  int raison = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -260,9 +261,12 @@ class _SignalerBottomSheetModalState extends State<SignalerBottomSheetModal> {
                             ),)
                         ),
                         onPressed: () {
-                          provider.signaler(context, id: widget.productId.toString(), type: "produit", raison: raison.toString());
+                          provider.signaler(context, id: widget.productId.toString(), type: "produit", raison: raison.toString()).then((value){
+                            if(value)
+                              Navigator.pop(context);
+                          });
                         },
-                        child: const Text('error, reessayer', style: TextStyle(
+                        child: const Text('error, réessayer', style: TextStyle(
                             fontSize: 15, fontWeight: FontWeight.w300),)),
                   );
               }

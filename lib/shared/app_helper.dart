@@ -82,5 +82,7 @@ class AppHelper {
     return shortestSide > 600;
 
   }
-  static showErrorFlushBar(BuildContext context, String string) {}
+  static showErrorFlushBar(BuildContext context, String string) {
+
+  }
 }
