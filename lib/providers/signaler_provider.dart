@@ -25,7 +25,7 @@ class SignalerProvider extends ChangeNotifier {
       response.response.data.forEach((element) {
         _raisons.add(SignalerModel.fromJson(element));
       });
-      print("raisons => " + _raisons.toString());
+      print("raisons => " + response.response.data.toString());
       if(type=="produit"){
         _raisonsProduits = _raisons;
       }else{

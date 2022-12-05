@@ -6,6 +6,7 @@ import 'package:wantermarket/providers/auth_provider.dart';
 import 'package:wantermarket/providers/boutique_favories_provider.dart';
 import 'package:wantermarket/route/routes.dart';
 import 'package:wantermarket/shared/app_helper.dart';
+import 'package:wantermarket/ui/screens/boutique_details/widgets/signal_vendor.dart';
 
 import '../../../../config/app_colors.dart';
 import '../../../../data/models/body/boutique.dart';
@@ -192,7 +193,14 @@ class VendorInformationWidget extends StatelessWidget {
                                 ListTile(
                                   onTap: () async {
                                     Navigator.of(context).pop();
-                                    ContactVendor.shareShop(boutique);
+                                    showModalBottomSheet(
+                                        backgroundColor: Colors.transparent,
+                                        isScrollControlled: true,
+                                        context: context,
+                                        builder: (context) {
+                                          return SignalerVendorBottomSheetModal(vendorId: boutique.vendor!.id!.toInt());
+                                        }
+                                    );
                                   },
                                   horizontalTitleGap: 0,
                                   leading: const Icon(Icons.flag, color: AppColors.PRIMARY,),
