@@ -26,6 +26,8 @@ class AppConstants {
   static const String URI_BANNER = '/promos';
   static const String PLANS_URI = '/plans';
   static const String URI_COUNTRIES = '/pays';
+  static const String URI_SIGNALER = '/signaler';
+  static const String URI_RAISONS_SIGNALER = '/raison';
 
   //AUTH
   static const String SEARCH_URI = '/search';

@@ -13,6 +13,7 @@ import 'package:wantermarket/providers/payment_provider.dart';
 import 'package:wantermarket/providers/plan_provider.dart';
 import 'package:wantermarket/providers/product_provider.dart';
 import 'package:wantermarket/providers/search_provider.dart';
+import 'package:wantermarket/providers/signaler_provider.dart';
 import 'package:wantermarket/providers/slider_provider.dart';
 import 'package:wantermarket/providers/vendor_provider.dart';
 import 'package:wantermarket/providers/wishlist_provider.dart';
@@ -52,6 +53,7 @@ Future<void> main() async {
       ChangeNotifierProvider(create: (context) => di.sl<PaymentProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<CrudProductProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<BoutiqueFavoriesProvider>()),
+      ChangeNotifierProvider(create: (context) => di.sl<SignalerProvider>()),
 
       // ChangeNotifierProvider(create: (context) => di.sl<ConnectivityProvider>()),
     ],
