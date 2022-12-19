@@ -19,6 +19,8 @@ import 'package:wantermarket/ui/screens/home/widgets/top_annonces_widget.dart';
 import 'package:wantermarket/ui/screens/home/widgets/top_boutiques_widget.dart';
 
 import '../../../data/models/body/pushnotification_model.dart';
+import '../../../providers/category_provider.dart';
+import '../../../providers/signaler_provider.dart';
 import '../../basewidgets/app_bars/app_bar.dart';
 import '../../basewidgets/bottom_bar/bottom_nav_bar.dart';
 
@@ -43,6 +45,9 @@ class _HomeScreenState extends State<HomeScreen> {
     Provider.of<ProductProvider>(context, listen: false).getTopAnnonces(context);
     Provider.of<ProductProvider>(context, listen: false).getDealOfTheDay(context);
     Provider.of<ProductProvider>(context, listen: false).getNewArrivals(context, reload: true);
+    Provider.of<SignalerProvider>(context, listen: false).getRaisons(context, "produit");
+    Provider.of<SignalerProvider>(context, listen: false).getRaisons(context, "vendeur");
+    Provider.of<CategoryProvider>(context, listen: false).getCategories(context);
   }
 
   late final FirebaseMessaging _messaging;
