@@ -7,6 +7,7 @@ import 'package:wantermarket/ui/screens/home/widgets/title_and_more_widget.dart'
 import '../../../../config/app_colors.dart';
 import '../../../../data/models/body/filter_model.dart';
 import '../../../../route/routes.dart';
+import '../../../../shared/app_helper.dart';
 import '../../../basewidgets/cards/deal_du_jour_card.dart';
 import '../../../basewidgets/shimmer/custom_shimmer.dart';
 
@@ -20,44 +21,54 @@ class DealDuJourWidget extends StatelessWidget {
     return Column(
       children: [
         TitleAndMoreText( pageTitle : "Produits en promo", title: 'En Promo', moreText: 'Voir Plus', route:  AppRoutes.seeMore, filterModel: FilterModel(isPromo: 1),),
-        Consumer<ProductProvider>(
-          builder: (context, productProvider, child){
-           switch (productProvider.dealsOfTheDayStatus) {
-             case ProductDealOfTheDayStatus.initial:
-             case ProductDealOfTheDayStatus.loading:
-               return DealOfOfTheDayWidgetShimmer();
-             case ProductDealOfTheDayStatus.loaded:
-               return productProvider.dealsOfTheDay.length > 0 ?  SizedBox(
-                 height: 510,
-                 child: Swiper(
-                   itemCount: productProvider.dealsOfTheDay.length,
-                   itemBuilder: (BuildContext context, int index) {
-                     return  Column(
-                       mainAxisAlignment: MainAxisAlignment.center,
-                       children: [
-                         Container(
-                           margin: const EdgeInsets.only(left: 10, right: 10),
-                           width: MediaQuery.of(context).size.width-20,
-                           // padding: const EdgeInsets.only(bottom: 10),
-                           decoration: BoxDecoration(
-                             border : Border.all(color: AppColors.SECONDARY, width: 2),
-                           ),
-                           child: SizedBox(width: 510, height: 500,  child: DealDuJour(product:productProvider.dealsOfTheDay[index] )),
+        Container(
+          width: double.infinity,
+          child: Consumer<ProductProvider>(
+            builder: (context, productProvider, child){
+             switch (productProvider.dealsOfTheDayStatus) {
+               case ProductDealOfTheDayStatus.initial:
+               case ProductDealOfTheDayStatus.loading:
+                 return DealOfOfTheDayWidgetShimmer();
+               case ProductDealOfTheDayStatus.loaded:
+                 return productProvider.dealsOfTheDay.length > 0 ?
+                       Container(
+                         height : 510,
+                         width: double.infinity,
+                         child: ConstrainedBox(
+                           constraints:BoxConstraints(maxWidth: 300),
+                           child: Swiper(
+                             itemCount: productProvider.dealsOfTheDay.length,
+                             itemBuilder: (BuildContext context, int index) {
+                               return  Column(
+                                 mainAxisAlignment: MainAxisAlignment.start,
+                                 crossAxisAlignment: CrossAxisAlignment.start,
+                                 children: [
+                                   Container(
+                                     margin: const EdgeInsets.only(left: 10, right: 10),
+                                     width: MediaQuery.of(context).size.width-20,
+                                     // padding: const EdgeInsets.only(bottom: 10),
+                                     decoration: BoxDecoration(
+                                       border : Border.all(color: AppColors.SECONDARY, width: 2),
+                                     ),
+                                     child: SizedBox(width: 510, height: 500,  child: DealDuJour(product:productProvider.dealsOfTheDay[index] )),
 
+                                   ),
+                                   // SizedBox(height: 20,),
+                                 ],
+                               );
+                             },
+                             indicatorLayout: PageIndicatorLayout.COLOR,
+                             autoplay: true,
+                             duration: 1000,
+                             viewportFraction: AppHelper.isTablet(context) ? AppHelper.getViewportFraction(context)  : 1,
+                           ),
                          ),
-                         // SizedBox(height: 20,),
-                       ],
-                     );
-                   },
-                   indicatorLayout: PageIndicatorLayout.COLOR,
-                   autoplay: true,
-                   duration: 1000,
-                 ),
-               ): const Center(child: Text('Aucun produit'));
-             case ProductDealOfTheDayStatus.error:
-               return const Center(child: Text('error'));
-           }
-          },
+                 ): const Center(child: Text('Aucun produit'));
+               case ProductDealOfTheDayStatus.error:
+                 return const Center(child: Text('error'));
+             }
+            },
+          ),
         ),
       ],
     );

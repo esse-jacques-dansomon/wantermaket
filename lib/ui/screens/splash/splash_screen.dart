@@ -8,6 +8,7 @@ import '../../../providers/auth_provider.dart';
 import '../../../providers/boutique_provider.dart';
 import '../../../providers/category_provider.dart';
 import '../../../providers/product_provider.dart';
+import '../../../providers/signaler_provider.dart';
 import '../../../providers/slider_provider.dart';
 import '../../../route/routes.dart';
 
@@ -37,6 +38,8 @@ class _SlashScreenState extends State<SlashScreen> {
       Provider.of<ProductProvider>(context, listen: false).getTopAnnonces(context);
       Provider.of<ProductProvider>(context, listen: false).getDealOfTheDay(context);
       Provider.of<ProductProvider>(context, listen: false).getNewArrivals(context, reload: true);
+      Provider.of<SignalerProvider>(context, listen: false).getRaisons(context, "produit");
+      Provider.of<SignalerProvider>(context, listen: false).getRaisons(context, "vendeur");
       timer = Timer(const Duration(milliseconds: 4000), () {
         //navigate to the next screen
         Navigator.pushReplacementNamed(context, AppRoutes.home);

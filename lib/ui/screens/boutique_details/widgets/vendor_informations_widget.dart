@@ -6,6 +6,7 @@ import 'package:wantermarket/providers/auth_provider.dart';
 import 'package:wantermarket/providers/boutique_favories_provider.dart';
 import 'package:wantermarket/route/routes.dart';
 import 'package:wantermarket/shared/app_helper.dart';
+import 'package:wantermarket/ui/screens/boutique_details/widgets/signal_vendor.dart';
 
 import '../../../../config/app_colors.dart';
 import '../../../../data/models/body/boutique.dart';
@@ -154,15 +155,84 @@ class VendorInformationWidget extends StatelessWidget {
             ),
             const SizedBox(width: 10,),
             Expanded(
-              flex: 2,
-              child: ElevatedButton(
-                onPressed: () async {
-                  ContactVendor.shareShop(boutique);
-                },
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(AppColors.WHITE)
+              flex: 1,
+              child: Center(
+                child: InkWell(
+                  onTap: () async {
+                    // ContactVendor.shareShop(boutique);
+                    //show showModalBottomSheet
+                    showModalBottomSheet(
+                        backgroundColor: Colors.transparent,
+                        isScrollControlled: true,
+                        context: context,
+                        builder: (context) {
+                          return Container(
+                            height: 280,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(15),
+                                topRight: Radius.circular(15),
+                              ),
+                            ),
+                            padding: const EdgeInsets.only(top: 5, bottom: 10),
+                            margin: const EdgeInsets.only(  left: 5),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(height: 15,),
+                                ListTile(
+                                  onTap: () async {
+                                    Navigator.of(context).pop();
+                                     ContactVendor.shareShop(boutique);
+                                  },
+                                  horizontalTitleGap: 0,
+                                  leading: const Icon(Icons.share_sharp, color: AppColors.PRIMARY,),
+                                  title: const Text('Partager', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),),
+                                ),
+                                ListTile(
+                                  onTap: () async {
+                                    Navigator.of(context).pop();
+                                    showModalBottomSheet(
+                                        backgroundColor: Colors.transparent,
+                                        isScrollControlled: true,
+                                        context: context,
+                                        builder: (context) {
+                                          return SignalerVendorBottomSheetModal(vendorId: boutique.vendor!.id!.toInt());
+                                        }
+                                    );
+                                  },
+                                  horizontalTitleGap: 0,
+                                  leading: const Icon(Icons.flag, color: AppColors.PRIMARY,),
+                                  title: const Text('Signaler la boutique', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),),
+                                ),
+                                ListTile(
+                                  onTap: () async {
+                                    Navigator.of(context).pop();
+                                    ContactVendor.shareShop(boutique);
+                                  },
+                                  horizontalTitleGap: 0,
+                                  leading: const Icon(Icons.block, color: AppColors.PRIMARY,),
+                                  title: const Text('Bloquer cette boutique', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),),
+                                ),
+
+
+                              ],
+                            ),
+                          );
+                        });
+
+
+                  },
+                  child: Container(
+                    height: 35,
+                    width: 35,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: AppColors.WHITE ,
+                    ),
+                      child: const Icon(Icons.more_vert, color: AppColors.PRIMARY,)),
                 ),
-                child: const Icon(Icons.share, color: AppColors.PRIMARY,),
               ),
             ),
           ],

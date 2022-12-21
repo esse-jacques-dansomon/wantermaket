@@ -27,11 +27,13 @@ import 'package:wantermarket/providers/vendor_provider.dart';
 
 import '../config/app_constantes.dart';
 import '../data/datasource/dio/dio_client.dart';
+import '../data/repositories/signal_repo.dart';
 import '../providers/boutique_provider.dart';
 import '../providers/category_detail_provider.dart';
 import '../providers/category_provider.dart';
 import '../providers/product_provider.dart';
 import '../providers/search_provider.dart';
+import '../providers/signaler_provider.dart';
 import '../providers/wishlist_provider.dart';
 import '../shared/network_info.dart';
 
@@ -58,6 +60,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => BoutiqueFavoriesRepo(dioClient: sl()));
   sl.registerLazySingleton(() => CrudProductRepo(dioClient: sl()));
   sl.registerLazySingleton(() => PaymentRepo(dioClient: sl()));
+  sl.registerLazySingleton(() => SignalRepo(dioClient: sl()));
 
 
   //Provider
@@ -75,6 +78,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => CrudProductProvider(crudProductRepo: sl()));
   sl.registerLazySingleton(() => PaymentProvider(paymentRepo: sl()));
   sl.registerLazySingleton(() => WishlistProvider(prefs: sl()));
+  sl.registerLazySingleton(() => SignalerProvider(signalRepo: sl()));
 
   // External
   final sharedPreferences = await SharedPreferences.getInstance();
