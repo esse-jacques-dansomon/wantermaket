@@ -63,6 +63,6 @@
 		<string>Using cellular service</string>
 	</array>
 	<key>NSPhotoLibraryUsageDescription</key>
-<string>We need access to your photo library to display your photos in the app.</string>
+      <string>We need access to your photo library to display your photos in the app.</string>
 </dict>
 </plist>
