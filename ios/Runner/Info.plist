@@ -57,10 +57,5 @@
       <key>NSAllowsArbitraryLoads</key>
       <true/>
     </dict>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>Taking photos with the camera</string>
-		<string>Using cellular service</string>
-	</array>
 </dict>
 </plist>
