@@ -67,6 +67,7 @@
 	</array>
 	<key>NSCameraUsageDescription</key>
 	<string>camera usage</string>
-
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>photo library usage</string>
 </dict>
 </plist>
