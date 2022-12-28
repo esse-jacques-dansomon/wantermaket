@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import 'package:pay/pay.dart';
 import 'package:wantermarket/config/app_colors.dart';
 import 'package:wantermarket/data/models/body/plan.dart';
 import 'package:wantermarket/providers/auth_provider.dart';
@@ -9,12 +9,19 @@ import 'package:wantermarket/route/routes.dart';
 import 'package:wantermarket/shared/app_helper.dart';
 import 'package:wantermarket/ui/basewidgets/loaders/custom_app_loader.dart';
 import 'package:wantermarket/ui/screens/payment_api/paytech_api_payment_screen.dart';
-
+const _paymentItems = [
+  PaymentItem(
+    label: 'Total',
+    amount: '99.99',
+    status: PaymentItemStatus.final_price,
+  )
+];
 class PlanItem extends StatelessWidget {
   final Plan plan;
   const PlanItem({
     Key? key, required this.plan
   }) : super(key: key);
+  
 
 
   @override
@@ -91,6 +98,7 @@ class PlanItem extends StatelessWidget {
                       showDialog(
                           context: context, builder: (context) => Container(
                         height: 200,
+                        
                         child: AlertDialog(
                           title: const Text('Confirmation de paiement'),
                           content:  Text('Voulez-vous vraiment souscrire à ce plan ' + plan.name! + '?'),
@@ -106,7 +114,9 @@ class PlanItem extends StatelessWidget {
                                     ],
                                   );
                                 case PaymentPlanType.loaded:
-                                  return Row(
+                                  return Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       TextButton(
                                         onPressed: () async {
@@ -127,6 +137,28 @@ class PlanItem extends StatelessWidget {
                                           child: Text('Confirmer', style: TextStyle(color: AppColors.WHITE),),
                                         ),
                                       ),
+                                      ApplePayButton(
+                                        paymentConfigurationAsset: 'applepay.json',
+                                        paymentItems: _paymentItems,
+                                    
+                                        style: ApplePayButtonStyle.black,
+                                        type: ApplePayButtonType.buy,
+                                        margin: const EdgeInsets.only(top: 15.0),
+                                        onPaymentResult: onApplePayResult,
+                                        loadingIndicator: const Center(
+                                          child: CircularProgressIndicator(),
+                                        ),
+                                      ),
+                                      GooglePayButton(
+                                      paymentConfigurationAsset: 'gpay.json',
+                                      paymentItems: _paymentItems,
+                                      type: GooglePayButtonType.pay,
+                                      margin: const EdgeInsets.only(top: 15.0),
+                                      onPaymentResult: onGooglePayResult,
+                                      loadingIndicator: const Center(
+                                        child: CircularProgressIndicator(),
+                                      ),
+                                  ),
                                       TextButton(
                                         onPressed: () {
                                           Navigator.pop(context);
@@ -139,7 +171,7 @@ class PlanItem extends StatelessWidget {
                                           ),
                                           child: Text('Annuler', style: TextStyle(color: AppColors.SECONDARY),),
                                         ),
-                                      )
+                                      ),
                                     ],
                                   );
                                 case PaymentPlanType.error:
@@ -168,7 +200,8 @@ class PlanItem extends StatelessWidget {
                       AppHelper.showInfoFlushBar(context, "Vous devez vous connecter pour continuer");
                     },
                     child:  Text('   Choisir le plan ${plan.name!}  ', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
-                  )
+                  ),
+                  
               )
 
               else Container(),
@@ -179,4 +212,13 @@ class PlanItem extends StatelessWidget {
       ],
     );
   }
+
+    void onApplePayResult(paymentResult) {
+    // Send the resulting Apple Pay token to your server / PSP
+    }
+
+  void onGooglePayResult(paymentResult) {
+    // Send the resulting Google Pay token to your server / PSP
+  }
+
 }
