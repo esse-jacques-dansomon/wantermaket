@@ -9,6 +9,12 @@
 .history
 .svn/
 migrate_working_dir/
+/ios/build/
+/ios/Pods/
+/ios/Flutter/flutter_export_environment.sh
+/ios/Flutter/Generated.xcconfig
+/ios/Flutter/AppFrameworkInfo.plist
+
 
 # IntelliJ related
 *.iml
