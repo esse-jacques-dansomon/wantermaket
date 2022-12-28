@@ -5,9 +5,8 @@ import 'package:wantermarket/config/app_colors.dart';
 import 'package:wantermarket/config/app_images.dart';
 import 'package:wantermarket/providers/vendor_provider.dart';
 import 'package:wantermarket/route/routes.dart';
+
 import '../../../../shared/contact_vendor.dart';
-
-
 import 'stats_item.dart';
 
 class VendorDashboardStats extends StatelessWidget {
@@ -43,43 +42,46 @@ class VendorDashboardStats extends StatelessWidget {
             children: [
               SizedBox(
                 width: 75,
-                height:75,
+                height: 75,
                 child: ClipOval(
                     child: Consumer<VendorProvider>(
-                      builder: (context, vendorProvider, _)=>CachedNetworkImage(
-                        imageUrl: vendorProvider.boutique.profilImage ?? AppImage.logo,
-                        fit: BoxFit.cover,
-                        width: 75,
-                        height: 75,
-                      ),
-                    )
-                ),
+                  builder: (context, vendorProvider, _) => CachedNetworkImage(
+                    imageUrl:
+                        vendorProvider.boutique.profilImage ?? AppImage.logo,
+                    fit: BoxFit.cover,
+                    width: 75,
+                    height: 75,
+                  ),
+                )),
               ),
               Consumer<VendorProvider>(
-                builder: (context, vendorProvider, _){
-                  return  Container(
+                builder: (context, vendorProvider, _) {
+                  return Container(
                     margin: const EdgeInsets.only(left: 15),
-                    child:
-                    Column(
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
-                      children:  [
-                        Text(vendorProvider.boutique.name ?? 'Pas encore de nom',
+                      children: [
+                        Text(
+                          vendorProvider.boutique.name ?? 'Pas encore de nom',
                           style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
                         const SizedBox(height: 5),
-                        Text( "${vendorProvider.boutique.vendor?.city?? ''} " + " ${vendorProvider.boutique.vendor?.country?? ''}",
+                        Text(
+                          "${vendorProvider.boutique.vendor?.city ?? ''} " +
+                              " ${vendorProvider.boutique.vendor?.country ?? ''}",
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w300,
                           ),
                         ),
                         const SizedBox(height: 5),
-
-                        Text(vendorProvider.boutique.vendor?.address ?? 'Pas encore d\'adresse',
+                        Text(
+                          vendorProvider.boutique.vendor?.address ??
+                              'Pas encore d\'adresse',
                           style: const TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w300,
@@ -94,28 +96,45 @@ class VendorDashboardStats extends StatelessWidget {
           ),
           Column(
             children: [
-
-              const SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
               Row(
                 children: [
-                  Expanded(child: ElevatedButton(onPressed: (){
-                    AppRoutes.goTo(context, AppRoutes.editProfile);
-                  }, child: const Text('Editer Profil'))),
-                  const SizedBox(width: 10,),
-                  Expanded(child: ElevatedButton(onPressed: (){
-                    AppRoutes.goTo(context, AppRoutes.editBoutiqueBySecteur);
-                  }, child: const Text('Editer Boutique'))),
-                  const SizedBox(width: 10,),
-                  ElevatedButton(onPressed: (){
-                    ContactVendor.shareShop(
-                        Provider.of<VendorProvider>(context, listen: false).boutique,
-                    );
-                  }, child: Icon(Icons.share)),
+                  Expanded(
+                      flex: 3,
+                      child: ElevatedButton(
+                          onPressed: () {
+                            AppRoutes.goTo(context, AppRoutes.editProfile);
+                          },
+                          child: const Text('Edit Profil'))),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(
+                      flex: 5,
+                      child: ElevatedButton(
+                          onPressed: () {
+                            AppRoutes.goTo(
+                                context, AppRoutes.editBoutiqueBySecteur);
+                          },
+                          child: const Text('Edit Boutique'))),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  ElevatedButton(
+                      onPressed: () {
+                        ContactVendor.shareShop(
+                          Provider.of<VendorProvider>(context, listen: false)
+                              .boutique,
+                        );
+                      },
+                      child: Icon(Icons.share)),
                 ],
               ),
               // STATISTIQUES
               Consumer<VendorProvider>(
-                builder: (context, vendorProvider, _){
+                builder: (context, vendorProvider, _) {
                   return Column(
                     children: [
                       Container(
@@ -138,14 +157,29 @@ class VendorDashboardStats extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Expanded( flex: 2, child:  StatItem(name: 'Abonnés',value: vendorProvider.vendorStat.nombreAbonnes ?? 0,),),
+                            Expanded(
+                              flex: 2,
+                              child: StatItem(
+                                name: 'Abonnés',
+                                value:
+                                    vendorProvider.vendorStat.nombreAbonnes ??
+                                        0,
+                              ),
+                            ),
                             Container(
                               width: 2,
                               height: 45,
                               margin: const EdgeInsets.symmetric(horizontal: 0),
                               color: AppColors.PRIMARY,
                             ),
-                            Expanded(flex: 2, child:  StatItem(name: 'Visites',value: vendorProvider.vendorStat.nombreVisites?? 0,)),
+                            Expanded(
+                                flex: 2,
+                                child: StatItem(
+                                  name: 'Visites',
+                                  value:
+                                      vendorProvider.vendorStat.nombreVisites ??
+                                          0,
+                                )),
                           ],
                         ),
                       ),
@@ -169,14 +203,25 @@ class VendorDashboardStats extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Expanded(child:  StatItem(name: 'Produits',value: vendorProvider.vendorStat.produitsTotal??0,)),
+                            Expanded(
+                                child: StatItem(
+                              name: 'Produits',
+                              value:
+                                  vendorProvider.vendorStat.produitsTotal ?? 0,
+                            )),
                             Container(
                               width: 2,
                               height: 45,
                               margin: const EdgeInsets.symmetric(horizontal: 0),
                               color: AppColors.PRIMARY,
                             ),
-                            Expanded(child:  StatItem(name: 'Produits Restants',value: vendorProvider.vendorStat.produitsRestant??0,)),
+                            Expanded(
+                                child: StatItem(
+                              name: 'Produits Restants',
+                              value:
+                                  vendorProvider.vendorStat.produitsRestant ??
+                                      0,
+                            )),
                           ],
                         ),
                       ),
@@ -200,7 +245,13 @@ class VendorDashboardStats extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Expanded(child:  StatItem(name: 'Nombre de boosts réstants',value: vendorProvider.vendorStat.nbreBoostRestant??0,)),
+                            Expanded(
+                                child: StatItem(
+                              name: 'Nombre de boosts réstants',
+                              value:
+                                  vendorProvider.vendorStat.nbreBoostRestant ??
+                                      0,
+                            )),
                           ],
                         ),
                       ),
@@ -208,7 +259,9 @@ class VendorDashboardStats extends StatelessWidget {
                   );
                 },
               ),
-              const SizedBox(height: 25,),
+              const SizedBox(
+                height: 25,
+              ),
             ],
           ),
         ],
