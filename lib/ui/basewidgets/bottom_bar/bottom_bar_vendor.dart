@@ -4,10 +4,8 @@ import 'package:wantermarket/ui/basewidgets/loaders/custom_app_loader.dart';
 
 import '../../../data/models/body/product.dart';
 import '../../../providers/signaler_provider.dart';
-import '../../../shared/app_helper.dart';
 import '../../../shared/contact_vendor.dart';
 import 'dart:io' show Platform;
-
 
 class BottomBarVendor extends StatefulWidget {
   const BottomBarVendor({
@@ -47,80 +45,95 @@ class _BottomBarVendorState extends State<BottomBarVendor> {
             child: ElevatedButton(
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.green),
-                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50),
-                    ),)
-                ),
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                    )),
                 onPressed: () async {
                   ContactVendor.openWhatsapp(
                       context: context, product: widget.product);
-                }, child: Row(
-              children: const [
-                Icon(Icons.whatsapp, size: 22),
-                // SizedBox(width: 5,),
-                // Text('WhatsApp', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),),
-              ],
-            )),
+                },
+                child: Row(
+                  children: const [
+                    Icon(Icons.whatsapp, size: 22),
+                    // SizedBox(width: 5,),
+                    // Text('WhatsApp', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),),
+                  ],
+                )),
           ),
 
           //phone call
-          SizedBox(width: 5,),
+          SizedBox(
+            width: 5,
+          ),
           SizedBox(
             height: 35,
             child: ElevatedButton(
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.black54),
-                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50),
-                    ),)
-                ),
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                    )),
                 onPressed: () {
-                  ContactVendor.openPhone(context: context,
+                  ContactVendor.openPhone(
+                      context: context,
                       number: widget.product.boutique?.vendor?.phone ?? '');
-                }, child: Row(
-              children: const [
-                Icon(Icons.call_outlined, size: 22),
-                // SizedBox(width: 5,),
-                // Text('Appel', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),),
-              ],
-            )),
+                },
+                child: Row(
+                  children: const [
+                    Icon(Icons.call_outlined, size: 22),
+                    // SizedBox(width: 5,),
+                    // Text('Appel', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),),
+                  ],
+                )),
           ),
 
           //message
-          SizedBox(width: 5,),
+          SizedBox(
+            width: 5,
+          ),
           SizedBox(
             height: 35,
             child: ElevatedButton(
                 style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(
-                        Colors.blue[900]),
-                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50),
-                    ),)
-                ),
+                    backgroundColor:
+                        MaterialStateProperty.all(Colors.blue[900]),
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                    )),
                 onPressed: () {
-                  ContactVendor.openMessage(context: context,
+                  ContactVendor.openMessage(
+                      context: context,
                       number: widget.product.boutique?.vendor?.phone ?? '');
-                }, child: Row(
-              children: const [
-                Icon(Icons.sms_outlined, size: 22),
-                // SizedBox(width: 5,),
-                // Text('SMS', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),),
-              ],
-            )),
+                },
+                child: Row(
+                  children: const [
+                    Icon(Icons.sms_outlined, size: 22),
+                    // SizedBox(width: 5,),
+                    // Text('SMS', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),),
+                  ],
+                )),
           ),
 
           //report product
-          SizedBox(width: 5,),
+          SizedBox(
+            width: 5,
+          ),
           SizedBox(
             height: 35,
             child: ElevatedButton(
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.red),
-                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50),
-                    ),)
-                ),
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                    )),
                 onPressed: () {
                   //show bottom sheet
                   showModalBottomSheet(
@@ -128,29 +141,36 @@ class _BottomBarVendorState extends State<BottomBarVendor> {
                       isScrollControlled: true,
                       context: context,
                       builder: (context) {
-                        return SignalerBottomSheetModal(productId: this.widget.product.id!);
-                      }
-                  );
-                }, child: Row(
-              children: const [
-                Icon(Icons.report_outlined, size: 22),
-                SizedBox(width: 5,),
-                Text('Signaler',
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),),
-              ],
-            )),
+                        return SignalerBottomSheetModal(
+                            productId: this.widget.product.id!);
+                      });
+                },
+                child: Row(
+                  children: const [
+                    Icon(Icons.report_outlined, size: 22),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Text(
+                      'Signaler',
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.w300),
+                    ),
+                  ],
+                )),
           ),
-          SizedBox(width: 5,),
-
+          SizedBox(
+            width: 5,
+          ),
         ],
       ),
     );
   }
 }
 
-
 class SignalerBottomSheetModal extends StatefulWidget {
-  const SignalerBottomSheetModal({Key? key, required this.productId}) : super(key: key);
+  const SignalerBottomSheetModal({Key? key, required this.productId})
+      : super(key: key);
   final int productId;
 
   @override
@@ -180,8 +200,10 @@ class _SignalerBottomSheetModalState extends State<SignalerBottomSheetModal> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Text('Signaler le produit',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+              const Text(
+                'Signaler le produit',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
               IconButton(
                 onPressed: () {
                   Navigator.pop(context);
@@ -190,14 +212,24 @@ class _SignalerBottomSheetModalState extends State<SignalerBottomSheetModal> {
               ),
             ],
           ),
-          const SizedBox(height: 10,),
-          const Text('Veuillez nous indiquer la raison de votre signalement',
-            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),),
-          const SizedBox(height: 20,),
+          const SizedBox(
+            height: 10,
+          ),
+          const Text(
+            'Veuillez nous indiquer la raison de votre signalement',
+            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
           //select reason
-          const Text('Raison',
-            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),),
-          const SizedBox(height: 10,),
+          const Text(
+            'Raison',
+            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
@@ -208,14 +240,13 @@ class _SignalerBottomSheetModalState extends State<SignalerBottomSheetModal> {
               isExpanded: true,
               underline: const SizedBox(),
               value: raison,
-              items: Provider
-                  .of<SignalerProvider>(context, listen: false)
+              items: Provider.of<SignalerProvider>(context, listen: false)
                   .raisonsProduits
-                  .map((e) =>
-                  DropdownMenuItem(
-                    value: e.id,
-                    child: Text(e.texte),
-                  )).toList(),
+                  .map((e) => DropdownMenuItem(
+                        value: e.id,
+                        child: Text(e.texte),
+                      ))
+                  .toList(),
               onChanged: (value) {
                 setState(() {
                   raison = value as int;
@@ -224,11 +255,12 @@ class _SignalerBottomSheetModalState extends State<SignalerBottomSheetModal> {
             ),
           ),
 
-          const SizedBox(height: 20,),
+          const SizedBox(
+            height: 20,
+          ),
           Consumer<SignalerProvider>(
             builder: (context, provider, child) {
-              switch(provider.status)
-              {
+              switch (provider.status) {
                 case SignalerStatus.loaded:
                 case SignalerStatus.initial:
                   return SizedBox(
@@ -236,41 +268,58 @@ class _SignalerBottomSheetModalState extends State<SignalerBottomSheetModal> {
                     width: double.infinity,
                     child: ElevatedButton(
                         style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(Colors.red),
-                            shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50),
-                            ),)
-                        ),
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.red),
+                            shape: MaterialStateProperty.all(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(50),
+                              ),
+                            )),
                         onPressed: () {
-                          provider.signaler(context, id: widget.productId.toString(), type: "produit", raison: raison.toString());
+                          provider.signaler(context,
+                              id: widget.productId.toString(),
+                              type: "produit",
+                              raison: raison.toString());
                         },
-                        child: const Text('Signaler', style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.w300),)),
+                        child: const Text(
+                          'Signaler',
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.w300),
+                        )),
                   );
                 case SignalerStatus.loading:
-                   return Center(child: CustomAppLoader());
+                  return Center(child: CustomAppLoader());
                 case SignalerStatus.error:
-                  return  SizedBox(
+                  return SizedBox(
                     height: 35,
                     width: double.infinity,
                     child: ElevatedButton(
                         style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(Colors.red),
-                            shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50),
-                            ),)
-                        ),
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.red),
+                            shape: MaterialStateProperty.all(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(50),
+                              ),
+                            )),
                         onPressed: () {
-                          provider.signaler(context, id: widget.productId.toString(), type: "produit", raison: raison.toString()).then((value){
-                            if(value)
-                              Navigator.pop(context);
+                          provider
+                              .signaler(context,
+                                  id: widget.productId.toString(),
+                                  type: "produit",
+                                  raison: raison.toString())
+                              .then((value) {
+                            if (value) Navigator.pop(context);
                           });
                         },
-                        child: const Text('error, réessayer', style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.w300),)),
+                        child: const Text(
+                          'error, réessayer',
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.w300),
+                        )),
                   );
               }
-              },
+            },
           ),
         ],
       ),
