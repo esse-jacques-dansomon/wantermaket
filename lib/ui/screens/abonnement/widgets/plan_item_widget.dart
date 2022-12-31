@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:pay/pay.dart';
 import 'package:provider/provider.dart';
@@ -191,15 +193,18 @@ class PlanItem extends StatelessWidget {
                                                 ],
                                               );
                                             case PaymentPlanType.loaded:
-                                              return Row(
+                                              return Column(
                                                 mainAxisAlignment:
-                                                    MainAxisAlignment.start,
+                                                    MainAxisAlignment.end,
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.center,
                                                 children: [
                                                   Row(
                                                       crossAxisAlignment:
                                                           CrossAxisAlignment
+                                                              .center,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
                                                               .center,
                                                       children: [
                                                         TextButton(
@@ -238,9 +243,11 @@ class PlanItem extends StatelessWidget {
                                                                   };
                                                           },
                                                           child: Container(
-                                                            padding:
-                                                                EdgeInsets.all(
-                                                                    8),
+                                                            padding: EdgeInsets
+                                                                .all(Platform
+                                                                        .isIOS
+                                                                    ? 9
+                                                                    : 19),
                                                             decoration: BoxDecoration(
                                                                 color: AppColors
                                                                     .SECONDARY,
@@ -249,7 +256,7 @@ class PlanItem extends StatelessWidget {
                                                                         .circular(
                                                                             5))),
                                                             child: Text(
-                                                              'Payer',
+                                                              'Payer Par PayTech (Mobile Money et CB)',
                                                               style: TextStyle(
                                                                   color:
                                                                       AppColors
@@ -262,6 +269,9 @@ class PlanItem extends StatelessWidget {
                                                   Row(
                                                       crossAxisAlignment:
                                                           CrossAxisAlignment
+                                                              .center,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
                                                               .center,
                                                       children: [
                                                         ApplePayButton(
