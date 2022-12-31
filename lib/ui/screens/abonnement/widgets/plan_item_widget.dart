@@ -303,6 +303,7 @@ class PlanItem extends StatelessWidget {
                                                                   .pay,
                                                           onPaymentResult:
                                                               onGooglePayResult,
+                                                            
                                                           loadingIndicator:
                                                               const Center(
                                                             child:
@@ -365,10 +366,20 @@ class PlanItem extends StatelessWidget {
   }
 
   void onApplePayResult(paymentResult) {
-    // Send the resulting Apple Pay token to your server / PSP
+    print(paymentResult);
   }
 
   void onGooglePayResult(paymentResult) {
     // Send the resulting Google Pay token to your server / PSP
+    print(paymentResult);
+    //verify if payment is successful
+    if (paymentResult['status'] == 'SUCCESS') {
+      print('payment successful');
+    } else {
+      //payment failed
+      print('payment failed');
+    }
   }
+
+  
 }

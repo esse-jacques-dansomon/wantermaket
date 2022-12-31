@@ -11,7 +11,7 @@
             "type": "PAYMENT_GATEWAY",
             "parameters": {
               "gateway": "example",
-              "gatewayMerchantId": "gatewayMerchantId"
+              "gatewayMerchantId": "0205-4776-6388"
             }
           },
           "parameters": {
@@ -26,12 +26,15 @@
         }
       ],
       "merchantInfo": {
-        "merchantId": "01234567890123456789",
-        "merchantName": "Example Merchant Name"
+        "merchantId": "BCR2DN4TQSLYTDJT",
+        "merchantName": "Wanter Market"
       },
       "transactionInfo": {
+      "totalPrice": "9.99",
+      "totalPriceStatus": "FINAL",
         "countryCode": "US",
         "currencyCode": "USD"
+     
       }
     }
   }
