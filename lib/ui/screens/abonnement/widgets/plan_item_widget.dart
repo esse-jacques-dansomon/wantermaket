@@ -249,7 +249,7 @@ class PlanItem extends StatelessWidget {
                                                                         .circular(
                                                                             5))),
                                                             child: Text(
-                                                              'Payer avec Paytech',
+                                                              'Payer',
                                                               style: TextStyle(
                                                                   color:
                                                                       AppColors
@@ -291,10 +291,6 @@ class PlanItem extends StatelessWidget {
                                                           type:
                                                               GooglePayButtonType
                                                                   .pay,
-                                                          margin:
-                                                              const EdgeInsets
-                                                                      .only(
-                                                                  top: 15.0),
                                                           onPaymentResult:
                                                               onGooglePayResult,
                                                           loadingIndicator:

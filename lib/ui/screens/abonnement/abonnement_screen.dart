@@ -19,17 +19,16 @@ class _AbonnementScreenState extends State<AbonnementScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    if (Provider.of<PlanProvider>(context, listen: false).plans.isEmpty){
+    if (Provider.of<PlanProvider>(context, listen: false).plans.isEmpty) {
       _loadData();
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
-    return SafeArea(child: Scaffold(
+    return SafeArea(
+        child: Scaffold(
       appBar: appBarWithReturn(title: 'Abonnements', context: context),
       body: SafeArea(
         child: Padding(
@@ -37,21 +36,22 @@ class _AbonnementScreenState extends State<AbonnementScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 15,),
-              Expanded(child: Consumer<PlanProvider>(
-                builder: (context, planProvider, _){
-                  return ListView.separated(
-                      physics: const BouncingScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        return PlanItem(plan: planProvider.plans[index],);
-                      },
-                      separatorBuilder: (context, index)
-                      => const SizedBox(height: 30),
-                      itemCount: planProvider.plans.length
-
-                  );
-                }
-              ))
+              const SizedBox(
+                height: 15,
+              ),
+              Expanded(child:
+                  Consumer<PlanProvider>(builder: (context, planProvider, _) {
+                return ListView.separated(
+                    physics: const BouncingScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return PlanItem(
+                        plan: planProvider.plans[index],
+                      );
+                    },
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(height: 30),
+                    itemCount: planProvider.plans.length);
+              }))
             ],
           ),
         ),
@@ -59,4 +59,3 @@ class _AbonnementScreenState extends State<AbonnementScreen> {
     ));
   }
 }
-

@@ -34,133 +34,142 @@ class _BottomBarVendorState extends State<BottomBarVendor> {
           ),
         ],
       ),
-      height: Platform.isIOS ? 70 : 55,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.end,
+      height: Platform.isIOS ? 65 : 55,
+      child: Column(
         children: [
-          //whatSapp
           SizedBox(
-            height: 35,
-            child: ElevatedButton(
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.green),
-                    shape: MaterialStateProperty.all(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                    )),
-                onPressed: () async {
-                  ContactVendor.openWhatsapp(
-                      context: context, product: widget.product);
-                },
-                child: Row(
-                  children: const [
-                    Icon(Icons.whatsapp, size: 22),
-                    // SizedBox(width: 5,),
-                    // Text('WhatsApp', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),),
-                  ],
-                )),
+            height: 8,
           ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              //whatSapp
+              SizedBox(
+                height: 35,
+                child: ElevatedButton(
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.green),
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                        )),
+                    onPressed: () async {
+                      ContactVendor.openWhatsapp(
+                          context: context, product: widget.product);
+                    },
+                    child: Row(
+                      children: const [
+                        Icon(Icons.whatsapp, size: 22),
+                        // SizedBox(width: 5,),
+                        // Text('WhatsApp', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),),
+                      ],
+                    )),
+              ),
 
-          //phone call
-          SizedBox(
-            width: 5,
-          ),
-          SizedBox(
-            height: 35,
-            child: ElevatedButton(
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.black54),
-                    shape: MaterialStateProperty.all(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50),
-                      ),
+              //phone call
+              SizedBox(
+                width: 5,
+              ),
+              SizedBox(
+                height: 35,
+                child: ElevatedButton(
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.black54),
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                        )),
+                    onPressed: () {
+                      ContactVendor.openPhone(
+                          context: context,
+                          number: widget.product.boutique?.vendor?.phone ?? '');
+                    },
+                    child: Row(
+                      children: const [
+                        Icon(Icons.call_outlined, size: 22),
+                        // SizedBox(width: 5,),
+                        // Text('Appel', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),),
+                      ],
                     )),
-                onPressed: () {
-                  ContactVendor.openPhone(
-                      context: context,
-                      number: widget.product.boutique?.vendor?.phone ?? '');
-                },
-                child: Row(
-                  children: const [
-                    Icon(Icons.call_outlined, size: 22),
-                    // SizedBox(width: 5,),
-                    // Text('Appel', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),),
-                  ],
-                )),
-          ),
+              ),
 
-          //message
-          SizedBox(
-            width: 5,
-          ),
-          SizedBox(
-            height: 35,
-            child: ElevatedButton(
-                style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all(Colors.blue[900]),
-                    shape: MaterialStateProperty.all(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50),
-                      ),
+              //message
+              SizedBox(
+                width: 5,
+              ),
+              SizedBox(
+                height: 35,
+                child: ElevatedButton(
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.blue[900]),
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                        )),
+                    onPressed: () {
+                      ContactVendor.openMessage(
+                          context: context,
+                          number: widget.product.boutique?.vendor?.phone ?? '');
+                    },
+                    child: Row(
+                      children: const [
+                        Icon(Icons.sms_outlined, size: 22),
+                        // SizedBox(width: 5,),
+                        // Text('SMS', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),),
+                      ],
                     )),
-                onPressed: () {
-                  ContactVendor.openMessage(
-                      context: context,
-                      number: widget.product.boutique?.vendor?.phone ?? '');
-                },
-                child: Row(
-                  children: const [
-                    Icon(Icons.sms_outlined, size: 22),
-                    // SizedBox(width: 5,),
-                    // Text('SMS', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),),
-                  ],
-                )),
-          ),
+              ),
 
-          //report product
-          SizedBox(
-            width: 5,
-          ),
-          SizedBox(
-            height: 35,
-            child: ElevatedButton(
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.red),
-                    shape: MaterialStateProperty.all(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50),
-                      ),
+              //report product
+              SizedBox(
+                width: 5,
+              ),
+              SizedBox(
+                height: 35,
+                child: ElevatedButton(
+                    style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(Colors.red),
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                        )),
+                    onPressed: () {
+                      //show bottom sheet
+                      showModalBottomSheet(
+                          backgroundColor: Colors.transparent,
+                          isScrollControlled: true,
+                          context: context,
+                          builder: (context) {
+                            return SignalerBottomSheetModal(
+                                productId: this.widget.product.id!);
+                          });
+                    },
+                    child: Row(
+                      children: const [
+                        Icon(Icons.report_outlined, size: 22),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          'Signaler',
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.w300),
+                        ),
+                      ],
                     )),
-                onPressed: () {
-                  //show bottom sheet
-                  showModalBottomSheet(
-                      backgroundColor: Colors.transparent,
-                      isScrollControlled: true,
-                      context: context,
-                      builder: (context) {
-                        return SignalerBottomSheetModal(
-                            productId: this.widget.product.id!);
-                      });
-                },
-                child: Row(
-                  children: const [
-                    Icon(Icons.report_outlined, size: 22),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Text(
-                      'Signaler',
-                      style:
-                          TextStyle(fontSize: 15, fontWeight: FontWeight.w300),
-                    ),
-                  ],
-                )),
-          ),
-          SizedBox(
-            width: 5,
+              ),
+              SizedBox(
+                width: 5,
+              ),
+            ],
           ),
         ],
       ),

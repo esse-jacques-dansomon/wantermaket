@@ -14,7 +14,6 @@ import '../../../basewidgets/cards/produit_by_boutique.dart';
 import '../../../basewidgets/loaders/custom_app_loader.dart';
 
 class ProductsFound extends StatefulWidget {
-
   const ProductsFound({Key? key}) : super(key: key);
 
   @override
@@ -24,23 +23,25 @@ class ProductsFound extends StatefulWidget {
 class _ProductsFoundState extends State<ProductsFound> {
   final ScrollController _controller = ScrollController();
 
-
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _controller.addListener(_scrollListener);
-
   }
 
   void _scrollListener() {
-    if (_controller.position.pixels == _controller.position.maxScrollExtent ) {
-      SharedPreferences prefs = Provider.of<AuthProvider>(context, listen: false).authRepo.sharedPreferences;
+    if (_controller.position.pixels == _controller.position.maxScrollExtent) {
+      SharedPreferences prefs =
+          Provider.of<AuthProvider>(context, listen: false)
+              .authRepo
+              .sharedPreferences;
       String? filter = prefs.getString("wanter_filter");
       FilterModel filterModel = FilterModel.fromMap(json.decode(filter!));
-      Provider.of<SearchProvider>(context, listen: false).filter(context, isNewSearch: false, filterModel: filterModel);
+      Provider.of<SearchProvider>(context, listen: false)
+          .filter(context, isNewSearch: false, filterModel: filterModel);
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -66,7 +67,8 @@ class _ProductsFoundState extends State<ProductsFound> {
                               product: searchProvider.products[index]);
                         },
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: AppHelper.getCrossAxisCount(context, width: 230),
+                          crossAxisCount:
+                              AppHelper.getCrossAxisCount(context, width: 230),
                           childAspectRatio: 1,
                           crossAxisSpacing: 5,
                           mainAxisSpacing: 10,
@@ -74,10 +76,11 @@ class _ProductsFoundState extends State<ProductsFound> {
                         ),
                       ),
                     ),
-
                     if (searchProvider.paginationState ==
                         searchPaginationState.loading)
-                      Container(height: 100, child: Center(child: const CustomAppLoader())),
+                      Container(
+                          height: 100,
+                          child: Center(child: const CustomAppLoader())),
                   ],
                 ),
               );
