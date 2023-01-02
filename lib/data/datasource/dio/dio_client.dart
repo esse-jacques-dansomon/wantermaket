@@ -10,13 +10,14 @@ class DioClient {
   // final LoggingInterceptor loggingInterceptor;
   final SharedPreferences sharedPreferences;
 
-  Dio dio=Dio() ;
-  String token='';
-  String countryCode= '';
+  Dio dio = Dio();
+  String token = '';
+  String countryCode = '';
 
   DioClient(this.baseUrl, Dio dioC, this.sharedPreferences) {
-    token = sharedPreferences.getString(AppConstants.TOKEN) ??  '';
-    countryCode = sharedPreferences.getString(AppConstants.COUNTRY_CODE) ?? AppConstants.languages[0].code;
+    token = sharedPreferences.getString(AppConstants.TOKEN) ?? '';
+    countryCode = sharedPreferences.getString(AppConstants.COUNTRY_CODE) ??
+        AppConstants.languages[0].code;
     dio = dioC;
     dio
       ..options.baseUrl = baseUrl
@@ -27,16 +28,15 @@ class DioClient {
         'Content-Type': 'application/json; charset=UTF-8',
         'Accept': 'application/json',
         'Authorization': 'Bearer $token',
-        AppConstants.COUNTRY_CODE : countryCode.toUpperCase(),
-
+        AppConstants.COUNTRY_CODE: countryCode.toUpperCase(),
       };
 
     // dio.interceptors.add(loggingInterceptor);
   }
 
-  void updateHeader( String countryCode) {
-    token = token ;
-    countryCode = countryCode ;
+  void updateHeader(String countryCode) {
+    token = token;
+    countryCode = countryCode;
     this.countryCode = countryCode;
     dio.options.headers = {
       'Content-Type': 'application/json; charset=UTF-8',
@@ -46,18 +46,19 @@ class DioClient {
     };
   }
 
-  Future<Response> get(String uri, {
-    Map<String, dynamic> ?queryParameters,
+  Future<Response> get(
+    String uri, {
+    Map<String, dynamic>? queryParameters,
     Options? options,
     CancelToken? cancelToken,
     ProgressCallback? onReceiveProgress,
   }) async {
-
     try {
       dio.options.headers = {
         'Content-Type': 'application/json; charset=UTF-8',
         'Accept': 'application/json',
-        'Authorization': 'Bearer ${sharedPreferences.getString(AppConstants.TOKEN) }',
+        'Authorization':
+            'Bearer ${sharedPreferences.getString(AppConstants.TOKEN)}',
         AppConstants.COUNTRY_CODE: countryCode.toUpperCase(),
       };
       token = sharedPreferences.getString(AppConstants.TOKEN) ?? '';
@@ -79,10 +80,10 @@ class DioClient {
     }
   }
 
-
-  Future<Response> post(String uri, {
+  Future<Response> post(
+    String uri, {
     data,
-    Map<String, dynamic> ?queryParameters,
+    Map<String, dynamic>? queryParameters,
     Options? options,
     CancelToken? cancelToken,
     ProgressCallback? onSendProgress,
@@ -91,14 +92,15 @@ class DioClient {
     dio.options.headers = {
       'Content-Type': 'application/json; charset=UTF-8',
       'Accept': 'application/json',
-      'Authorization': 'Bearer ${sharedPreferences.getString(AppConstants.TOKEN) }',
+      'Authorization':
+          'Bearer ${sharedPreferences.getString(AppConstants.TOKEN)}',
       AppConstants.COUNTRY_CODE: countryCode,
     };
     // 60sec
     dio.options.connectTimeout = 60000;
     dio.options.receiveTimeout = 60000;
     token = sharedPreferences.getString(AppConstants.TOKEN) ?? '';
-
+    
     try {
       var response = await dio.post(
         uri,
@@ -117,19 +119,20 @@ class DioClient {
     }
   }
 
-
-  Future<Response> put(String uri, {
+  Future<Response> put(
+    String uri, {
     data,
-    Map<String, dynamic> ?queryParameters,
-    Options ?options,
-    CancelToken ?cancelToken,
-    ProgressCallback ?onSendProgress,
-    ProgressCallback ?onReceiveProgress,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+    CancelToken? cancelToken,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
   }) async {
     dio.options.headers = {
       'Content-Type': 'application/json; charset=UTF-8',
       'Accept': 'application/json',
-      'Authorization': 'Bearer ${sharedPreferences.getString(AppConstants.TOKEN) }',
+      'Authorization':
+          'Bearer ${sharedPreferences.getString(AppConstants.TOKEN)}',
       AppConstants.COUNTRY_CODE: countryCode,
     };
     token = sharedPreferences.getString(AppConstants.TOKEN) ?? '';
@@ -152,16 +155,18 @@ class DioClient {
     }
   }
 
-  Future<Response> delete(String uri, {
+  Future<Response> delete(
+    String uri, {
     data,
-    Map<String, dynamic> ?queryParameters,
-    Options ?options,
-    CancelToken ?cancelToken,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+    CancelToken? cancelToken,
   }) async {
     dio.options.headers = {
       'Content-Type': 'application/json; charset=UTF-8',
       'Accept': 'application/json',
-      'Authorization': 'Bearer ${sharedPreferences.getString(AppConstants.TOKEN) }',
+      'Authorization':
+          'Bearer ${sharedPreferences.getString(AppConstants.TOKEN)}',
       AppConstants.COUNTRY_CODE: countryCode,
     };
     token = sharedPreferences.getString(AppConstants.TOKEN) ?? '';
@@ -180,6 +185,4 @@ class DioClient {
       throw e;
     }
   }
-
-
 }

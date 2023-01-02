@@ -50,6 +50,7 @@ class AppConstants {
   static const String PAY_ABONNEMENT_URI = '/abonnement';
   static const String PAY_BOOSTER_PRODUCT_URI = '/paiement/booster';
   static const String PAY_ETAT_URI = '/paiement/verif';
+  static const String PAY_MOBILE_URI = '/paiement/mobile/confirm';
   static const String REDIRECT_SUCCESS_PAY_URI = 'https://wantermarket.com/success';
   static const String REDIRECT_CANCEL_PAY_URI = 'https://wantermarket.com/cancel';
   //A PROPOS

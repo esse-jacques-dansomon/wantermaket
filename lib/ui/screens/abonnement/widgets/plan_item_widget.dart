@@ -12,13 +12,6 @@ import 'package:wantermarket/shared/app_helper.dart';
 import 'package:wantermarket/ui/basewidgets/loaders/custom_app_loader.dart';
 import 'package:wantermarket/ui/screens/payment_api/paytech_api_payment_screen.dart';
 
-const _paymentItems = [
-  PaymentItem(
-    label: 'Total',
-    amount: '99.99',
-    status: PaymentItemStatus.final_price,
-  )
-];
 
 class PlanItem extends StatelessWidget {
   final Plan plan;
@@ -193,6 +186,7 @@ class PlanItem extends StatelessWidget {
                                                 ],
                                               );
                                             case PaymentPlanType.loaded:
+                                              var token;
                                               return Column(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.end,
@@ -278,15 +272,26 @@ class PlanItem extends StatelessWidget {
                                                           paymentConfigurationAsset:
                                                               'applepay.json',
                                                           paymentItems:
-                                                              _paymentItems,
+                                                             [
+                                                                PaymentItem(
+                                                                  label: plan.name,
+                                                                  amount: plan.price.toString(),
+                                                                  status: PaymentItemStatus.final_price,
+                                                                )
+                                                              ],
                                                           style:
                                                               ApplePayButtonStyle
                                                                   .black,
                                                           type:
                                                               ApplePayButtonType
                                                                   .buy,
-                                                          onPaymentResult:
-                                                              onApplePayResult,
+                                                          onPaymentResult: (value) => {
+                                                            token = value.map((key, value) => MapEntry(key, value)).values.toList()[2]['token']['transactionId'],
+                                                            print(token),
+                                                            traiterPaiement(context,plan.id, token)
+                                                      
+                                                          },
+                                                              onError: (error) => print(error),
                                                           loadingIndicator:
                                                               const Center(
                                                             child:
@@ -296,13 +301,24 @@ class PlanItem extends StatelessWidget {
                                                         GooglePayButton(
                                                           paymentConfigurationAsset:
                                                               'gpay.json',
-                                                          paymentItems:
-                                                              _paymentItems,
+                                                          paymentItems:[
+                                                                PaymentItem(
+                                                                  label: plan.name,
+                                                                  amount: plan.price.toString(),
+                                                                  status: PaymentItemStatus.final_price,
+                                                                )
+                                                              ],
                                                           type:
                                                               GooglePayButtonType
                                                                   .pay,
-                                                          onPaymentResult:
-                                                              onGooglePayResult,
+                                                          onPaymentResult: (value) => {
+                                                            print(value),
+                                                            token = value.map((key, value) => MapEntry(key, value)).values.toList()[2]['tokenizationData']['token'],
+                                                            print(token),
+                                                            traiterPaiement(context,plan.id, token)
+                                                            
+                                                          },
+                                                              onError: (error) => print(error),
                                                             
                                                           loadingIndicator:
                                                               const Center(
@@ -368,17 +384,23 @@ class PlanItem extends StatelessWidget {
   void onApplePayResult(paymentResult) {
     print(paymentResult);
   }
+  Future<void> traiterPaiement(context,plandId,TransactionId) async {
+    print(plandId);
+    print(TransactionId);
+    var planSubscribe = {
+      'isAbonnement' : true,
+      'planId' : plandId,
+      'paiementId' : TransactionId,
+    };
+    var rep = await Provider.of<PaymentProvider>(context, listen:false).submitMobilePayment(context, planSubscribe);
+    print(rep);
+
+  }
 
   void onGooglePayResult(paymentResult) {
     // Send the resulting Google Pay token to your server / PSP
     print(paymentResult);
-    //verify if payment is successful
-    if (paymentResult['status'] == 'SUCCESS') {
-      print('payment successful');
-    } else {
-      //payment failed
-      print('payment failed');
-    }
+    
   }
 
   

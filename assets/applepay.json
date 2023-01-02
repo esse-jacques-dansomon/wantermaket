@@ -2,10 +2,10 @@
     "provider": "apple_pay",
     "data": {
       "merchantIdentifier": "merchant.com.wantermarket.wantermarket",
-      "displayName": "wanter Market",
+      "displayName": "Wanter Market",
       "merchantCapabilities": ["3DS", "debit", "credit"],
       "supportedNetworks": ["amex", "visa", "discover", "masterCard"],
-      "countryCode": "US",
-      "currencyCode": "USD"
+      "countryCode": "SN",
+      "currencyCode": "XOF"
     }
   }

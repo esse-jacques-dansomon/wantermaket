@@ -13,7 +13,8 @@ class PaymentRepo {
 
   Future<ApiResponse> getBecameExclusiveLink() async {
     try {
-      final response = await dioClient.post(AppConstants.PAY_BECOME_EXCLUSIVE_URI, data: {});
+      final response =
+          await dioClient.post(AppConstants.PAY_BECOME_EXCLUSIVE_URI, data: {});
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -22,7 +23,8 @@ class PaymentRepo {
 
   Future<ApiResponse> getAbonnementLink(int idPlan) async {
     try {
-      final response = await dioClient.post(AppConstants.PAY_ABONNEMENT_URI, data: jsonEncode({'plan_id': idPlan}));
+      final response = await dioClient.post(AppConstants.PAY_ABONNEMENT_URI,
+          data: jsonEncode({'plan_id': idPlan}));
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -31,7 +33,8 @@ class PaymentRepo {
 
   Future<ApiResponse> getBoosterProductLink(Product product) async {
     try {
-      final response = await dioClient.post(AppConstants.PAY_BOOSTER_PRODUCT_URI,
+      final response = await dioClient.post(
+          AppConstants.PAY_BOOSTER_PRODUCT_URI,
           data: jsonEncode({'produit_id': product.id}));
       return ApiResponse.withSuccess(response);
     } catch (e) {
@@ -48,4 +51,15 @@ class PaymentRepo {
     }
   }
 
+  Future<ApiResponse> submitMobilePayment(data) async {
+    print("arriver au repo");
+    try {
+      final response =
+          await dioClient.post(AppConstants.PAY_MOBILE_URI, data: data);
+      print(response);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
 }
