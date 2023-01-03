@@ -1,4 +1,8 @@
+
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:pay/pay.dart';
 import 'package:provider/provider.dart';
 import 'package:wantermarket/config/app_colors.dart';
 import 'package:wantermarket/config/app_images.dart';
@@ -10,7 +14,9 @@ import 'package:wantermarket/shared/app_helper.dart';
 import 'package:wantermarket/shared/contact_vendor.dart';
 import 'package:wantermarket/ui/screens/payment_api/paytech_api_payment_screen.dart';
 
+import '../../../../providers/auth_provider.dart';
 import '../../../../providers/payment_provider.dart';
+import '../../../basewidgets/user-actions-account-status/payement-success.dart';
 
 class ProductButtons extends StatelessWidget {
   final Product product;
@@ -18,18 +24,6 @@ class ProductButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    void _launchPayTechPaymentUrl() async {
-      final paymentProvider = Provider.of<PaymentProvider>(context, listen: false);
-      await paymentProvider.getBoosterProductLink(context, product).then((url) async {
-        if( url != ""  )
-        {
-          await (Navigator.push(context, MaterialPageRoute(builder: (context) =>  PayTechApiPaymentScreen( initialUrl : url)),) );
-        }else{
-          AppHelper.showInfoFlushBar(context, "Vous avez bien booster ce produit " + product.name!);
-        }
-      });
-    }
 
     return Container(
       height: 330,
@@ -114,7 +108,7 @@ class ProductButtons extends StatelessWidget {
                         },
                       );
                     }else{
-                      _launchPayTechPaymentUrl();
+                      _makePayment(context, product);
                     }
                   },
                 ),
@@ -181,4 +175,131 @@ class ProductButtons extends StatelessWidget {
       ),
     );
   }
+
+  _makePayment(BuildContext context, Product product) async {
+    showDialog(
+      context: context,
+      builder: (context) => Container(
+        height: 200,
+        child: AlertDialog(
+          title: const Text(
+              'Confirmation de paiement'),
+          content: Text('Voulez-vous vraiment booster ce produit?'),
+          actions: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TextButton(
+                        onPressed: () async {
+                          _launchPayTechPaymentUrl;
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(Platform.isIOS ? 9 : 19),
+                          decoration: BoxDecoration(
+                              color: AppColors.SECONDARY,
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(5))),
+                          child: Text(
+                            'Payer Par PayTech (Mobile Money et CB)',
+                            style: TextStyle(
+                                color: AppColors.WHITE, fontSize: 12),
+                          ),
+                        ),
+                      ),
+                    ]),
+                Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ApplePayButton(
+                        paymentConfigurationAsset: 'applepay.json',
+                        paymentItems: [
+                          PaymentItem(
+                            label: 'Booster '  + product.name!,
+                            amount: '24000',
+                            status: PaymentItemStatus.final_price,
+                          )
+                        ],
+                        style: ApplePayButtonStyle.black,
+                        type: ApplePayButtonType.buy,
+                        onPaymentResult: (value) => {
+                          traiterPaiement(
+                            context,
+                          )
+                        },
+                        onError: (error) => print(error),
+                        loadingIndicator: const Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      ),
+                      GooglePayButton(
+                        paymentConfigurationAsset: 'gpay.json',
+                        paymentItems: [
+                          PaymentItem(
+                            label: 'Booster ' + product.name!,
+                            amount: '24000',
+                            status: PaymentItemStatus.final_price,
+                          )
+                        ],
+                        type: GooglePayButtonType.pay,
+                        onPaymentResult: (value) => {
+                          traiterPaiement(
+                            context,
+                          )
+                        },
+                        onError: (error) => print(error),
+                        loadingIndicator: const Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      ),
+                    ]),
+              ],
+            ),
+
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _launchPayTechPaymentUrl(BuildContext context, Product produit) async {
+    final paymentProvider = Provider.of<PaymentProvider>(context, listen: false);
+    await paymentProvider.getBoosterProductLink(context, produit).then((url) async {
+      if( url != ""  )
+      {
+        await (Navigator.push(context, MaterialPageRoute(builder: (context) =>  PayTechApiPaymentScreen( initialUrl : url)),) );
+      }else{
+        AppHelper.showInfoFlushBar(context, "Vous avez bien booster ce produit " + product.name!);
+      }
+    });
+  }
+
+  Future<void> traiterPaiement(context) async {
+    var planSubscribe = {
+      'type': "produit",
+      'id': product.id,
+      // 'paiementId': TransactionId,
+    };
+    Provider.of<PaymentProvider>(context, listen: false)
+        .submitMobilePayment(context, planSubscribe)
+        .then((value) {
+      if (value) {
+        Provider.of<AuthProvider>(context, listen: false)
+            .verifyIsAuthenticated(context);
+        showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) {
+              return const PaymentSuccess();
+            });
+      }
+    });
+  }
+
+
 }

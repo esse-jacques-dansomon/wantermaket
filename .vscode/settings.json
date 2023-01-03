@@ -11,5 +11,8 @@
         "paytech",
         "survenue",
         "wantermarket"
-    ]
+    ],
+    "[dart]": {
+        "editor.formatOnSave": true
+    }
 }

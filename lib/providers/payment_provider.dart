@@ -91,11 +91,10 @@ class PaymentProvider extends ChangeNotifier {
   }
 
   Future<bool> submitMobilePayment(BuildContext context, data) async {
-    print("arrived au provider");
     paymentStatus = PaymentStatus.loading;
     notifyListeners();
     final response = await paymentRepo.submitMobilePayment(data);
-    if (response.error == null) {
+    if (response.error == null){
       paymentStatus = PaymentStatus.pending;
       notifyListeners();
       return response.response.data['success'];

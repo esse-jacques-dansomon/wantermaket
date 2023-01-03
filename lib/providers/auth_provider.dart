@@ -1,4 +1,3 @@
-// ignore_for_file: unused_import
 
 import 'dart:convert';
 
@@ -178,6 +177,7 @@ class AuthProvider extends ChangeNotifier {
       final response = response0.response;
       if(response.statusCode == 200){
         loginn = true;
+        print('verifyIsAuthenticated success');
         user = LoginReponse.fromJson(response.data);
         authRepo.saveInfoInShared(AppConstants.USER_CREDENTIALS, json.encode(response.data));
       }else{

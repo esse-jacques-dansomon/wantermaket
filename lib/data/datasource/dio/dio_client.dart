@@ -136,6 +136,14 @@ class DioClient {
       AppConstants.COUNTRY_CODE: countryCode,
     };
     token = sharedPreferences.getString(AppConstants.TOKEN) ?? '';
+     //log infos
+    print('token: $token');
+    print('countryCode: $countryCode');
+    print('uri: $uri');
+    print('data: $data');
+    print('queryParameters: $queryParameters');
+    print('options: $options');
+    print('cancelToken: $cancelToken');
 
     try {
       var response = await dio.put(

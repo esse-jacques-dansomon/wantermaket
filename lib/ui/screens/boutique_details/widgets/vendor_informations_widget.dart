@@ -209,7 +209,7 @@ class VendorInformationWidget extends StatelessWidget {
                                 ListTile(
                                   onTap: () async {
                                     Navigator.of(context).pop();
-                                    ContactVendor.shareShop(boutique);
+
                                   },
                                   horizontalTitleGap: 0,
                                   leading: const Icon(Icons.block, color: AppColors.PRIMARY,),
