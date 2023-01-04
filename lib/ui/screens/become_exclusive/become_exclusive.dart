@@ -223,27 +223,7 @@ class _BecomeExclusiveScreenState extends State<BecomeExclusiveScreen> {
                               child: CircularProgressIndicator(),
                             ),
                           ),
-                          GooglePayButton(
-                            paymentConfigurationAsset: 'gpay.json',
-                            paymentItems: [
-                              PaymentItem(
-                                label: 'Devenir Exclusive',
-                                amount: '25000',
-                                status: PaymentItemStatus.final_price,
-                              )
-                            ],
-                            type: GooglePayButtonType.pay,
-                            onPaymentResult: (value) => {
-                              traiterPaiement(
-                                context,
-                              )
-                            },
-                            onError: (error) => print(error),
-                            loadingIndicator: const Center(
-                              child: CircularProgressIndicator(),
-                            ),
-                          ),
-                        ]),
+                          ]),
                   ],
                 ),
               ],

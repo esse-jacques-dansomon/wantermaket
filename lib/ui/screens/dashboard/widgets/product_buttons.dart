@@ -237,27 +237,7 @@ class ProductButtons extends StatelessWidget {
                           child: CircularProgressIndicator(),
                         ),
                       ),
-                      GooglePayButton(
-                        paymentConfigurationAsset: 'gpay.json',
-                        paymentItems: [
-                          PaymentItem(
-                            label: 'Booster ' + product.name!,
-                            amount: '24000',
-                            status: PaymentItemStatus.final_price,
-                          )
-                        ],
-                        type: GooglePayButtonType.pay,
-                        onPaymentResult: (value) => {
-                          traiterPaiement(
-                            context,
-                          )
-                        },
-                        onError: (error) => print(error),
-                        loadingIndicator: const Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                      ),
-                    ]),
+                      ]),
               ],
             ),
 

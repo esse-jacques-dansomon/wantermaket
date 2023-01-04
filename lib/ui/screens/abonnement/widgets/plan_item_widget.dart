@@ -215,7 +215,6 @@ class PlanItem extends StatelessWidget {
                           ],
                         );
                       case PaymentPlanType.loaded:
-                        var token;
                         return Column(
                           mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -288,27 +287,7 @@ class PlanItem extends StatelessWidget {
                                       child: CircularProgressIndicator(),
                                     ),
                                   ),
-                                  GooglePayButton(
-                                    paymentConfigurationAsset: 'gpay.json',
-                                    paymentItems: [
-                                      PaymentItem(
-                                        label: plan.name,
-                                        amount: plan.price.toString(),
-                                        status: PaymentItemStatus.final_price,
-                                      )
-                                    ],
-                                    type: GooglePayButtonType.pay,
-                                    onPaymentResult: (value) => {
-                                      traiterPaiement(
-                                        context,
-                                        plan.id,
-                                      )
-                                    },
-                                    onError: (error) => print(error),
-                                    loadingIndicator: const Center(
-                                      child: CircularProgressIndicator(),
-                                    ),
-                                  ),
+                                  
                                 ]),
                           ],
                         );
