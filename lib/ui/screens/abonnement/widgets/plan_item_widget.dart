@@ -147,7 +147,7 @@ class PlanItem extends StatelessWidget {
                               .isLoggedIn()
                           ?
                           //open dialogue
-                      _makePayment(context)
+                          _makePayment(context)
                           : AppHelper.showInfoFlushBar(context,
                               "Vous devez vous connecter pour continuer");
                     },
@@ -167,7 +167,6 @@ class PlanItem extends StatelessWidget {
     );
   }
 
-
   Future<void> traiterPaiement(context, plandId) async {
     var planSubscribe = {
       'type': 'abonnement',
@@ -177,8 +176,7 @@ class PlanItem extends StatelessWidget {
         .submitMobilePayment(context, planSubscribe)
         .then((value) {
       if (value) {
-        Provider.of<AuthProvider>(context, listen: false)
-            .verifyIsAuthenticated(context);
+        Provider.of<AuthProvider>(context, listen: false).verifyIsAuthenticated(context);
         showDialog(
             context: context,
             barrierDismissible: false,
@@ -191,223 +189,154 @@ class PlanItem extends StatelessWidget {
     //update user info
   }
 
-  _makePayment(BuildContext context){
+  _makePayment(BuildContext context) {
     showDialog(
         context: context,
         builder: (context) => Container(
-          height: 200,
-          child: AlertDialog(
-            title: const Text(
-                'Confirmation de paiement'),
-            content: Text(
-                'Voulez-vous vraiment souscrire à ce plan ' +
+              height: 200,
+              child: AlertDialog(
+                title: const Text('Confirmation de paiement'),
+                content: Text('Voulez-vous vraiment souscrire à ce plan ' +
                     plan.name! +
                     '?'),
-            actions: [
-              Consumer<PaymentProvider>(builder:
-                  (context, paymentProvider, child) {
-                switch (
-                paymentProvider.paymentPlanType) {
-                  case PaymentPlanType.loading:
-                    return Row(
-                      crossAxisAlignment:
-                      CrossAxisAlignment.center,
-                      mainAxisAlignment:
-                      MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          child: Center(
-                              child:
-                              const CustomAppLoader()),
-                          height: 70,
-                        ),
-                      ],
-                    );
-                  case PaymentPlanType.loaded:
-                    var token;
-                    return Column(
-                      mainAxisAlignment:
-                      MainAxisAlignment.end,
-                      crossAxisAlignment:
-                      CrossAxisAlignment.center,
-                      children: [
-                        Row(
-                            crossAxisAlignment:
-                            CrossAxisAlignment
-                                .center,
-                            mainAxisAlignment:
-                            MainAxisAlignment
-                                .center,
-                            children: [
-                              TextButton(
-                                onPressed: () async {
-                                  Provider.of<AuthProvider>(
-                                      context,
-                                      listen:
-                                      false)
-                                      .isLoggedIn()
-                                      ? await Provider.of<
-                                      PaymentProvider>(
-                                      context,
-                                      listen:
-                                      false)
-                                      .getAbonnementLink(
-                                      context,
-                                      plan)
-                                      .then(
-                                          (url) async {
-                                        await (Navigator
-                                            .push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  PayTechApiPaymentScreen(initialUrl: url)),
-                                        ));
-                                      })
-                                      : {
-                                    (Navigator.popAndPushNamed(
-                                        context,
-                                        AppRoutes
-                                            .login)),
-                                    AppHelper.showInfoFlushBar(
-                                        context,
-                                        "Vous devez vous connecter pour continuer")
-                                  };
-                                },
-                                child: Container(
-                                  padding: EdgeInsets
-                                      .all(Platform
-                                      .isIOS
-                                      ? 9
-                                      : 19),
-                                  decoration: BoxDecoration(
-                                      color: AppColors
-                                          .SECONDARY,
-                                      borderRadius: BorderRadius
-                                          .all(Radius
-                                          .circular(
-                                          5))),
-                                  child: Text(
-                                    'Payer Par PayTech (Mobile Money et CB)',
-                                    style: TextStyle(
-                                        color:
-                                        AppColors
-                                            .WHITE,
-                                        fontSize: 12),
-                                  ),
-                                ),
-                              ),
-                            ]),
-                        Row(
-                            crossAxisAlignment:
-                            CrossAxisAlignment
-                                .center,
-                            mainAxisAlignment:
-                            MainAxisAlignment
-                                .center,
-                            children: [
-                              ApplePayButton(
-                                paymentConfigurationAsset:
-                                'applepay.json',
-                                paymentItems: [
-                                  PaymentItem(
-                                    label: plan.name,
-                                    amount: plan.price
-                                        .toString(),
-                                    status:
-                                    PaymentItemStatus
-                                        .final_price,
-                                  )
-                                ],
-                                style:
-                                ApplePayButtonStyle
-                                    .black,
-                                type:
-                                ApplePayButtonType
-                                    .buy,
-                                onPaymentResult:
-                                    (value) => {
-                                  traiterPaiement(
-                                      context,
-                                      plan.id)
-                                },
-                                onError: (error) =>
-                                    print(error),
-                                loadingIndicator:
-                                const Center(
-                                  child:
-                                  CircularProgressIndicator(),
-                                ),
-                              ),
-                              GooglePayButton(
-                                paymentConfigurationAsset:
-                                'gpay.json',
-                                paymentItems: [
-                                  PaymentItem(
-                                    label: plan.name,
-                                    amount: plan.price
-                                        .toString(),
-                                    status:
-                                    PaymentItemStatus
-                                        .final_price,
-                                  )
-                                ],
-                                type:
-                                GooglePayButtonType
-                                    .pay,
-                                onPaymentResult:
-                                    (value) => {
-                                  
-                                  traiterPaiement(
-                                    context,
-                                    plan.id,
-                                  )
-                                },
-                                onError: (error) =>
-                                    print(error),
-                                loadingIndicator:
-                                const Center(
-                                  child:
-                                  CircularProgressIndicator(),
-                                ),
-                              ),
-                            ]),
-                      ],
-                    );
-                  case PaymentPlanType.error:
-                    return Row(
-                      children: [
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: Container(
-                            padding:
-                            EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                                color: AppColors
-                                    .SECONDARY,
-                                borderRadius:
-                                BorderRadius.all(
-                                    Radius
-                                        .circular(
-                                        5))),
-                            child: Text(
-                              "Une erreur s'est produite, Réessayer",
-                              style: TextStyle(
-                                  color: AppColors
-                                      .WHITE),
+                actions: [
+                  Consumer<PaymentProvider>(
+                      builder: (context, paymentProvider, child) {
+                    switch (paymentProvider.paymentPlanType) {
+                      case PaymentPlanType.loading:
+                        return Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              child: Center(child: const CustomAppLoader()),
+                              height: 70,
                             ),
-                          ),
-                        )
-                      ],
-                    );
-                }
-              }),
-            ],
-          ),
-        ));
+                          ],
+                        );
+                      case PaymentPlanType.loaded:
+                        var token;
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  TextButton(
+                                    onPressed: () async {
+                                      Provider.of<AuthProvider>(context,
+                                                  listen: false)
+                                              .isLoggedIn()
+                                          ? await Provider.of<PaymentProvider>(
+                                                  context,
+                                                  listen: false)
+                                              .getAbonnementLink(context, plan)
+                                              .then((url) async {
+                                              await (Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        PayTechApiPaymentScreen(
+                                                            initialUrl: url)),
+                                              ));
+                                            })
+                                          : {
+                                              (Navigator.popAndPushNamed(
+                                                  context, AppRoutes.login)),
+                                              AppHelper.showInfoFlushBar(
+                                                  context,
+                                                  "Vous devez vous connecter pour continuer")
+                                            };
+                                    },
+                                    child: Container(
+                                      padding: EdgeInsets.all(
+                                          Platform.isIOS ? 9 : 19),
+                                      decoration: BoxDecoration(
+                                          color: AppColors.SECONDARY,
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(5))),
+                                      child: Text(
+                                        'Payer Par PayTech (Mobile Money et CB)',
+                                        style: TextStyle(
+                                            color: AppColors.WHITE,
+                                            fontSize: 12),
+                                      ),
+                                    ),
+                                  ),
+                                ]),
+                            Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  ApplePayButton(
+                                    paymentConfigurationAsset: 'applepay.json',
+                                    paymentItems: [
+                                      PaymentItem(
+                                        label: plan.name,
+                                        amount: plan.price.toString(),
+                                        status: PaymentItemStatus.final_price,
+                                      )
+                                    ],
+                                    style: ApplePayButtonStyle.black,
+                                    type: ApplePayButtonType.buy,
+                                    onPaymentResult: (value) =>
+                                        {traiterPaiement(context, plan.id)},
+                                    onError: (error) => print(error),
+                                    loadingIndicator: const Center(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                                  ),
+                                  GooglePayButton(
+                                    paymentConfigurationAsset: 'gpay.json',
+                                    paymentItems: [
+                                      PaymentItem(
+                                        label: plan.name,
+                                        amount: plan.price.toString(),
+                                        status: PaymentItemStatus.final_price,
+                                      )
+                                    ],
+                                    type: GooglePayButtonType.pay,
+                                    onPaymentResult: (value) => {
+                                      traiterPaiement(
+                                        context,
+                                        plan.id,
+                                      )
+                                    },
+                                    onError: (error) => print(error),
+                                    loadingIndicator: const Center(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                                  ),
+                                ]),
+                          ],
+                        );
+                      case PaymentPlanType.error:
+                        return Row(
+                          children: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: Container(
+                                padding: EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                    color: AppColors.SECONDARY,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5))),
+                                child: Text(
+                                  "Une erreur s'est produite, Réessayer",
+                                  style: TextStyle(color: AppColors.WHITE),
+                                ),
+                              ),
+                            )
+                          ],
+                        );
+                    }
+                  }),
+                ],
+              ),
+            ));
   }
-
-
 }

@@ -88,6 +88,17 @@ class _PayTechApiPaymentScreen extends State<PayTechApiPaymentScreen> {
                 }
               },
               initialUrl: widget.initialUrl,
+              onProgress: (int progress) {
+                print("WebView is loading (progress : $progress%)");
+                // if (progress == 100) {
+                //   setState(() {
+                //     pay = 1;
+                //   });
+                // }
+                //show loading indicator
+
+              },
+
             ),
     ));
   }

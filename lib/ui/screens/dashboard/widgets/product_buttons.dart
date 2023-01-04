@@ -196,7 +196,7 @@ class ProductButtons extends StatelessWidget {
                     children: [
                       TextButton(
                         onPressed: () async {
-                          _launchPayTechPaymentUrl;
+                          _launchPayTechPaymentUrl(context, product);
                         },
                         child: Container(
                           padding: EdgeInsets.all(Platform.isIOS ? 9 : 19),
@@ -288,8 +288,6 @@ class ProductButtons extends StatelessWidget {
         .submitMobilePayment(context, planSubscribe)
         .then((value) {
       if (value) {
-        Provider.of<AuthProvider>(context, listen: false)
-            .verifyIsAuthenticated(context);
         showDialog(
             context: context,
             barrierDismissible: false,

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../config/app_colors.dart';
+import '../../../providers/vendor_provider.dart';
 import '../../../route/routes.dart';
 
 class PaymentSuccess extends StatelessWidget {
@@ -44,9 +46,11 @@ class PaymentSuccessBox extends StatelessWidget {
                   SizedBox( height: 45, width: double.infinity, child: ElevatedButton(onPressed: (){
                      Navigator.pop(context);
                      Navigator.pop(context);
+                     Provider.of<VendorProvider>(context, listen: false).getBoutique(context);
+                     Provider.of<VendorProvider>(context, listen: false).getVendorProducts(context);
                      //for pending screen
                      AppRoutes.goTo(context, AppRoutes.profile);
-                  }, style: ButtonStyle(backgroundColor: MaterialStateProperty.all(AppColors.PRIMARY)), child: const Text('OK'),),)
+                  }, style: ButtonStyle(backgroundColor: MaterialStateProperty.all(AppColors.PRIMARY)), child: const Text('Ok'),),)
 
                 ],
               ),

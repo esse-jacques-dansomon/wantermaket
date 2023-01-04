@@ -71,7 +71,9 @@ class VendorProductCard extends StatelessWidget {
                             child: SizedBox(
                               height:25,
                               child: ElevatedButton(
-                                  style: const ButtonStyle(
+                                  style:  ButtonStyle(
+                                      backgroundColor: MaterialStateProperty.all(AppColors.PRIMARY),
+                                      shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5))))
                                   ),
                                   onPressed: (){
                                       // Navigator.pushNamed(context, AppRoutes.editProduct, arguments: product);
