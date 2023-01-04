@@ -53,9 +53,9 @@ class PaymentRepo {
 
   Future<ApiResponse> submitMobilePayment(data) async {
     print("arriver au repo");
+    print(data);
     try {
-      final response =
-          await dioClient.post(AppConstants.PAY_MOBILE_URI, data: data);
+      final response = await dioClient.post(AppConstants.PAY_MOBILE_URI, data: data);
       print(response);
       return ApiResponse.withSuccess(response);
     } catch (e) {

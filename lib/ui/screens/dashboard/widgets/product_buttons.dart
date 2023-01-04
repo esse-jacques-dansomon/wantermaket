@@ -221,7 +221,7 @@ class ProductButtons extends StatelessWidget {
                         paymentItems: [
                           PaymentItem(
                             label: 'Booster '  + product.name!,
-                            amount: '24000',
+                            amount: '100',
                             status: PaymentItemStatus.final_price,
                           )
                         ],
@@ -281,9 +281,8 @@ class ProductButtons extends StatelessWidget {
 
   Future<void> traiterPaiement(context) async {
     var planSubscribe = {
-      'type': "produit",
-      'id': product.id,
-      // 'paiementId': TransactionId,
+      'type': "boost",
+      'produit_id': product.id,
     };
     Provider.of<PaymentProvider>(context, listen: false)
         .submitMobilePayment(context, planSubscribe)

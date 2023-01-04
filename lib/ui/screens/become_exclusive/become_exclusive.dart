@@ -81,7 +81,7 @@ class _BecomeExclusiveScreenState extends State<BecomeExclusiveScreen> {
                   height: 20,
                 ),
                 const Text(
-                  '50.000 F CFA / 30 jours',
+                  '25.000 F CFA / 30 jours',
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -140,8 +140,7 @@ class _BecomeExclusiveScreenState extends State<BecomeExclusiveScreen> {
 
   Future<void> traiterPaiement(context) async {
     var planSubscribe = {
-      'type': "exclusive",
-      // 'paiementId': TransactionId,
+      'type': "exclusive"
     };
     Provider.of<PaymentProvider>(context, listen: false)
         .submitMobilePayment(context, planSubscribe)
@@ -208,7 +207,7 @@ class _BecomeExclusiveScreenState extends State<BecomeExclusiveScreen> {
                             paymentItems: [
                               PaymentItem(
                                 label: 'Devenir Exclusive',
-                                amount: '24000',
+                                amount: '25000',
                                 status: PaymentItemStatus.final_price,
                               )
                             ],
@@ -229,7 +228,7 @@ class _BecomeExclusiveScreenState extends State<BecomeExclusiveScreen> {
                             paymentItems: [
                               PaymentItem(
                                 label: 'Devenir Exclusive',
-                                amount: '24000',
+                                amount: '25000',
                                 status: PaymentItemStatus.final_price,
                               )
                             ],

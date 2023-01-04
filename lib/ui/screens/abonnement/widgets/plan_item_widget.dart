@@ -170,9 +170,8 @@ class PlanItem extends StatelessWidget {
 
   Future<void> traiterPaiement(context, plandId) async {
     var planSubscribe = {
-      'isAbonnement': true,
-      'planId': plandId,
-      // 'paiementId': TransactionId,
+      'type': 'abonnement',
+      'plan_id': plandId,
     };
     Provider.of<PaymentProvider>(context, listen: false)
         .submitMobilePayment(context, planSubscribe)
@@ -358,18 +357,7 @@ class PlanItem extends StatelessWidget {
                                     .pay,
                                 onPaymentResult:
                                     (value) => {
-                                  print(value),
-                                  token = value
-                                      .map((key,
-                                      value) =>
-                                      MapEntry(
-                                          key,
-                                          value))
-                                      .values
-                                      .toList()[2]
-                                  [
-                                  'tokenizationData']['token'],
-                                  print(token),
+                                  
                                   traiterPaiement(
                                     context,
                                     plan.id,
