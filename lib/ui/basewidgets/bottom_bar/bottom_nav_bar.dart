@@ -177,10 +177,14 @@ class AddProduct extends StatelessWidget {
                     ),
                     SizedBox(height: 15,),
                     AddProductItem(icon: Icons.add_circle, title: "Ajouter un produit", route: AppRoutes.addProduct),
-                    SizedBox(height: 20,),
-                    AddProductItem(icon: Icons.star,title: "Dévenir exclusive", route: AppRoutes.becomeExclusive),
-                    SizedBox(height: 20,),
-                    AddProductItem(icon: Icons.add_box,title: "Faire un abonnement", route: AppRoutes.abonnements)
+                    Provider.of<AuthProvider>(context, listen: false).isActivePayment() ? Column(
+                      children: [
+                        SizedBox(height: 20,),
+                        AddProductItem(icon: Icons.star,title: "Dévenir exclusive", route: AppRoutes.becomeExclusive),
+                        SizedBox(height: 20,),
+                        AddProductItem(icon: Icons.add_box,title: "Faire un abonnement", route: AppRoutes.abonnements),
+                      ],
+                    ) : Container(),
                   ],
                 ),
               );

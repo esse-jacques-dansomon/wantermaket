@@ -123,11 +123,11 @@ class _AppDrawerState extends State<AppDrawer> {
               ],
             ) : Container(),
 
-            const DrawerMenuItem(
+             Provider.of<AuthProvider>(context, listen: false).isActivePayment() ?const DrawerMenuItem(
               menuName: 'Abonnements',
               route: AppRoutes.abonnements,
               icon: Icons.person_pin_rounded,
-            ),
+            ): Container(),
             const DrawerMenuItem(
               menuName: 'Ma Liste d\'Envies',
               route: AppRoutes.wishList,
@@ -161,11 +161,11 @@ class _AppDrawerState extends State<AppDrawer> {
                   route: AppRoutes.resetPassword,
                   icon: Icons.password_outlined,
                 ),
-                const DrawerMenuItem(
+                Provider.of<AuthProvider>(context, listen: false).isActivePayment() ? const DrawerMenuItem(
                   menuName: 'Dévénir Exclusive',
                   route: AppRoutes.becomeExclusive,
                   icon: Icons.star_half_outlined,
-                ),
+                ) : Container(),
 
                 ListTile(
                   onTap: (){

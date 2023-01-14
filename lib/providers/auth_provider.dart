@@ -177,7 +177,6 @@ class AuthProvider extends ChangeNotifier {
       final response = response0.response;
       if(response.statusCode == 200){
         loginn = true;
-        print('verifyIsAuthenticated success');
         user = LoginReponse.fromJson(response.data);
         authRepo.saveInfoInShared(AppConstants.USER_CREDENTIALS, json.encode(response.data));
       }else{
@@ -212,6 +211,14 @@ class AuthProvider extends ChangeNotifier {
 
   bool isLoggedIn() {
     return authRepo.isLoggedIn();
+  }
+
+  bool isActivePayment() {
+    //if not login return false
+    if(!isLoggedIn()) return false;
+    //if user is not active return false
+    if(this.user.activePaiement != true ) return false;
+    return true;
   }
 
 

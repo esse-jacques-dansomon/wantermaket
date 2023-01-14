@@ -17,11 +17,13 @@ class LoginReponse {
     this.accessToken,
     this.tokenType,
     this.isExclusive,
-    this.nbreBoostRestant
+    this.nbreBoostRestant,
+    this.activePaiement,
   });
 
   final bool? etat;
   final bool? canAddProduct;
+  final bool? activePaiement;
   final bool? isExclusive;
   final String? plan;
   final String? profilImage;
@@ -71,6 +73,7 @@ class LoginReponse {
     accessToken: json["access_token"],
     tokenType: json["token_type"],
     nbreBoostRestant: json["nbre_boost_restant"],
+    activePaiement: json["activePaiement"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -86,5 +89,6 @@ class LoginReponse {
     "access_token": accessToken,
     "token_type": tokenType,
     "nbre_boost_restant": nbreBoostRestant,
+    "activePaiement": activePaiement,
   };
 }

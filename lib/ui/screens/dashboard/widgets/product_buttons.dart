@@ -82,7 +82,7 @@ class ProductButtons extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Column(
               children: [
-                ListTile(
+                Provider.of<AuthProvider>(context, listen: false).isActivePayment() ? ListTile(
                   leading: const Icon(Icons.add_circle, size: 27, color: AppColors.FACEBOOK,),
                   title: Text("Booster", style: TextStyle(fontSize: 18, ),),
                   onTap: () {
@@ -111,7 +111,7 @@ class ProductButtons extends StatelessWidget {
                       _makePayment(context, product);
                     }
                   },
-                ),
+                ) : Container(),
                 ListTile(
                   leading: const Icon(Icons.share, size: 27, color: Colors.blue,),
                   title: Text("Partager", style: TextStyle(fontSize: 18),),
